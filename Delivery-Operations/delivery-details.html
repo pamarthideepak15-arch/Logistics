@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LR Execution Details - Logistics ERP</title>
+<link rel="stylesheet" href="../Design System/global.css">
+<link rel="stylesheet" href="../Design System/components.css">
+<link rel="stylesheet" href="../Sidebar/sidebar.css">
+<link rel="stylesheet" href="delivery-operations.css">
+<style>
+.lr-view-stack { display: flex; flex-direction: column; gap: 16px; padding-bottom: 24px; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.detail-card { background: #fff; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.card-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--color-border); font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
+.kv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; }
+.kv { display: flex; flex-direction: column; gap: 3px; }
+.kv label { font-size: 0.72rem; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.02em; }
+.kv span { font-size: 0.8125rem; font-weight: 600; color: var(--color-black); line-height: 1.35; }
+
+/* 1. Execution Lifecycle Stepper */
+.steps { display: grid; grid-template-columns: repeat(6, minmax(80px, 1fr)); gap: 8px; overflow-x: auto; padding: 10px 0; }
+.step { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; color: #888; font-size: 0.72rem; font-weight: 600; }
+.step:not(:last-child):after { content: ''; position: absolute; top: 14px; left: calc(50% + 15px); width: calc(100% - 30px); height: 1px; background: var(--color-border); }
+.step.done:not(:last-child):after { background: var(--color-black); }
+.dot { z-index: 1; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid var(--color-border); border-radius: 50%; background: #fff; font-size: 0.75rem; }
+.step.done, .step.current { color: var(--color-black); }
+.step.done .dot { color: #fff; background: var(--color-black); border-color: var(--color-black); }
+.step.current .dot { border: 2px solid var(--color-black); font-weight: 700; color: var(--color-black); background: #fff; }
+
+/* 2. Schedule Table Container */
+.schedule-table-container { width: 100%; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); overflow: hidden; background: #fff; }
+.schedule-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.schedule-table th { background: var(--color-black); color: var(--color-white); padding: 8px 12px; text-align: left; font-weight: 600; font-size: 0.8125rem; }
+.schedule-table td { padding: 8px 12px; border-bottom: 1px solid var(--color-border); vertical-align: middle; color: var(--color-black); }
+.schedule-table tr:last-child td { border-bottom: none; }
+
+/* 3. Timeline Activity */
+.activity-list { display: flex; flex-direction: column; gap: 14px; padding-left: 2px; }
+.activity-item { position: relative; display: flex; gap: 12px; font-size: 0.8125rem; }
+.activity-item:not(:last-child):before { content: ''; position: absolute; left: 6px; top: 16px; bottom: -14px; width: 1px; background: var(--color-border); }
+.activity-dot { z-index: 1; width: 13px; height: 13px; margin-top: 3px; border-radius: 50%; background: var(--color-black); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--color-black); flex-shrink: 0; }
+.activity-content { display: flex; flex-direction: column; gap: 2px; }
+.activity-time { font-size: 0.72rem; font-weight: 700; color: var(--color-black); }
+.activity-desc { font-size: 0.8125rem; color: #444; }
+
+/* 4. Completion Proof & Verification Box */
+.completion-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.proof-box { border: 1px solid var(--color-border); border-radius: 4px; padding: 12px; background: var(--color-bg-light); display: flex; flex-direction: column; gap: 6px; }
+.proof-img-placeholder { width: 100%; height: 120px; background: #fff; border: 1px dashed var(--color-black); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #555; font-size: 0.75rem; }
+
+/* 5. Failed Banner */
+.failed-banner { background: #fafafa; border: 1px dashed var(--color-black); border-radius: var(--border-radius-base); padding: 14px 16px; display: none; }
+.failed-banner.active { display: block; }
+
+/* State Switcher Tabs in Top Header */
+.state-switcher-tabs { display: flex; background: #eee; padding: 3px; border-radius: 6px; border: 1px solid var(--color-border); gap: 2px; }
+.state-tab { padding: 4px 12px; font-size: 0.75rem; font-weight: 600; border: none; background: transparent; cursor: pointer; border-radius: 4px; color: #555; transition: all 0.15s; }
+.state-tab.active { background: var(--color-black); color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+/* Form Elements */
+.form-group-erp { display: flex; flex-direction: column; gap: 4px; }
+.form-group-erp label { font-size: 0.75rem; font-weight: 700; color: var(--color-black); }
+.form-group-erp select, .form-group-erp input { height: 32px; font-size: 0.8125rem; width: 100%; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 4px 8px; background: #fff; outline: none; }
+.form-group-erp select:focus, .form-group-erp input:focus { border-color: var(--color-black); }
+
+/* Modal styles */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 2000; }
+.modal-overlay.active { display: flex; }
+.modal-box { background: #fff; border-radius: 8px; width: 480px; max-width: 92vw; padding: 20px; box-shadow: 0 16px 40px rgba(0,0,0,0.2); border: 1px solid var(--color-border); }
+
+@media (max-width: 900px) { .detail-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        <!-- Two-Tier Dark Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                <nav class="rail-nav">
+                    <a href="../User-Management/index.html" class="rail-icon active" data-tooltip="Administration"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>
+                    <a href="../Counter-Booking/index.html" class="rail-icon" data-tooltip="Counter Booking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></a>
+                    <a href="../Logistics-Admin/index.html" class="rail-icon" data-tooltip="Logistics Operations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></a>
+                </nav>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-header"><div class="sidebar-title">Logistics ERP</div><div class="sidebar-badge">ONLINE</div></div>
+                <div class="sidebar-nav-section">ADMINISTRATION</div>
+                <nav class="sidebar-nav">
+                    <a href="../User-Management/index.html">User Management</a>
+                    <a href="../Branch-Management/index.html">Branch Management</a>
+                    <a href="../Lorry-Receipt-Management/index.html">LR Management</a>
+                    <a href="../Pickup-Operations/index.html" id="side-link-pickup">Pickup Operations</a>
+                    <a href="../Delivery-Operations/index.html" id="side-link-delivery">Delivery Operations</a>
+                    <a href="../Role-Permission/index.html">Roles &amp; Permissions</a>
+                    <a href="../Audit-Logs/index.html">Audit Logs</a>
+                </nav>
+                <div class="sidebar-nav-section">CUSTOMERS</div>
+                <nav class="sidebar-nav">
+                    <a href="../Customer-Management/index.html">Customer Management</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Administration</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="#" id="breadcrumb-module-link" style="color:inherit;text-decoration:none">Operations</a>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current" id="breadcrumb-lr-id">LR-2026-000125</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info"><strong>Super Admin</strong><span>HQ-NODE-01</span></div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <!-- Page Header with Back Button, State Tabs and Quick Actions -->
+                <div class="page-header" style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <a href="#" id="back-to-module-btn" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;" title="Back">&lt;</a>
+                        <div class="page-title-group">
+                            <h1 class="page-title" id="view-page-title">Request - LR-2026-000125</h1>
+                            <p class="page-subtitle" id="view-page-subtitle">Track execution, customer details, assignment information, and activity history.</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <!-- State View Selector (Assign Page vs Assigned Execution View) -->
+                        <div class="state-switcher-tabs">
+                            <button type="button" class="state-tab" id="tab-state-assign" onclick="switchStateView('assign')">1. Assign Page (Pending)</button>
+                            <button type="button" class="state-tab active" id="tab-state-assigned" onclick="switchStateView('assigned')">2. Assigned Execution View</button>
+                        </div>
+                        <div style="display: flex; gap: 8px;" id="header-action-buttons">
+                            <button type="button" class="btn-secondary" id="btn-toggle-fail" onclick="openFailModal()" style="font-size: 0.75rem; padding: 6px 12px;">Mark as Failed</button>
+                            <button type="button" class="btn-primary" id="btn-reassign-action" onclick="openActionModal()" style="font-size: 0.75rem; padding: 6px 12px;">Reassign / Schedule</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lr-view-stack">
+                    
+                    <!-- ========================================================= -->
+                    <!-- 1. EXECUTION LIFECYCLE TIMELINE (Shown only in Assigned)   -->
+                    <!-- ========================================================= -->
+                    <section class="detail-card exec-only-section" id="section-lifecycle">
+                        <div class="card-title">
+                            <span id="lifecycle-title">Execution Lifecycle</span>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="badge-status badge-completed" id="detail-status-badge">COMPLETED</span>
+                                <button type="button" class="btn-secondary" style="font-size: 0.7rem; padding: 2px 6px;" onclick="toggleFailedBannerView()">Toggle Failed View</button>
+                            </div>
+                        </div>
+                        <div class="steps" id="lifecycle-steps-container">
+                            <!-- Populated dynamically based on Pickup vs Delivery module -->
+                        </div>
+                    </section>
+
+                    <!-- FAILED STATE BANNER (Shown when Failed State is toggled) -->
+                    <section id="failed-state-banner" class="failed-banner exec-only-section">
+                        <div class="card-title" style="border: none; margin: 0; padding-bottom: 6px;">
+                            <span id="failed-banner-title">Failed Request Details</span>
+                            <span class="badge-status badge-failed">FAILED</span>
+                        </div>
+                        <div class="kv-grid">
+                            <div class="kv">
+                                <label id="lbl-fail-reason">Failure Reason</label>
+                                <span id="val-fail-reason">Customer Not Available</span>
+                            </div>
+                            <div class="kv">
+                                <label>Attempt Date &amp; Time</label>
+                                <span id="val-fail-time">17 Aug 2026, 11:45 AM</span>
+                            </div>
+                            <div class="kv" style="grid-column: span 2;">
+                                <label id="lbl-fail-remarks">Remarks &amp; Notes</label>
+                                <span id="val-fail-remarks">Premises was closed. Called customer phone twice, requested reattempt tomorrow morning.</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ========================================================= -->
+                    <!-- 2. INFORMATION CARDS (TWO-COLUMN CARD LAYOUT)             -->
+                    <!-- ========================================================= -->
+                    <div class="detail-grid">
+                        
+                        <!-- LEFT CARD: REQUEST INFORMATION (Both Assign & Assigned) -->
+                        <div class="detail-card">
+                            <div class="card-title">
+                                <span id="left-card-title">Request Information</span>
+                                <span class="badge-status badge-assigned" id="left-card-badge">PENDING ASSIGNMENT</span>
+                            </div>
+                            <div class="kv-grid">
+                                <div class="kv">
+                                    <label>LR Number</label>
+                                    <span id="f-lr-number">LR-2026-000125</span>
+                                </div>
+                                <div class="kv">
+                                    <label id="lbl-branch-extra">Branch Location</label>
+                                    <span id="f-branch-extra">Bangalore Hub</span>
+                                </div>
+                                <div class="kv">
+                                    <label>Customer Name</label>
+                                    <span id="f-customer-name">ABC Pvt Ltd</span>
+                                </div>
+                                <div class="kv">
+                                    <label>Customer Mobile</label>
+                                    <span id="f-customer-mobile">+91 98860 12345</span>
+                                </div>
+                                <div class="kv" style="grid-column: span 2;">
+                                    <label id="lbl-address">Address</label>
+                                    <span id="f-address">Tech Park, Whitefield, Bangalore, Karnataka - 560066</span>
+                                </div>
+                                <div class="kv">
+                                    <label>Items / Commodity</label>
+                                    <span id="f-items">Electronics &amp; Integrated Chips</span>
+                                </div>
+                                <div class="kv">
+                                    <label>Packages &amp; Weight</label>
+                                    <span id="f-pkg-weight">3 Boxes · 45 KG</span>
+                                </div>
+                                <div class="kv" style="grid-column: span 2;">
+                                    <label>Payment Details</label>
+                                    <span id="f-payment">Paid (Prepaid Online ₹1,450)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT CARD: DYNAMIC BASED ON STATE -->
+                        <!-- State 1: ASSIGN CARD (Interactive Inputs - Before Assignment) -->
+                        <div class="detail-card" id="card-assign-inputs" style="display: none;">
+                            <div class="card-title">
+                                <span id="assign-card-title">Assign Personnel</span>
+                                <span class="badge-status badge-pending">PENDING</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div class="form-group-erp">
+                                    <label id="lbl-input-person">Select Staff *</label>
+                                    <select id="input-assign-person">
+                                        <option value="Ravi Kumar">Ravi Kumar (Staff · Active &amp; Available)</option>
+                                        <option value="Suresh Rao">Suresh Rao (Staff · Active &amp; Available)</option>
+                                        <option value="Manjunath Shetty">Manjunath Shetty (Staff · Active)</option>
+                                        <option value="Praveen Nayak">Praveen Nayak (Staff · Active)</option>
+                                    </select>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div class="form-group-erp">
+                                        <label id="lbl-input-date">Date *</label>
+                                        <input type="text" id="input-assign-date" value="17 Aug 2026">
+                                    </div>
+                                    <div class="form-group-erp">
+                                        <label id="lbl-input-slot">Time Slot *</label>
+                                        <select id="input-assign-slot">
+                                            <option value="10:00 AM - 01:00 PM">Morning (10:00 AM - 01:00 PM)</option>
+                                            <option value="02:00 PM - 05:00 PM">Afternoon (02:00 PM - 05:00 PM)</option>
+                                            <option value="05:00 PM - 08:00 PM">Evening (05:00 PM - 08:00 PM)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style="padding-top: 4px;">
+                                    <button type="button" class="btn-primary" style="width: 100%; height: 34px; font-size: 0.8125rem; font-weight: 700;" onclick="submitInitialAssignment()" id="btn-submit-assign">
+                                        Assign Personnel &amp; Dispatch
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- State 2: ASSIGNMENT DETAILS CARD (Read-Only KV - After Assignment) -->
+                        <div class="detail-card" id="card-assigned-details">
+                            <div class="card-title">
+                                <span id="right-card-title">Assignment Details</span>
+                                <span class="badge-status badge-accepted" id="right-card-badge">ASSIGNED</span>
+                            </div>
+                            <div class="kv-grid">
+                                <div class="kv">
+                                    <label id="lbl-assigned-staff">Assigned Staff</label>
+                                    <span id="f-assigned-person">Ravi Kumar</span>
+                                </div>
+                                <div class="kv">
+                                    <label>Assignment Status</label>
+                                    <span id="f-assignment-status">Accepted &amp; Dispatched</span>
+                                </div>
+                                <div class="kv">
+                                    <label id="lbl-scheduled-date">Scheduled Date</label>
+                                    <span id="f-scheduled-date">17 Aug 2026</span>
+                                </div>
+                                <div class="kv">
+                                    <label id="lbl-time-slot">Time Slot</label>
+                                    <span id="f-time-slot">10:00 AM - 01:00 PM</span>
+                                </div>
+                                <div class="kv">
+                                    <label>Assigned Date &amp; Time</label>
+                                    <span id="f-assigned-datetime">17 Aug 2026, 09:30 AM</span>
+                                </div>
+                                <div class="kv">
+                                    <label>Assigned By</label>
+                                    <span id="f-assigned-by">Super Admin (HQ Node)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ========================================================= -->
+                    <!-- ASSIGNMENT HISTORY (Shown in Assign Page State)           -->
+                    <!-- ========================================================= -->
+                    <section class="detail-card" id="section-assign-history" style="display: none;">
+                        <div class="card-title">
+                            <span>Assignment History</span>
+                            <span style="font-size: 0.75rem; color: #666; font-weight: 500;">Personnel &amp; Dispatch Log</span>
+                        </div>
+                        <div class="schedule-table-container">
+                            <table class="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>Assigned By</th>
+                                        <th>Assigned Date &amp; Time</th>
+                                        <th>Assigned Staff</th>
+                                        <th>Schedule Date &amp; Slot</th>
+                                        <th>Assignment Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Super Admin (HQ Node)</td>
+                                        <td>17 Aug 2026, 09:30 AM</td>
+                                        <td><strong id="hist-assigned-person">Ravi Kumar</strong></td>
+                                        <td>17 Aug 2026 (10:00 AM - 01:00 PM)</td>
+                                        <td><span class="badge-status badge-assigned">Assigned</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- ========================================================= -->
+                    <!-- 3. SCHEDULE SECTION (Shown in Assigned Execution View)    -->
+                    <!-- ========================================================= -->
+                    <section class="detail-card exec-only-section" id="section-schedule">
+                        <div class="card-title">
+                            <span id="schedule-section-title">Today's Schedule</span>
+                            <span style="font-size: 0.75rem; color: #666; font-weight: 500;" id="schedule-section-subtitle">Assigned Route &amp; Operations</span>
+                        </div>
+                        <div class="schedule-table-container">
+                            <table class="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time Slot</th>
+                                        <th>Customer</th>
+                                        <th>Location</th>
+                                        <th>LR Number</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schedule-tbody">
+                                    <!-- Populated dynamically based on module -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- ========================================================= -->
+                    <!-- 4. ACTIVITY HISTORY (Shown in Assigned Execution View)    -->
+                    <!-- ========================================================= -->
+                    <section class="detail-card exec-only-section" id="section-history">
+                        <div class="card-title">
+                            <span id="history-section-title">Timeline &amp; Activity History</span>
+                            <span style="font-size: 0.75rem; color: #666; font-weight: 500;" id="history-count-badge">5 Milestones Logged</span>
+                        </div>
+                        <div class="activity-list" id="timeline-activity-list">
+                            <!-- Populated dynamically based on module -->
+                        </div>
+                    </section>
+
+                    <!-- ========================================================= -->
+                    <!-- 5. COMPLETION VERIFICATION (Shown after completion)        -->
+                    <!-- ========================================================= -->
+                    <section class="detail-card exec-only-section" id="section-completion">
+                        <div class="card-title">
+                            <span id="completion-title">Completion Verification Details</span>
+                            <span class="badge-status badge-completed" id="completion-badge">Verified &amp; Closed</span>
+                        </div>
+                        
+                        <div class="completion-grid">
+                            <!-- Proof Photo -->
+                            <div class="proof-box">
+                                <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase;" id="lbl-proof-photo">Proof Photo</span>
+                                <div class="proof-img-placeholder">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                    <span id="val-proof-photo-text">[ Parcel Handover Photo Verified ]</span>
+                                </div>
+                                <span style="font-size: 0.6875rem; color: #666;">Uploaded: 17 Aug 2026, 12:29 PM</span>
+                            </div>
+
+                            <!-- Customer Signature -->
+                            <div class="proof-box">
+                                <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase;" id="lbl-signature">Customer Confirmation</span>
+                                <div class="proof-img-placeholder" style="font-style: italic; font-family: cursive; font-size: 1.125rem;">
+                                    <span id="val-signature-name">Authorized Signatory</span>
+                                    <span style="font-size: 0.6875rem; font-family: sans-serif; font-style: normal; color: #888;">Digital E-Sign Captured</span>
+                                </div>
+                                <span style="font-size: 0.6875rem; color: #666;" id="lbl-signed-by">Signed by: Receiving Officer</span>
+                            </div>
+
+                            <!-- Closure Record -->
+                            <div class="proof-box" style="justify-content: space-between;">
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase;" id="lbl-closure-title">Closure Record</span>
+                                    <div class="kv" id="kv-otp-box">
+                                        <label id="lbl-otp">OTP Verification Status</label>
+                                        <span><strong style="color: var(--color-black);" id="val-otp">✓ Verified (OTP #884129)</strong></span>
+                                    </div>
+                                    <div class="kv">
+                                        <label id="lbl-completion-date">Completion Date &amp; Time</label>
+                                        <span id="val-completion-date">17 Aug 2026, 12:30 PM</span>
+                                    </div>
+                                    <div class="kv">
+                                        <label id="lbl-completed-by">Completed By</label>
+                                        <span id="val-completed-by">Ravi Kumar (Staff ID: DP-104)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- REASSIGN / SCHEDULE POPUP MODAL -->
+    <div class="modal-overlay" id="action-modal">
+        <div class="modal-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:10px; margin-bottom:12px;">
+                <h3 style="font-size:1rem; font-weight:700; margin:0;" id="action-modal-title">Reassign Staff / Schedule</h3>
+                <button type="button" onclick="closeActionModal()" style="background:none; border:none; font-size:1.25rem; cursor:pointer;">&times;</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <div class="form-group-erp">
+                    <label id="modal-lbl-staff">Select Personnel *</label>
+                    <select id="modal-select-person">
+                        <option value="Ravi Kumar">Ravi Kumar (Active)</option>
+                        <option value="Suresh Rao">Suresh Rao (Active)</option>
+                        <option value="Manjunath Shetty">Manjunath Shetty (Active)</option>
+                        <option value="Praveen Nayak">Praveen Nayak (Active)</option>
+                    </select>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div class="form-group-erp">
+                        <label>Scheduled Date *</label>
+                        <input type="text" id="modal-input-date" value="18 Aug 2026">
+                    </div>
+                    <div class="form-group-erp">
+                        <label>Time Slot *</label>
+                        <select id="modal-select-slot">
+                            <option value="09:00 AM - 12:00 PM">Morning (09:00 AM - 12:00 PM)</option>
+                            <option value="01:00 PM - 04:00 PM" selected>Afternoon (01:00 PM - 04:00 PM)</option>
+                            <option value="04:00 PM - 07:00 PM">Evening (04:00 PM - 07:00 PM)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px; border-top:1px solid var(--color-border); padding-top:12px; margin-top:14px;">
+                <button type="button" class="btn-secondary" onclick="closeActionModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="submitReassignment()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MARK AS FAILED MODAL -->
+    <div class="modal-overlay" id="fail-modal">
+        <div class="modal-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:10px; margin-bottom:12px;">
+                <h3 style="font-size:1rem; font-weight:700; margin:0;" id="fail-modal-title">Record Failed Status</h3>
+                <button type="button" onclick="closeFailModal()" style="background:none; border:none; font-size:1.25rem; cursor:pointer;">&times;</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <div class="form-group-erp">
+                    <label id="fail-select-lbl">Reason *</label>
+                    <select id="modal-select-fail-reason">
+                        <!-- Populated by JS based on module -->
+                    </select>
+                </div>
+                <div class="form-group-erp">
+                    <label>Remarks / Notes</label>
+                    <textarea id="modal-fail-remarks" rows="2" style="font-size:0.8125rem; width:100%; border:1px solid var(--color-border); border-radius:4px; padding:6px;" placeholder="Customer remarks..."></textarea>
+                </div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px; border-top:1px solid var(--color-border); padding-top:12px; margin-top:14px;">
+                <button type="button" class="btn-secondary" onclick="closeFailModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="submitFailedStatus()">Confirm Failed</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURABLE UNIFIED LR EXECUTION VIEW COMPONENT
+        const urlParams = new URLSearchParams(window.location.search);
+        let moduleType = urlParams.get('module') || (window.location.pathname.includes('Pickup') ? 'pickup' : 'delivery');
+        let lrId = urlParams.get('lr') || (moduleType === 'pickup' ? 'LR-2026-000125' : 'LR-2026-000126');
+        let currentViewState = urlParams.get('state') || 'assigned'; // 'assign' or 'assigned'
+
+        function switchStateView(state) {
+            currentViewState = state;
+            document.getElementById('tab-state-assign').className = `state-tab ${state === 'assign' ? 'active' : ''}`;
+            document.getElementById('tab-state-assigned').className = `state-tab ${state === 'assigned' ? 'active' : ''}`;
+
+            const isAssignPage = (state === 'assign');
+            const isPickup = (moduleType === 'pickup');
+
+            // Toggle sections visibility
+            const execSections = document.querySelectorAll('.exec-only-section');
+            execSections.forEach(sec => {
+                sec.style.display = isAssignPage ? 'none' : 'block';
+            });
+
+            // Toggle Right Cards
+            document.getElementById('card-assign-inputs').style.display = isAssignPage ? 'flex' : 'none';
+            document.getElementById('card-assigned-details').style.display = isAssignPage ? 'none' : 'flex';
+            document.getElementById('section-assign-history').style.display = isAssignPage ? 'block' : 'none';
+
+            // Action Buttons in Header
+            document.getElementById('header-action-buttons').style.display = isAssignPage ? 'none' : 'flex';
+
+            // Left Card Badge
+            document.getElementById('left-card-badge').textContent = isAssignPage ? 'PENDING ASSIGNMENT' : 'ASSIGNED';
+            document.getElementById('left-card-badge').className = `badge-status ${isAssignPage ? 'badge-pending' : 'badge-assigned'}`;
+
+            // Subtitle
+            document.getElementById('view-page-subtitle').textContent = isAssignPage 
+                ? 'Assign field personnel and schedule collection before execution starts.'
+                : 'Track execution, customer details, assignment information, and activity history.';
+        }
+
+        function renderUnifiedView() {
+            const isPickup = (moduleType === 'pickup');
+
+            // 1. Sidebar Links Highlight
+            document.getElementById('side-link-pickup').className = isPickup ? 'active' : '';
+            document.getElementById('side-link-delivery').className = !isPickup ? 'active' : '';
+
+            // 2. Breadcrumbs & Header Title
+            const moduleName = isPickup ? 'Pickup Operations' : 'Delivery Operations';
+            const moduleHref = isPickup ? '../Pickup-Operations/index.html' : '../Delivery-Operations/index.html';
+            document.getElementById('breadcrumb-module-link').textContent = moduleName;
+            document.getElementById('breadcrumb-module-link').href = moduleHref;
+            document.getElementById('breadcrumb-lr-id').textContent = lrId;
+            document.getElementById('back-to-module-btn').href = moduleHref;
+            document.getElementById('back-to-module-btn').title = `Back to ${moduleName}`;
+
+            document.getElementById('view-page-title').textContent = `${isPickup ? 'Pickup Request' : 'Delivery Request'} - ${lrId}`;
+
+            // 3. Execution Lifecycle Timeline (Dynamic)
+            document.getElementById('lifecycle-title').textContent = `${isPickup ? 'Pickup' : 'Delivery'} Execution Lifecycle`;
+            const stepsContainer = document.getElementById('lifecycle-steps-container');
+            
+            if (isPickup) {
+                // Pickup Lifecycle: Assigned -> Accepted -> En Route -> Reached Location -> Picked -> Completed
+                stepsContainer.innerHTML = `
+                    <div class="step done" id="step-1"><div class="dot">✓</div><span>Assigned</span></div>
+                    <div class="step done" id="step-2"><div class="dot">✓</div><span>Accepted</span></div>
+                    <div class="step done" id="step-3"><div class="dot">✓</div><span>En Route</span></div>
+                    <div class="step done" id="step-4"><div class="dot">✓</div><span>Reached Location</span></div>
+                    <div class="step done" id="step-5"><div class="dot">✓</div><span>Picked</span></div>
+                    <div class="step done" id="step-6"><div class="dot">✓</div><span>Completed</span></div>
+                `;
+            } else {
+                // Delivery Lifecycle: Assigned -> Accepted -> Out for Delivery -> Reached Customer Location -> Delivered -> Completed
+                stepsContainer.innerHTML = `
+                    <div class="step done" id="step-1"><div class="dot">✓</div><span>Assigned</span></div>
+                    <div class="step done" id="step-2"><div class="dot">✓</div><span>Accepted</span></div>
+                    <div class="step done" id="step-3"><div class="dot">✓</div><span>Out for Delivery</span></div>
+                    <div class="step done" id="step-4"><div class="dot">✓</div><span>Reached Customer Location</span></div>
+                    <div class="step done" id="step-5"><div class="dot">✓</div><span>Delivered</span></div>
+                    <div class="step done" id="step-6"><div class="dot">✓</div><span>Completed</span></div>
+                `;
+            }
+
+            // 4. Two-Column Information Cards
+            document.getElementById('left-card-title').textContent = isPickup ? 'Pickup Information' : 'Delivery Information';
+            document.getElementById('right-card-title').textContent = isPickup ? 'Pickup Assignment Details' : 'Delivery Assignment Details';
+
+            document.getElementById('f-lr-number').textContent = lrId;
+            document.getElementById('lbl-address').textContent = isPickup ? 'Pickup Address' : 'Delivery Address';
+
+            if (isPickup) {
+                document.getElementById('lbl-branch-extra').textContent = 'Pickup Location / Branch';
+                document.getElementById('f-branch-extra').textContent = 'Kadri, Mangalore (Hub 1)';
+                
+                document.getElementById('lbl-assigned-staff').textContent = 'Assigned Pickup Boy';
+                document.getElementById('lbl-scheduled-date').textContent = 'Pickup Date';
+                document.getElementById('lbl-time-slot').textContent = 'Pickup Time Slot';
+                document.getElementById('f-assigned-person').textContent = 'Ravi Shetty (Pickup Staff)';
+
+                // Assign Inputs Card
+                document.getElementById('assign-card-title').textContent = 'Assign Pickup Boy';
+                document.getElementById('lbl-input-person').textContent = 'Select Pickup Boy *';
+                document.getElementById('lbl-input-date').textContent = 'Pickup Date *';
+                document.getElementById('lbl-input-slot').textContent = 'Pickup Time Slot *';
+                document.getElementById('btn-submit-assign').textContent = 'Assign Pickup Boy & Dispatch';
+            } else {
+                document.getElementById('lbl-branch-extra').textContent = 'Destination Branch';
+                document.getElementById('f-branch-extra').textContent = 'Bangalore Hub';
+
+                document.getElementById('lbl-assigned-staff').textContent = 'Assigned Delivery Person';
+                document.getElementById('lbl-scheduled-date').textContent = 'Scheduled Delivery Date';
+                document.getElementById('lbl-time-slot').textContent = 'Time Slot';
+                document.getElementById('f-assigned-person').textContent = 'Ravi Kumar (Delivery Staff)';
+
+                // Assign Inputs Card
+                document.getElementById('assign-card-title').textContent = 'Assign Delivery Person';
+                document.getElementById('lbl-input-person').textContent = 'Select Delivery Person *';
+                document.getElementById('lbl-input-date').textContent = 'Delivery Date *';
+                document.getElementById('lbl-input-slot').textContent = 'Delivery Time Slot *';
+                document.getElementById('btn-submit-assign').textContent = 'Assign Delivery Person & Dispatch';
+            }
+
+            // 5. Schedule Section (Today's Assigned Pickups / Delivery Route Schedule)
+            const schedTitle = document.getElementById('schedule-section-title');
+            const schedSub = document.getElementById('schedule-section-subtitle');
+            const schedTbody = document.getElementById('schedule-tbody');
+
+            if (isPickup) {
+                schedTitle.textContent = "Pickup Boy Schedule (Today's Assigned Pickups)";
+                schedSub.textContent = "Assigned Pickup Boy: Ravi Shetty · 17 Aug 2026";
+                schedTbody.innerHTML = `
+                    <tr>
+                        <td><strong>09:00 AM - 10:00 AM</strong></td>
+                        <td>Coastal Traders</td>
+                        <td>Kadri</td>
+                        <td><strong>LR-2026-000125</strong></td>
+                        <td><span class="badge-status badge-completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>10:30 AM - 11:30 AM</strong></td>
+                        <td>Udupi Enterprises</td>
+                        <td>Kankanady</td>
+                        <td><strong>LR-2026-000126</strong></td>
+                        <td><span class="badge-status badge-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>12:00 PM - 01:00 PM</strong></td>
+                        <td>Ocean Foods</td>
+                        <td>Bejai</td>
+                        <td><strong>LR-2026-000127</strong></td>
+                        <td><span class="badge-status badge-pending">Pending</span></td>
+                    </tr>
+                `;
+            } else {
+                schedTitle.textContent = "Delivery Route Schedule";
+                schedSub.textContent = "Assigned Delivery Person: Ravi Kumar · 17 Aug 2026";
+                schedTbody.innerHTML = `
+                    <tr>
+                        <td><strong>10:00 AM - 01:00 PM</strong></td>
+                        <td>ABC Pvt Ltd</td>
+                        <td>Whitefield Tech Park</td>
+                        <td><strong>LR-2026-000125</strong></td>
+                        <td><span class="badge-status badge-completed">Delivered</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>02:00 PM - 05:00 PM</strong></td>
+                        <td>Cyber Systems Ltd</td>
+                        <td>HITEC City Phase 2</td>
+                        <td><strong>LR-2026-000126</strong></td>
+                        <td><span class="badge-status badge-out-for-delivery">Out for Delivery</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>05:00 PM - 08:00 PM</strong></td>
+                        <td>Metro Electricals</td>
+                        <td>Koramangala 5th Block</td>
+                        <td><strong>LR-2026-000131</strong></td>
+                        <td><span class="badge-status badge-pending">Assigned</span></td>
+                    </tr>
+                `;
+            }
+
+            // 6. History Section
+            const histTitle = document.getElementById('history-section-title');
+            const histList = document.getElementById('timeline-activity-list');
+
+            if (isPickup) {
+                histTitle.textContent = 'Pickup Activity History';
+                histList.innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">08:30 AM · 17 Aug 2026</span>
+                            <span class="activity-desc">Pickup assigned to <strong>Ravi Shetty</strong> by Super Admin.</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">08:35 AM · 17 Aug 2026</span>
+                            <span class="activity-desc">Pickup accepted by <strong>Ravi Shetty</strong>.</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">09:10 AM · 17 Aug 2026</span>
+                            <span class="activity-desc">Pickup started (En Route to customer location).</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">09:35 AM · 17 Aug 2026</span>
+                            <span class="activity-desc">Reached customer location (Kadri, Mangalore).</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">09:50 AM · 17 Aug 2026</span>
+                            <span class="activity-desc">Parcel collected and verified with customer handover signature.</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                histTitle.textContent = 'Delivery Timeline & Activity History';
+                histList.innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">10:00 AM · 17 Aug 2026</span>
+                            <span class="activity-desc">Delivery assigned to <strong>Ravi Kumar</strong> by Super Admin.</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">10:15 AM · 17 Aug 2026</span>
+                            <span class="activity-desc">Delivery accepted by <strong>Ravi Kumar</strong>.</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">11:30 AM · 17 Aug 2026</span>
+                            <span class="activity-desc">Out for delivery en-route to customer address.</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">12:15 PM · 17 Aug 2026</span>
+                            <span class="activity-desc">Reached customer location (Whitefield Tech Park).</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot"></div>
+                        <div class="activity-content">
+                            <span class="activity-time">12:30 PM · 17 Aug 2026</span>
+                            <span class="activity-desc">Parcel delivered, physical shipment handed over and OTP verified.</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 7. Completion Verification Section
+            document.getElementById('completion-title').textContent = isPickup 
+                ? 'Pickup Completion Verification Details' 
+                : 'Delivery Completion Verification Details';
+
+            document.getElementById('lbl-proof-photo').textContent = isPickup ? 'Pickup Proof Photo' : 'Delivery Proof Photo';
+            document.getElementById('val-proof-photo-text').textContent = isPickup 
+                ? '[ Parcel Collection Photo Verified ]' 
+                : '[ Parcel Handover Photo Verified ]';
+
+            document.getElementById('lbl-signature').textContent = isPickup ? 'Customer Confirmation' : 'Customer Signature';
+            document.getElementById('lbl-signed-by').textContent = isPickup 
+                ? 'Signed by: Customer Handover Authority' 
+                : 'Signed by: Receiving Officer';
+
+            document.getElementById('lbl-closure-title').textContent = isPickup ? 'Pickup Closure Record' : 'OTP & Closure Record';
+            
+            if (isPickup) {
+                document.getElementById('lbl-otp').textContent = 'Items Collected';
+                document.getElementById('val-otp').textContent = '3 Boxes Verified (45 KG)';
+                document.getElementById('lbl-completion-date').textContent = 'Pickup Date & Time';
+                document.getElementById('val-completion-date').textContent = '17 Aug 2026, 09:50 AM';
+                document.getElementById('val-completed-by').textContent = 'Ravi Shetty (Pickup Staff PB-102)';
+            } else {
+                document.getElementById('lbl-otp').textContent = 'OTP Verification Status';
+                document.getElementById('val-otp').textContent = '✓ Verified (OTP #884129)';
+                document.getElementById('lbl-completion-date').textContent = 'Delivered Date & Time';
+                document.getElementById('val-completion-date').textContent = '17 Aug 2026, 12:30 PM';
+                document.getElementById('val-completed-by').textContent = 'Ravi Kumar (Delivery Staff DP-104)';
+            }
+
+            // 8. Fail Modal Options based on Module
+            const failSelect = document.getElementById('modal-select-fail-reason');
+            if (isPickup) {
+                failSelect.innerHTML = `
+                    <option value="Customer Not Available">Customer Not Available</option>
+                    <option value="Wrong Address">Wrong Address</option>
+                    <option value="Parcel Not Ready">Parcel Not Ready</option>
+                    <option value="Customer Cancelled">Customer Cancelled</option>
+                    <option value="Other">Other</option>
+                `;
+                document.getElementById('lbl-fail-reason').textContent = 'Failed Pickup Reason';
+            } else {
+                failSelect.innerHTML = `
+                    <option value="Customer Not Available">Customer Not Available</option>
+                    <option value="Wrong Address">Wrong Address</option>
+                    <option value="Customer Refused">Customer Refused</option>
+                    <option value="Payment Issue">Payment Issue</option>
+                    <option value="Delivery Rescheduled">Delivery Rescheduled</option>
+                    <option value="Other">Other</option>
+                `;
+                document.getElementById('lbl-fail-reason').textContent = 'Reason for Failed Delivery';
+            }
+
+            // Switch to the requested state view
+            switchStateView(currentViewState);
+        }
+
+        // Submit Initial Assignment in State 1
+        function submitInitialAssignment() {
+            const person = document.getElementById('input-assign-person').value;
+            const date = document.getElementById('input-assign-date').value;
+            const slot = document.getElementById('input-assign-slot').value;
+
+            document.getElementById('f-assigned-person').textContent = person;
+            document.getElementById('f-scheduled-date').textContent = date;
+            document.getElementById('f-time-slot').textContent = slot;
+            document.getElementById('hist-assigned-person').textContent = person;
+
+            alert(`✓ Successfully assigned ${person} to ${lrId}! Switching to Assigned Execution View.`);
+            switchStateView('assigned');
+        }
+
+        // Toggle Failed Banner View
+        function toggleFailedBannerView() {
+            const banner = document.getElementById('failed-state-banner');
+            banner.classList.toggle('active');
+        }
+
+        // Modal Handlers
+        function openActionModal() {
+            document.getElementById('action-modal').classList.add('active');
+        }
+        function closeActionModal() {
+            document.getElementById('action-modal').classList.remove('active');
+        }
+        function submitReassignment() {
+            const person = document.getElementById('modal-select-person').value;
+            const date = document.getElementById('modal-input-date').value;
+            const slot = document.getElementById('modal-select-slot').value;
+            document.getElementById('f-assigned-person').textContent = person;
+            document.getElementById('f-scheduled-date').textContent = date;
+            document.getElementById('f-time-slot').textContent = slot;
+            closeActionModal();
+            alert(`Updated schedule and assignment to ${person}`);
+        }
+
+        function openFailModal() {
+            document.getElementById('fail-modal').classList.add('active');
+        }
+        function closeFailModal() {
+            document.getElementById('fail-modal').classList.remove('active');
+        }
+        function submitFailedStatus() {
+            const reason = document.getElementById('modal-select-fail-reason').value;
+            const remarks = document.getElementById('modal-fail-remarks').value;
+            document.getElementById('val-fail-reason').textContent = reason;
+            if (remarks) document.getElementById('val-fail-remarks').textContent = remarks;
+            document.getElementById('failed-state-banner').classList.add('active');
+            document.getElementById('detail-status-badge').textContent = 'FAILED';
+            document.getElementById('detail-status-badge').className = 'badge-status badge-failed';
+            closeFailModal();
+        }
+
+        document.addEventListener('DOMContentLoaded', renderUnifiedView);
+    </script>
+</body>
+</html>

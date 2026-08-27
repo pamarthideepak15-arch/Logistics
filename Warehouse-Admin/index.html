@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Admin - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="warehouse-admin.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (Main Admin Standard Structure) -->
+        <aside class="sidebar">
+            
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo" title="Logistics ERP">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="javascript:void(0)" class="rail-icon active" data-tooltip="Warehouse Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <!-- Role specific menu: Warehouse Admin -->
+                <div class="sidebar-nav-section">DASHBOARD</div>
+                <nav class="sidebar-nav">
+                    <a href="javascript:void(0)" class="sidebar-link active" id="side-link-dashboard" onclick="switchNav('dashboard')">
+                        <label for="mobile-menu-toggle" style="display: flex; align-items: center; gap: inherit; width: 100%; cursor: pointer; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            Dashboard
+                        </label>
+                    </a>
+                </nav>
+
+                <div class="sidebar-nav-section" style="margin-top: 14px;">WAREHOUSE OPERATIONS</div>
+                <nav class="sidebar-nav">
+                    <a href="javascript:void(0)" class="sidebar-link" id="side-link-incoming" onclick="switchNav('incoming')">
+                        <label for="mobile-menu-toggle" style="display: flex; align-items: center; gap: inherit; width: 100%; cursor: pointer; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            </svg>
+                            Incoming Shipments
+                        </label>
+                    </a>
+                    <a href="javascript:void(0)" class="sidebar-link" id="side-link-received" onclick="switchNav('received')">
+                        <label for="mobile-menu-toggle" style="display: flex; align-items: center; gap: inherit; width: 100%; cursor: pointer; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Received Shipments
+                        </label>
+                    </a>
+                    <a href="javascript:void(0)" class="sidebar-link" id="side-link-issues" onclick="switchNav('issues')">
+                        <label for="mobile-menu-toggle" style="display: flex; align-items: center; gap: inherit; width: 100%; cursor: pointer; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            Issues
+                        </label>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            
+            <!-- Top Header (Standard Main Admin Top Bar) -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Warehouse Admin</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current" id="breadcrumb-current">Dashboard</span>
+                    <span class="warehouse-hub-badge" style="margin-left: 8px;">WH-MNG-01 · MANGALORE HUB</span>
+                </div>
+
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Suresh Kumar</strong>
+                        <span>Warehouse Admin</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Dynamic Notification Toast -->
+            <div id="wh-toast" class="wh-toast">Notification Message</div>
+
+            <!-- Page Workspace Container -->
+            <div class="main-scroll-area">
+
+                <!-- ================================================== -->
+                <!-- SCREEN 0: DASHBOARD                                -->
+                <!-- ================================================== -->
+                <section id="view-dashboard" class="view-panel" style="display:flex;flex-direction:column;gap:12px;">
+                    <div class="page-header">
+                        <div class="page-title-group">
+                            <h1 class="page-title">Warehouse Dashboard</h1>
+                            <p class="page-subtitle">Overview of today's incoming shipments, intake throughput, and active exceptions.</p>
+                        </div>
+                        <div class="header-actions">
+                            <button type="button" class="btn-secondary" onclick="simulateLiveIntakeUpdate()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                Refresh Feed
+                            </button>
+                            <button type="button" class="btn-primary" onclick="switchNav('incoming')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Receive Shipment
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard KPI Cards Grid (Ultra-Compact) -->
+                    <div class="kpi-cards-grid">
+                        <div class="kpi-stat-card" style="cursor:pointer;" onclick="switchNav('incoming')">
+                            <div class="kpi-stat-top-row">
+                                <span class="kpi-stat-label">Incoming Shipments</span>
+                                <span class="kpi-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path></svg>
+                                </span>
+                            </div>
+                            <span class="kpi-stat-value" id="kpi-val-incoming">25</span>
+                            <span class="kpi-stat-sub">4 Routes Scheduled</span>
+                        </div>
+                        <div class="kpi-stat-card" style="cursor:pointer;" onclick="switchNav('incoming')">
+                            <div class="kpi-stat-top-row">
+                                <span class="kpi-stat-label">Pending Receiving</span>
+                                <span class="kpi-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                </span>
+                            </div>
+                            <span class="kpi-stat-value" id="kpi-val-pending">5</span>
+                            <span class="kpi-stat-sub">At Gate / Dock Area</span>
+                        </div>
+                        <div class="kpi-stat-card" style="cursor:pointer;" onclick="switchNav('received')">
+                            <div class="kpi-stat-top-row">
+                                <span class="kpi-stat-label">Received Today</span>
+                                <span class="kpi-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                            </div>
+                            <span class="kpi-stat-value" id="kpi-val-received">17</span>
+                            <span class="kpi-stat-sub">Verified & Staged</span>
+                        </div>
+                        <div class="kpi-stat-card" style="cursor:pointer;" onclick="switchNav('issues')">
+                            <div class="kpi-stat-top-row">
+                                <span class="kpi-stat-label">Active Exceptions</span>
+                                <span class="kpi-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                </span>
+                            </div>
+                            <span class="kpi-stat-value" id="kpi-val-issues">2</span>
+                            <span class="kpi-stat-sub">Require Resolution</span>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- ================================================== -->
+                <!-- SCREEN 1: INCOMING SHIPMENTS                       -->
+                <!-- ================================================== -->
+                <section id="view-incoming" class="view-panel" style="display:none;flex-direction:column;gap:12px;">
+                    
+                    <div class="page-header">
+                        <div class="page-title-group">
+                            <h1 class="page-title">Incoming Shipments</h1>
+                            <p class="page-subtitle">Shipments awaiting warehouse receiving and physical verification.</p>
+                        </div>
+                    </div>
+
+                    <!-- Main Admin Standard Filters Bar -->
+                    <div class="filters-bar">
+                        <div class="search-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="filter-incoming-search" class="search-input" placeholder="Search LR Number, Sender, Receiver..." onkeyup="filterIncomingTable()">
+                        </div>
+                        
+                        <!-- Staff Dropdown Filter -->
+                        <details class="custom-select-wrapper" style="width: 160px;">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder">All Staff</span>
+                                <span class="selected-text text-ravi">Ravi Shetty</span>
+                                <span class="selected-text text-mahesh">Mahesh Rao</span>
+                                <span class="selected-text text-prashanth">Prashanth Pai</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-staff-filter" value="all" checked onchange="setIncomingStaffFilter('all')"> All Staff
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-staff-filter" value="Ravi Shetty" onchange="setIncomingStaffFilter('Ravi Shetty')"> Ravi Shetty
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-staff-filter" value="Mahesh Rao" onchange="setIncomingStaffFilter('Mahesh Rao')"> Mahesh Rao
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-staff-filter" value="Prashanth Pai" onchange="setIncomingStaffFilter('Prashanth Pai')"> Prashanth Pai
+                                </label>
+                            </div>
+                        </details>
+
+                        <!-- Branch Dropdown Filter -->
+                        <details class="custom-select-wrapper" style="width: 170px;">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder">All Branches</span>
+                                <span class="selected-text text-mng">Mangalore Central</span>
+                                <span class="selected-text text-baik">Baikampady</span>
+                                <span class="selected-text text-udupi">Udupi Branch</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-branch-filter" value="all" checked onchange="setIncomingBranchFilter('all')"> All Branches
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-branch-filter" value="Mangalore Central" onchange="setIncomingBranchFilter('Mangalore Central')"> Mangalore Central
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-branch-filter" value="Baikampady" onchange="setIncomingBranchFilter('Baikampady')"> Baikampady
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-branch-filter" value="Udupi Branch" onchange="setIncomingBranchFilter('Udupi Branch')"> Udupi Branch
+                                </label>
+                            </div>
+                        </details>
+
+                        <!-- Status Dropdown Filter -->
+                        <details class="custom-select-wrapper" style="width: 160px;">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder">All Status</span>
+                                <span class="selected-text text-awaiting">Awaiting Receive</span>
+                                <span class="selected-text text-gate">At Warehouse Gate</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-status-filter" value="all" checked onchange="setIncomingStatusFilter('all')"> All Status
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-status-filter" value="Awaiting Receive" onchange="setIncomingStatusFilter('Awaiting Receive')"> Awaiting Receive
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="incoming-status-filter" value="At Warehouse Gate" onchange="setIncomingStatusFilter('At Warehouse Gate')"> At Warehouse Gate
+                                </label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Incoming Data Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="incoming-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 0, this)">
+                                        <div class="sort-header-content">
+                                            LR Number
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 1, this)">
+                                        <div class="sort-header-content">
+                                            Pickup Boy
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 2, this)">
+                                        <div class="sort-header-content">
+                                            Pickup Branch
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 3, this)">
+                                        <div class="sort-header-content">
+                                            Sender
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 4, this)">
+                                        <div class="sort-header-content">
+                                            Receiver
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 5, this)">
+                                        <div class="sort-header-content">
+                                            Items
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 6, this)">
+                                        <div class="sort-header-content">
+                                            Packages
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 7, this)">
+                                        <div class="sort-header-content">
+                                            Weight
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('incoming', 8, this)">
+                                        <div class="sort-header-content">
+                                            Status
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th style="text-align:right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="incoming-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination Bar (Main Admin Component) -->
+                        <div class="pagination-bar">
+                            <span id="incoming-page-info">Showing 1-5 of 25</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <span class="page-number" style="background: transparent; color: inherit; cursor: pointer;">2</span>
+                                <span class="page-number" style="background: transparent; color: inherit; cursor: pointer;">3</span>
+                                <button type="button" class="page-btn">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================================================== -->
+                <!-- SCREEN 2: RECEIVED SHIPMENTS (HISTORY)             -->
+                <!-- ================================================== -->
+                <section id="view-received" class="view-panel" style="display:none;flex-direction:column;gap:12px;">
+                    
+                    <div class="page-header">
+                        <div class="page-title-group">
+                            <h1 class="page-title">Received Shipments</h1>
+                            <p class="page-subtitle">Shipments physically received and verified at the warehouse.</p>
+                        </div>
+                    </div>
+
+                    <!-- Main Admin Standard Filters Bar -->
+                    <div class="filters-bar">
+                        <div class="search-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="filter-received-search" class="search-input" placeholder="Search LR, Sender, Receiver..." onkeyup="filterReceivedTable()">
+                        </div>
+
+                        <!-- Date Filter Dropdown -->
+                        <details class="custom-select-wrapper" style="width: 200px;">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder" style="display: flex; align-items: center; gap: 6px;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    Select Date
+                                </span>
+                                <span class="selected-text text-today">Date: Today (14 Aug 2026)</span>
+                                <span class="selected-text text-yest">Date: Yesterday</span>
+                                <span class="selected-text text-month">Date: This Month</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option">
+                                    <input type="radio" name="received-date-filter" value="today" checked onchange="setReceivedDateFilter('today')"> Today (14 Aug 2026)
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="received-date-filter" value="yesterday" onchange="setReceivedDateFilter('yesterday')"> Yesterday
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="received-date-filter" value="month" onchange="setReceivedDateFilter('month')"> This Month
+                                </label>
+                            </div>
+                        </details>
+
+                        <!-- Status Filter Dropdown -->
+                        <details class="custom-select-wrapper" style="width: 170px;">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder">All Status</span>
+                                <span class="selected-text text-rcv">RECEIVED</span>
+                                <span class="selected-text text-prcv">PARTIALLY RECEIVED</span>
+                                <span class="selected-text text-issue">ISSUE RAISED</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option">
+                                    <input type="radio" name="received-status-filter" value="all" checked onchange="setReceivedStatusFilter('all')"> All Status
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="received-status-filter" value="RECEIVED" onchange="setReceivedStatusFilter('RECEIVED')"> RECEIVED
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="received-status-filter" value="PARTIALLY RECEIVED" onchange="setReceivedStatusFilter('PARTIALLY RECEIVED')"> PARTIALLY RECEIVED
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="received-status-filter" value="ISSUE RAISED" onchange="setReceivedStatusFilter('ISSUE RAISED')"> ISSUE RAISED
+                                </label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Received Data Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="received-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="handleTableSort('received', 0, this)">
+                                        <div class="sort-header-content">
+                                            LR Number
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 1, this)">
+                                        <div class="sort-header-content">
+                                            Sender
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 2, this)">
+                                        <div class="sort-header-content">
+                                            Receiver
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 3, this)">
+                                        <div class="sort-header-content">
+                                            Pickup Boy
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 4, this)">
+                                        <div class="sort-header-content">
+                                            Items Received
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 5, this)">
+                                        <div class="sort-header-content">
+                                            Packages
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 6, this)">
+                                        <div class="sort-header-content">
+                                            Weight
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 7, this)">
+                                        <div class="sort-header-content">
+                                            Received By
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 8, this)">
+                                        <div class="sort-header-content">
+                                            Received Date & Time
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('received', 9, this)">
+                                        <div class="sort-header-content">
+                                            Status
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th style="text-align:right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="received-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination Bar -->
+                        <div class="pagination-bar">
+                            <span id="received-page-info">Showing 1-4 of 17</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <span class="page-number" style="background: transparent; color: inherit; cursor: pointer;">2</span>
+                                <button type="button" class="page-btn">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================================================== -->
+                <!-- SCREEN 3: ISSUES / EXCEPTION TRACKING              -->
+                <!-- ================================================== -->
+                <section id="view-issues" class="view-panel" style="display:none;flex-direction:column;gap:12px;">
+                    
+                    <div class="page-header">
+                        <div class="page-title-group">
+                            <h1 class="page-title">Warehouse Issues & Exceptions</h1>
+                            <p class="page-subtitle">Track missing, damaged, incorrect, or mismatched shipments.</p>
+                        </div>
+                    </div>
+
+                    <!-- Main Admin Standard Filters Bar -->
+                    <div class="filters-bar">
+                        <div class="search-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="filter-issues-search" class="search-input" placeholder="Search LR Number / Issue Type..." onkeyup="filterIssuesTable()">
+                        </div>
+
+                        <!-- Status Filter Dropdown -->
+                        <details class="custom-select-wrapper" style="width: 150px;">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder">All Status</span>
+                                <span class="selected-text text-open">Open</span>
+                                <span class="selected-text text-resolved">Resolved</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option">
+                                    <input type="radio" name="issues-status-filter" value="all" checked onchange="setIssueStatusFilter('all')"> All Status
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="issues-status-filter" value="Open" onchange="setIssueStatusFilter('Open')"> Open
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="issues-status-filter" value="Resolved" onchange="setIssueStatusFilter('Resolved')"> Resolved
+                                </label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Issues Data Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="issues-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="handleTableSort('issues', 0, this)">
+                                        <div class="sort-header-content">
+                                            LR Number
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('issues', 1, this)">
+                                        <div class="sort-header-content">
+                                            Issue Type
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('issues', 2, this)">
+                                        <div class="sort-header-content">
+                                            Expected
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('issues', 3, this)">
+                                        <div class="sort-header-content">
+                                            Received
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('issues', 4, this)">
+                                        <div class="sort-header-content">
+                                            Reported By
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('issues', 5, this)">
+                                        <div class="sort-header-content">
+                                            Date & Time
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('issues', 6, this)">
+                                        <div class="sort-header-content">
+                                            Remarks / Resolution
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleTableSort('issues', 7, this)">
+                                        <div class="sort-header-content">
+                                            Status
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th style="text-align:right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="issues-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination Bar -->
+                        <div class="pagination-bar">
+                            <span id="issues-page-info">Showing 1-2 of 2</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <button type="button" class="page-btn" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL 1: RECEIVE SHIPMENT POPUP                    -->
+    <!-- ================================================== -->
+    <div id="modal-receive-shipment" class="admin-modal-overlay">
+        <div class="admin-modal-container" style="max-width:640px;">
+            <div class="admin-modal-header">
+                <div>
+                    <h3 id="rcv-modal-title">Receive Shipment</h3>
+                    <div style="font-size:0.75rem;color:#666;margin-top:2px;" id="rcv-modal-lr-header">LR-2026-000125</div>
+                </div>
+                <button type="button" class="admin-modal-close-btn" onclick="closeModal('modal-receive-shipment')">&times;</button>
+            </div>
+
+            <div class="admin-modal-body">
+                
+                <!-- STEP 1: SCAN LR BARCODE FIRST -->
+                <div class="scan-barcode-box" id="scan-barcode-container">
+                    <div class="scan-box-left">
+                        <div class="scan-icon-indicator">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                <path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div style="font-weight:700;font-size:0.8125rem;">Scan LR Barcode</div>
+                            <div style="font-size:0.6875rem;color:#666;" id="scan-hint-text">Scan the LR barcode attached to the physical shipment.</div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn-primary" id="btn-scan-trigger" onclick="simulateBarcodeVerification()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Scan LR Barcode</span>
+                        </button>
+                        <span class="scan-status-verified" id="scan-verified-badge">✓ LR Verified</span>
+                    </div>
+                </div>
+
+                <!-- STEP 2: AUTO FETCHED SHIPMENT & VERIFICATION WORKFLOW -->
+                <div id="autofetched-details-section" style="display:none;flex-direction:column;gap:14px;">
+                    
+                    <!-- Auto-Fetched Shipment Information -->
+                    <div class="modal-detail-card">
+                        <div style="font-size:0.6875rem;font-weight:700;color:#666;text-transform:uppercase;margin-bottom:4px;">Auto-Fetched Shipment Details:</div>
+                        <div class="modal-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">LR Number</span>
+                                <span class="info-val lr-mono-tag" id="modal-lr-num">LR-2026-000125</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Pickup Person</span>
+                                <span class="info-val" id="modal-pickup-boy">Ravi Shetty</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Pickup Branch</span>
+                                <span class="info-val" id="modal-branch">Mangalore Central</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Warehouse / Hub</span>
+                                <span class="info-val">WH-MNG-01 · Mangalore Hub</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Sender</span>
+                                <span class="info-val" id="modal-sender">Coastal Traders</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Receiver</span>
+                                <span class="info-val" id="modal-receiver">ABC Pvt Ltd</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Expected Packages</span>
+                                <span class="info-val" id="modal-exp-pkgs">3 Boxes</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Expected Weight</span>
+                                <span class="info-val" id="modal-exp-wt">45 KG</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: ITEMS / PACKAGE VERIFICATION -->
+                    <div class="modal-detail-card" style="background:#ffffff;border:1px solid var(--color-border);">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                            <div style="font-size:0.6875rem;font-weight:700;color:#666;text-transform:uppercase;">Items / Package Verification:</div>
+                            <span style="font-size:0.6875rem;color:#666;">Physically inspect & mark each item</span>
+                        </div>
+                        <div id="modal-items-breakdown-list" style="display:flex;flex-direction:column;gap:8px;">
+                            <!-- Dynamically generated item cards -->
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: PACKAGE-LEVEL QUANTITY CALCULATION -->
+                    <div class="verification-compare-box">
+                        <div class="compare-col">
+                            <div class="compare-col-header">Expected Manifest</div>
+                            <div class="info-item">
+                                <span class="info-label">Expected Packages:</span>
+                                <span class="info-val" id="expected-packages-val">3 Boxes</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Expected Weight:</span>
+                                <span class="info-val" id="expected-weight-val">45 KG</span>
+                            </div>
+                        </div>
+
+                        <div class="compare-col">
+                            <div class="compare-col-header">Physical Count & Status</div>
+                            <div class="info-item">
+                                <span class="info-label">Packages Received:</span>
+                                <div class="compare-input-control">
+                                    <input type="number" id="input-received-packages" min="0" value="0" oninput="calculateIntakeCounts()">
+                                    <span style="font-size:0.75rem;font-weight:600;color:#666;" id="input-unit-label">Boxes</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Weight Received:</span>
+                                <div class="compare-input-control">
+                                    <input type="number" id="input-received-weight" min="0" step="0.5" value="0" oninput="calculateIntakeCounts()">
+                                    <span style="font-size:0.75rem;font-weight:600;color:#666;">KG</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: RECEIVING SUMMARY & CALCULATION STATE -->
+                    <div class="modal-detail-card" id="receiving-summary-box" style="background:#f9fafb;">
+                        <div style="font-size:0.6875rem;font-weight:700;color:#666;text-transform:uppercase;margin-bottom:6px;">Receiving Summary:</div>
+                        <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:8px;font-size:0.75rem;">
+                            <div class="info-item">
+                                <span class="info-label">Expected:</span>
+                                <strong id="sum-expected">3 Boxes · 45 KG</strong>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Received:</span>
+                                <strong id="sum-received" style="color:var(--color-black);">3 Boxes · 45 KG</strong>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Missing:</span>
+                                <strong id="sum-missing" style="color:var(--color-black);">0 Boxes</strong>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Damaged:</span>
+                                <strong id="sum-damaged" style="color:var(--color-black);">0 Boxes</strong>
+                            </div>
+                        </div>
+                        <div style="margin-top:8px;padding-top:6px;border-top:1px solid #e5e5e5;display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:0.75rem;font-weight:600;color:#666;">Intake Outcome:</span>
+                            <span class="status-pill awaiting" id="sum-status-pill">Ready to Receive</span>
+                        </div>
+                    </div>
+
+                    <!-- Mandatory Issue Details Section (When Exception Detected) -->
+                    <div id="exception-input-section" style="display:none;background:var(--color-bg-light);border:1px solid var(--color-border);border-radius:var(--border-radius-base);padding:12px;flex-direction:column;gap:8px;">
+                        <div style="font-weight:700;font-size:0.8125rem;color:var(--color-black);display:flex;align-items:center;gap:6px;">
+                            <span>Issue / Discrepancy Detected</span>
+                        </div>
+                        <div class="form-group" style="margin-bottom:4px;">
+                            <label for="exception-reason-select" style="color:var(--color-black);font-size:0.75rem;">Issue Classification *</label>
+                            <select id="exception-reason-select" style="background:#fff;">
+                                <option value="Missing Package">Missing Package</option>
+                                <option value="Damaged Package">Damaged Package</option>
+                                <option value="Item Not Received">Item Not Received</option>
+                                <option value="Weight Mismatch">Weight Mismatch</option>
+                                <option value="Wrong Shipment">Wrong Shipment</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label for="exception-remarks-input" style="color:var(--color-black);font-size:0.75rem;">Issue Remark * (Mandatory)</label>
+                            <input type="text" id="exception-remarks-input" placeholder="e.g. 1 box of Laptop Accessories was not received / damaged" style="background:#fff;" oninput="validateFinalCTA()">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="admin-modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal('modal-receive-shipment')">Cancel</button>
+                <button type="button" class="btn-primary" id="btn-primary-receive-cta" onclick="executeReceiveAction()" disabled style="opacity:0.4;">
+                    <span>Confirm Received</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL 2: VIEW RECEIVED SHIPMENT DETAILS            -->
+    <!-- ================================================== -->
+    <div id="modal-view-received" class="admin-modal-overlay">
+        <div class="admin-modal-container" style="max-width:580px;">
+            <div class="admin-modal-header">
+                <div>
+                    <h3 id="view-rcv-modal-title">Received Shipment Record</h3>
+                    <div style="font-size:0.75rem;color:#666;margin-top:2px;" id="view-rcv-lr-header">LR-2026-000125</div>
+                </div>
+                <button type="button" class="admin-modal-close-btn" onclick="closeModal('modal-view-received')">&times;</button>
+            </div>
+
+            <div class="admin-modal-body">
+                <!-- Summary Card -->
+                <div class="modal-detail-card">
+                    <div class="modal-info-grid">
+                        <div class="info-item">
+                            <span class="info-label">LR Number</span>
+                            <span class="info-val lr-mono-tag" id="view-rcv-lr">LR-2026-000125</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Intake Status</span>
+                            <span class="status-pill received" id="view-rcv-status">Received</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Sender</span>
+                            <span class="info-val" id="view-rcv-sender">Coastal Traders</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Receiver</span>
+                            <span class="info-val" id="view-rcv-receiver">ABC Pvt Ltd</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Pickup Staff</span>
+                            <span class="info-val" id="view-rcv-staff">Ravi Shetty</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Received By</span>
+                            <span class="info-val" id="view-rcv-by">Suresh Kumar (Warehouse Admin)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Received Date & Time</span>
+                            <span class="info-val" id="view-rcv-time">14 Aug 2026, 04:30 PM</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Warehouse Staging</span>
+                            <span class="info-val">WH-MNG-01 · Bay 4 Staging</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intake Package & Item Quantities Comparison -->
+                <div class="verification-compare-box">
+                    <div class="compare-col">
+                        <div class="compare-col-header">Expected Manifest</div>
+                        <div class="info-item">
+                            <span class="info-label">Expected Packages:</span>
+                            <span class="info-val" id="view-rcv-exp-pkgs">3 Boxes</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Expected Weight:</span>
+                            <span class="info-val" id="view-rcv-exp-wt">45 KG</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Manifested Items:</span>
+                            <span class="info-val" id="view-rcv-exp-items" style="font-size:0.75rem;">Laptop Accessories, Documents</span>
+                        </div>
+                    </div>
+
+                    <div class="compare-col">
+                        <div class="compare-col-header">Actual Received Intake</div>
+                        <div class="info-item">
+                            <span class="info-label">Received Packages:</span>
+                            <span class="info-val" id="view-rcv-act-pkgs">3 Boxes</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Received Weight:</span>
+                            <span class="info-val" id="view-rcv-act-wt">45 KG</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Items Intake Breakdown:</span>
+                            <span class="info-val" id="view-rcv-act-items" style="font-size:0.75rem;font-weight:700;">Laptop Accessories: 2 Boxes, Documents: 1 Box</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Discrepancy & Issue Record (If Applicable) -->
+                <div id="view-rcv-exception-box" style="display:none;background:var(--color-bg-light);border:1px solid var(--color-border);border-radius:var(--border-radius-base);padding:10px 12px;font-size:0.78rem;">
+                    <div style="font-weight:700;color:var(--color-black);margin-bottom:4px;">Logged Exception Record:</div>
+                    <div id="view-rcv-exception-text" style="color:var(--color-black);">-</div>
+                </div>
+            </div>
+
+            <div class="admin-modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal('modal-view-received')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL 3: RESOLVE ISSUE POPUP                       -->
+    <!-- ================================================== -->
+    <div id="modal-resolve-issue" class="admin-modal-overlay">
+        <div class="admin-modal-container" style="max-width:520px;">
+            <div class="admin-modal-header">
+                <h3>Resolve Shipment Issue</h3>
+                <button type="button" class="admin-modal-close-btn" onclick="closeModal('modal-resolve-issue')">&times;</button>
+            </div>
+
+            <div class="admin-modal-body">
+                <div class="modal-detail-card">
+                    <div class="modal-info-grid">
+                        <div class="info-item">
+                            <span class="info-label">LR Number</span>
+                            <span class="info-val lr-mono-tag" id="res-modal-lr">LR-2026-000125</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Issue Type</span>
+                            <span class="info-val" id="res-modal-type" style="font-weight:700;">Missing Package</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Expected vs Received</span>
+                            <span class="info-val" id="res-modal-variance">3 Boxes vs 2 Boxes</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Original Remarks</span>
+                            <span class="info-val" id="res-modal-orig-remarks" style="font-size:0.75rem;color:#555;">1 box missing during receiving</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom:4px;">
+                    <label for="res-type-select">Resolution Type *</label>
+                    <select id="res-type-select">
+                        <option value="Package Received Later">Package Received Later</option>
+                        <option value="Weight Verified">Weight Verified</option>
+                        <option value="Issue Accepted">Issue Accepted</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="res-remarks-text">Resolution Remarks * (Mandatory)</label>
+                    <textarea id="res-remarks-text" rows="3" placeholder="e.g. Missing box received from pickup team and verified"></textarea>
+                </div>
+
+                <div class="modal-info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Resolved By</span>
+                        <span class="info-val">Suresh Kumar (Warehouse Admin)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Resolved Date & Time</span>
+                        <span class="info-val" id="res-modal-timestamp">14 Aug 2026, 05:30 PM</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal('modal-resolve-issue')">Cancel</button>
+                <button type="button" class="btn-primary" onclick="submitResolveIssue()">Mark Resolved</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // Warehouse Admin In-Memory Data Store
+        let incomingShipments = [
+            {
+                lr: 'LR-2026-000125',
+                pickupBoy: 'Ravi Shetty',
+                pickupBranch: 'Mangalore Central',
+                sender: 'Coastal Traders',
+                senderAddr: 'Kadri, Mangalore',
+                receiver: 'ABC Pvt Ltd',
+                receiverAddr: 'Bangalore Hub',
+                itemsSummary: 'Laptop Accessories, Documents',
+                itemsList: [
+                    { name: 'Laptop Accessories', qty: '2 Boxes' },
+                    { name: 'Documents', qty: '1 Box' }
+                ],
+                packagesCount: 3,
+                packagesUnit: 'Boxes',
+                weightKg: 45,
+                status: 'Awaiting Receive'
+            },
+            {
+                lr: 'LR-2026-000126',
+                pickupBoy: 'Ravi Shetty',
+                pickupBranch: 'Mangalore Central',
+                sender: 'Udupi Enterprises',
+                senderAddr: 'Kankanady, Mangalore',
+                receiver: 'Apex Logistics',
+                receiverAddr: 'Mumbai Hub',
+                itemsSummary: 'Garments, Accessories',
+                itemsList: [
+                    { name: 'Garments Pack', qty: '3 Cartons' },
+                    { name: 'Fashion Accessories', qty: '2 Cartons' }
+                ],
+                packagesCount: 5,
+                packagesUnit: 'Cartons',
+                weightKg: 80,
+                status: 'Awaiting Receive'
+            },
+            {
+                lr: 'LR-2026-000127',
+                pickupBoy: 'Ravi Shetty',
+                pickupBranch: 'Mangalore Central',
+                sender: 'Ocean Foods',
+                senderAddr: 'Bejai, Mangalore',
+                receiver: 'South Retailers',
+                receiverAddr: 'Cochin Hub',
+                itemsSummary: 'Packaged Food Crates',
+                itemsList: [
+                    { name: 'Seafood Tins', qty: '1 Crate' },
+                    { name: 'Dry Spices', qty: '1 Crate' }
+                ],
+                packagesCount: 2,
+                packagesUnit: 'Crates',
+                weightKg: 30,
+                status: 'Awaiting Receive'
+            },
+            {
+                lr: 'LR-2026-000130',
+                pickupBoy: 'Mahesh Rao',
+                pickupBranch: 'Baikampady',
+                sender: 'Canara Tools',
+                senderAddr: 'Industrial Zone',
+                receiver: 'Metro Tech',
+                receiverAddr: 'Chennai Hub',
+                itemsSummary: 'Hand Tools, Hardware',
+                itemsList: [
+                    { name: 'Power Drill Kits', qty: '2 Boxes' },
+                    { name: 'Fastener Sets', qty: '2 Boxes' }
+                ],
+                packagesCount: 4,
+                packagesUnit: 'Boxes',
+                weightKg: 65,
+                status: 'At Warehouse Gate'
+            },
+            {
+                lr: 'LR-2026-000131',
+                pickupBoy: 'Prashanth Pai',
+                pickupBranch: 'Udupi Branch',
+                sender: 'Malpe Marine Spares',
+                senderAddr: 'Port Road, Malpe',
+                receiver: 'Global Maritime',
+                receiverAddr: 'Goa Hub',
+                itemsSummary: 'Marine Motor Parts',
+                itemsList: [
+                    { name: 'Marine Propeller Shaft', qty: '1 Wooden Box' }
+                ],
+                packagesCount: 1,
+                packagesUnit: 'Wooden Box',
+                weightKg: 120,
+                status: 'Awaiting Receive'
+            }
+        ];
+
+        let receivedShipments = [
+            {
+                lr: 'LR-2026-000128',
+                sender: 'Supreme Steel Works',
+                receiver: 'National Infra Ltd',
+                pickupBoy: 'Ravi Shetty',
+                items: 'Industrial Steel Bundles (10 Bundles)',
+                manifestItems: 'Industrial Steel Bundles',
+                packages: '10 Bundles',
+                expectedPkgs: '10 Bundles',
+                weight: '220 KG',
+                expectedWeight: '220 KG',
+                receivedBy: 'Suresh Kumar',
+                receivedTime: '14 Aug 2026, 04:30 PM',
+                status: 'RECEIVED',
+                exceptionRecord: null
+            },
+            {
+                lr: 'LR-2026-000129',
+                sender: 'Apex Polymers',
+                receiver: 'Karnataka Plastics',
+                pickupBoy: 'Ravi Shetty',
+                items: 'Polymer Liquid Drums (4 Drums)',
+                manifestItems: 'Polymer Liquid Drums',
+                packages: '4 Drums',
+                expectedPkgs: '4 Drums',
+                weight: '110 KG',
+                expectedWeight: '110 KG',
+                receivedBy: 'Suresh Kumar',
+                receivedTime: '14 Aug 2026, 03:45 PM',
+                status: 'RECEIVED',
+                exceptionRecord: null
+            },
+            {
+                lr: 'LR-2026-000120',
+                sender: 'Deccan Chemicals',
+                receiver: 'Pai Pharmaceuticals',
+                pickupBoy: 'Mahesh Rao',
+                items: 'Pharma Solvent Cans (5 Cans Received, 1 Damaged)',
+                manifestItems: 'Pharma Solvent Cans',
+                packages: '5 Cans',
+                expectedPkgs: '6 Cans',
+                weight: '80 KG',
+                expectedWeight: '95 KG',
+                receivedBy: 'Suresh Kumar',
+                receivedTime: '14 Aug 2026, 02:15 PM',
+                status: 'PARTIALLY RECEIVED',
+                exceptionRecord: {
+                    type: 'Damaged Package',
+                    remark: '1 can observed with cracked seal and leak during dock inspection',
+                    missing: '0',
+                    damaged: 'Pharma Solvent Cans (1)'
+                }
+            },
+            {
+                lr: 'LR-2026-000122',
+                sender: 'Karavali Textiles',
+                receiver: 'Bangalore Garments',
+                pickupBoy: 'Prashanth Pai',
+                items: 'Cotton Fabric Bales (8 Bales)',
+                manifestItems: 'Cotton Fabric Bales',
+                packages: '8 Bales',
+                expectedPkgs: '8 Bales',
+                weight: '160 KG',
+                expectedWeight: '160 KG',
+                receivedBy: 'Suresh Kumar',
+                receivedTime: '14 Aug 2026, 01:20 PM',
+                status: 'RECEIVED',
+                exceptionRecord: null
+            },
+            {
+                lr: 'LR-2026-000114',
+                sender: 'Coastal Agro Traders',
+                receiver: 'Malabar Spices',
+                pickupBoy: 'Ravi Shetty',
+                items: 'Organic Cardamom Packs (12 Boxes)',
+                manifestItems: 'Organic Cardamom Packs',
+                packages: '12 Boxes',
+                expectedPkgs: '12 Boxes',
+                weight: '48 KG',
+                expectedWeight: '48 KG',
+                receivedBy: 'Suresh Kumar',
+                receivedTime: '14 Aug 2026, 11:45 AM',
+                status: 'RECEIVED',
+                exceptionRecord: null
+            },
+            {
+                lr: 'LR-2026-000110',
+                sender: 'Canara Hardware Ltd',
+                receiver: 'Metro Builders',
+                pickupBoy: 'Mahesh Rao',
+                items: 'Hand Tools, Power Drills (3 Boxes Received)',
+                manifestItems: 'Hand Tools, Power Drills',
+                packages: '3 Boxes',
+                expectedPkgs: '4 Boxes',
+                weight: '45 KG',
+                expectedWeight: '60 KG',
+                receivedBy: 'Suresh Kumar',
+                receivedTime: '14 Aug 2026, 10:30 AM',
+                status: 'PARTIALLY RECEIVED',
+                exceptionRecord: {
+                    type: 'Missing Package',
+                    remark: '1 carton of power drills missing from pickup van',
+                    missing: '1 Box (Power Drills)',
+                    damaged: '0'
+                }
+            }
+        ];
+
+        let issuesList = [
+            {
+                lr: 'LR-2026-000118',
+                issueType: 'Missing Package',
+                expected: '3 Boxes (45 KG)',
+                received: '2 Boxes (30 KG)',
+                reportedBy: 'Suresh Kumar',
+                dateTime: '14 Aug 2026, 11:30 AM',
+                remarks: '1 box of Laptop Accessories was not received during dock check',
+                resolvedBy: '',
+                resolvedDate: '',
+                resolutionRemark: '',
+                status: 'Open'
+            },
+            {
+                lr: 'LR-2026-000120',
+                issueType: 'Damaged Package',
+                expected: '6 Cans (95 KG)',
+                received: '5 Cans (80 KG)',
+                reportedBy: 'Suresh Kumar',
+                dateTime: '14 Aug 2026, 02:15 PM',
+                remarks: '1 can cracked and leaking solvent in staging dock area',
+                resolvedBy: '',
+                resolvedDate: '',
+                resolutionRemark: '',
+                status: 'Open'
+            },
+            {
+                lr: 'LR-2026-000115',
+                issueType: 'Weight Mismatch',
+                expected: '5 Cartons (80 KG)',
+                received: '5 Cartons (72 KG)',
+                reportedBy: 'Suresh Kumar',
+                dateTime: '14 Aug 2026, 09:15 AM',
+                remarks: 'Observed 8 KG variance on weighbridge scale',
+                resolvedBy: 'Suresh Kumar',
+                resolvedDate: '14 Aug 2026, 01:10 PM',
+                resolutionRemark: '[Weight Verified] Calibrated industrial scale re-checked; gross variance accepted by sender.',
+                status: 'Resolved'
+            },
+            {
+                lr: 'LR-2026-000109',
+                issueType: 'Missing Item',
+                expected: '4 Cartons (60 KG)',
+                received: '3 Cartons (45 KG)',
+                reportedBy: 'Suresh Kumar',
+                dateTime: '13 Aug 2026, 04:20 PM',
+                remarks: '1 carton of electrical switches missing from vehicle',
+                resolvedBy: 'Suresh Kumar',
+                resolvedDate: '14 Aug 2026, 10:00 AM',
+                resolutionRemark: '[Package Received Later] Pickup person located missing box at Mangalore branch and delivered to hub.',
+                status: 'Resolved'
+            }
+        ];
+
+        let activeLRBeingReceived = null;
+        let isScannedVerified = false;
+        let activeResolvingIssueIdx = null;
+
+        let incomingStaffFilterVal = 'all';
+        let incomingBranchFilterVal = 'all';
+        let incomingStatusFilterVal = 'all';
+
+        let receivedDateFilterVal = 'today';
+        let receivedStatusFilterVal = 'all';
+
+        let currentIssueFilter = 'all';
+
+        // Initialize Table Views
+        document.addEventListener('DOMContentLoaded', () => {
+            renderIncomingTable();
+            renderReceivedTable();
+            renderIssuesTable();
+            updateKPIs();
+        });
+
+        function simulateLiveIntakeUpdate() {
+            updateKPIs();
+            renderIncomingTable();
+            renderReceivedTable();
+            renderIssuesTable();
+            showToast('✓ Metrics refreshed');
+        }
+
+        // 1. Navigation Switcher
+        function switchNav(viewName) {
+            document.querySelectorAll('.view-panel').forEach(v => v.style.display = 'none');
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+
+            const titleMap = {
+                'dashboard': 'Dashboard',
+                'incoming': 'Incoming Shipments',
+                'received': 'Received Shipments',
+                'issues': 'Issues'
+            };
+
+            const targetView = document.getElementById(`view-${viewName}`);
+            const targetLink = document.getElementById(`side-link-${viewName}`);
+            
+            if (targetView) targetView.style.display = 'flex';
+            if (targetLink) targetLink.classList.add('active');
+
+            document.getElementById('breadcrumb-current').textContent = titleMap[viewName] || 'Warehouse Operations';
+        }
+
+        // 2. Render Incoming Table
+        function renderIncomingTable() {
+            filterIncomingTable();
+        }
+
+        // Filter Setter Helpers for Incoming
+        function setIncomingStaffFilter(val) {
+            incomingStaffFilterVal = val;
+            filterIncomingTable();
+        }
+        function setIncomingBranchFilter(val) {
+            incomingBranchFilterVal = val;
+            filterIncomingTable();
+        }
+        function setIncomingStatusFilter(val) {
+            incomingStatusFilterVal = val;
+            filterIncomingTable();
+        }
+
+        function filterIncomingTable() {
+            const q = (document.getElementById('filter-incoming-search').value || '').toLowerCase();
+            const staff = incomingStaffFilterVal;
+            const branch = incomingBranchFilterVal;
+            const status = incomingStatusFilterVal;
+
+            const tbody = document.getElementById('incoming-table-body');
+            tbody.innerHTML = '';
+
+            let visibleCount = 0;
+            incomingShipments.forEach(item => {
+                const matchQ = item.lr.toLowerCase().includes(q) || item.sender.toLowerCase().includes(q) || item.receiver.toLowerCase().includes(q) || item.itemsSummary.toLowerCase().includes(q) || item.pickupBoy.toLowerCase().includes(q);
+                const matchStaff = (staff === 'all' || item.pickupBoy === staff);
+                const matchBranch = (branch === 'all' || item.pickupBranch === branch);
+                const matchStatus = (status === 'all' || item.status === status);
+
+                if (matchQ && matchStaff && matchBranch && matchStatus) {
+                    visibleCount++;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><span class="lr-mono-tag">${item.lr}</span></td>
+                        <td><strong>${item.pickupBoy}</strong></td>
+                        <td>${item.pickupBranch}</td>
+                        <td>${item.sender}</td>
+                        <td>${item.receiver}</td>
+                        <td><span style="font-size:0.75rem;color:#444;">${item.itemsSummary}</span></td>
+                        <td>${item.packagesCount} ${item.packagesUnit}</td>
+                        <td>${item.weightKg} KG</td>
+                        <td><span class="status-pill awaiting">${item.status}</span></td>
+                        <td style="text-align:right;">
+                            <button type="button" class="btn-primary" onclick="openReceiveShipmentModal('${item.lr}')" style="height:28px;padding:0 10px;font-size:0.75rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Receive</span>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+
+            const pageInfo = document.getElementById('incoming-page-info');
+            if (pageInfo) pageInfo.textContent = `Showing 1-${visibleCount} of ${incomingShipments.length}`;
+        }
+
+        // 3. Render Received Table
+        function renderReceivedTable() {
+            filterReceivedTable();
+        }
+
+        // Filter Setter Helpers for Received
+        function setReceivedDateFilter(val) {
+            receivedDateFilterVal = val;
+            filterReceivedTable();
+        }
+        function setReceivedStatusFilter(val) {
+            receivedStatusFilterVal = val;
+            filterReceivedTable();
+        }
+
+        function filterReceivedTable() {
+            const q = (document.getElementById('filter-received-search').value || '').toLowerCase();
+            const status = receivedStatusFilterVal;
+
+            const tbody = document.getElementById('received-table-body');
+            tbody.innerHTML = '';
+
+            let visibleCount = 0;
+            receivedShipments.forEach(item => {
+                const matchQ = item.lr.toLowerCase().includes(q) || item.sender.toLowerCase().includes(q) || item.receiver.toLowerCase().includes(q) || item.items.toLowerCase().includes(q) || item.pickupBoy.toLowerCase().includes(q);
+                const matchStatus = (status === 'all' || item.status === status);
+
+                if (matchQ && matchStatus) {
+                    visibleCount++;
+                    const tr = document.createElement('tr');
+                    let pillClass = 'received';
+                    if (item.status === 'PARTIALLY RECEIVED') {
+                        pillClass = 'partial';
+                    } else if (item.status.includes('Issue') || item.status === 'ISSUE RAISED') {
+                        pillClass = 'issue-raised';
+                    }
+
+                    tr.innerHTML = `
+                        <td><span class="lr-mono-tag">${item.lr}</span></td>
+                        <td>${item.sender}</td>
+                        <td>${item.receiver}</td>
+                        <td>${item.pickupBoy}</td>
+                        <td><span style="font-size:0.75rem;color:#444;">${item.items}</span></td>
+                        <td>${item.packages}</td>
+                        <td>${item.weight}</td>
+                        <td>${item.receivedBy}</td>
+                        <td>${item.receivedTime}</td>
+                        <td><span class="status-pill ${pillClass}">${item.status}</span></td>
+                        <td style="text-align:right;">
+                            <button type="button" class="btn-secondary" onclick="openViewReceivedModal('${item.lr}')" style="height:28px;padding:0 10px;font-size:0.75rem;">View</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+
+            const pageInfo = document.getElementById('received-page-info');
+            if (pageInfo) pageInfo.textContent = `Showing 1-${visibleCount} of ${receivedShipments.length}`;
+        }
+
+        // 4. Render Issues Table
+        function setIssueStatusFilter(val) {
+            currentIssueFilter = val;
+            filterIssuesTable();
+        }
+
+        function filterIssuesTable() {
+            const q = (document.getElementById('filter-issues-search').value || '').toLowerCase();
+            const tbody = document.getElementById('issues-table-body');
+            tbody.innerHTML = '';
+
+            let count = 0;
+            issuesList.forEach((item, idx) => {
+                if (currentIssueFilter !== 'all' && item.status !== currentIssueFilter) return;
+                
+                const matchQ = item.lr.toLowerCase().includes(q) || item.issueType.toLowerCase().includes(q) || item.remarks.toLowerCase().includes(q);
+                if (!matchQ) return;
+
+                count++;
+                const tr = document.createElement('tr');
+                const isResolved = item.status === 'Resolved';
+                tr.innerHTML = `
+                    <td><span class="lr-mono-tag">${item.lr}</span></td>
+                    <td><strong>${item.issueType}</strong></td>
+                    <td>${item.expected}</td>
+                    <td>${item.received}</td>
+                    <td>${item.reportedBy}</td>
+                    <td>${item.dateTime}</td>
+                    <td>
+                        <div style="font-size:0.75rem;color:#333;display:flex;flex-direction:column;gap:2px;">
+                            ${isResolved ? `
+                                <div><strong style="color:#555;">Original:</strong> ${item.remarks}</div>
+                                <div style="margin-top:2px;"><strong style="color:var(--color-black);">Resolution:</strong> ${item.resolutionRemark}</div>
+                            ` : `<span>${item.remarks}</span>`}
+                        </div>
+                    </td>
+                    <td><span class="status-pill ${isResolved ? 'resolved' : 'open'}">${item.status}</span></td>
+                    <td style="text-align:right;">
+                        ${isResolved ? `<button type="button" class="btn-secondary" onclick="openViewResolvedModal(${idx})" style="height:28px;padding:0 10px;font-size:0.75rem;">View</button>` : `<button type="button" class="btn-primary" onclick="openResolveModal(${idx})" style="height:28px;padding:0 10px;font-size:0.75rem;">Resolve</button>`}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const pageInfo = document.getElementById('issues-page-info');
+            if (pageInfo) pageInfo.textContent = `Showing 1-${count} of ${count}`;
+        }
+
+        function renderIssuesTable() {
+            filterIssuesTable();
+        }
+
+        // 5. Update KPI Cards
+        function updateKPIs() {
+            document.getElementById('kpi-val-incoming').textContent = incomingShipments.length + 20;
+            document.getElementById('kpi-val-pending').textContent = incomingShipments.length;
+            document.getElementById('kpi-val-received').textContent = receivedShipments.length + 13;
+            document.getElementById('kpi-val-issues').textContent = issuesList.filter(i => i.status === 'Open').length;
+        }
+
+        // 6. Receive Modal Management
+        let itemVerificationStates = [];
+
+        function openReceiveShipmentModal(lrNumber) {
+            const shipment = incomingShipments.find(s => s.lr === lrNumber);
+            if (!shipment) return;
+
+            activeLRBeingReceived = shipment;
+            isScannedVerified = false;
+
+            // Header & non-editable details
+            document.getElementById('rcv-modal-title').textContent = `Receive Shipment`;
+            document.getElementById('rcv-modal-lr-header').textContent = shipment.lr;
+            document.getElementById('modal-lr-num').textContent = shipment.lr;
+            document.getElementById('modal-pickup-boy').textContent = shipment.pickupBoy;
+            document.getElementById('modal-branch').textContent = shipment.pickupBranch;
+            document.getElementById('modal-sender').textContent = `${shipment.sender} (${shipment.senderAddr})`;
+            document.getElementById('modal-receiver').textContent = `${shipment.receiver} (${shipment.receiverAddr})`;
+            document.getElementById('modal-exp-pkgs').textContent = `${shipment.packagesCount} ${shipment.packagesUnit}`;
+            document.getElementById('modal-exp-wt').textContent = `${shipment.weightKg} KG`;
+
+            // Reset Scan Section (Prompt user to scan first)
+            document.getElementById('scan-barcode-container').style.display = 'flex';
+            document.getElementById('btn-scan-trigger').style.display = 'inline-flex';
+            document.getElementById('scan-verified-badge').classList.remove('visible');
+            document.getElementById('scan-hint-text').textContent = 'Scan the LR barcode attached to the physical shipment.';
+            
+            // Hide verification until LR is scanned
+            document.getElementById('autofetched-details-section').style.display = 'none';
+
+            // Initialize item verification states
+            itemVerificationStates = shipment.itemsList.map(it => {
+                const numericQty = parseInt(it.qty) || 1;
+                return {
+                    name: it.name,
+                    expectedQtyStr: it.qty,
+                    expectedUnits: numericQty,
+                    status: 'Received',
+                    damagedQty: 0
+                };
+            });
+
+            // Package totals
+            document.getElementById('expected-packages-val').textContent = `${shipment.packagesCount} ${shipment.packagesUnit}`;
+            document.getElementById('expected-weight-val').textContent = `${shipment.weightKg} KG`;
+
+            document.getElementById('input-received-packages').value = shipment.packagesCount;
+            document.getElementById('input-unit-label').textContent = shipment.packagesUnit;
+            document.getElementById('input-received-weight').value = shipment.weightKg;
+            document.getElementById('exception-remarks-input').value = '';
+
+            openModal('modal-receive-shipment');
+        }
+
+        // STEP 1: Scan Barcode Trigger
+        function simulateBarcodeVerification() {
+            isScannedVerified = true;
+            document.getElementById('btn-scan-trigger').style.display = 'none';
+            document.getElementById('scan-verified-badge').classList.add('visible');
+            document.getElementById('scan-hint-text').textContent = `Barcode ${activeLRBeingReceived.lr} verified. Shipment details populated below.`;
+            
+            // Reveal verification & item checklist
+            document.getElementById('autofetched-details-section').style.display = 'flex';
+            
+            renderItemChecklist();
+            calculateIntakeCounts();
+            showToast(`✓ LR Verified: ${activeLRBeingReceived.lr}`);
+        }
+
+        // STEP 2 & 3: Render Physical Items Verification Cards
+        function renderItemChecklist() {
+            const itemsContainer = document.getElementById('modal-items-breakdown-list');
+            itemsContainer.innerHTML = '';
+
+            itemVerificationStates.forEach((it, idx) => {
+                const itemCard = document.createElement('div');
+                itemCard.style.border = '1px solid var(--color-border)';
+                itemCard.style.borderRadius = 'var(--border-radius-base)';
+                itemCard.style.padding = '10px';
+                
+                const isRcv = it.status === 'Received';
+                const isNotRcv = it.status === 'Not Received';
+                const isDamaged = it.status === 'Damaged';
+
+                itemCard.style.backgroundColor = isRcv ? '#ffffff' : 'var(--color-bg-light)';
+
+                itemCard.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <div>
+                            <div style="font-weight:700;font-size:0.8125rem;">${idx + 1}. ${it.name}</div>
+                            <div style="font-size:0.75rem;color:#666;margin-top:2px;">Expected: <strong>${it.expectedQtyStr}</strong></div>
+                        </div>
+                        <div style="display:flex;gap:4px;">
+                            <button type="button" class="${isRcv ? 'btn-primary' : 'btn-secondary'}" onclick="setItemCheckStatus(${idx}, 'Received')" style="height:26px;padding:0 8px;font-size:0.6875rem;">
+                                ✓ Received
+                            </button>
+                            <button type="button" class="${isNotRcv ? 'btn-primary' : 'btn-secondary'}" onclick="setItemCheckStatus(${idx}, 'Not Received')" style="height:26px;padding:0 8px;font-size:0.6875rem;">
+                                ✕ Not Received
+                            </button>
+                            <button type="button" class="${isDamaged ? 'btn-primary' : 'btn-secondary'}" onclick="setItemCheckStatus(${idx}, 'Damaged')" style="height:26px;padding:0 8px;font-size:0.6875rem;">
+                                ⚠ Damaged
+                            </button>
+                        </div>
+                    </div>
+
+                    ${isNotRcv ? `
+                        <div style="margin-top:8px;padding-top:6px;border-top:1px dashed var(--color-border);display:flex;align-items:center;gap:6px;font-size:0.75rem;">
+                            <span style="font-weight:700;color:var(--color-black);">Item Status:</span>
+                            <span style="color:var(--color-black);font-weight:700;">Missing (${it.expectedQtyStr})</span>
+                        </div>
+                    ` : ''}
+
+                    ${isDamaged ? `
+                        <div style="margin-top:8px;padding-top:6px;border-top:1px dashed var(--color-border);display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;">
+                            <span style="font-weight:700;color:var(--color-black);">Damaged Quantity:</span>
+                            <div style="display:flex;align-items:center;gap:6px;">
+                                <input type="number" min="1" max="${it.expectedUnits}" value="${it.damagedQty || 1}" onchange="updateDamagedQty(${idx}, this.value)" style="width:55px;padding:3px 6px;border:1px solid var(--color-border);border-radius:4px;font-size:0.75rem;font-weight:700;">
+                                <span style="font-weight:600;color:#666;">Unit(s)</span>
+                            </div>
+                        </div>
+                    ` : ''}
+                `;
+                itemsContainer.appendChild(itemCard);
+            });
+        }
+
+        function setItemCheckStatus(idx, status) {
+            itemVerificationStates[idx].status = status;
+            if (status === 'Damaged' && (!itemVerificationStates[idx].damagedQty || itemVerificationStates[idx].damagedQty < 1)) {
+                itemVerificationStates[idx].damagedQty = 1;
+            }
+            renderItemChecklist();
+            calculateIntakeCounts();
+        }
+
+        function updateDamagedQty(idx, val) {
+            itemVerificationStates[idx].damagedQty = parseInt(val) || 1;
+            calculateIntakeCounts();
+        }
+
+        // STEP 4 & 5: Calculate Missing, Damaged, and Received totals
+        function calculateIntakeCounts() {
+            if (!activeLRBeingReceived) return;
+
+            const expPkgs = activeLRBeingReceived.packagesCount;
+            const expWt = activeLRBeingReceived.weightKg;
+
+            let notReceivedCount = 0;
+            let damagedCount = 0;
+
+            itemVerificationStates.forEach(it => {
+                if (it.status === 'Not Received') notReceivedCount += it.expectedUnits;
+                if (it.status === 'Damaged') damagedCount += (it.damagedQty || 1);
+            });
+
+            const calculatedRcvPkgs = Math.max(0, expPkgs - notReceivedCount);
+            const inputPkgs = parseInt(document.getElementById('input-received-packages').value) || calculatedRcvPkgs;
+            const inputWt = parseFloat(document.getElementById('input-received-weight').value) || expWt;
+
+            const missingPkgs = Math.max(0, expPkgs - inputPkgs);
+
+            // Update Summary row
+            document.getElementById('sum-expected').textContent = `${expPkgs} ${activeLRBeingReceived.packagesUnit} · ${expWt} KG`;
+            document.getElementById('sum-received').textContent = `${inputPkgs} ${activeLRBeingReceived.packagesUnit} · ${inputWt} KG`;
+            document.getElementById('sum-missing').textContent = `${missingPkgs} ${activeLRBeingReceived.packagesUnit}`;
+            document.getElementById('sum-damaged').textContent = `${damagedCount} ${activeLRBeingReceived.packagesUnit}`;
+
+            const statusPill = document.getElementById('sum-status-pill');
+            const exceptionBox = document.getElementById('exception-input-section');
+            const primaryCTA = document.getElementById('btn-primary-receive-cta');
+
+            const hasExceptions = (missingPkgs > 0 || damagedCount > 0 || notReceivedCount > 0 || inputWt !== expWt);
+
+            if (!hasExceptions) {
+                statusPill.textContent = 'READY TO RECEIVE';
+                statusPill.className = 'status-pill received';
+                exceptionBox.style.display = 'none';
+
+                primaryCTA.innerHTML = '<span>Confirm Received</span>';
+                primaryCTA.disabled = false;
+                primaryCTA.style.opacity = '1';
+            } else {
+                const isPartial = (inputPkgs > 0);
+                statusPill.textContent = isPartial ? 'PARTIAL RECEIVING' : 'ISSUE DETECTED';
+                statusPill.className = isPartial ? 'status-pill partial' : 'status-pill issue';
+
+                exceptionBox.style.display = 'flex';
+
+                const reasonSelect = document.getElementById('exception-reason-select');
+                if (damagedCount > 0) {
+                    reasonSelect.value = 'Damaged Package';
+                } else if (missingPkgs > 0) {
+                    reasonSelect.value = 'Missing Package';
+                } else if (notReceivedCount > 0) {
+                    reasonSelect.value = 'Item Not Received';
+                } else if (inputWt !== expWt) {
+                    reasonSelect.value = 'Weight Mismatch';
+                }
+
+                primaryCTA.innerHTML = isPartial ? '<span>Confirm Partial Receive & Raise Issue</span>' : '<span>Raise Issue</span>';
+                validateFinalCTA();
+            }
+        }
+
+        function validateFinalCTA() {
+            const expPkgs = activeLRBeingReceived.packagesCount;
+            const rcvPkgs = parseInt(document.getElementById('input-received-packages').value) || 0;
+            const damagedCount = itemVerificationStates.filter(it => it.status === 'Damaged').length;
+            const notRcvCount = itemVerificationStates.filter(it => it.status === 'Not Received').length;
+            
+            const hasExceptions = (rcvPkgs !== expPkgs || damagedCount > 0 || notRcvCount > 0);
+            const remarks = document.getElementById('exception-remarks-input').value.trim();
+            const primaryCTA = document.getElementById('btn-primary-receive-cta');
+
+            if (hasExceptions && !remarks) {
+                primaryCTA.disabled = true;
+                primaryCTA.style.opacity = '0.4';
+                primaryCTA.title = 'Issue Remark is mandatory when an exception is detected';
+            } else {
+                primaryCTA.disabled = false;
+                primaryCTA.style.opacity = '1';
+                primaryCTA.title = '';
+            }
+        }
+
+        // STEP 6: Execute Confirm Received or Confirm Partial Receive & Raise Issue
+        function executeReceiveAction() {
+            if (!isScannedVerified) {
+                showToast('Please scan and verify LR Barcode first');
+                return;
+            }
+
+            const expPkgs = activeLRBeingReceived.packagesCount;
+            const rcvPkgs = parseInt(document.getElementById('input-received-packages').value) || 0;
+            const rcvWt = parseFloat(document.getElementById('input-received-weight').value) || 0;
+            const expWt = activeLRBeingReceived.weightKg;
+
+            const damagedItems = itemVerificationStates.filter(it => it.status === 'Damaged');
+            const missingItems = itemVerificationStates.filter(it => it.status === 'Not Received');
+            const hasExceptions = (rcvPkgs !== expPkgs || damagedItems.length > 0 || missingItems.length > 0 || rcvWt !== expWt);
+
+            const issueRemark = document.getElementById('exception-remarks-input').value.trim();
+            const issueType = document.getElementById('exception-reason-select').value;
+
+            if (hasExceptions && !issueRemark) {
+                showToast('Please provide mandatory Issue Remark before confirming');
+                return;
+            }
+
+            let finalStatus = 'RECEIVED';
+            if (hasExceptions) {
+                finalStatus = (rcvPkgs > 0) ? 'PARTIALLY RECEIVED' : 'ISSUE RAISED';
+            }
+
+            const receivedItemsList = itemVerificationStates.filter(it => it.status === 'Received').map(it => `${it.name} (${it.expectedQtyStr})`);
+            if (damagedItems.length > 0) {
+                receivedItemsList.push(damagedItems.map(it => `${it.name} (${it.damagedQty || 1} Damaged)`).join(', '));
+            }
+
+            const itemsReceivedText = receivedItemsList.length > 0 ? receivedItemsList.join(', ') : 'None (Shipment Issue)';
+
+            // 1. Remove from Incoming Shipments
+            incomingShipments = incomingShipments.filter(s => s.lr !== activeLRBeingReceived.lr);
+
+            // 2. Add to Received Shipments History
+            const newRecord = {
+                lr: activeLRBeingReceived.lr,
+                sender: activeLRBeingReceived.sender,
+                receiver: activeLRBeingReceived.receiver,
+                pickupBoy: activeLRBeingReceived.pickupBoy,
+                items: itemsReceivedText,
+                manifestItems: activeLRBeingReceived.itemsSummary,
+                packages: `${rcvPkgs} ${activeLRBeingReceived.packagesUnit}`,
+                expectedPkgs: `${expPkgs} ${activeLRBeingReceived.packagesUnit}`,
+                weight: `${rcvWt} KG`,
+                expectedWeight: `${expWt} KG`,
+                receivedBy: 'Suresh Kumar',
+                receivedTime: new Date().toLocaleString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }),
+                status: finalStatus,
+                exceptionRecord: hasExceptions ? {
+                    type: issueType,
+                    remark: issueRemark,
+                    missing: missingItems.map(it => it.name).join(', ') || `${Math.max(0, expPkgs - rcvPkgs)} Packages`,
+                    damaged: damagedItems.map(it => `${it.name} (${it.damagedQty || 1})`).join(', ') || '0'
+                } : null
+            };
+
+            receivedShipments.unshift(newRecord);
+
+            // 3. Log issue if exception occurred
+            if (hasExceptions) {
+                issuesList.unshift({
+                    lr: activeLRBeingReceived.lr,
+                    issueType: issueType,
+                    expected: `${expPkgs} ${activeLRBeingReceived.packagesUnit} (${expWt} KG)`,
+                    received: `${rcvPkgs} ${activeLRBeingReceived.packagesUnit} (${rcvWt} KG)`,
+                    reportedBy: 'Suresh Kumar',
+                    dateTime: new Date().toLocaleString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }),
+                    remarks: issueRemark,
+                    resolvedBy: '',
+                    resolvedDate: '',
+                    resolutionRemark: '',
+                    status: 'Open'
+                });
+            }
+
+            closeModal('modal-receive-shipment');
+            renderIncomingTable();
+            renderReceivedTable();
+            renderIssuesTable();
+            updateKPIs();
+
+            showToast(`✓ Shipment ${newRecord.lr} processed: ${finalStatus}`);
+        }
+
+        // STEP 7: View Received Shipment Details Modal
+        function openViewReceivedModal(lrNum) {
+            const shipment = receivedShipments.find(s => s.lr === lrNum);
+            if (!shipment) return;
+
+            document.getElementById('view-rcv-lr-header').textContent = shipment.lr;
+            document.getElementById('view-rcv-lr').textContent = shipment.lr;
+            
+            const statusEl = document.getElementById('view-rcv-status');
+            statusEl.textContent = shipment.status;
+            if (shipment.status === 'RECEIVED') {
+                statusEl.className = 'status-pill received';
+            } else if (shipment.status === 'PARTIALLY RECEIVED') {
+                statusEl.className = 'status-pill partial';
+            } else {
+                statusEl.className = 'status-pill issue-raised';
+            }
+
+            document.getElementById('view-rcv-sender').textContent = shipment.sender;
+            document.getElementById('view-rcv-receiver').textContent = shipment.receiver;
+            document.getElementById('view-rcv-staff').textContent = shipment.pickupBoy;
+            document.getElementById('view-rcv-by').textContent = `${shipment.receivedBy} (Warehouse Admin)`;
+            document.getElementById('view-rcv-time').textContent = shipment.receivedTime;
+
+            document.getElementById('view-rcv-exp-pkgs').textContent = shipment.expectedPkgs || shipment.packages;
+            document.getElementById('view-rcv-exp-wt').textContent = shipment.expectedWeight || shipment.weight;
+            document.getElementById('view-rcv-exp-items').textContent = shipment.manifestItems || shipment.items;
+
+            document.getElementById('view-rcv-act-pkgs').textContent = shipment.packages;
+            document.getElementById('view-rcv-act-wt').textContent = shipment.weight;
+            document.getElementById('view-rcv-act-items').textContent = shipment.items;
+
+            const exceptionBox = document.getElementById('view-rcv-exception-box');
+            if (shipment.exceptionRecord) {
+                exceptionBox.style.display = 'block';
+                document.getElementById('view-rcv-exception-text').innerHTML = `
+                    <div><strong>Issue Type:</strong> ${shipment.exceptionRecord.type}</div>
+                    <div style="margin-top:2px;"><strong>Remark:</strong> ${shipment.exceptionRecord.remark}</div>
+                    ${shipment.exceptionRecord.missing !== '0' ? `<div style="margin-top:2px;"><strong>Missing:</strong> ${shipment.exceptionRecord.missing}</div>` : ''}
+                    ${shipment.exceptionRecord.damaged !== '0' ? `<div style="margin-top:2px;"><strong>Damaged:</strong> ${shipment.exceptionRecord.damaged}</div>` : ''}
+                `;
+            } else {
+                exceptionBox.style.display = 'none';
+            }
+
+            openModal('modal-view-received');
+        }
+
+        // STEP 8: View Resolved Issue Modal
+        function openViewResolvedModal(idx) {
+            const issue = issuesList[idx];
+            if (!issue) return;
+
+            document.getElementById('res-modal-lr').textContent = issue.lr;
+            document.getElementById('res-modal-type').textContent = issue.issueType;
+            document.getElementById('res-modal-variance').textContent = `${issue.expected} vs ${issue.received}`;
+            document.getElementById('res-modal-orig-remarks').textContent = issue.remarks;
+            document.getElementById('res-remarks-text').value = issue.resolutionRemark;
+            document.getElementById('res-modal-timestamp').textContent = issue.resolvedDate || '14 Aug 2026, 05:30 PM';
+
+            openModal('modal-resolve-issue');
+        }
+
+        // STEP 9: Resolve Issue Flow
+        function openResolveModal(idx) {
+            activeResolvingIssueIdx = idx;
+            const issue = issuesList[idx];
+
+            document.getElementById('res-modal-lr').textContent = issue.lr;
+            document.getElementById('res-modal-type').textContent = issue.issueType;
+            document.getElementById('res-modal-variance').textContent = `${issue.expected} vs ${issue.received}`;
+            document.getElementById('res-modal-orig-remarks').textContent = issue.remarks;
+            document.getElementById('res-remarks-text').value = '';
+            document.getElementById('res-modal-timestamp').textContent = new Date().toLocaleString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+
+            openModal('modal-resolve-issue');
+        }
+
+        function submitResolveIssue() {
+            const remarks = document.getElementById('res-remarks-text').value.trim();
+            if (!remarks) {
+                showToast('Resolution remarks are mandatory');
+                return;
+            }
+
+            const resType = document.getElementById('res-type-select').value;
+            const issue = issuesList[activeResolvingIssueIdx];
+
+            issue.status = 'Resolved';
+            issue.resolvedBy = 'Suresh Kumar';
+            issue.resolvedDate = new Date().toLocaleString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+            issue.resolutionRemark = `[${resType}] ${remarks}`;
+
+            closeModal('modal-resolve-issue');
+            renderIssuesTable();
+            updateKPIs();
+
+            showToast(`Issue ${issue.lr} Marked RESOLVED`);
+        }
+
+        // STEP 10: Generic Table Sorting Handler
+        let sortStates = {
+            incoming: { col: null, asc: true },
+            received: { col: null, asc: true },
+            issues: { col: null, asc: true }
+        };
+
+        function handleTableSort(tableType, colIndex, thElement) {
+            const state = sortStates[tableType];
+            if (state.col === colIndex) {
+                state.asc = !state.asc;
+            } else {
+                state.col = colIndex;
+                state.asc = true;
+            }
+
+            const table = thElement.closest('table');
+            table.querySelectorAll('th.sortable').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+            });
+            thElement.classList.add(state.asc ? 'sort-asc' : 'sort-desc');
+
+            if (tableType === 'incoming') {
+                const keys = ['lr', 'pickupBoy', 'pickupBranch', 'sender', 'receiver', 'itemsSummary', 'packagesCount', 'weightKg', 'status'];
+                const key = keys[colIndex];
+                if (key) {
+                    incomingShipments.sort((a, b) => {
+                        let vA = a[key];
+                        let vB = b[key];
+                        if (typeof vA === 'string') {
+                            return state.asc ? vA.localeCompare(vB) : vB.localeCompare(vA);
+                        } else {
+                            return state.asc ? (vA - vB) : (vB - vA);
+                        }
+                    });
+                    renderIncomingTable();
+                }
+            } else if (tableType === 'received') {
+                const keys = ['lr', 'sender', 'receiver', 'pickupBoy', 'items', 'packages', 'weight', 'receivedBy', 'receivedTime', 'status'];
+                const key = keys[colIndex];
+                if (key) {
+                    receivedShipments.sort((a, b) => {
+                        let vA = a[key] || '';
+                        let vB = b[key] || '';
+                        if (key === 'packages' || key === 'weight') {
+                            const nA = parseFloat(vA) || 0;
+                            const nB = parseFloat(vB) || 0;
+                            return state.asc ? (nA - nB) : (nB - nA);
+                        }
+                        return state.asc ? vA.toString().localeCompare(vB.toString()) : vB.toString().localeCompare(vA.toString());
+                    });
+                    renderReceivedTable();
+                }
+            } else if (tableType === 'issues') {
+                const keys = ['lr', 'issueType', 'expected', 'received', 'reportedBy', 'dateTime', 'remarks', 'status'];
+                const key = keys[colIndex];
+                if (key) {
+                    issuesList.sort((a, b) => {
+                        let vA = a[key] || '';
+                        let vB = b[key] || '';
+                        return state.asc ? vA.toString().localeCompare(vB.toString()) : vB.toString().localeCompare(vA.toString());
+                    });
+                    renderIssuesTable();
+                }
+            }
+        }
+
+        // Modal Utility Helpers
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('wh-toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

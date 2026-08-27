@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Edit Shift</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="shift-management.css">
+</head>
+<body>
+    
+    <!-- Mobile Menu Drawer Toggle -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (HRMS Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                <nav class="rail-nav">
+                    <a href="#" class="rail-icon active" data-tooltip="HRMS">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+                <div class="sidebar-nav-section">HUMAN RESOURCES</div>
+                <nav class="sidebar-nav">
+                    <a href="../Staff-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        Staff Master
+                    </a>
+                    <a href="../Attendance/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Attendance
+                    </a>
+                    <a href="index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Shift Management
+                    </a>
+                    <a href="../Leave-Management/leave-management.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
+                        Leave Management
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>HRMS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>Shift Management</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Edit Shift</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <form action="index.html">
+                    <div class="page-header">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <a href="index.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Edit Shift</h1>
+                                <p class="page-subtitle">Update shift configuration.</p>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a href="index.html" class="btn-secondary">Cancel</a>
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+
+                    <!-- Form Grid Layout (Two Column) -->
+                    <div class="form-grid" style="padding-bottom: 120px;">
+                        
+                        <!-- Row 1: Shift Code & Shift Name -->
+                        <div class="form-group">
+                            <label>Shift Code *</label>
+                            <input type="text" id="shift-code" value="GEN-01" style="height: 32px; width: 100%; box-sizing: border-box;" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Shift Name *</label>
+                            <input type="text" id="shift-name" value="General Shift" style="height: 32px; width: 100%; box-sizing: border-box;" required>
+                        </div>
+
+                        <!-- Row 2: Start Time & End Time -->
+                        <div class="form-group">
+                            <label>Start Time *</label>
+                            <div style="display: flex; gap: 8px; align-items: center; width: 100%;">
+                                <!-- Hour -->
+                                <details class="custom-select-wrapper" style="width: 75px; position: relative;">
+                                    <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px; font-size: 0.8125rem;">
+                                        <span class="placeholder">09</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="max-height: 120px; overflow-y: auto; width: 75px;">
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="01"> 01</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="02"> 02</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="03"> 03</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="04"> 04</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="05"> 05</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="06"> 06</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="07"> 07</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="08"> 08</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="09" checked> 09</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="10"> 10</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="11"> 11</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-hour" value="12"> 12</label>
+                                    </div>
+                                </details>
+                                <span>:</span>
+                                <!-- Minute -->
+                                <details class="custom-select-wrapper" style="width: 75px; position: relative;">
+                                    <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px; font-size: 0.8125rem;">
+                                        <span class="placeholder">00</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="max-height: 120px; overflow-y: auto; width: 75px;">
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="00" checked> 00</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="05"> 05</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="10"> 10</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="15"> 15</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="20"> 20</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="25"> 25</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="30"> 30</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="35"> 35</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="40"> 40</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="45"> 45</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="50"> 50</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-minute" value="55"> 55</label>
+                                    </div>
+                                </details>
+                                <!-- AM/PM -->
+                                <details class="custom-select-wrapper" style="width: 75px; position: relative;">
+                                    <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px; font-size: 0.8125rem;">
+                                        <span class="placeholder">AM</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="width: 75px;">
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-period" value="AM" checked> AM</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="start-period" value="PM"> PM</label>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>End Time *</label>
+                            <div style="display: flex; gap: 8px; align-items: center; width: 100%;">
+                                <!-- Hour -->
+                                <details class="custom-select-wrapper" style="width: 75px; position: relative;">
+                                    <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px; font-size: 0.8125rem;">
+                                        <span class="placeholder">06</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="max-height: 120px; overflow-y: auto; width: 75px;">
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="01"> 01</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="02"> 02</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="03"> 03</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="04"> 04</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="05"> 05</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="06" checked> 06</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="07"> 07</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="08"> 08</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="09"> 09</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="10"> 10</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="11"> 11</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-hour" value="12"> 12</label>
+                                    </div>
+                                </details>
+                                <span>:</span>
+                                <!-- Minute -->
+                                <details class="custom-select-wrapper" style="width: 75px; position: relative;">
+                                    <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px; font-size: 0.8125rem;">
+                                        <span class="placeholder">00</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></summary>
+                                    <div class="custom-select-options" style="max-height: 120px; overflow-y: auto; width: 75px;">
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="00" checked> 00</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="05"> 05</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="10"> 10</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="15"> 15</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="20"> 20</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="25"> 25</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="30"> 30</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="35"> 35</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="40"> 40</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="45"> 45</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="50"> 50</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-minute" value="55"> 55</label>
+                                    </div>
+                                </details>
+                                <!-- AM/PM -->
+                                <details class="custom-select-wrapper" style="width: 75px; position: relative;">
+                                    <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px; font-size: 0.8125rem;">
+                                        <span class="placeholder">PM</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="width: 75px;">
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-period" value="AM"> AM</label>
+                                        <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="end-period" value="PM" checked> PM</label>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Working Hours -->
+                        <div class="form-group">
+                            <label>Working Hours</label>
+                            <input type="text" id="working-hours-field" value="—" readonly style="background-color: var(--color-bg-light); cursor: not-allowed; font-weight: 600;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startHours = document.getElementsByName('start-hour');
+            const startMinutes = document.getElementsByName('start-minute');
+            const startPeriods = document.getElementsByName('start-period');
+            
+            const endHours = document.getElementsByName('end-hour');
+            const endMinutes = document.getElementsByName('end-minute');
+            const endPeriods = document.getElementsByName('end-period');
+            
+            const workingHoursField = document.getElementById('working-hours-field');
+            
+            function calculateHours() {
+                let sh = null, sm = null, sp = null;
+                let eh = null, em = null, ep = null;
+                
+                for (let r of startHours) { if (r.checked) sh = r.value; }
+                for (let r of startMinutes) { if (r.checked) sm = r.value; }
+                for (let r of startPeriods) { if (r.checked) sp = r.value; }
+                
+                for (let r of endHours) { if (r.checked) eh = r.value; }
+                for (let r of endMinutes) { if (r.checked) em = r.value; }
+                for (let r of endPeriods) { if (r.checked) ep = r.value; }
+                
+                if (!sh || !sm || !sp || !eh || !em || !ep) {
+                    if (workingHoursField) workingHoursField.value = '—';
+                    return;
+                }
+                
+                let startH = parseInt(sh);
+                if (sp === 'PM' && startH < 12) startH += 12;
+                if (sp === 'AM' && startH === 12) startH = 0;
+                let startMins = startH * 60 + parseInt(sm);
+                
+                let endH = parseInt(eh);
+                if (ep === 'PM' && endH < 12) endH += 12;
+                if (ep === 'AM' && endH === 12) endH = 0;
+                let endMins = endH * 60 + parseInt(em);
+                
+                let diffMins = endMins - startMins;
+                if (diffMins <= 0) {
+                    diffMins += 24 * 60;
+                }
+                
+                let diffHours = diffMins / 60;
+                let display = Number.isInteger(diffHours) ? (diffHours + 'h') : (diffHours.toFixed(1) + 'h');
+                if (workingHoursField) workingHoursField.value = display;
+            }
+            
+            // Listen for changes on custom option options input elements
+            document.querySelectorAll('.custom-select-wrapper input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', calculateHours);
+            });
+            
+            // Load shifts from localStorage
+            let staffShifts = [];
+            if (localStorage.getItem('staffShifts')) {
+                staffShifts = JSON.parse(localStorage.getItem('staffShifts'));
+            }
+
+            // Get Shift Code from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const shiftCode = urlParams.get('code');
+
+            const shift = staffShifts.find(s => s.code === shiftCode);
+            if (!shift) {
+                alert('Shift record not found.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Keep track of old shift name to update employees
+            const oldShiftName = shift.name;
+
+            // Pre-fill Shift Code (readonly) and Shift Name
+            const codeField = document.getElementById('shift-code');
+            if (codeField) {
+                codeField.value = shift.code;
+                codeField.readOnly = true;
+                codeField.style.backgroundColor = 'var(--color-bg-light)';
+                codeField.style.cursor = 'not-allowed';
+            }
+
+            const nameField = document.getElementById('shift-name');
+            if (nameField) nameField.value = shift.name;
+
+            // Helper to prefill time custom dropdowns
+            function prefillTimeSelect(radioName, timeVal) {
+                const radio = document.querySelector(`input[name="${radioName}"][value="${timeVal}"]`);
+                if (radio) {
+                    radio.checked = true;
+                    const wrapper = radio.closest('.custom-select-wrapper');
+                    if (wrapper) {
+                        const placeholder = wrapper.querySelector('.custom-select-trigger .placeholder');
+                        if (placeholder) placeholder.textContent = timeVal;
+                    }
+                }
+            }
+
+            // Parse and prefill start and end times
+            if (shift.start) {
+                const [time, period] = shift.start.split(' ');
+                const [hour, minute] = time.split(':');
+                prefillTimeSelect('start-hour', hour);
+                prefillTimeSelect('start-minute', minute);
+                prefillTimeSelect('start-period', period);
+            }
+
+            if (shift.end) {
+                const [time, period] = shift.end.split(' ');
+                const [hour, minute] = time.split(':');
+                prefillTimeSelect('end-hour', hour);
+                prefillTimeSelect('end-minute', minute);
+                prefillTimeSelect('end-period', period);
+            }
+
+            // Form Submit handler
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('shift-name').value.trim();
+
+                    let sh = null, sm = null, sp = null;
+                    let eh = null, em = null, ep = null;
+                    for (let r of startHours) { if (r.checked) sh = r.value; }
+                    for (let r of startMinutes) { if (r.checked) sm = r.value; }
+                    for (let r of startPeriods) { if (r.checked) sp = r.value; }
+                    for (let r of endHours) { if (r.checked) eh = r.value; }
+                    for (let r of endMinutes) { if (r.checked) em = r.value; }
+                    for (let r of endPeriods) { if (r.checked) ep = r.value; }
+
+                    if (!sh || !sm || !sp || !eh || !em || !ep) {
+                        alert('Please fill out Start Time and End Time fields.');
+                        return;
+                    }
+
+                    const startTime = `${sh}:${sm} ${sp}`;
+                    const endTime = `${eh}:${em} ${ep}`;
+                    const hours = workingHoursField.value;
+
+                    // Update shift properties
+                    shift.name = name;
+                    shift.start = startTime;
+                    shift.end = endTime;
+                    shift.hours = hours;
+
+                    // Update staff employees using this shift
+                    let staffEmployees = [];
+                    if (localStorage.getItem('staffEmployees')) {
+                        staffEmployees = JSON.parse(localStorage.getItem('staffEmployees'));
+                        staffEmployees.forEach(emp => {
+                            if (emp.shift.toLowerCase() === oldShiftName.toLowerCase()) {
+                                emp.shift = name;
+                            }
+                        });
+                        localStorage.setItem('staffEmployees', JSON.stringify(staffEmployees));
+                    }
+
+                    localStorage.setItem('staffShifts', JSON.stringify(staffShifts));
+
+                    window.location.href = 'index.html';
+                });
+            }
+
+            calculateHours();
+        });
+    </script>
+</body>
+</html>

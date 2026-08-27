@@ -1,0 +1,426 @@
+/* Leave-Management/leave-management.css */
+
+/* Tab System Styling */
+.tab-nav {
+    display: flex;
+    gap: 24px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 20px;
+    padding-bottom: 2px;
+}
+.tab-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #666;
+    text-decoration: none;
+    padding-bottom: 8px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+}
+.tab-link:hover {
+    color: var(--color-black);
+}
+
+/* Radio triggers to switch views */
+#tab-requests-radio:checked ~ .app-layout .tab-link-requests {
+    color: var(--color-black);
+    border-color: var(--color-black);
+    font-weight: 700;
+}
+#tab-settings-radio:checked ~ .app-layout .tab-link-settings {
+    color: var(--color-black);
+    border-color: var(--color-black);
+    font-weight: 700;
+}
+
+#tab-requests-radio:checked ~ .app-layout .view-settings {
+    display: none !important;
+}
+#tab-settings-radio:checked ~ .app-layout .view-requests {
+    display: none !important;
+}
+
+#tab-requests-radio:checked ~ .app-layout .btn-apply-leave {
+    display: inline-flex !important;
+}
+#tab-requests-radio:checked ~ .app-layout .btn-add-leave-type {
+    display: none !important;
+}
+#tab-settings-radio:checked ~ .app-layout .btn-apply-leave {
+    display: none !important;
+}
+#tab-settings-radio:checked ~ .app-layout .btn-add-leave-type {
+    display: inline-flex !important;
+}
+
+/* Modal overlays and checkbox states */
+#apply-leave-toggle,
+#filters-toggle,
+#review-lv-0001-toggle,
+#review-lv-0002-toggle,
+#review-lv-0003-toggle,
+#add-leave-type-toggle,
+#delete-el-toggle,
+#delete-pl-toggle,
+#delete-lop-toggle {
+    display: none;
+}
+
+#apply-leave-toggle:checked ~ #apply-leave-modal,
+#filters-toggle:checked ~ #filters-modal,
+#review-lv-0001-toggle:checked ~ #review-lv-0001-modal,
+#review-lv-0002-toggle:checked ~ #review-lv-0002-modal,
+#review-lv-0003-toggle:checked ~ #review-lv-0003-modal,
+#add-leave-type-toggle:checked ~ #add-leave-type-modal,
+#delete-el-toggle:checked ~ #delete-el-modal,
+#delete-pl-toggle:checked ~ #delete-pl-modal,
+#delete-lop-toggle:checked ~ #delete-lop-modal {
+    display: flex;
+}
+
+/* Pure HTML/CSS state machine for LV-0001 (Pending Request) */
+#lv-0001-approved,
+#lv-0001-rejected {
+    display: none;
+}
+
+/* Show correct status in table row */
+#lv-0001-approved:checked ~ .app-layout .row-lv-0001 .status-pending,
+#lv-0001-rejected:checked ~ .app-layout .row-lv-0001 .status-pending {
+    display: none !important;
+}
+#lv-0001-approved:checked ~ .app-layout .row-lv-0001 .status-approved {
+    display: inline-flex !important;
+}
+#lv-0001-rejected:checked ~ .app-layout .row-lv-0001 .status-rejected {
+    display: inline-flex !important;
+}
+
+/* Show correct LOP in table row */
+#lv-0001-approved:checked ~ .app-layout .row-lv-0001 .lop-val-pending {
+    display: none !important;
+}
+#lv-0001-approved:checked ~ .app-layout .row-lv-0001 .lop-val-final {
+    display: inline !important;
+}
+
+/* Show correct actions in table row */
+#lv-0001-approved:checked ~ .app-layout .row-lv-0001 .actions-pending,
+#lv-0001-rejected:checked ~ .app-layout .row-lv-0001 .actions-pending {
+    display: none !important;
+}
+#lv-0001-approved:checked ~ .app-layout .row-lv-0001 .actions-final,
+#lv-0001-rejected:checked ~ .app-layout .row-lv-0001 .actions-final {
+    display: inline-flex !important;
+}
+
+/* Modal details success panels toggling */
+#lv-0001-approved:checked ~ #review-lv-0001-modal .review-details-block,
+#lv-0001-rejected:checked ~ #review-lv-0001-modal .review-details-block {
+    display: none !important;
+}
+#lv-0001-approved:checked ~ #review-lv-0001-modal .success-approved-block {
+    display: flex !important;
+}
+#lv-0001-rejected:checked ~ #review-lv-0001-modal .success-rejected-block {
+    display: flex !important;
+}
+
+/* View states for already approved/rejected from start */
+#review-lv-0001-modal .success-approved-block,
+#review-lv-0001-modal .success-rejected-block {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px 0;
+}
+
+/* Specific styling elements for calculations */
+.calc-table {
+    width: 100%;
+    margin-top: 12px;
+    border-collapse: collapse;
+    background-color: var(--color-bg-light);
+    border-radius: var(--border-radius-base);
+    overflow: hidden;
+}
+.calc-table th, .calc-table td {
+    padding: 10px 12px;
+    font-size: 0.8125rem;
+    border-bottom: 1px solid var(--color-border);
+}
+.calc-table tr:last-child th, .calc-table tr:last-child td {
+    border-bottom: none;
+    font-weight: 700;
+}
+
+.warning-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background-color: #fff9eb;
+    color: #b25e00;
+    border: 1px solid #ffe8cc;
+    border-radius: var(--border-radius-base);
+    padding: 10px 12px;
+    font-size: 0.75rem;
+    margin-top: 12px;
+    line-height: 1.4;
+}
+
+.balance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+}
+.balance-card {
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-base);
+}
+.balance-card-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+}
+.balance-card-val {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-top: 2px;
+}
+
+/* Dropdown appearance for custom styling */
+.custom-select-trigger {
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-option {
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+}
+.custom-option:hover {
+    background-color: var(--color-bg-light);
+}
+
+/* Active filter state indicator */
+.filter-btn-active {
+    display: none;
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-black);
+    border-radius: 50%;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+}
+
+/* Tab Settings table width custom column stylings */
+.settings-table th, .settings-table td {
+    text-align: left;
+    white-space: nowrap;
+}
+.settings-table th:last-child, .settings-table td:last-child {
+    text-align: center;
+}
+
+/* Ensure table headers are single-line and do not wrap */
+.data-table thead th {
+    white-space: nowrap !important;
+}
+.sort-header-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap !important;
+}
+
+/* Close icon positioning */
+.modal-close-label {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    color: #666;
+    padding: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease;
+}
+.modal-close-label:hover {
+    color: var(--color-black);
+}
+
+/* Form Actions Flex Alignment */
+.modal-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 16px;
+}
+
+/* Fix all modals layout and viewport constraints */
+.modal-content {
+    max-height: 90vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+.modal-scrollable-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Fixed CTA actions at bottom of modals with clear top boundary */
+.modal-form-actions {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding-top: 16px !important;
+    background: var(--color-white) !important;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* Styling override for status badges to keep them black-and-white */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    color: var(--color-black) !important;
+    border: 1px solid var(--color-black) !important;
+}
+
+/* Ensure table data cells are single-line and do not wrap */
+.data-table tbody td {
+    white-space: nowrap !important;
+}
+
+/* Fix data table spacing in Leave Management by overriding light global table sizing defaults */
+.data-table th, 
+.data-table td {
+    text-align: left !important;
+    padding: 6px 12px !important;
+    font-size: 0.8125rem !important;
+    width: auto !important;
+}
+
+/* Specific column alignments for status and actions */
+.data-table th:nth-child(10), .data-table td:nth-child(10) {
+    text-align: center !important;
+} /* Status */
+
+.data-table th:last-child, .data-table td:last-child {
+    text-align: center !important;
+} /* Actions */
+
+/* Settings Table column alignments for toggle switch and action icons */
+.settings-table th:nth-child(4), .settings-table td:nth-child(4),
+.settings-table th:nth-child(5), .settings-table td:nth-child(5) {
+    text-align: center !important;
+}
+
+/* Fix duplicate/incorrect stroke borders and outline focus conflicts globally */
+input, select, textarea, summary, details, button {
+    outline: none !important;
+    outline-width: 0 !important;
+    box-shadow: none !important;
+}
+
+summary.custom-select-trigger,
+details.custom-select-wrapper {
+    outline: none !important;
+    outline-width: 0 !important;
+    box-shadow: none !important;
+}
+
+summary.custom-select-trigger:focus,
+summary.custom-select-trigger:focus-visible {
+    outline: none !important;
+    outline-width: 0 !important;
+    box-shadow: none !important;
+    border-color: var(--color-black) !important;
+}
+
+details.custom-select-wrapper[open] summary.custom-select-trigger {
+    border-color: var(--color-black) !important;
+    outline: none !important;
+    outline-width: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Remove dropdown options panel shadow offset strokes */
+.custom-select-options {
+    box-shadow: none !important;
+}
+
+/* Consistent height, padding, border radius and border colors for all inputs/selects in Leave Management */
+.modal-content input[type="text"],
+.modal-content input[type="date"],
+.modal-content textarea,
+.modal-content .custom-select-trigger {
+    border: 1px solid #8c8c8c !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="date"]:focus,
+.modal-content textarea:focus,
+.modal-content details[open] .custom-select-trigger {
+    border-color: var(--color-black) !important;
+    outline: none !important;
+}
+
+/* Fix scrolling inside modal details block wrappers */
+.review-details-block {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    flex-grow: 1 !important;
+}
+
+/* Ensure absolute dropdown lists inside scrollable modals are not clipped at the bottom */
+#apply-leave-modal .modal-scrollable-body {
+    padding-bottom: 80px !important;
+}
+
+/* Allow Advanced Filters dropdowns to overflow without scrolling or whitespace */
+#filters-modal .modal-content {
+    overflow: visible !important;
+}
+#filters-modal .modal-scrollable-body {
+    overflow: visible !important;
+    padding-bottom: 20px !important;
+}
+
+/* Dynamically display active filter dot if any checkbox inside filters-modal is checked (Pure HTML/CSS) */
+body:has(#filters-modal input[type="checkbox"]:checked) .filter-btn-active {
+    display: block !important;
+}
+
+

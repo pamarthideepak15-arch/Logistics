@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pickup Boy App - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="pickup-boy-body">
+
+    <!-- Mobile Device Frame (360px - 390px) -->
+    <div class="pb-app-container">
+        
+        <!-- Compact Header (Hidden during Login) -->
+        <header class="pb-header" id="pb-main-header" style="display:none;">
+            <div class="pb-header-left">
+                <div>
+                    <div class="pb-header-title" id="pb-header-title">Pickup App</div>
+                    <div class="pb-header-sub" id="pb-header-sub">Mangalore Branch</div>
+                </div>
+            </div>
+            <div class="pb-header-badge">ONLINE</div>
+        </header>
+
+        <!-- Dynamic In-App Toast -->
+        <div id="pb-toast" class="pb-toast">Notification message</div>
+
+        <!-- Main Viewport -->
+        <main class="pb-viewport no-nav" id="pb-viewport">
+
+            <!-- ========================================== -->
+            <!-- 1. HIGH-FIDELITY MOBILE OTP LOGIN SCREEN   -->
+            <!-- ========================================== -->
+            <section id="pb-screen-login" class="pb-screen active" style="padding:0;height:100%;">
+                <div class="pb-mobile-login-view">
+                    
+                    <div class="pb-login-top">
+                        
+                        <!-- Logo & App Name -->
+                        <div class="pb-login-brand-compact">
+                            <div class="pb-login-logo-sq">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="1" y="3" width="15" height="13"></rect>
+                                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="pb-app-title-main">Pickup Boy App</div>
+                                <div class="pb-app-title-sub">Logistics Field Operations</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 1: Mobile Number Input -->
+                        <div id="login-step-phone">
+                            <div class="pb-login-prompt">
+                                <h3>Mobile Number</h3>
+                                <p>Enter registered 10-digit number to receive OTP</p>
+                            </div>
+
+                            <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;">
+                                <div class="pb-phone-input-group">
+                                    <span class="pb-country-code">+91</span>
+                                    <input type="tel" id="login-phone-val" class="pb-phone-field" placeholder="Enter mobile number" value="9886099887" maxlength="10">
+                                </div>
+
+                                <button type="button" class="pb-btn-full" onclick="sendMobileOTP()">
+                                    <span>Send OTP</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: OTP Verification -->
+                        <div id="login-step-otp" class="pb-otp-view">
+                            
+                            <!-- Top Left Back CTA -->
+                            <button type="button" class="pb-login-back-btn" onclick="backToPhoneStep()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                                <span>Back</span>
+                            </button>
+
+                            <div class="pb-login-prompt">
+                                <h3>Enter OTP</h3>
+                                <p>6-digit code sent to <strong id="display-otp-phone" style="color:var(--pb-text-primary);">+91 98860 99887</strong></p>
+                            </div>
+
+                            <div class="pb-otp-inputs">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="5" onkeyup="moveOTPFocus(this, 0)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="4" onkeyup="moveOTPFocus(this, 1)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="2" onkeyup="moveOTPFocus(this, 2)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="1" onkeyup="moveOTPFocus(this, 3)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="0" onkeyup="moveOTPFocus(this, 4)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="9" onkeyup="moveOTPFocus(this, 5)">
+                            </div>
+
+                            <button type="button" class="pb-btn-full" onclick="verifyMobileOTP()">
+                                <span>Verify OTP & Login →</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div style="font-size:0.72rem;color:var(--pb-text-secondary);text-align:center;font-weight:500;">
+                        Mangalore Branch · Field Staff Authorization
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- 2. HOME SCREEN (Compact Minimal Layout)    -->
+            <!-- ========================================== -->
+            <section id="pb-screen-home" class="pb-screen">
+                
+                <!-- Minimal Header -->
+                <div class="pb-home-header-minimal">
+                    <div>
+                        <div class="pb-home-greeting-title">Good Morning, Ravi</div>
+                        <div class="pb-home-greeting-sub">Pickup Staff · Mangalore Branch</div>
+                    </div>
+                    <div class="pb-home-avatar-small">RS</div>
+                </div>
+
+                <!-- Today's Progress Horizontal KPI Bar -->
+                <div class="pb-kpi-container">
+                    <div class="pb-kpi-header">Today's Progress</div>
+                    <div class="pb-kpi-row">
+                        <div class="pb-kpi-item">
+                            <div class="pb-kpi-label">Assigned</div>
+                            <div class="pb-kpi-val" id="kpi-assigned">8</div>
+                        </div>
+                        <div class="pb-kpi-item">
+                            <div class="pb-kpi-label">Completed</div>
+                            <div class="pb-kpi-val" id="kpi-completed">3</div>
+                        </div>
+                        <div class="pb-kpi-item">
+                            <div class="pb-kpi-label">Pending</div>
+                            <div class="pb-kpi-val" id="kpi-pending">5</div>
+                        </div>
+                        <div class="pb-kpi-item">
+                            <div class="pb-kpi-label">Failed</div>
+                            <div class="pb-kpi-val" id="kpi-failed">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fast Route Start Action Banner -->
+                <div class="pb-home-route-card" onclick="switchNav('pickups')">
+                    <div>
+                        <div class="pb-home-route-title">Start Today's Route</div>
+                        <div class="pb-home-route-sub">5 pending pickups in Mangalore</div>
+                    </div>
+                    <div class="pb-route-arrow-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- 3. PICKUPS SCREEN (Collapsible Groups)     -->
+            <!-- ========================================== -->
+            <section id="pb-screen-pickups" class="pb-screen">
+                
+                <div class="pb-chips-group">
+                    <!-- Date Filter Chips -->
+                    <div class="pb-chips-row">
+                        <button class="pb-chip active" onclick="selectDateChip(this, 'today')">Today</button>
+                        <button class="pb-chip" onclick="selectDateChip(this, 'month')">This Month</button>
+                        <button class="pb-chip" onclick="selectDateChip(this, 'custom')">Custom</button>
+                    </div>
+
+                    <!-- Custom Date Picker -->
+                    <div id="pb-custom-date-bar" class="pb-date-picker-bar">
+                        <span>Select Date:</span>
+                        <input type="date" class="pb-date-input" id="pb-date-val" value="2026-08-14" onchange="filterPickups()">
+                    </div>
+
+                    <!-- Status Filter Chips -->
+                    <div class="pb-chips-row">
+                        <button class="pb-chip active" onclick="selectStatusChip(this, 'all')">All</button>
+                        <button class="pb-chip" onclick="selectStatusChip(this, 'pending')">Pending</button>
+                        <button class="pb-chip" onclick="selectStatusChip(this, 'completed')">Completed</button>
+                        <button class="pb-chip" onclick="selectStatusChip(this, 'failed')">Failed</button>
+                    </div>
+                </div>
+
+                <!-- Location Groups Container -->
+                <div id="pb-pickups-list" style="display:flex;flex-direction:column;gap:8px;">
+
+                    <!-- LOCATION GROUP 1: Mangalore Central Area -->
+                    <div class="pb-location-group" id="group-mangalore-central">
+                        <div class="pb-location-header" onclick="toggleLocationGroup('group-mangalore-central')">
+                            <div class="pb-location-header-left">
+                                <div class="pb-location-name-row">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>Mangalore Central Area</span>
+                                </div>
+                                <div class="pb-location-sub-count">3 Pickups</div>
+                            </div>
+                            <div class="pb-location-header-right">
+                                <div class="pb-chevron-toggle">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-location-content">
+
+                            <!-- Pickup 1: Coastal Traders -->
+                            <div class="pb-card" data-lr="LR-2026-000125" data-status="pending" onclick="openPickupDetails('LR-2026-000125')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Coastal Traders</div>
+                                    <span class="pb-lr-chip">LR-2026-000125</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Kadri, Mangalore</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Coastal Traders', 'Kadri, Mangalore', '2.4 km', '8 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>09:00 AM</span>
+                                    <span>3 Boxes</span>
+                                    <span>45 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000125">✓ Paid · ₹2,450</span>
+                                    <span class="pb-status-badge" id="card-status-LR-2026-000125">Pending</span>
+                                </div>
+                            </div>
+
+                            <!-- Pickup 2: Udupi Enterprises -->
+                            <div class="pb-card" data-lr="LR-2026-000126" data-status="pending" onclick="openPickupDetails('LR-2026-000126')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Udupi Enterprises</div>
+                                    <span class="pb-lr-chip">LR-2026-000126</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Kankanady, Mangalore</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Udupi Enterprises', 'Kankanady, Mangalore', '4.1 km', '12 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>10:30 AM</span>
+                                    <span>5 Cartons</span>
+                                    <span>80 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000126">Unpaid · ₹1,800</span>
+                                    <span class="pb-status-badge" id="card-status-LR-2026-000126">Pending</span>
+                                </div>
+                            </div>
+
+                            <!-- Pickup 3: Ocean Foods -->
+                            <div class="pb-card" data-lr="LR-2026-000127" data-status="pending" onclick="openPickupDetails('LR-2026-000127')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Ocean Foods</div>
+                                    <span class="pb-lr-chip">LR-2026-000127</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Bejai, Mangalore</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Ocean Foods', 'Bejai, Mangalore', '1.8 km', '5 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>12:00 PM</span>
+                                    <span>2 Crates</span>
+                                    <span>30 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000127">✓ Paid · ₹1,200</span>
+                                    <span class="pb-status-badge" id="card-status-LR-2026-000127">Pending</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- LOCATION GROUP 2: Baikampady Industrial Area -->
+                    <div class="pb-location-group" id="group-baikampady">
+                        <div class="pb-location-header" onclick="toggleLocationGroup('group-baikampady')">
+                            <div class="pb-location-header-left">
+                                <div class="pb-location-name-row">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>Baikampady Industrial Area</span>
+                                </div>
+                                <div class="pb-location-sub-count">2 Pickups</div>
+                            </div>
+                            <div class="pb-location-header-right">
+                                <div class="pb-chevron-toggle">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-location-content">
+
+                            <!-- Pickup 4: Supreme Steel Works -->
+                            <div class="pb-card" data-lr="LR-2026-000128" data-status="completed" onclick="openPickupDetails('LR-2026-000128')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Supreme Steel Works</div>
+                                    <span class="pb-lr-chip">LR-2026-000128</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Industrial Estate, Baikampady</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Supreme Steel Works', 'Baikampady, Mangalore', '8.5 km', '20 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>08:30 AM</span>
+                                    <span>10 Bundles</span>
+                                    <span>220 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000128">✓ Paid · ₹5,600</span>
+                                    <span class="pb-status-badge completed" id="card-status-LR-2026-000128">Completed</span>
+                                </div>
+                            </div>
+
+                            <!-- Pickup 5: Apex Polymers -->
+                            <div class="pb-card" data-lr="LR-2026-000129" data-status="completed" onclick="openPickupDetails('LR-2026-000129')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Apex Polymers</div>
+                                    <span class="pb-lr-chip">LR-2026-000129</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Phase 2, Baikampady</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Apex Polymers', 'Phase 2 Baikampady', '9.0 km', '22 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>08:45 AM</span>
+                                    <span>4 Drums</span>
+                                    <span>110 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000129">✓ Paid · ₹3,100</span>
+                                    <span class="pb-status-badge completed" id="card-status-LR-2026-000129">Completed</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- 4. PICKUP DETAILS SCREEN (Action Area)     -->
+            <!-- ========================================== -->
+            <section id="pb-screen-details" class="pb-screen">
+                
+                <div class="pb-back-nav" onclick="switchNav('pickups')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to Pickups</span>
+                </div>
+
+                <!-- Customer Details Card -->
+                <div class="pb-detail-card">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                        <div>
+                            <h3 id="dt-customer" style="font-size:0.95rem;font-weight:800;color:var(--pb-text-primary);">Coastal Traders</h3>
+                            <div id="dt-phone" style="font-size:0.72rem;color:var(--pb-text-secondary);margin-top:1px;">+91 98450 12345</div>
+                        </div>
+                        <span id="dt-status-badge" class="pb-status-badge">PENDING</span>
+                    </div>
+
+                    <div class="pb-detail-row" style="margin-top:4px;">
+                        <span class="pb-detail-label">LR Number</span>
+                        <span class="pb-detail-val" id="dt-lr" style="font-family:ui-monospace, monospace;">LR-2026-000125</span>
+                    </div>
+
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Pickup Address</span>
+                        <span class="pb-detail-val" id="dt-address">Kadri, Mangalore</span>
+                    </div>
+
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Items & Weight</span>
+                        <span class="pb-detail-val" id="dt-items">3 Boxes (45 KG)</span>
+                    </div>
+
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Scheduled Time</span>
+                        <span class="pb-detail-val" id="dt-time">09:00 AM</span>
+                    </div>
+
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Payment</span>
+                        <span class="pb-detail-val" id="dt-payment">✓ Paid · ₹2,450</span>
+                    </div>
+                </div>
+
+                <!-- 2-Column Action Grid -->
+                <div class="pb-workflow-box">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span class="pb-workflow-title">Pickup Actions</span>
+                        <span style="font-size:0.6875rem;color:var(--pb-text-secondary);font-weight:600;">Tap to execute</span>
+                    </div>
+
+                    <div class="pb-action-grid-2col">
+                        <!-- 1. Navigate -->
+                        <button class="pb-action-grid-btn" id="btn-wf-nav" onclick="openNavigateSheetCurrent()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                </svg>
+                                <span class="pb-action-card-title">Navigate</span>
+                            </div>
+                            <span class="pb-action-card-status">Open Route</span>
+                        </button>
+
+                        <!-- 2. Scan LR -->
+                        <button class="pb-action-grid-btn" id="btn-wf-scan" onclick="openScanSheet()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                    <path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"></path>
+                                </svg>
+                                <span class="pb-action-card-title">Scan LR</span>
+                            </div>
+                            <span class="pb-action-card-status">Scan Barcode</span>
+                        </button>
+
+                        <!-- 3. Verify Items -->
+                        <button class="pb-action-grid-btn" id="btn-wf-confirm" onclick="openConfirmItemsSheet()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span class="pb-action-card-title">Verify Items</span>
+                            </div>
+                            <span class="pb-action-card-status">Confirm Qty</span>
+                        </button>
+
+                        <!-- 4. Photos -->
+                        <button class="pb-action-grid-btn" id="btn-wf-photo" onclick="openPhotosSheet()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                    <circle cx="12" cy="13" r="4"></circle>
+                                </svg>
+                                <span class="pb-action-card-title">Cargo Photos</span>
+                            </div>
+                            <span class="pb-action-card-status">Add Photos</span>
+                        </button>
+
+                        <!-- 5. Signature -->
+                        <button class="pb-action-grid-btn" id="btn-wf-sig" onclick="openSignatureSheet()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 20h9"></path>
+                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                </svg>
+                                <span class="pb-action-card-title">Signature</span>
+                            </div>
+                            <span class="pb-action-card-status">Customer Sign</span>
+                        </button>
+
+                        <!-- 6. Payment (Only if unpaid) -->
+                        <button class="pb-action-grid-btn" id="btn-wf-payment" onclick="openPaymentSheet()" style="display:none;">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                                </svg>
+                                <span class="pb-action-card-title">Payment</span>
+                            </div>
+                            <span class="pb-action-card-status">Collect Due</span>
+                        </button>
+                    </div>
+
+                    <!-- Customer Not Available Option Button -->
+                    <button class="pb-btn-not-available" onclick="openFailedPickupSheet()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <span>Customer Not Available / Failed</span>
+                    </button>
+                </div>
+
+                <!-- Complete Pickup CTA with check-circle icon -->
+                <button class="pb-btn-full" id="btn-complete-pickup-trigger" onclick="openCompletePickupSheet()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="16 10 10.5 15.5 8 13"></polyline>
+                    </svg>
+                    <span>Complete Pickup</span>
+                </button>
+
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- 5. PROFILE SCREEN (Production Card Style)  -->
+            <!-- ========================================== -->
+            <section id="pb-screen-profile" class="pb-screen">
+                
+                <div class="pb-profile-screen-wrap">
+                    
+                    <div style="font-size:0.9375rem;font-weight:800;color:var(--pb-text-primary);">
+                        My Profile
+                    </div>
+
+                    <!-- Clean High-Fidelity Profile Card -->
+                    <div class="pb-profile-card-premium">
+                        <div class="pb-avatar-hero">RS</div>
+                        <div class="pb-profile-hero-name">Ravi Shetty</div>
+                        <div class="pb-profile-hero-role">Pickup Staff</div>
+                        <div class="pb-profile-hero-branch">Mangalore Branch</div>
+                        <div class="pb-profile-hero-empid">PB-MNG-042</div>
+                    </div>
+
+                    <!-- Bottom Section: Logout Action -->
+                    <button type="button" class="pb-logout-row-btn" onclick="handleLogout()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- ========================================== -->
+        <!-- FIXED PRODUCTION BOTTOM NAVIGATION (BLACK) -->
+        <!-- ========================================== -->
+        <nav class="pb-bottom-nav hidden" id="pb-bottom-nav">
+            <button class="pb-nav-item active" id="nav-btn-home" onclick="switchNav('home')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Home</span>
+            </button>
+
+            <button class="pb-nav-item" id="nav-btn-pickups" onclick="switchNav('pickups')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="3" width="15" height="13"></rect>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+                <span>Pickups</span>
+            </button>
+
+            <button class="pb-nav-item" id="nav-btn-profile" onclick="switchNav('profile')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Profile</span>
+            </button>
+        </nav>
+
+        <!-- ==================================================
+             HIGH-FIDELITY MOBILE BOTTOM SHEETS
+             ================================================== -->
+
+        <!-- 1. NAVIGATE BOTTOM SHEET -->
+        <div id="sheet-navigate" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Customer Navigation</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-navigate')">&times;</button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;padding:6px 0;">
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Location:</span>
+                        <span class="pb-detail-val" id="sheet-nav-loc">Kadri, Mangalore</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Distance:</span>
+                        <span class="pb-detail-val" id="sheet-nav-dist">2.4 km</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">ETA:</span>
+                        <span class="pb-detail-val" id="sheet-nav-eta">8 mins</span>
+                    </div>
+                </div>
+                <button class="pb-btn-full" onclick="confirmNavigationAction()">
+                    <span>Open Map</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. SCAN LR BOTTOM SHEET -->
+        <div id="sheet-scan-lr" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Scan LR</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-scan-lr')">&times;</button>
+                </div>
+
+                <div class="pb-scanner-view" id="scanner-view-box">
+                    <div class="pb-scan-laser"></div>
+                    <div style="font-size:0.75rem;font-weight:700;z-index:2;">Camera Active</div>
+                    <div style="font-size:0.6875rem;color:#9ca3af;z-index:2;">Align LR Barcode Inside Frame</div>
+                </div>
+
+                <div class="pb-scan-result-card" id="scan-result-box">
+                    <div style="font-weight:800;color:var(--pb-text-primary);border-bottom:1px solid var(--pb-border-light);padding-bottom:4px;">
+                        ✓ LR Verified
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Customer:</span>
+                        <span class="pb-detail-val" id="scan-res-customer">Coastal Traders</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">LR Number:</span>
+                        <span class="pb-detail-val" id="scan-res-lr" style="font-family:monospace;">LR-2026-000125</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Items:</span>
+                        <span class="pb-detail-val" id="scan-res-items">3 Boxes</span>
+                    </div>
+                </div>
+
+                <button class="pb-btn-full" id="btn-scan-sim" onclick="simulateBarcodeScan()">
+                    <span>Scan Barcode</span>
+                </button>
+                <button class="pb-btn-full" id="btn-scan-confirm" style="display:none;" onclick="confirmScanDone()">
+                    <span>Confirm</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. CONFIRM ITEMS BOTTOM SHEET -->
+        <div id="sheet-confirm-items" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Confirm Items</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-confirm-items')">&times;</button>
+                </div>
+
+                <div class="pb-detail-row" style="padding:4px 0;">
+                    <span class="pb-detail-label">Expected Items:</span>
+                    <span class="pb-detail-val" id="sheet-confirm-expected">3 Boxes</span>
+                </div>
+
+                <div style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Collected Quantity:</div>
+                <div class="pb-counter-control">
+                    <button type="button" class="pb-btn-counter" onclick="adjustItemQty(-1)">-</button>
+                    <span class="pb-counter-display" id="sheet-counter-val">3</span>
+                    <button type="button" class="pb-btn-counter" onclick="adjustItemQty(1)">+</button>
+                </div>
+
+                <button class="pb-btn-full" onclick="confirmItemsDone()">
+                    <span>Confirm</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 4. CAPTURE PHOTOS BOTTOM SHEET -->
+        <div id="sheet-photos" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Capture Photos</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-photos')">&times;</button>
+                </div>
+
+                <div class="pb-photo-grid">
+                    <div class="pb-photo-box" onclick="addPhotoToSheet()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                        <span>Add Photo</span>
+                    </div>
+                    <div class="pb-photo-preview" id="sheet-photo-1" style="display:none;">
+                        <span>PHOTO 1</span>
+                        <span>Cargo</span>
+                    </div>
+                    <div class="pb-photo-preview" id="sheet-photo-2" style="display:none;">
+                        <span>PHOTO 2</span>
+                        <span>Slip</span>
+                    </div>
+                </div>
+
+                <div id="sheet-photo-msg" style="font-size:0.75rem;color:var(--pb-text-secondary);text-align:center;">
+                    0 / 2 Uploaded
+                </div>
+
+                <button class="pb-btn-full" onclick="confirmPhotosDone()">
+                    <span>Continue</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 5. SIGNATURE BOTTOM SHEET -->
+        <div id="sheet-signature" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Signature</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-signature')">&times;</button>
+                </div>
+
+                <div style="font-size:0.75rem;color:var(--pb-text-secondary);">
+                    Sign with finger in the signature pad:
+                </div>
+
+                <canvas id="sheet-sig-canvas" class="pb-sig-canvas" width="320" height="130"></canvas>
+
+                <div style="display:flex;gap:8px;">
+                    <button class="pb-btn-full secondary" onclick="clearSignatureCanvas()">
+                        <span>Clear</span>
+                    </button>
+                    <button class="pb-btn-full" onclick="confirmSignatureDone()">
+                        <span>Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. PAYMENT BOTTOM SHEET -->
+        <div id="sheet-payment" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Payment Collection</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-payment')">&times;</button>
+                </div>
+
+                <div style="text-align:center;padding:8px 0;">
+                    <div style="font-size:0.75rem;color:var(--pb-text-secondary);">Amount Due:</div>
+                    <div style="font-size:1.5rem;font-weight:800;color:var(--pb-text-primary);" id="sheet-pay-amount">₹1,800</div>
+                </div>
+
+                <div id="sheet-pay-qr" style="display:none;flex-direction:column;align-items:center;gap:6px;border:1px solid var(--pb-border-light);padding:10px;border-radius:var(--pb-radius-md);background:#fafafa;">
+                    <svg viewBox="0 0 100 100" width="110" height="110">
+                        <rect width="100" height="100" fill="white"/>
+                        <rect x="10" y="10" width="25" height="25" fill="#111827"/>
+                        <rect x="15" y="15" width="15" height="15" fill="white"/>
+                        <rect x="18" y="18" width="9" height="9" fill="#111827"/>
+                        <rect x="65" y="10" width="25" height="25" fill="#111827"/>
+                        <rect x="70" y="15" width="15" height="15" fill="white"/>
+                        <rect x="73" y="18" width="9" height="9" fill="#111827"/>
+                        <rect x="10" y="65" width="25" height="25" fill="#111827"/>
+                        <rect x="15" y="70" width="15" height="15" fill="white"/>
+                        <rect x="18" y="73" width="9" height="9" fill="#111827"/>
+                        <rect x="42" y="10" width="12" height="12" fill="#111827"/>
+                        <rect x="42" y="30" width="16" height="8" fill="#111827"/>
+                        <rect x="10" y="45" width="18" height="10" fill="#111827"/>
+                        <rect x="65" y="45" width="25" height="10" fill="#111827"/>
+                    </svg>
+                    <div style="font-size:0.6875rem;color:var(--pb-text-secondary);font-weight:600;">Scan with UPI app</div>
+                </div>
+
+                <div style="display:flex;gap:8px;">
+                    <button class="pb-btn-full" onclick="completePaymentCash()">
+                        <span>Collect Cash</span>
+                    </button>
+                    <button class="pb-btn-full secondary" onclick="toggleQRView()">
+                        <span>Generate QR</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. COMPLETE PICKUP BOTTOM SHEET -->
+        <div id="sheet-complete-pickup" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Complete Pickup</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-complete-pickup')">&times;</button>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:8px;padding:6px 0;">
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">LR Number:</span>
+                        <span class="pb-detail-val" id="sheet-sum-lr" style="font-family:monospace;">LR-2026-000125</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Customer:</span>
+                        <span class="pb-detail-val" id="sheet-sum-customer">Coastal Traders</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Items:</span>
+                        <span class="pb-detail-val" id="sheet-sum-items">3 Boxes</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Payment Status:</span>
+                        <span class="pb-detail-val" id="sheet-sum-pay">✓ Paid</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Verification Status:</span>
+                        <span class="pb-detail-val" id="sheet-sum-verify">✓ Complete</span>
+                    </div>
+                </div>
+
+                <button class="pb-btn-full" onclick="finalizePickupAction()">
+                    <span>Complete Pickup</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 8. CUSTOMER NOT AVAILABLE / FAILED PICKUP BOTTOM SHEET -->
+        <div id="sheet-failed-pickup" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Reason for Failed Pickup</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-failed-pickup')">&times;</button>
+                </div>
+
+                <div style="font-size:0.75rem;color:var(--pb-text-secondary);">
+                    Select why this pickup could not be completed:
+                </div>
+
+                <div class="pb-reasons-list">
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Customer not available" checked onchange="toggleOtherReasonInput()">
+                        <span>Customer not available</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Shop closed" onchange="toggleOtherReasonInput()">
+                        <span>Shop closed</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Wrong address" onchange="toggleOtherReasonInput()">
+                        <span>Wrong address</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Customer refused" onchange="toggleOtherReasonInput()">
+                        <span>Customer refused</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Package not ready" onchange="toggleOtherReasonInput()">
+                        <span>Package not ready</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Other" onchange="toggleOtherReasonInput()">
+                        <span>Other</span>
+                    </label>
+                </div>
+
+                <!-- Text field for Other reason -->
+                <input type="text" id="failed-reason-other-input" class="pb-reason-other-input" placeholder="Enter reason for failure...">
+
+                <div style="display:flex;gap:8px;width:100%;margin-top:10px;">
+                    <button class="pb-btn-full secondary" onclick="openReattemptPickupSheet()">
+                        <span>Schedule Reattempt</span>
+                    </button>
+                    <button class="pb-btn-full" onclick="submitFailedPickup()">
+                        <span>Mark Failed</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. REATTEMPT PICKUP BOTTOM SHEET -->
+        <div id="sheet-reattempt-pickup" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Schedule Pickup Reattempt</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-reattempt-pickup')">&times;</button>
+                </div>
+
+                <div style="font-size:0.75rem;color:var(--pb-text-secondary);margin-bottom:8px;">
+                    Reschedule pickup attempt date &amp; time slot:
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:12px;padding:4px 0;">
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">LR Number:</span>
+                        <span class="pb-detail-val" id="sheet-reattempt-lr" style="font-family:monospace;">LR-2026-000125</span>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:4px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Reattempt Date *</label>
+                        <select id="reattempt-date-select" style="height:36px;border:1px solid var(--pb-border-light);border-radius:6px;padding:4px 8px;font-size:0.8125rem;background:#fff;">
+                            <option value="Tomorrow, 18 Aug 2026">Tomorrow (18 Aug 2026)</option>
+                            <option value="Day After, 19 Aug 2026">Day After (19 Aug 2026)</option>
+                            <option value="Today Evening (17 Aug 2026)">Today Evening (17 Aug 2026)</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:4px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Time Slot *</label>
+                        <select id="reattempt-slot-select" style="height:36px;border:1px solid var(--pb-border-light);border-radius:6px;padding:4px 8px;font-size:0.8125rem;background:#fff;">
+                            <option value="09:00 AM - 12:00 PM">Morning Slot (09:00 AM - 12:00 PM)</option>
+                            <option value="01:00 PM - 04:00 PM">Afternoon Slot (01:00 PM - 04:00 PM)</option>
+                            <option value="05:00 PM - 08:00 PM">Evening Slot (05:00 PM - 08:00 PM)</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:4px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Customer Notes / Instructions</label>
+                        <input type="text" id="reattempt-notes-input" placeholder="e.g., Customer requested pickup after 11 AM" style="height:36px;border:1px solid var(--pb-border-light);border-radius:6px;padding:4px 8px;font-size:0.8125rem;background:#fff;">
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:8px;width:100%;margin-top:12px;">
+                    <button class="pb-btn-full secondary" onclick="closeSheet('sheet-reattempt-pickup')">
+                        <span>Cancel</span>
+                    </button>
+                    <button class="pb-btn-full" onclick="submitReattemptPickup()">
+                        <span>Confirm Reattempt</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // Data Store
+        const pickupDB = {
+            'LR-2026-000125': {
+                customer: 'Coastal Traders',
+                phone: '+91 98450 12345',
+                lr: 'LR-2026-000125',
+                address: 'Kadri, Mangalore',
+                items: '3 Boxes',
+                weight: '45 KG',
+                itemCount: 3,
+                time: '09:00 AM',
+                paid: true,
+                amount: '₹2,450',
+                status: 'pending',
+                dist: '2.4 km',
+                eta: '8 mins'
+            },
+            'LR-2026-000126': {
+                customer: 'Udupi Enterprises',
+                phone: '+91 98801 44552',
+                lr: 'LR-2026-000126',
+                address: 'Kankanady, Mangalore',
+                items: '5 Cartons',
+                weight: '80 KG',
+                itemCount: 5,
+                time: '10:30 AM',
+                paid: false,
+                amount: '₹1,800',
+                status: 'pending',
+                dist: '4.1 km',
+                eta: '12 mins'
+            },
+            'LR-2026-000127': {
+                customer: 'Ocean Foods',
+                phone: '+91 97412 88710',
+                lr: 'LR-2026-000127',
+                address: 'Bejai, Mangalore',
+                items: '2 Crates',
+                weight: '30 KG',
+                itemCount: 2,
+                time: '12:00 PM',
+                paid: true,
+                amount: '₹1,200',
+                status: 'pending',
+                dist: '1.8 km',
+                eta: '5 mins'
+            },
+            'LR-2026-000128': {
+                customer: 'Supreme Steel Works',
+                phone: '+91 94481 22990',
+                lr: 'LR-2026-000128',
+                address: 'Industrial Estate, Baikampady',
+                items: '10 Bundles',
+                weight: '220 KG',
+                itemCount: 10,
+                time: '08:30 AM',
+                paid: true,
+                amount: '₹5,600',
+                status: 'completed',
+                dist: '8.5 km',
+                eta: '20 mins'
+            },
+            'LR-2026-000129': {
+                customer: 'Apex Polymers',
+                phone: '+91 99002 33441',
+                lr: 'LR-2026-000129',
+                address: 'Phase 2, Baikampady',
+                items: '4 Drums',
+                weight: '110 KG',
+                itemCount: 4,
+                time: '08:45 AM',
+                paid: true,
+                amount: '₹3,100',
+                status: 'completed',
+                dist: '9.0 km',
+                eta: '22 mins'
+            }
+        };
+
+        let currentSelectedLR = 'LR-2026-000125';
+        let currentStatusFilter = 'all';
+        let photosUploadedCount = 0;
+        let collectedQty = 3;
+
+        // 1. OTP Login Flow
+        function sendMobileOTP() {
+            const phone = document.getElementById('login-phone-val').value.trim();
+            if (phone.length < 10) {
+                showToast('Please enter 10-digit mobile');
+                return;
+            }
+            document.getElementById('display-otp-phone').textContent = `+91 ${phone}`;
+            document.getElementById('login-step-phone').style.display = 'none';
+            document.getElementById('login-step-otp').classList.add('visible');
+            showToast('OTP sent: 542109');
+        }
+
+        function backToPhoneStep() {
+            document.getElementById('login-step-phone').style.display = 'block';
+            document.getElementById('login-step-otp').classList.remove('visible');
+        }
+
+        function moveOTPFocus(input, idx) {
+            if (input.value.length === 1 && idx < 5) {
+                document.querySelectorAll('.pb-otp-digit')[idx + 1].focus();
+            }
+        }
+
+        function verifyMobileOTP() {
+            showToast('OTP verified successfully');
+            document.getElementById('pb-screen-login').classList.remove('active');
+            document.getElementById('pb-main-header').style.display = 'flex';
+            document.getElementById('pb-bottom-nav').classList.remove('hidden');
+            document.getElementById('pb-viewport').classList.remove('no-nav');
+            switchNav('home');
+        }
+
+        function handleLogout() {
+            if (confirm('Logout from Pickup Boy App?')) {
+                document.getElementById('pb-main-header').style.display = 'none';
+                document.getElementById('pb-bottom-nav').classList.add('hidden');
+                document.getElementById('pb-viewport').classList.add('no-nav');
+
+                document.querySelectorAll('.pb-screen').forEach(s => s.classList.remove('active'));
+                document.getElementById('pb-screen-login').classList.add('active');
+                backToPhoneStep();
+                showToast('Logged out');
+            }
+        }
+
+        // 2. Fixed 3-Tab Bottom Navigation
+        function switchNav(tab) {
+            document.querySelectorAll('.pb-screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.pb-nav-item').forEach(b => b.classList.remove('active'));
+
+            const title = document.getElementById('pb-header-title');
+            const sub = document.getElementById('pb-header-sub');
+
+            if (tab === 'home') {
+                document.getElementById('pb-screen-home').classList.add('active');
+                document.getElementById('nav-btn-home').classList.add('active');
+                title.textContent = 'Pickup App';
+                sub.textContent = 'Mangalore Branch';
+            } else if (tab === 'pickups') {
+                document.getElementById('pb-screen-pickups').classList.add('active');
+                document.getElementById('nav-btn-pickups').classList.add('active');
+                title.textContent = 'My Pickups';
+                sub.textContent = 'Assigned Tasks';
+            } else if (tab === 'profile') {
+                document.getElementById('pb-screen-profile').classList.add('active');
+                document.getElementById('nav-btn-profile').classList.add('active');
+                title.textContent = 'My Profile';
+                sub.textContent = 'Staff Account';
+            }
+        }
+
+        // 3. Location Groups Collapsible Toggle
+        function toggleLocationGroup(groupId) {
+            const el = document.getElementById(groupId);
+            if (el) el.classList.toggle('collapsed');
+        }
+
+        function selectDateChip(btn, type) {
+            btn.parentElement.querySelectorAll('.pb-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+
+            const customBar = document.getElementById('pb-custom-date-bar');
+            if (type === 'custom') {
+                customBar.classList.add('visible');
+            } else {
+                customBar.classList.remove('visible');
+                showToast(`Filtered: ${type === 'today' ? 'Today' : 'This Month'}`);
+            }
+        }
+
+        function selectStatusChip(btn, status) {
+            btn.parentElement.querySelectorAll('.pb-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            currentStatusFilter = status;
+            filterPickups();
+        }
+
+        function filterPickups() {
+            const cards = document.querySelectorAll('.pb-card');
+            cards.forEach(card => {
+                const cardStatus = card.getAttribute('data-status');
+                if (currentStatusFilter === 'all' || cardStatus === currentStatusFilter) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 4. Pickup Details Screen
+        function openPickupDetails(lrNumber) {
+            const data = pickupDB[lrNumber];
+            if (!data) return;
+
+            currentSelectedLR = lrNumber;
+
+            document.getElementById('dt-customer').textContent = data.customer;
+            document.getElementById('dt-phone').textContent = data.phone;
+            document.getElementById('dt-lr').textContent = data.lr;
+            document.getElementById('dt-address').textContent = data.address;
+            document.getElementById('dt-items').textContent = `${data.items} (${data.weight})`;
+            document.getElementById('dt-time').textContent = data.time;
+
+            const statusBadge = document.getElementById('dt-status-badge');
+            statusBadge.textContent = data.status.toUpperCase();
+            statusBadge.className = `pb-status-badge ${data.status === 'completed' ? 'completed' : ''}`;
+
+            const paymentText = data.paid ? `✓ Paid · ${data.amount}` : `Unpaid · ${data.amount}`;
+            document.getElementById('dt-payment').textContent = paymentText;
+
+            const payStep = document.getElementById('btn-wf-payment');
+            if (!data.paid) {
+                payStep.style.display = 'inline-flex';
+            } else {
+                payStep.style.display = 'none';
+            }
+
+            resetWorkflowState(data.status);
+
+            document.querySelectorAll('.pb-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('pb-screen-details').classList.add('active');
+            document.getElementById('pb-header-title').textContent = data.customer;
+            document.getElementById('pb-header-sub').textContent = data.lr;
+        }
+
+        function resetWorkflowState(status) {
+            const steps = [
+                { 
+                    key: 'nav', 
+                    title: 'Navigate', 
+                    statusText: 'Open Route',
+                    completedTitle: 'Navigate',
+                    icon: `<polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>`
+                },
+                { 
+                    key: 'scan', 
+                    title: 'Scan LR', 
+                    statusText: 'Scan Barcode',
+                    completedTitle: 'Scan LR',
+                    icon: `<rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"></path>`
+                },
+                { 
+                    key: 'confirm', 
+                    title: 'Verify Items', 
+                    statusText: 'Confirm Qty',
+                    completedTitle: 'Items Verified',
+                    icon: `<polyline points="20 6 9 17 4 12"></polyline>`
+                },
+                { 
+                    key: 'photo', 
+                    title: 'Cargo Photos', 
+                    statusText: 'Add Photos',
+                    completedTitle: 'Photos Uploaded',
+                    icon: `<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle>`
+                },
+                { 
+                    key: 'sig', 
+                    title: 'Signature', 
+                    statusText: 'Customer Sign',
+                    completedTitle: 'Signature',
+                    icon: `<path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>`
+                },
+                { 
+                    key: 'payment', 
+                    title: 'Payment', 
+                    statusText: 'Collect Due',
+                    completedTitle: 'Payment',
+                    icon: `<rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line>`
+                }
+            ];
+
+            const isCompleted = status === 'completed';
+            const isFailed = status === 'failed';
+
+            steps.forEach(s => {
+                const btn = document.getElementById(`btn-wf-${s.key}`);
+                if (!btn) return;
+                if (isCompleted) {
+                    btn.classList.add('completed');
+                    btn.innerHTML = `
+                        <div class="pb-action-card-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span class="pb-action-card-title">${s.completedTitle}</span>
+                        </div>
+                        <span class="pb-action-card-status">✓ Completed</span>
+                    `;
+                } else if (isFailed) {
+                    btn.classList.remove('completed');
+                    btn.disabled = true;
+                } else {
+                    btn.classList.remove('completed');
+                    btn.disabled = false;
+                    btn.innerHTML = `
+                        <div class="pb-action-card-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14" stroke-linecap="round" stroke-linejoin="round">
+                                ${s.icon}
+                            </svg>
+                            <span class="pb-action-card-title">${s.title}</span>
+                        </div>
+                        <span class="pb-action-card-status">${s.statusText}</span>
+                    `;
+                }
+            });
+
+            const completeBtn = document.getElementById('btn-complete-pickup-trigger');
+            if (isCompleted) {
+                completeBtn.textContent = '✓ Completed';
+                completeBtn.classList.add('completed-state');
+                completeBtn.disabled = true;
+            } else if (isFailed) {
+                completeBtn.textContent = 'Pickup Failed';
+                completeBtn.classList.add('completed-state');
+                completeBtn.disabled = true;
+            } else {
+                completeBtn.textContent = 'Complete Pickup';
+                completeBtn.classList.remove('completed-state');
+                completeBtn.disabled = false;
+            }
+        }
+
+        // 5. Bottom Sheets Handling
+        function closeSheet(sheetId) {
+            document.getElementById(sheetId).classList.remove('active');
+        }
+
+        // --- 1. Navigate Bottom Sheet ---
+        function openNavigateSheet(customer, address, dist, eta) {
+            document.getElementById('sheet-nav-loc').textContent = address;
+            document.getElementById('sheet-nav-dist').textContent = dist;
+            document.getElementById('sheet-nav-eta').textContent = eta;
+            document.getElementById('sheet-navigate').classList.add('active');
+        }
+
+        function openNavigateSheetCurrent() {
+            const data = pickupDB[currentSelectedLR];
+            openNavigateSheet(data.customer, data.address, data.dist, data.eta);
+        }
+
+        function confirmNavigationAction() {
+            const data = pickupDB[currentSelectedLR];
+            closeSheet('sheet-navigate');
+            markStepDone('nav');
+            showToast(`Opening Navigation to: ${data.address}`);
+            const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`;
+            window.open(mapUrl, '_blank');
+        }
+
+        // --- 2. Scan LR Bottom Sheet ---
+        function openScanSheet() {
+            const data = pickupDB[currentSelectedLR];
+            document.getElementById('scan-res-customer').textContent = data.customer;
+            document.getElementById('scan-res-lr').textContent = data.lr;
+            document.getElementById('scan-res-items').textContent = data.items;
+
+            document.getElementById('scan-result-box').classList.remove('visible');
+            document.getElementById('btn-scan-sim').style.display = 'flex';
+            document.getElementById('btn-scan-confirm').style.display = 'none';
+            document.getElementById('sheet-scan-lr').classList.add('active');
+        }
+
+        function simulateBarcodeScan() {
+            document.getElementById('scan-result-box').classList.add('visible');
+            document.getElementById('btn-scan-sim').style.display = 'none';
+            document.getElementById('btn-scan-confirm').style.display = 'flex';
+            showToast('Barcode recognized: ' + currentSelectedLR);
+        }
+
+        function confirmScanDone() {
+            closeSheet('sheet-scan-lr');
+            markStepDone('scan');
+            showToast('LR Verified');
+        }
+
+        // --- 3. Confirm Items Bottom Sheet ---
+        function openConfirmItemsSheet() {
+            const data = pickupDB[currentSelectedLR];
+            document.getElementById('sheet-confirm-expected').textContent = data.items;
+            collectedQty = data.itemCount;
+            document.getElementById('sheet-counter-val').textContent = collectedQty;
+            document.getElementById('sheet-confirm-items').classList.add('active');
+        }
+
+        function adjustItemQty(delta) {
+            collectedQty = Math.max(0, collectedQty + delta);
+            document.getElementById('sheet-counter-val').textContent = collectedQty;
+        }
+
+        function confirmItemsDone() {
+            closeSheet('sheet-confirm-items');
+            markStepDone('confirm');
+            showToast(`Confirmed ${collectedQty} items`);
+        }
+
+        // --- 4. Photos Bottom Sheet ---
+        function openPhotosSheet() {
+            photosUploadedCount = 0;
+            document.getElementById('sheet-photo-1').style.display = 'none';
+            document.getElementById('sheet-photo-2').style.display = 'none';
+            document.getElementById('sheet-photo-msg').textContent = '0 / 2 Uploaded';
+            document.getElementById('sheet-photos').classList.add('active');
+        }
+
+        function addPhotoToSheet() {
+            if (photosUploadedCount === 0) {
+                photosUploadedCount = 1;
+                document.getElementById('sheet-photo-1').style.display = 'flex';
+                document.getElementById('sheet-photo-msg').textContent = '1 / 2 Uploaded';
+                showToast('Photo 1 added');
+            } else if (photosUploadedCount === 1) {
+                photosUploadedCount = 2;
+                document.getElementById('sheet-photo-2').style.display = 'flex';
+                document.getElementById('sheet-photo-msg').textContent = '2 / 2 Uploaded';
+                showToast('Photo 2 added');
+            } else {
+                showToast('Maximum 2 photos');
+            }
+        }
+
+        function confirmPhotosDone() {
+            if (photosUploadedCount === 0) {
+                showToast('Please add at least 1 photo');
+                return;
+            }
+            closeSheet('sheet-photos');
+            markStepDone('photo');
+            showToast('Photos uploaded');
+        }
+
+        // --- 5. Signature Canvas ---
+        let sigIsDrawing = false;
+        let sigCtx = null;
+
+        function openSignatureSheet() {
+            document.getElementById('sheet-signature').classList.add('active');
+            const canvas = document.getElementById('sheet-sig-canvas');
+            sigCtx = canvas.getContext('2d');
+            sigCtx.strokeStyle = '#111827';
+            sigCtx.lineWidth = 2.5;
+
+            canvas.onmousedown = (e) => startDraw(e.offsetX, e.offsetY);
+            canvas.onmousemove = (e) => draw(e.offsetX, e.offsetY);
+            canvas.onmouseup = () => sigIsDrawing = false;
+
+            canvas.ontouchstart = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                startDraw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+            };
+            canvas.ontouchmove = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                draw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+            };
+            canvas.ontouchend = () => sigIsDrawing = false;
+        }
+
+        function startDraw(x, y) {
+            sigIsDrawing = true;
+            sigCtx.beginPath();
+            sigCtx.moveTo(x, y);
+        }
+
+        function draw(x, y) {
+            if (!sigIsDrawing) return;
+            sigCtx.lineTo(x, y);
+            sigCtx.stroke();
+        }
+
+        function clearSignatureCanvas() {
+            const canvas = document.getElementById('sheet-sig-canvas');
+            sigCtx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function confirmSignatureDone() {
+            closeSheet('sheet-signature');
+            markStepDone('sig');
+            showToast('Signature saved');
+        }
+
+        // --- 6. Payment Bottom Sheet ---
+        function openPaymentSheet() {
+            const data = pickupDB[currentSelectedLR];
+            document.getElementById('sheet-pay-amount').textContent = data.amount;
+            document.getElementById('sheet-pay-qr').style.display = 'none';
+            document.getElementById('sheet-payment').classList.add('active');
+        }
+
+        function toggleQRView() {
+            const qr = document.getElementById('sheet-pay-qr');
+            qr.style.display = qr.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function completePaymentCash() {
+            const data = pickupDB[currentSelectedLR];
+            data.paid = true;
+            closeSheet('sheet-payment');
+            markStepDone('payment');
+
+            document.getElementById('dt-payment').textContent = `✓ Paid · ${data.amount}`;
+            const cardPay = document.getElementById(`card-pay-${currentSelectedLR}`);
+            if (cardPay) cardPay.textContent = `✓ Paid · ${data.amount}`;
+
+            showToast('Payment Completed');
+        }
+
+        // --- 7. Complete Pickup Bottom Sheet ---
+        function openCompletePickupSheet() {
+            const data = pickupDB[currentSelectedLR];
+            if (!data.paid) {
+                showToast('Collect payment first');
+                openPaymentSheet();
+                return;
+            }
+
+            document.getElementById('sheet-sum-lr').textContent = data.lr;
+            document.getElementById('sheet-sum-customer').textContent = data.customer;
+            document.getElementById('sheet-sum-items').textContent = data.items;
+            document.getElementById('sheet-sum-pay').textContent = `✓ Paid · ${data.amount}`;
+            document.getElementById('sheet-sum-verify').textContent = '✓ Complete';
+
+            document.getElementById('sheet-complete-pickup').classList.add('active');
+        }
+
+        function finalizePickupAction() {
+            const data = pickupDB[currentSelectedLR];
+            data.status = 'completed';
+            closeSheet('sheet-complete-pickup');
+
+            const cardBadge = document.getElementById(`card-status-${currentSelectedLR}`);
+            if (cardBadge) {
+                cardBadge.textContent = 'Completed';
+                cardBadge.className = 'pb-status-badge completed';
+            }
+            const card = document.querySelector(`.pb-card[data-lr="${currentSelectedLR}"]`);
+            if (card) card.setAttribute('data-status', 'completed');
+
+            const comp = document.getElementById('kpi-completed');
+            const pend = document.getElementById('kpi-pending');
+            comp.textContent = parseInt(comp.textContent) + 1;
+            pend.textContent = Math.max(0, parseInt(pend.textContent) - 1);
+
+            showToast(`Pickup ${data.lr} COMPLETED!`);
+
+            setTimeout(() => {
+                switchNav('pickups');
+            }, 800);
+        }
+
+        // --- 8. Customer Not Available / Failed Flow ---
+        function openFailedPickupSheet() {
+            document.getElementById('sheet-failed-pickup').classList.add('active');
+        }
+
+        function toggleOtherReasonInput() {
+            const checked = document.querySelector('input[name="failed-reason"]:checked');
+            const otherInput = document.getElementById('failed-reason-other-input');
+            if (checked && checked.value === 'Other') {
+                otherInput.style.display = 'block';
+                otherInput.focus();
+            } else {
+                otherInput.style.display = 'none';
+            }
+        }
+
+        function submitFailedPickup() {
+            const checked = document.querySelector('input[name="failed-reason"]:checked');
+            let reason = checked ? checked.value : 'Customer not available';
+            if (reason === 'Other') {
+                const custom = document.getElementById('failed-reason-other-input').value.trim();
+                if (custom) reason = custom;
+            }
+
+            const data = pickupDB[currentSelectedLR];
+            data.status = 'failed';
+            data.failedReason = reason;
+            data.failedAt = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            data.staff = 'Ravi Shetty';
+
+            closeSheet('sheet-failed-pickup');
+
+            const cardBadge = document.getElementById(`card-status-${currentSelectedLR}`);
+            if (cardBadge) {
+                cardBadge.textContent = 'Failed';
+                cardBadge.className = 'pb-status-badge failed';
+            }
+            const card = document.querySelector(`.pb-card[data-lr="${currentSelectedLR}"]`);
+            if (card) card.setAttribute('data-status', 'failed');
+
+            const failKpi = document.getElementById('kpi-failed');
+            const pendKpi = document.getElementById('kpi-pending');
+            failKpi.textContent = parseInt(failKpi.textContent) + 1;
+            pendKpi.textContent = Math.max(0, parseInt(pendKpi.textContent) - 1);
+
+            showToast(`Pickup Marked FAILED (${reason})`);
+
+            setTimeout(() => {
+                switchNav('pickups');
+            }, 800);
+        }
+
+        // --- 9. Reattempt Pickup Flow ---
+        function openReattemptPickupSheet() {
+            closeSheet('sheet-failed-pickup');
+            const data = pickupDB[currentSelectedLR];
+            document.getElementById('sheet-reattempt-lr').textContent = data.lr;
+            document.getElementById('sheet-reattempt-pickup').classList.add('active');
+        }
+
+        function submitReattemptPickup() {
+            const data = pickupDB[currentSelectedLR];
+            const date = document.getElementById('reattempt-date-select').value;
+            const slot = document.getElementById('reattempt-slot-select').value;
+            const notes = document.getElementById('reattempt-notes-input').value.trim();
+
+            data.status = 'reattempted';
+            data.reattemptDate = date;
+            data.reattemptSlot = slot;
+            data.reattemptNotes = notes;
+
+            closeSheet('sheet-reattempt-pickup');
+
+            const cardBadge = document.getElementById(`card-status-${currentSelectedLR}`);
+            if (cardBadge) {
+                cardBadge.textContent = 'Reattempt';
+                cardBadge.className = 'pb-status-badge reattempt';
+            }
+            const card = document.querySelector(`.pb-card[data-lr="${currentSelectedLR}"]`);
+            if (card) card.setAttribute('data-status', 'reattempted');
+
+            showToast(`✓ Reattempt Scheduled for ${data.lr} (${date})`);
+
+            setTimeout(() => {
+                switchNav('pickups');
+            }, 800);
+        }
+
+        function markStepDone(stepKey) {
+            const stepTitles = {
+                'nav': 'Navigate',
+                'scan': 'Scan LR',
+                'confirm': 'Items Verified',
+                'photo': 'Photos Uploaded',
+                'sig': 'Signature',
+                'payment': 'Payment'
+            };
+
+            const title = stepTitles[stepKey] || 'Task';
+            const btn = document.getElementById(`btn-wf-${stepKey}`);
+            if (!btn) return;
+            btn.classList.add('completed');
+            btn.innerHTML = `
+                <div class="pb-action-card-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span class="pb-action-card-title">${title}</span>
+                </div>
+                <span class="pb-action-card-status">✓ Completed</span>
+            `;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('pb-toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2200);
+        }
+    </script>
+</body>
+</html>

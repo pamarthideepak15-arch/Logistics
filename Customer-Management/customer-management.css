@@ -1,0 +1,226 @@
+/* Customer Management Table Alignments (Overrides global component rules on desktop only) */
+@media (min-width: 769px) {
+    .data-table th, .data-table td {
+        text-align: left !important;
+        white-space: nowrap !important;
+        padding-right: 32px !important;
+        width: auto !important;
+    }
+    .data-table th:last-child, .data-table td:last-child {
+        text-align: right !important;
+        width: 1% !important;
+        padding-right: 16px !important;
+    }
+}
+
+
+/* Badges for Customer Type */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid #000000;
+}
+.badge-individual {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+.badge-business {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Conditional Forms */
+.business-fields {
+    display: none !important;
+}
+body:has(#type-business:checked) .business-fields {
+    display: block !important;
+}
+body:has(#type-business-view:checked) .business-fields {
+    display: block !important;
+}
+
+/* Radio Group Tabs Styling */
+.radio-group label {
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+}
+.radio-group label input[type="radio"] {
+    display: none !important;
+}
+.radio-group label:has(input[type="radio"]:checked) {
+    background-color: var(--color-black) !important;
+    color: var(--color-white) !important;
+    border-color: var(--color-black) !important;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+}
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Date Filter Selected Text Display & Auto Width */
+#date-filter-wrapper {
+    min-width: 145px;
+    width: auto !important;
+}
+
+#date-filter-trigger {
+    white-space: nowrap;
+    gap: 8px;
+}
+
+#date-filter-trigger .selected-text,
+#date-filter-trigger .placeholder {
+    white-space: nowrap;
+}
+
+details.custom-select-wrapper:has(input[value="all"]:checked) .placeholder {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+}
+
+details.custom-select-wrapper:has(input[value="today"]:checked) .selected-text.text-today {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+}
+
+details.custom-select-wrapper:has(input[value="thisweek"]:checked) .selected-text.text-thisweek {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+}
+
+details.custom-select-wrapper:has(input[value="customdate"]:checked) .selected-text.text-customdate {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Custom ERP Calendar Popup Overlay & Styling */
+.calendar-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-popup {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    width: 280px;
+    padding: 14px;
+    font-family: var(--font-family-primary);
+    color: var(--color-black);
+    user-select: none;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.calendar-month-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.calendar-nav-btn {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-black);
+    transition: all 0.15s ease;
+}
+
+.calendar-nav-btn:hover {
+    background-color: var(--color-bg-light);
+    border-color: var(--color-black);
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.calendar-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 12px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--color-black);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.calendar-day:hover:not(.empty):not(.selected) {
+    background-color: var(--color-bg-light);
+}
+
+.calendar-day.empty {
+    cursor: default;
+}
+
+.calendar-day.selected {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    font-weight: 700;
+}
+
+.calendar-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+}
+
+.calendar-btn {
+    height: 28px;
+    padding: 0 12px;
+    font-size: 0.75rem;
+}

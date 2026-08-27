@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LR Management - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="lrm.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar -->
+        <aside class="sidebar">
+            
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="../User-Management/index.html" class="rail-icon active" data-tooltip="Administration">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </a>
+                    <a href="../Counter-Booking/index.html" class="rail-icon" data-tooltip="Counter Booking">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Masters">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Logistics Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Accounts">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12" /><path d="M6 8h12" /><path d="m6 13 8.5 8" /><path d="M6 13h3" /><path d="M9 13c6.667 0 6.667-10 0-10" /></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="HR">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">ADMINISTRATION</div>
+                <nav class="sidebar-nav">
+                    <a href="../User-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        User Management
+                    </a>
+                    <a href="../Branch-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Management
+                    </a>
+                    <a href="index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        LR Management
+                    </a>
+                    <a href="../Pickup-Operations/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        Pickup Operations
+                    </a>
+                    <a href="../Delivery-Operations/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Delivery Operations
+                    </a>
+                    <a href="../Role-Permission/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Roles & Permissions
+                    </a>
+                    <a href="../Audit-Logs/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        Audit Logs
+                    </a>
+                </nav>
+
+                <div class="sidebar-nav-section">CUSTOMERS</div>
+                <nav class="sidebar-nav">
+                    <a href="../Customer-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 1 0 7.75"></path></svg>
+                        Customer Management
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Administration</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">LR Management</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">LR Management</h1>
+                        <p class="page-subtitle">Manage and track generated Lorry Receipts across branches.</p>
+                    </div>
+        
+                </div>
+
+                <!-- Filters Bar (Uses identical design system components and custom-select-wrapper dropdowns) -->
+                <div class="filters-bar">
+                    <div class="search-input-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="search-input" placeholder="Search LR Number / Customer / Mobile Number">
+                    </div>
+
+                    <!-- Branch Filter -->
+                    <details class="custom-select-wrapper" style="width: 140px;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Branch</span>
+                            <span class="selected-text text-mumbai">Mumbai Hub</span>
+                            <span class="selected-text text-delhi">Delhi Hub</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="filter-branch" value="all"> All Branches</label>
+                            <label class="custom-option"><input type="radio" name="filter-branch" value="mumbai"> Mumbai Hub</label>
+                            <label class="custom-option"><input type="radio" name="filter-branch" value="delhi"> Delhi Hub</label>
+                            <label class="custom-option"><input type="radio" name="filter-branch" value="jaipur"> Jaipur Branch</label>
+                        </div>
+                    </details>
+
+                    <!-- Status Filter -->
+                    <details class="custom-select-wrapper" style="width: 130px;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Status</span>
+                            <span class="selected-text text-booked">Booked</span>
+                            <span class="selected-text text-intransit">In-transit</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="filter-status" value="all"> All Statuses</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="booked"> Booked</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="picked"> Picked</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="intransit"> In-transit</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="delivered"> Delivered</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="ndr"> NDR</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="rto"> RTO</label>
+                        </div>
+                    </details>
+
+                    <!-- Booking Date Filter -->
+                    <details class="custom-select-wrapper" id="date-filter-wrapper" style="min-width: 145px;">
+                        <summary class="custom-select-trigger" id="date-filter-trigger">
+                            <span class="placeholder" style="display: flex; align-items: center; gap: 6px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                Date
+                            </span>
+                            <span class="selected-text text-today">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                Today
+                            </span>
+                            <span class="selected-text text-thisweek">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                This Week
+                            </span>
+                            <span class="selected-text text-customdate">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span id="custom-date-selected-text">13 Aug 2026</span>
+                            </span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+
+                        <div class="custom-select-options">
+                            <label class="custom-option">
+                                <input type="radio" name="filter-date" value="all">
+                                All Dates
+                            </label>
+                            <label class="custom-option">
+                                <input type="radio" name="filter-date" value="today">
+                                Today
+                            </label>
+                            <label class="custom-option">
+                                <input type="radio" name="filter-date" value="thisweek">
+                                This Week
+                            </label>
+                            <label class="custom-option">
+                                <input type="radio" name="filter-date" value="customdate" id="radio-customdate">
+                                Custom Date
+                            </label>
+                        </div>
+                    </details>
+
+
+                    <!-- Payment Type Filter -->
+                    <details class="custom-select-wrapper" style="width: 130px;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Payment Type</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="filter-payment" value="all"> All Types</label>
+                            <label class="custom-option"><input type="radio" name="filter-payment" value="paid"> Paid</label>
+                            <label class="custom-option"><input type="radio" name="filter-payment" value="topay"> To-Pay</label>
+                            <label class="custom-option"><input type="radio" name="filter-payment" value="credit"> Credit</label>
+                        </div>
+                    </details>
+
+                    <!-- Shipment Type Filter -->
+                    <details class="custom-select-wrapper" style="width: 140px;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Shipment Type</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="filter-shipment" value="all"> All Types</label>
+                            <label class="custom-option"><input type="radio" name="filter-shipment" value="individual"> Individual</label>
+                            <label class="custom-option"><input type="radio" name="filter-shipment" value="business"> Business</label>
+                            <label class="custom-option"><input type="radio" name="filter-shipment" value="ftl"> FTL</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- LR Enterprise Data Table with Sortable Column Headers -->
+                <div class="table-container">
+                    <table class="data-table lrm-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        LR Number
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Booking Date
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Customer
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th>Origin Branch</th>
+                                <th>Destination Branch</th>
+                                <th>Current Branch</th>
+                                <th>Shipment Type</th>
+                                <th>Weight</th>
+                                <th>Payment Type</th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Amount
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th>Truck Number</th>
+                                <th>Pickup Status</th>
+                                <th>Delivery Status</th>
+                                <th>E-Way Bill</th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Status
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th style="text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Row 1: Booked / Paid -->
+                            <tr>
+                                <td><a href="view-lr.html?lr=LR-2026-000125" style="font-weight: 700; color: var(--color-black); text-decoration: underline;">LR-2026-000125</a></td>
+                                <td>13 Aug 2026</td>
+                                <td>ABC Traders Pvt Ltd</td>
+                                <td>Mumbai Hub</td>
+                                <td>Delhi Hub</td>
+                                <td>Mumbai Hub</td>
+                                <td>Business</td>
+                                <td>75 kg</td>
+                                <td>Paid</td>
+                                <td style="font-weight: 700;">₹50,100</td>
+                                <td><span style="font-family: monospace; font-weight: 600;">AP16AB1234</span></td>
+                                <td><span style="font-weight: 600;">Picked</span></td>
+                                <td><span style="color: #666;">Pending</span></td>
+                                <td><span style="font-weight: 600;">Generated</span></td>
+                                <td><span class="badge-status badge-booked">Booked</span></td>
+                                <td style="text-align: center;">
+                                    <div class="action-icons" style="justify-content: center;">
+                                        <a href="view-lr.html?lr=LR-2026-000125" class="action-icon" title="View LR Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                        <button type="button" class="action-icon" title="Print LR" onclick="alert('Printing LR-2026-000125...')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                        </button>
+                                        <button type="button" class="action-icon" title="Download LR" onclick="alert('Downloading LR-2026-000125 PDF...')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: In-transit / Credit -->
+                            <tr>
+                                <td><a href="view-lr.html?lr=LR-2026-000124" style="font-weight: 700; color: var(--color-black); text-decoration: underline;">LR-2026-000124</a></td>
+                                <td>12 Aug 2026</td>
+                                <td>Precision Logistics</td>
+                                <td>Jaipur Branch</td>
+                                <td>Bengaluru Hub</td>
+                                <td>Vijayawada Warehouse</td>
+                                <td>FTL</td>
+                                <td>1,200 kg</td>
+                                <td>Credit</td>
+                                <td style="font-weight: 700;">₹1,25,000</td>
+                                <td><span style="font-family: monospace; font-weight: 600;">AP16CD5678</span></td>
+                                <td><span style="font-weight: 600;">Picked</span></td>
+                                <td><span style="color: #666;">Pending</span></td>
+                                <td><span style="font-weight: 600;">Generated</span></td>
+                                <td><span class="badge-status badge-intransit">In Transit</span></td>
+                                <td style="text-align: center;">
+                                    <div class="action-icons" style="justify-content: center;">
+                                        <a href="view-lr.html?lr=LR-2026-000124" class="action-icon" title="View LR Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                        <button type="button" class="action-icon" title="Print LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                        </button>
+                                        <button type="button" class="action-icon" title="Download LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 3: Delivered / To-Pay -->
+                            <tr>
+                                <td><a href="view-lr.html?lr=LR-2026-000123" style="font-weight: 700; color: var(--color-black); text-decoration: underline;">LR-2026-000123</a></td>
+                                <td>11 Aug 2026</td>
+                                <td>Ramesh Sharma</td>
+                                <td>Delhi Hub</td>
+                                <td>Mumbai Hub</td>
+                                <td>Mumbai Hub</td>
+                                <td>Individual</td>
+                                <td>15 kg</td>
+                                <td>To-Pay</td>
+                                <td style="font-weight: 700;">₹4,500</td>
+                                <td><span style="font-family: monospace; font-weight: 600;">MH04EF9012</span></td>
+                                <td><span style="font-weight: 600;">Picked</span></td>
+                                <td><span style="font-weight: 700;">Delivered</span></td>
+                                <td><span style="color: #666;">Not Required</span></td>
+                                <td><span class="badge-status badge-delivered">Delivered</span></td>
+                                <td style="text-align: center;">
+                                    <div class="action-icons" style="justify-content: center;">
+                                        <a href="view-lr.html?lr=LR-2026-000123" class="action-icon" title="View LR Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                        <button type="button" class="action-icon" title="Print LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                        </button>
+                                        <button type="button" class="action-icon" title="Download LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 4: Picked / Paid -->
+                            <tr>
+                                <td><a href="view-lr.html?lr=LR-2026-000122" style="font-weight: 700; color: var(--color-black); text-decoration: underline;">LR-2026-000122</a></td>
+                                <td>10 Aug 2026</td>
+                                <td>Global Freight Corp</td>
+                                <td>Ahmedabad Hub</td>
+                                <td>Kolkata Point</td>
+                                <td>Ahmedabad Hub</td>
+                                <td>Business</td>
+                                <td>340 kg</td>
+                                <td>Paid</td>
+                                <td style="font-weight: 700;">₹32,000</td>
+                                <td><span style="font-family: monospace; font-weight: 600;">GJ01GH3456</span></td>
+                                <td><span style="font-weight: 600;">Picked</span></td>
+                                <td><span style="color: #666;">Pending</span></td>
+                                <td><span style="font-weight: 600;">Generated</span></td>
+                                <td><span class="badge-status badge-picked">Picked</span></td>
+                                <td style="text-align: center;">
+                                    <div class="action-icons" style="justify-content: center;">
+                                        <a href="view-lr.html?lr=LR-2026-000122" class="action-icon" title="View LR Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                        <button type="button" class="action-icon" title="Print LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                        </button>
+                                        <button type="button" class="action-icon" title="Download LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 5: NDR Status -->
+                            <tr>
+                                <td><a href="view-lr.html?lr=LR-2026-000121&status=ndr" style="font-weight: 700; color: var(--color-black); text-decoration: underline;">LR-2026-000121</a></td>
+                                <td>09 Aug 2026</td>
+                                <td>Pooja Hegde</td>
+                                <td>Mumbai Hub</td>
+                                <td>Pune Hub</td>
+                                <td>Pune Hub</td>
+                                <td>Individual</td>
+                                <td>8 kg</td>
+                                <td>To-Pay</td>
+                                <td style="font-weight: 700;">₹1,200</td>
+                                <td><span style="font-family: monospace; font-weight: 600;">MH12JK7890</span></td>
+                                <td><span style="font-weight: 600;">Picked</span></td>
+                                <td><span style="color: var(--color-black); font-weight: 600;">Failed</span></td>
+                                <td><span style="color: #666;">Not Required</span></td>
+                                <td><span class="badge-status badge-ndr">NDR</span></td>
+                                <td style="text-align: center;">
+                                    <div class="action-icons" style="justify-content: center;">
+                                        <a href="view-lr.html?lr=LR-2026-000121&status=ndr" class="action-icon" title="View LR Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                        <button type="button" class="action-icon" title="Print LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                        </button>
+                                        <button type="button" class="action-icon" title="Download LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 6: RTO Status -->
+                            <tr>
+                                <td><a href="view-lr.html?lr=LR-2026-000120&status=rto" style="font-weight: 700; color: var(--color-black); text-decoration: underline;">LR-2026-000120</a></td>
+                                <td>08 Aug 2026</td>
+                                <td>Vanguard Enterprises</td>
+                                <td>Delhi Hub</td>
+                                <td>Chennai Hub</td>
+                                <td>Chennai Hub</td>
+                                <td>FTL</td>
+                                <td>500 kg</td>
+                                <td>Credit</td>
+                                <td style="font-weight: 700;">₹45,600</td>
+                                <td><span style="font-family: monospace; font-weight: 600;">AP16XY9876</span></td>
+                                <td><span style="font-weight: 600;">Picked</span></td>
+                                <td><span style="color: var(--color-black); font-weight: 600;">Failed</span></td>
+                                <td><span style="font-weight: 600;">Generated</span></td>
+                                <td><span class="badge-status badge-rto">RTO</span></td>
+                                <td style="text-align: center;">
+                                    <div class="action-icons" style="justify-content: center;">
+                                        <a href="view-lr.html?lr=LR-2026-000120&status=rto" class="action-icon" title="View LR Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                        <button type="button" class="action-icon" title="Print LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                        </button>
+                                        <button type="button" class="action-icon" title="Download LR">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination Bar -->
+                <div class="pagination-bar">
+                    <span>Showing 1 to 6 of 128 Lorry Receipts</span>
+                    <div class="pagination-controls">
+                        <button class="page-btn">&laquo; Previous</button>
+                        <span class="page-number">1</span>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">Next &raquo;</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom ERP Calendar Popup Overlay -->
+    <div class="calendar-popup-overlay" id="calendar-popup-overlay" style="display: none;">
+        <div class="calendar-popup" id="calendar-popup">
+            <div class="calendar-header">
+                <button type="button" class="calendar-nav-btn" id="cal-prev-month" aria-label="Previous Month">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <span class="calendar-month-title" id="cal-month-title">August 2026</span>
+                <button type="button" class="calendar-nav-btn" id="cal-next-month" aria-label="Next Month">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+
+            <div class="calendar-weekdays">
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+                <span>Sun</span>
+            </div>
+
+            <div class="calendar-days-grid" id="calendar-days-grid">
+                <!-- Dynamically rendered days -->
+            </div>
+
+            <div class="calendar-actions">
+                <button type="button" class="btn-secondary calendar-btn" id="cal-cancel-btn">Cancel</button>
+                <button type="button" class="btn-primary calendar-btn" id="cal-apply-btn">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateWrapper = document.getElementById('date-filter-wrapper');
+            const calendarOverlay = document.getElementById('calendar-popup-overlay');
+            const radioCustomDate = document.getElementById('radio-customdate');
+            const customDateText = document.getElementById('custom-date-selected-text');
+            
+            // Initial date: August 13, 2026
+            let currentDate = new Date(2026, 7, 13);
+            let selectedDate = new Date(2026, 7, 13);
+            let tempSelectedDate = new Date(2026, 7, 13);
+
+            const monthNames = ["August", "September", "October", "November", "December", "January", "February", "March", "April", "May", "June", "July"];
+            const fullMonthNames = ["January", "February", "March", "April", "May", "June", 
+                                "July", "August", "September", "October", "November", "December"];
+            const monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            function renderCalendar() {
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                
+                document.getElementById('cal-month-title').textContent = `${fullMonthNames[month]} ${year}`;
+                
+                const grid = document.getElementById('calendar-days-grid');
+                grid.innerHTML = '';
+
+                let firstDay = new Date(year, month, 1).getDay();
+                let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+                
+                const totalDays = new Date(year, month + 1, 0).getDate();
+
+                for (let i = 0; i < startOffset; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'calendar-day empty';
+                    grid.appendChild(emptyCell);
+                }
+
+                for (let d = 1; d <= totalDays; d++) {
+                    const dayCell = document.createElement('div');
+                    dayCell.className = 'calendar-day';
+                    dayCell.textContent = d;
+
+                    if (tempSelectedDate && 
+                        tempSelectedDate.getFullYear() === year && 
+                        tempSelectedDate.getMonth() === month && 
+                        tempSelectedDate.getDate() === d) {
+                        dayCell.classList.add('selected');
+                    }
+
+                    dayCell.addEventListener('click', function () {
+                        grid.querySelectorAll('.calendar-day').forEach(cell => cell.classList.remove('selected'));
+                        dayCell.classList.add('selected');
+                        tempSelectedDate = new Date(year, month, d);
+                    });
+
+                    grid.appendChild(dayCell);
+                }
+            }
+
+            document.getElementById('cal-prev-month').addEventListener('click', function(e) {
+                e.stopPropagation();
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            document.getElementById('cal-next-month').addEventListener('click', function(e) {
+                e.stopPropagation();
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            const dateRadios = document.querySelectorAll('input[name="filter-date"]');
+            dateRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'customdate') {
+                        if (dateWrapper) dateWrapper.removeAttribute('open');
+                        tempSelectedDate = new Date(selectedDate);
+                        currentDate = new Date(selectedDate);
+                        renderCalendar();
+                        calendarOverlay.style.display = 'flex';
+                    } else {
+                        if (dateWrapper) dateWrapper.removeAttribute('open');
+                    }
+                });
+            });
+
+            document.getElementById('cal-cancel-btn').addEventListener('click', function() {
+                calendarOverlay.style.display = 'none';
+            });
+
+            document.getElementById('cal-apply-btn').addEventListener('click', function() {
+                if (tempSelectedDate) {
+                    selectedDate = new Date(tempSelectedDate);
+                    const formatted = `${selectedDate.getDate()} ${monthShortNames[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`;
+                    if (customDateText) {
+                        customDateText.textContent = formatted;
+                    }
+                    if (radioCustomDate) {
+                        radioCustomDate.checked = true;
+                    }
+                }
+                calendarOverlay.style.display = 'none';
+            });
+
+            calendarOverlay.addEventListener('click', function(e) {
+                if (e.target === calendarOverlay) {
+                    calendarOverlay.style.display = 'none';
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (dateWrapper && !dateWrapper.contains(e.target) && !calendarOverlay.contains(e.target)) {
+                    dateWrapper.removeAttribute('open');
+                }
+            });
+
+            renderCalendar();
+        });
+    </script>
+</body>
+</html>

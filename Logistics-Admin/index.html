@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Admin - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="logistics-admin.css">
+    <style>
+        .queue-header-split {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .count-pill {
+            font-size: 0.71875rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            background: #fff;
+            color: var(--color-black);
+        }
+        .sticky-summary-bar {
+            position: sticky;
+            bottom: 0;
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: var(--border-radius-base);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (Main Admin Standard Structure) -->
+        <aside class="sidebar">
+            
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo" title="Logistics ERP">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="javascript:void(0)" class="rail-icon active" data-tooltip="Logistics Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane: Dashboard, Vehicle Master, Truck Assignment ONLY -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">DASHBOARD</div>
+                <nav class="sidebar-nav">
+                    <a href="javascript:void(0)" class="sidebar-link active" id="side-link-dashboard" onclick="switchNav('dashboard')">
+                        <label for="mobile-menu-toggle" style="display: flex; align-items: center; gap: inherit; width: 100%; cursor: pointer; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            Dashboard
+                        </label>
+                    </a>
+                </nav>
+
+                <div class="sidebar-nav-section" style="margin-top: 14px;">LOGISTICS OPERATIONS</div>
+                <nav class="sidebar-nav">
+                    <a href="javascript:void(0)" class="sidebar-link" id="side-link-vehicles" onclick="switchNav('vehicles')">
+                        <label for="mobile-menu-toggle" style="display: flex; align-items: center; gap: inherit; width: 100%; cursor: pointer; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <rect x="1" y="3" width="15" height="13"></rect>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                            </svg>
+                            Vehicle Master
+                        </label>
+                    </a>
+                    <a href="javascript:void(0)" class="sidebar-link" id="side-link-assignment" onclick="switchNav('assignment')">
+                        <label for="mobile-menu-toggle" style="display: flex; align-items: center; gap: inherit; width: 100%; cursor: pointer; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <polyline points="17 11 19 13 23 9"></polyline>
+                            </svg>
+                            Truck Assignment
+                        </label>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            
+            <!-- Top Header (Standard Main Admin Top Bar) -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Logistics Admin</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current" id="breadcrumb-current">Dashboard</span>
+                    <span class="logistics-hub-badge" style="margin-left: 8px;">MANGALORE LOGISTICS HUB</span>
+                </div>
+
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Kiran Varma</strong>
+                        <span>Logistics Admin</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Dynamic Notification Toast (Strict B&W) -->
+            <div id="log-toast" class="log-toast">Notification Message</div>
+
+            <!-- Page Workspace Container -->
+            <div class="main-scroll-area">
+
+                <!-- ================================================== -->
+                <!-- 1. DASHBOARD                                       -->
+                <!-- ================================================== -->
+                <section id="view-dashboard" class="view-panel" style="display:flex;flex-direction:column;gap:12px;">
+                    <div class="page-header">
+                        <div class="page-title-group">
+                            <h1 class="page-title">Dashboard</h1>
+                            <p class="page-subtitle">Overview of transport fleet and loading operations.</p>
+                        </div>
+                    </div>
+
+                    <!-- Only Show KPI Cards -->
+                    <div class="kpi-cards-grid">
+                        <div class="kpi-stat-card" style="cursor:pointer;" onclick="switchNav('vehicles')">
+                            <div class="kpi-stat-top-row">
+                                <span class="kpi-stat-label">Available Vehicles</span>
+                                <span class="kpi-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                </span>
+                            </div>
+                            <span class="kpi-stat-value" id="kpi-avail-veh">12</span>
+                            <span class="kpi-stat-sub">Ready to assign</span>
+                        </div>
+                        <div class="kpi-stat-card" style="cursor:pointer;" onclick="switchNav('assignment'); switchSubTab('loading')">
+                            <div class="kpi-stat-top-row">
+                                <span class="kpi-stat-label">Pending Loading</span>
+                                <span class="kpi-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                </span>
+                            </div>
+                            <span class="kpi-stat-value" id="kpi-pend-loading">1</span>
+                            <span class="kpi-stat-sub">Waiting for scan</span>
+                        </div>
+                        <div class="kpi-stat-card" style="cursor:pointer;" onclick="switchNav('assignment'); switchSubTab('transit')">
+                            <div class="kpi-stat-top-row">
+                                <span class="kpi-stat-label">Loaded Trucks</span>
+                                <span class="kpi-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                            </div>
+                            <span class="kpi-stat-value" id="kpi-loaded-trucks">2</span>
+                            <span class="kpi-stat-sub">Ready to dispatch</span>
+                        </div>
+                        <div class="kpi-stat-card" style="cursor:pointer;" onclick="switchNav('assignment'); switchSubTab('transit')">
+                            <div class="kpi-stat-top-row">
+                                <span class="kpi-stat-label">In Transit Trucks</span>
+                                <span class="kpi-stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </span>
+                            </div>
+                            <span class="kpi-stat-value" id="kpi-transit-trucks">3</span>
+                            <span class="kpi-stat-sub">On active route</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================================================== -->
+                <!-- 2. VEHICLE MASTER                                  -->
+                <!-- ================================================== -->
+                <section id="view-vehicles" class="view-panel" style="display:none;flex-direction:column;gap:12px;">
+                    <div class="page-header">
+                        <div class="page-title-group">
+                            <h1 class="page-title">Vehicle Master</h1>
+                            <p class="page-subtitle">Maintain transport vehicles and regulatory compliance.</p>
+                        </div>
+                        <div class="header-actions">
+                            <a href="add-vehicle.html" class="btn-primary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Vehicle
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Filters Bar -->
+                    <div class="filters-bar">
+                        <div class="search-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="filter-vehicle-search" class="search-input" placeholder="Search Vehicle Number, Type..." onkeyup="filterVehicleTable()">
+                        </div>
+
+                        <!-- Type Filter -->
+                        <details class="custom-select-wrapper" style="width: 160px;">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder">All Types</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option"><input type="radio" name="vehicle-type-filter" value="all" checked onchange="filterVehicleTable()"> All Types</label>
+                                <label class="custom-option"><input type="radio" name="vehicle-type-filter" value="Mini Truck" onchange="filterVehicleTable()"> Mini Truck</label>
+                                <label class="custom-option"><input type="radio" name="vehicle-type-filter" value="Medium Truck" onchange="filterVehicleTable()"> Medium Truck</label>
+                                <label class="custom-option"><input type="radio" name="vehicle-type-filter" value="Heavy Truck" onchange="filterVehicleTable()"> Heavy Truck</label>
+                            </div>
+                        </details>
+
+                        <!-- Status Filter -->
+                        <details class="custom-select-wrapper" style="width: 160px;">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder">All Status</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option"><input type="radio" name="vehicle-status-filter" value="all" checked onchange="filterVehicleTable()"> All Status</label>
+                                <label class="custom-option"><input type="radio" name="vehicle-status-filter" value="Available" onchange="filterVehicleTable()"> Available</label>
+                                <label class="custom-option"><input type="radio" name="vehicle-status-filter" value="Assigned" onchange="filterVehicleTable()"> Assigned</label>
+                                <label class="custom-option"><input type="radio" name="vehicle-status-filter" value="In Transit" onchange="filterVehicleTable()"> In Transit</label>
+                                <label class="custom-option"><input type="radio" name="vehicle-status-filter" value="Inactive" onchange="filterVehicleTable()"> Inactive</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Vehicle Table with Actions: 👁 View, ✏ Edit, 🗑 Delete -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Vehicle Number</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Capacity</th>
+                                    <th>Document Status</th>
+                                    <th>Status</th>
+                                    <th style="text-align:right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehicle-table-body">
+                                <!-- Populated dynamically with icon-only actions -->
+                            </tbody>
+                        </table>
+
+                        <div class="pagination-bar">
+                            <span id="vehicle-page-info">Showing 1-6 of 6 vehicles</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <button type="button" class="page-btn" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================================================== -->
+                <!-- 3. TRUCK ASSIGNMENT (ENTERPRISE LARGE-DATA WORKFLOW)-->
+                <!-- ================================================== -->
+                <section id="view-assignment" class="view-panel" style="display:none;flex-direction:column;gap:12px;">
+                    
+                    <!-- Header with exact requested text -->
+                    <div class="page-header">
+                        <div class="page-title-group">
+                            <h1 class="page-title">Truck Assignment</h1>
+                            <p class="page-subtitle">Create truck movement and verify LR loading before dispatch.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3 Inner Step Tabs -->
+                    <div class="sub-tabs-bar">
+                        <button type="button" class="sub-tab-btn active" id="subtab-btn-create" onclick="switchSubTab('create')">
+                            1. Create Truck Movement
+                        </button>
+                        <button type="button" class="sub-tab-btn" id="subtab-btn-loading" onclick="switchSubTab('loading')">
+                            2. Loading Verification <span class="sub-tab-badge" id="badge-count-loading">1 Active</span>
+                        </button>
+                        <button type="button" class="sub-tab-btn" id="subtab-btn-transit" onclick="switchSubTab('transit')">
+                            3. Truck Movement <span class="sub-tab-badge" id="badge-count-transit">3</span>
+                        </button>
+                    </div>
+
+                    <!-- ================================================== -->
+                    <!-- STEP 1: CREATE TRUCK MOVEMENT                      -->
+                    <!-- ================================================== -->
+                    <div id="subtab-content-create" class="subtab-view" style="display:flex;flex-direction:column;gap:12px;">
+                        
+                        <!-- Compact CTA Card -->
+                        <div class="planned-journey-cta-card" style="background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--border-radius-base);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+                            <div class="planned-journey-cta-left" style="display:flex;align-items:center;gap:12px;">
+                                <div style="width:32px;height:32px;border-radius:4px;background:var(--color-black);color:var(--color-white);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                </div>
+                                <div>
+                                    <div style="font-size:0.875rem;font-weight:700;color:var(--color-black);">Create Planned Truck Journey</div>
+                                    <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:2px;">
+                                        Create a planned truck journey before physical loading. System automatically queries warehouse-verified shipments matching destination branch for verification.
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="create-truck-movement.html" class="btn-primary" style="height:32px;padding:0 14px;white-space:nowrap;flex-shrink:0;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="17 11 19 13 23 9"></polyline></svg>
+                                Create Truck Movement
+                            </a>
+                        </div>
+
+                        <!-- Active Staged Movements: Waiting for Loading -->
+                        <div style="margin-top:8px;">
+                            <span style="font-size:0.8125rem;font-weight:700;display:block;margin-bottom:8px;">Planned Truck Journeys (Waiting for Loading):</span>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Vehicle Number</th>
+                                            <th>From Branch</th>
+                                            <th>Destination Branch</th>
+                                            <th>Driver</th>
+                                            <th>Status</th>
+                                            <th style="text-align:right;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="active-sessions-tbody">
+                                        <!-- Populated dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ================================================== -->
+                    <!-- STEP 2: LOADING VERIFICATION (LARGE DATA SET)      -->
+                    <!-- ================================================== -->
+                    <div id="subtab-content-loading" class="subtab-view" style="display:none;flex-direction:column;gap:14px;">
+                        <div class="loading-verify-card" id="loading-verify-panel">
+                            
+                            <div class="panel-card-header">
+                                <span class="panel-card-title">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                    Loading Verification
+                                </span>
+                                <span class="badge-status badge-assigned" id="loading-truck-status-badge">Waiting for Loading</span>
+                            </div>
+
+                            <!-- Top Summary Card: Vehicle, Route, Driver, Status -->
+                            <div class="truck-meta-grid">
+                                <div class="truck-meta-item">
+                                    <span class="truck-meta-label">Vehicle</span>
+                                    <span class="truck-meta-val" id="load-meta-veh">KA-19-AB-1234</span>
+                                </div>
+                                <div class="truck-meta-item">
+                                    <span class="truck-meta-label">Route</span>
+                                    <span class="truck-meta-val" id="load-meta-route">Mangalore Warehouse → Bangalore Hub</span>
+                                </div>
+                                <div class="truck-meta-item">
+                                    <span class="truck-meta-label">Driver</span>
+                                    <span class="truck-meta-val" id="load-meta-driver">Ramesh Kumar</span>
+                                </div>
+                                <div class="truck-meta-item">
+                                    <span class="truck-meta-label">Status</span>
+                                    <span class="badge-status badge-assigned" id="load-meta-status">Waiting for Loading</span>
+                                </div>
+                            </div>
+
+                            <!-- SECTION A: READY FOR LOADING LR LIST (PAGINATED & SEARCHABLE FOR 100+ LRs) -->
+                            <div style="display:flex;flex-direction:column;gap:8px;">
+                                <div class="queue-header-split">
+                                    <div>
+                                        <span style="font-size:0.8125rem;font-weight:800;color:var(--color-black);">
+                                            Ready for Loading LR List
+                                        </span>
+                                        <span style="font-size:0.75rem;color:#666;margin-left:4px;">(Verified Warehouse Shipments Matching Destination)</span>
+                                    </div>
+                                    <span class="count-pill" id="ready-lrs-counter-badge">8 Eligible LRs in Queue</span>
+                                </div>
+
+                                <!-- Enterprise Table Filters (Search LR/Sender/Receiver, Destination, Date) -->
+                                <div class="filters-bar" style="margin-bottom:0;">
+                                    <div class="search-input-wrapper" style="min-width:260px;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" id="filter-ready-search" class="search-input" placeholder="Search LR Number, Sender, Receiver..." onkeyup="filterReadyLRsTable()">
+                                    </div>
+
+                                    <details class="custom-select-wrapper" style="width: 170px;" id="ready-dest-filter-wrapper">
+                                        <summary class="custom-select-trigger">
+                                            <span class="placeholder" id="ready-dest-summary">All Route Stops</span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        </summary>
+                                        <div class="custom-select-options">
+                                            <label class="custom-option"><input type="radio" name="ready-dest-filter" value="all" checked onchange="document.getElementById('ready-dest-summary').textContent='All Route Stops'; document.getElementById('ready-dest-filter-wrapper').removeAttribute('open'); filterReadyLRsTable();"> All Route Stops</label>
+                                            <label class="custom-option"><input type="radio" name="ready-dest-filter" value="Bangalore Hub" onchange="document.getElementById('ready-dest-summary').textContent='Bangalore Hub'; document.getElementById('ready-dest-filter-wrapper').removeAttribute('open'); filterReadyLRsTable();"> Bangalore Hub</label>
+                                            <label class="custom-option"><input type="radio" name="ready-dest-filter" value="Hyderabad Hub" onchange="document.getElementById('ready-dest-summary').textContent='Hyderabad Hub'; document.getElementById('ready-dest-filter-wrapper').removeAttribute('open'); filterReadyLRsTable();"> Hyderabad Hub</label>
+                                            <label class="custom-option"><input type="radio" name="ready-dest-filter" value="Mumbai Hub" onchange="document.getElementById('ready-dest-summary').textContent='Mumbai Hub'; document.getElementById('ready-dest-filter-wrapper').removeAttribute('open'); filterReadyLRsTable();"> Mumbai Hub</label>
+                                            <label class="custom-option"><input type="radio" name="ready-dest-filter" value="Chennai Hub" onchange="document.getElementById('ready-dest-summary').textContent='Chennai Hub'; document.getElementById('ready-dest-filter-wrapper').removeAttribute('open'); filterReadyLRsTable();"> Chennai Hub</label>
+                                            <label class="custom-option"><input type="radio" name="ready-dest-filter" value="Hubli Hub" onchange="document.getElementById('ready-dest-summary').textContent='Hubli Hub'; document.getElementById('ready-dest-filter-wrapper').removeAttribute('open'); filterReadyLRsTable();"> Hubli Hub</label>
+                                        </div>
+                                    </details>
+
+                                    <details class="custom-select-wrapper" style="width: 140px;">
+                                        <summary class="custom-select-trigger">
+                                            <span class="placeholder">Received Date</span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        </summary>
+                                        <div class="custom-select-options">
+                                            <label class="custom-option"><input type="radio" name="ready-date-filter" value="all" checked onchange="filterReadyLRsTable()"> All Dates</label>
+                                            <label class="custom-option"><input type="radio" name="ready-date-filter" value="today" onchange="filterReadyLRsTable()"> Today (17 Aug)</label>
+                                            <label class="custom-option"><input type="radio" name="ready-date-filter" value="yesterday" onchange="filterReadyLRsTable()"> Yesterday (16 Aug)</label>
+                                        </div>
+                                    </details>
+                                </div>
+
+                                <div class="table-container">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>LR Number</th>
+                                                <th>Sender</th>
+                                                <th>Receiver</th>
+                                                <th>Items</th>
+                                                <th>Packages</th>
+                                                <th>Weight</th>
+                                                <th>Destination Branch</th>
+                                                <th>Received Date</th>
+                                                <th>Status</th>
+                                                <th style="text-align:right;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ready-lrs-tbody">
+                                            <!-- Populated dynamically with individual Scan button per row -->
+                                        </tbody>
+                                    </table>
+
+                                    <div class="pagination-bar">
+                                        <span id="ready-page-info">Showing 1-8 of 8 eligible LRs</span>
+                                        <div class="pagination-controls">
+                                            <button type="button" class="page-btn" disabled>Prev</button>
+                                            <span class="page-number">1</span>
+                                            <button type="button" class="page-btn" disabled>Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SECTION B: LOADED IN TRUCK (PHYSICALLY SCANNED SHIPMENTS) -->
+                            <div style="margin-top:6px;">
+                                <div class="queue-header-split">
+                                    <div>
+                                        <span style="font-size:0.8125rem;font-weight:800;color:var(--color-black);">
+                                            Loaded in Truck
+                                        </span>
+                                        <span style="font-size:0.75rem;color:#666;margin-left:4px;">(Physically barcode scanned and verified into vehicle.)</span>
+                                    </div>
+                                    <span class="count-pill" id="loaded-lrs-counter-badge">0 Verified LRs</span>
+                                </div>
+                                <div class="table-container">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>LR Number</th>
+                                                <th>Destination Branch</th>
+                                                <th>Sender</th>
+                                                <th>Receiver</th>
+                                                <th>Items</th>
+                                                <th>Packages</th>
+                                                <th>Weight</th>
+                                                <th>Loading Status</th>
+                                                <th style="text-align:right;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="loaded-lrs-tbody">
+                                            <!-- Populated dynamically with Destination Branch and Loading Status -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- STICKY SUMMARY SECTION (Total Loaded LR, Total Packages, Total Weight) -->
+                            <div class="sticky-summary-bar">
+                                <div style="display:flex;gap:24px;font-size:0.8125rem;flex-wrap:wrap;align-items:center;">
+                                    <span>Total Loaded LR: <strong id="load-sum-count" style="font-size:0.9375rem;">0</strong></span>
+                                    <span>Total Packages: <strong id="load-sum-pkgs" style="font-size:0.9375rem;">0 Boxes</strong></span>
+                                    <span>Total Weight: <strong id="load-sum-weight" style="font-size:0.9375rem;">0 KG</strong></span>
+                                </div>
+                                <button type="button" id="btn-confirm-loading" class="btn-primary" style="height:36px;padding:0 18px;" onclick="confirmLoadingAndDispatch()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Confirm Loading Completed
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ================================================== -->
+                    <!-- STEP 4: TRUCK MOVEMENT (COMPLETED LOADING ONLY)    -->
+                    <!-- ================================================== -->
+                    <div id="subtab-content-transit" class="subtab-view" style="display:none;flex-direction:column;gap:12px;">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Vehicle Number</th>
+                                        <th>From Branch</th>
+                                        <th>Destination Branch</th>
+                                        <th>Driver</th>
+                                        <th>LR Count</th>
+                                        <th>Packages</th>
+                                        <th>Weight</th>
+                                        <th>Status</th>
+                                        <th style="text-align:right;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transit-trucks-tbody">
+                                    <!-- Populated dynamically with eye icon action ONLY -->
+                                </tbody>
+                            </table>
+
+                            <div class="pagination-bar">
+                                <span id="transit-page-info">Showing 1-3 of 3 truck movements</span>
+                                <div class="pagination-controls">
+                                    <button type="button" class="page-btn" disabled>Prev</button>
+                                    <span class="page-number">1</span>
+                                    <button type="button" class="page-btn" disabled>Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL: DELETE VEHICLE CONFIRMATION POPUP           -->
+    <!-- ================================================== -->
+    <div class="modal-overlay" id="delete-vehicle-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDeleteVehicleModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Vehicle</h3>
+            <p class="modal-desc" id="delete-modal-desc">Are you sure you want to delete this vehicle from the fleet?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeDeleteVehicleModal()">Cancel</button>
+                <button type="button" class="btn-primary" id="btn-confirm-delete-veh" onclick="executeDeleteVehicle()">Delete Vehicle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL: CANCEL / DELETE PLANNED JOURNEY MODAL       -->
+    <!-- ================================================== -->
+    <div class="modal-overlay" id="delete-journey-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDeleteJourneyModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Cancel Planned Journey</h3>
+            <p class="modal-desc" id="delete-journey-desc">Are you sure you want to cancel this planned truck journey?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeDeleteJourneyModal()">No, Keep</button>
+                <button type="button" class="btn-primary" onclick="executeDeleteJourney()">Cancel Journey</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL: UNLOAD LR SHIPMENT CONFIRMATION MODAL        -->
+    <!-- ================================================== -->
+    <div class="modal-overlay" id="unload-lr-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeUnloadLRModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path><line x1="8" y1="12" x2="16" y2="12" stroke-width="2.5"></line></svg>
+            </div>
+            <h3 class="modal-title">Unload LR Shipment</h3>
+            <p class="modal-desc" id="unload-lr-desc">Are you sure you want to unload LR-00125 from this truck? The shipment will be returned back to the Ready for Loading queue.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeUnloadLRModal()">Keep Loaded</button>
+                <button type="button" class="btn-primary" onclick="executeUnloadLR()">Unload Shipment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL: BARCODE SCANNER MODAL                       -->
+    <!-- ================================================== -->
+    <div id="barcode-scanner-modal" class="modal-overlay">
+        <div class="modal-content-custom" style="max-width: 460px;">
+            <div class="modal-header-custom">
+                <span class="modal-title-custom">Scan Physical LR Barcode</span>
+                <button type="button" class="modal-close" onclick="closeScannerModal()" style="position:static;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <p style="font-size:0.75rem;color:var(--color-text-muted);margin:0;">
+                    Scan the physical barcode label affixed to the shipment package to confirm loading inside the truck.
+                </p>
+
+                <!-- Scanner Viewport Graphic (Pure B&W) -->
+                <div style="background:#151515;border-radius:var(--border-radius-base);padding:24px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#fff;position:relative;overflow:hidden;">
+                    <div style="border: 2px dashed #ffffff; border-radius: 4px; padding: 12px 28px; display:flex; flex-direction:column; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" width="36" height="36">
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                            <line x1="6" y1="8" x2="6" y2="16"></line>
+                            <line x1="9" y1="8" x2="9" y2="16"></line>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="15" y1="8" x2="15" y2="16"></line>
+                            <line x1="18" y1="8" x2="18" y2="16"></line>
+                        </svg>
+                        <span style="font-size:0.875rem;font-weight:700;letter-spacing:0.05em;" id="scanner-expected-lr">LR-00125</span>
+                    </div>
+                    <span style="font-size:0.75rem;color:#ccc;">Physical barcode laser scanner connected</span>
+                </div>
+
+                <!-- Validation Error Message Display -->
+                <div id="scanner-error-box" style="display:none;background:#f5f5f5;border:1px solid #222;border-radius:4px;padding:8px 12px;font-size:0.75rem;font-weight:700;color:#000;">
+                    <!-- Error text inserted here -->
+                </div>
+
+                <!-- Validation Success Card -->
+                <div id="scanner-success-box" style="display:flex;border:1px solid var(--color-border);background:var(--color-bg-light);border-radius:4px;padding:12px;flex-direction:column;gap:8px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--color-border);padding-bottom:6px;">
+                        <strong style="font-size:0.875rem;" id="scanned-success-title">LR-00125</strong>
+                        <span class="badge-status badge-available">Verified for Route</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:0.75rem;">
+                        <div><span style="color:#666;">Destination:</span> <strong id="scanned-dest">Bangalore Hub</strong></div>
+                        <div><span style="color:#666;">Commodity:</span> <strong id="scanned-items">Electronics</strong></div>
+                        <div><span style="color:#666;">Packages:</span> <strong id="scanned-pkgs">3 Boxes</strong></div>
+                        <div><span style="color:#666;">Weight:</span> <strong id="scanned-weight">45 KG</strong></div>
+                        <div><span style="color:#666;">Sender:</span> <strong id="scanned-sender">Coastal Traders</strong></div>
+                        <div><span style="color:#666;">Receiver:</span> <strong id="scanned-receiver">ABC Pvt Ltd</strong></div>
+                    </div>
+                </div>
+
+                <div style="display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--color-border);padding-top:10px;margin-top:2px;">
+                    <button type="button" class="btn-secondary" onclick="closeScannerModal()">Cancel</button>
+                    <button type="button" id="btn-modal-confirm-load" class="btn-primary" onclick="confirmLoadFromScanner()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Confirm Loaded in Truck
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL: CREATE TRUCK MOVEMENT FORM                  -->
+    <!-- ================================================== -->
+    <div id="create-movement-modal" class="modal-overlay">
+        <div class="modal-content-custom">
+            <div class="modal-header-custom">
+                <span class="modal-title-custom">Create Truck Movement</span>
+                <button type="button" class="modal-close" onclick="closeCreateMovementModal()" style="position:static;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <form onsubmit="handleExecuteCreateMovement(event)" style="display:flex;flex-direction:column;gap:12px;">
+                
+                <!-- From Branch * -->
+                <div class="form-group">
+                    <label>From Branch *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select From Branch</span>
+                            <span class="selected-text text-mangalore" style="display: flex;">Mangalore Warehouse</span>
+                            <span class="selected-text text-bangalore">Bangalore Hub</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="create-from-branch" value="mangalore" checked> Mangalore Warehouse</label>
+                            <label class="custom-option"><input type="radio" name="create-from-branch" value="bangalore"> Bangalore Hub</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Destination Branch * -->
+                <div class="form-group">
+                    <label>Destination Branch *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select Destination Branch</span>
+                            <span class="selected-text text-dest-bangalore" style="display: flex;">Bangalore Hub</span>
+                            <span class="selected-text text-dest-mumbai">Mumbai Hub</span>
+                            <span class="selected-text text-dest-chennai">Chennai Hub</span>
+                            <span class="selected-text text-dest-hubli">Hubli Hub</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="create-dest-branch" value="dest-bangalore" checked> Bangalore Hub</label>
+                            <label class="custom-option"><input type="radio" name="create-dest-branch" value="dest-mumbai"> Mumbai Hub</label>
+                            <label class="custom-option"><input type="radio" name="create-dest-branch" value="dest-chennai"> Chennai Hub</label>
+                            <label class="custom-option"><input type="radio" name="create-dest-branch" value="dest-hubli"> Hubli Hub</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Vehicle * -->
+                <div class="form-group">
+                    <label>Vehicle *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;" id="create-veh-details-wrapper">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select Available Vehicle</span>
+                            <span class="selected-text dynamic-selected" id="selected-veh-summary" style="display: flex;">KA-19-AB-1234 · Mini Truck (2 Ton)</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options" id="create-veh-options-list">
+                            <!-- Populated dynamically with available vehicles from Vehicle Master -->
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Driver * -->
+                <div class="form-group">
+                    <label>Driver (From User Management) *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select Driver</span>
+                            <span class="selected-text text-ramesh" style="display: flex;">Ramesh Kumar (Role: Driver)</span>
+                            <span class="selected-text text-sunil">Sunil Shetty (Role: Driver)</span>
+                            <span class="selected-text text-rohit">Rohit Kumar (Role: Operations Staff)</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="create-driver" value="ramesh" checked> Ramesh Kumar (Role: Driver)</label>
+                            <label class="custom-option"><input type="radio" name="create-driver" value="sunil"> Sunil Shetty (Role: Driver)</label>
+                            <label class="custom-option"><input type="radio" name="create-driver" value="rohit"> Rohit Kumar (Role: Operations Staff)</label>
+                        </div>
+                    </details>
+                </div>
+
+                <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;border-top:1px solid var(--color-border);padding-top:12px;">
+                    <button type="button" class="btn-secondary" onclick="closeCreateMovementModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Truck Movement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL: EDIT PLANNED TRUCK MOVEMENT FORM            -->
+    <!-- ================================================== -->
+    <div id="edit-movement-modal" class="modal-overlay">
+        <div class="modal-content-custom">
+            <div class="modal-header-custom">
+                <span class="modal-title-custom">Edit Planned Journey</span>
+                <button type="button" class="modal-close" onclick="closeEditMovementModal()" style="position:static;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <form onsubmit="handleExecuteEditMovement(event)" style="display:flex;flex-direction:column;gap:12px;">
+                
+                <!-- From Branch * -->
+                <div class="form-group">
+                    <label>From Branch *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select From Branch</span>
+                            <span class="selected-text text-edit-from-mangalore" id="edit-from-summary" style="display: flex;">Mangalore Warehouse</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="edit-from-branch" value="Mangalore Warehouse" checked onchange="document.getElementById('edit-from-summary').textContent='Mangalore Warehouse'"> Mangalore Warehouse</label>
+                            <label class="custom-option"><input type="radio" name="edit-from-branch" value="Bangalore Hub" onchange="document.getElementById('edit-from-summary').textContent='Bangalore Hub'"> Bangalore Hub</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Destination Branch * -->
+                <div class="form-group">
+                    <label>Destination Branch *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select Destination Branch</span>
+                            <span class="selected-text text-edit-dest" id="edit-dest-summary" style="display: flex;">Bangalore Hub</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="edit-dest-branch" value="Bangalore Hub" checked onchange="document.getElementById('edit-dest-summary').textContent='Bangalore Hub'"> Bangalore Hub</label>
+                            <label class="custom-option"><input type="radio" name="edit-dest-branch" value="Mumbai Hub" onchange="document.getElementById('edit-dest-summary').textContent='Mumbai Hub'"> Mumbai Hub</label>
+                            <label class="custom-option"><input type="radio" name="edit-dest-branch" value="Chennai Hub" onchange="document.getElementById('edit-dest-summary').textContent='Chennai Hub'"> Chennai Hub</label>
+                            <label class="custom-option"><input type="radio" name="edit-dest-branch" value="Hubli Hub" onchange="document.getElementById('edit-dest-summary').textContent='Hubli Hub'"> Hubli Hub</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Vehicle * -->
+                <div class="form-group">
+                    <label>Vehicle *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;" id="edit-veh-details-wrapper">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select Vehicle</span>
+                            <span class="selected-text dynamic-selected" id="edit-selected-veh-summary" style="display: flex;">KA-19-AB-1234 · Mini Truck (2 Ton)</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options" id="edit-veh-options-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Driver * -->
+                <div class="form-group">
+                    <label>Driver (From User Management) *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select Driver</span>
+                            <span class="selected-text text-edit-driver" id="edit-driver-summary" style="display: flex;">Ramesh Kumar (Role: Driver)</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="edit-driver-opt" value="Ramesh Kumar" checked onchange="document.getElementById('edit-driver-summary').textContent='Ramesh Kumar (Role: Driver)'"> Ramesh Kumar (Role: Driver)</label>
+                            <label class="custom-option"><input type="radio" name="edit-driver-opt" value="Sunil Shetty" onchange="document.getElementById('edit-driver-summary').textContent='Sunil Shetty (Role: Driver)'"> Sunil Shetty (Role: Driver)</label>
+                            <label class="custom-option"><input type="radio" name="edit-driver-opt" value="Rohit Kumar" onchange="document.getElementById('edit-driver-summary').textContent='Rohit Kumar (Role: Operations Staff)'"> Rohit Kumar (Role: Operations Staff)</label>
+                        </div>
+                    </details>
+                </div>
+
+                <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;border-top:1px solid var(--color-border);padding-top:12px;">
+                    <button type="button" class="btn-secondary" onclick="closeEditMovementModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Update Planned Journey</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- LOGISTICS ADMIN DATA & INTERACTIVITY SCRIPT        -->
+    <!-- ================================================== -->
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+        // 1. Vehicle Master State
+        let vehiclesData = [
+            { no: 'KA-19-AB-1234', type: 'Mini Truck', capacity: '2 Ton', docStatus: 'Valid', status: 'Available' },
+            { no: 'KA-19-C-5678', type: 'Medium Truck', capacity: '5 Ton', docStatus: 'Valid', status: 'Available' },
+            { no: 'KA-20-D-9012', type: 'Heavy Truck', capacity: '12 Ton', docStatus: 'Valid', status: 'Available' },
+            { no: 'KA-19-EF-3456', type: 'Mini Truck', capacity: '2.5 Ton', docStatus: 'Valid', status: 'Available' },
+            { no: 'KA-19-GH-7890', type: 'Medium Truck', capacity: '6 Ton', docStatus: 'Valid', status: 'In Transit' },
+            { no: 'KA-20-JK-1122', type: 'Heavy Truck', capacity: '16 Ton', docStatus: 'Valid', status: 'In Transit' },
+            { no: 'KA-19-MN-9988', type: 'Medium Truck', capacity: '5 Ton', docStatus: 'Valid', status: 'In Transit' }
+        ];
+
+        let pendingDeleteVehNo = null;
+
+        // 2. Hub Shipments Database (Verified by Warehouse Admin, Ready for Loading)
+        let warehouseHubShipmentsDb = [
+            // Bangalore Hub Route
+            { lr: 'LR-00125', sender: 'Coastal Traders', receiver: 'ABC Pvt Ltd', items: 'Electronics', packages: 3, weight: 45, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00127', sender: 'Karnataka Spares', receiver: 'Auto Works Hub', items: 'Spare Parts', packages: 4, weight: 60, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00129', sender: 'Pai Garments', receiver: 'Trends Retail', items: 'Apparel Cartons', packages: 8, weight: 160, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00131', sender: 'Coastal Industrial', receiver: 'Metro Electricals', items: 'Motors & Cables', packages: 7, weight: 220, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '16 Aug 2026', dateTag: 'yesterday', status: 'Ready' },
+            { lr: 'LR-00135', sender: 'Canara Tiles Ltd', receiver: 'Builders Express', items: 'Ceramic Tiles', packages: 15, weight: 450, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '16 Aug 2026', dateTag: 'yesterday', status: 'Ready' },
+            { lr: 'LR-00137', sender: 'Mangalore Paper Mills', receiver: 'Metro Packaging', items: 'Paper Bundles', packages: 6, weight: 180, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00139', sender: 'Sagar Medical Supplies', receiver: 'Apollo Pharma', items: 'Pharma Cartons', packages: 4, weight: 65, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00141', sender: 'Western Ghats Agro', receiver: 'Organic Harvest', items: 'Coffee & Cashews', packages: 10, weight: 250, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00143', sender: 'Kudla Print Pack', receiver: 'Universal Publishing', items: 'Printed Catalogues', packages: 5, weight: 115, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '16 Aug 2026', dateTag: 'yesterday', status: 'Ready' },
+            { lr: 'LR-00145', sender: 'National Electricals', receiver: 'Silicon Power Corp', items: 'Switchboards', packages: 8, weight: 195, currentBranch: 'Mangalore Warehouse', dest: 'Bangalore Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+
+            // Hyderabad Hub Route
+            { lr: 'LR-00126', sender: 'Kudla Solutions', receiver: 'Cyber Systems', items: 'IT Hardware', packages: 2, weight: 20, currentBranch: 'Mangalore Warehouse', dest: 'Hyderabad Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00128', sender: 'Canara Spices Co', receiver: 'City Supermarket', items: 'Spices & Seasoning', packages: 6, weight: 90, currentBranch: 'Mangalore Warehouse', dest: 'Hyderabad Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00130', sender: 'Deccan Metal Works', receiver: 'Telangana Infra', items: 'Hardware Tools', packages: 5, weight: 140, currentBranch: 'Mangalore Warehouse', dest: 'Hyderabad Hub', date: '16 Aug 2026', dateTag: 'yesterday', status: 'Ready' },
+            { lr: 'LR-00136', sender: 'Coastal Marine Foods', receiver: 'Hyderabad Cold Hub', items: 'Seafood Boxes', packages: 8, weight: 210, currentBranch: 'Mangalore Warehouse', dest: 'Hyderabad Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00138', sender: 'Apex Hydraulics', receiver: 'Deccan Industrial', items: 'Hydraulic Pumps', packages: 3, weight: 175, currentBranch: 'Mangalore Warehouse', dest: 'Hyderabad Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00140', sender: 'Udupi Weavers Coop', receiver: 'Silk Silk House', items: 'Handloom Textiles', packages: 7, weight: 130, currentBranch: 'Mangalore Warehouse', dest: 'Hyderabad Hub', date: '16 Aug 2026', dateTag: 'yesterday', status: 'Ready' },
+            { lr: 'LR-00142', sender: 'Canara Solar Energy', receiver: 'Green Energy Hub', items: 'Solar Inverters', packages: 4, weight: 160, currentBranch: 'Mangalore Warehouse', dest: 'Hyderabad Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00144', sender: 'Mangalore Rubber Co', receiver: 'Automotive Rubber', items: 'Rubber Gaskets', packages: 6, weight: 95, currentBranch: 'Mangalore Warehouse', dest: 'Hyderabad Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+
+            // Mumbai Hub Route
+            { lr: 'LR-00132', sender: 'Malabar Spices', receiver: 'Royal Foods Ltd', items: 'Food / Spices', packages: 12, weight: 320, currentBranch: 'Mangalore Warehouse', dest: 'Mumbai Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00146', sender: 'Konkan Plastics', receiver: 'Maharashtra Poly', items: 'Poly Bags', packages: 9, weight: 180, currentBranch: 'Mangalore Warehouse', dest: 'Mumbai Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00147', sender: 'Kudla Marine Exporters', receiver: 'Nhava Sheva Cargo', items: 'Frozen Fish', packages: 14, weight: 420, currentBranch: 'Mangalore Warehouse', dest: 'Mumbai Hub', date: '16 Aug 2026', dateTag: 'yesterday', status: 'Ready' },
+
+            // Chennai Hub Route
+            { lr: 'LR-00133', sender: 'Apex Industrial Parts', receiver: 'Southern Motors', items: 'Auto Parts', packages: 5, weight: 210, currentBranch: 'Mangalore Warehouse', dest: 'Chennai Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+            { lr: 'LR-00148', sender: 'Canara Cables', receiver: 'Chennai Metro Tech', items: 'Optical Fiber', packages: 7, weight: 160, currentBranch: 'Mangalore Warehouse', dest: 'Chennai Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' },
+
+            // Hubli Hub Route
+            { lr: 'LR-00134', sender: 'Canara Marine Exports', receiver: 'Oceanic Delights', items: 'Packaged Goods', packages: 4, weight: 110, currentBranch: 'Mangalore Warehouse', dest: 'Hubli Hub', date: '16 Aug 2026', dateTag: 'yesterday', status: 'Ready' },
+            { lr: 'LR-00149', sender: 'Coastal Agro Seed', receiver: 'Hubli Seed Market', items: 'Agri Seeds', packages: 10, weight: 280, currentBranch: 'Mangalore Warehouse', dest: 'Hubli Hub', date: '17 Aug 2026', dateTag: 'today', status: 'Ready' }
+        ];
+
+        // 3. Active Loading Session State with Multi-Destination Route Support
+        let activeLoadingTruck = {
+            vehicleNo: 'KA-19-AB-1234',
+            driver: 'Ramesh Kumar',
+            fromBranch: 'Mangalore Warehouse',
+            destStops: ['Bangalore Hub', 'Hyderabad Hub'],
+            capacity: '2 Ton',
+            status: 'Waiting for Loading',
+            loadedShipments: []
+        };
+
+        // Active scanner target
+        let targetScanningLR = null;
+        let verifiedLRData = null;
+
+        // 4. In Transit Trucks State
+        let inTransitTrucksData = [
+            {
+                truckNo: 'KA-19-GH-7890',
+                fromBranch: 'Mangalore Warehouse',
+                destBranch: 'Bangalore Hub → Hyderabad Hub',
+                driver: 'Ramesh Kumar',
+                lrCount: '10 LR',
+                packages: '45 Boxes',
+                weight: '850 KG',
+                status: 'In Transit'
+            },
+            {
+                truckNo: 'KA-20-JK-1122',
+                fromBranch: 'Mangalore Warehouse',
+                destBranch: 'Mumbai Hub',
+                driver: 'Sunil Shetty',
+                lrCount: '14 LR',
+                packages: '62 Boxes',
+                weight: '1,200 KG',
+                status: 'In Transit'
+            },
+            {
+                truckNo: 'KA-19-MN-9988',
+                fromBranch: 'Mangalore Warehouse',
+                destBranch: 'Chennai Hub',
+                driver: 'Anand Poojary',
+                lrCount: '8 LR',
+                packages: '38 Boxes',
+                weight: '680 KG',
+                status: 'In Transit'
+            }
+        ];
+
+        // Navigation Switcher
+        function switchNav(viewId) {
+            document.querySelectorAll('.view-panel').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+
+            const targetView = document.getElementById('view-' + viewId);
+            const targetLink = document.getElementById('side-link-' + viewId);
+            const breadcrumb = document.getElementById('breadcrumb-current');
+
+            if (targetView) targetView.style.display = 'flex';
+            if (targetLink) targetLink.classList.add('active');
+
+            if (viewId === 'dashboard') {
+                breadcrumb.textContent = 'Dashboard';
+                renderDashboard();
+            } else if (viewId === 'vehicles') {
+                breadcrumb.textContent = 'Vehicle Master';
+                renderVehicleTable();
+            } else if (viewId === 'assignment') {
+                breadcrumb.textContent = 'Truck Assignment';
+                renderCreateMovementTab();
+                renderLoadingTab();
+                renderInTransitTable();
+            }
+        }
+
+        // Sub-Tab Switcher
+        function switchSubTab(tabName) {
+            document.querySelectorAll('.subtab-view').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.sub-tab-btn').forEach(el => el.classList.remove('active'));
+
+            const content = document.getElementById('subtab-content-' + tabName);
+            const btn = document.getElementById('subtab-btn-' + tabName);
+
+            if (content) content.style.display = 'flex';
+            if (btn) btn.classList.add('active');
+
+            if (tabName === 'create') renderCreateMovementTab();
+            if (tabName === 'loading') renderLoadingTab();
+            if (tabName === 'transit') renderInTransitTable();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('log-toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // ==========================================
+        // 1. DASHBOARD
+        // ==========================================
+        function renderDashboard() {
+            const availVeh = vehiclesData.filter(v => v.status === 'Available').length;
+            const pendLoading = activeLoadingTruck ? 1 : 0;
+            const loadedTrucks = 2;
+            const transitTrucks = inTransitTrucksData.length;
+
+            document.getElementById('kpi-avail-veh').textContent = availVeh;
+            document.getElementById('kpi-pend-loading').textContent = pendLoading;
+            document.getElementById('kpi-loaded-trucks').textContent = loadedTrucks;
+            document.getElementById('kpi-transit-trucks').textContent = transitTrucks;
+
+            document.getElementById('badge-count-loading').textContent = activeLoadingTruck ? '1 Active' : '0 Active';
+            document.getElementById('badge-count-transit').textContent = transitTrucks;
+        }
+
+        // ==========================================
+        // 2. VEHICLE MASTER
+        // ==========================================
+        function renderVehicleTable(search = '', type = 'all', status = 'all') {
+            const tbody = document.getElementById('vehicle-table-body');
+            let filtered = vehiclesData.filter(v => {
+                const matchSearch = search === '' || v.no.toLowerCase().includes(search.toLowerCase()) || v.type.toLowerCase().includes(search.toLowerCase());
+                const matchType = type === 'all' || v.type === type;
+                const matchStatus = status === 'all' || v.status === status;
+                return matchSearch && matchType && matchStatus;
+            });
+
+            document.getElementById('vehicle-page-info').textContent = `Showing 1-${filtered.length} of ${filtered.length} vehicles`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:#888;">No vehicles found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(v => {
+                const isInTransit = v.status === 'In Transit';
+                return `
+                <tr>
+                    <td><strong>${v.no}</strong></td>
+                    <td>${v.type}</td>
+                    <td>${v.capacity}</td>
+                    <td><span class="badge-status badge-uploaded">${v.docStatus}</span></td>
+                    <td><span class="badge-status ${v.status === 'Available' ? 'badge-available' : (v.status === 'In Transit' ? 'badge-transit' : 'badge-assigned')}">${v.status}</span></td>
+                    <td style="text-align:right;">
+                        <div class="action-icons" style="display:inline-flex;gap:4px;align-items:center;">
+                            <a href="vehicle-details.html?no=${encodeURIComponent(v.no)}&type=${encodeURIComponent(v.type)}&cap=${encodeURIComponent(v.capacity)}&status=${encodeURIComponent(v.status)}" class="action-icon" title="View Vehicle Details" style="display:inline-flex;padding:4px;color:var(--color-black);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </a>
+                            <a href="edit-vehicle.html?no=${encodeURIComponent(v.no)}&type=${encodeURIComponent(v.type)}&cap=${encodeURIComponent(v.capacity)}&status=${encodeURIComponent(v.status)}" class="action-icon" title="Edit Vehicle" style="display:inline-flex;padding:4px;color:var(--color-black);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </a>
+                            <button type="button" class="action-icon" title="${isInTransit ? 'Vehicle In Transit (Cannot Delete)' : 'Delete Vehicle'}" onclick="promptDeleteVehicle('${v.no}', '${v.status}')" style="${isInTransit ? 'opacity:0.35;cursor:not-allowed;' : 'color:var(--color-black);'}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        function filterVehicleTable() {
+            const text = document.getElementById('filter-vehicle-search').value;
+            const type = document.querySelector('input[name="vehicle-type-filter"]:checked')?.value || 'all';
+            const status = document.querySelector('input[name="vehicle-status-filter"]:checked')?.value || 'all';
+            renderVehicleTable(text, type, status);
+        }
+
+        function promptDeleteVehicle(vehNo, status) {
+            if (status === 'In Transit') {
+                showToast(`⚠️ Cannot delete vehicle ${vehNo} because it is currently In Transit on an active route.`);
+                return;
+            }
+
+            pendingDeleteVehNo = vehNo;
+            document.getElementById('delete-modal-desc').textContent = `Are you sure you want to delete vehicle ${vehNo} from Vehicle Master?`;
+            document.getElementById('delete-vehicle-modal').classList.add('active');
+        }
+
+        function closeDeleteVehicleModal() {
+            document.getElementById('delete-vehicle-modal').classList.remove('active');
+            pendingDeleteVehNo = null;
+        }
+
+        function executeDeleteVehicle() {
+            if (!pendingDeleteVehNo) return;
+
+            const targetIndex = vehiclesData.findIndex(v => v.no === pendingDeleteVehNo);
+            if (targetIndex !== -1) {
+                const deleted = vehiclesData.splice(targetIndex, 1);
+                showToast(`✓ Vehicle ${deleted[0].no} deleted successfully.`);
+            }
+
+            closeDeleteVehicleModal();
+            filterVehicleTable();
+            renderDashboard();
+        }
+
+        // ==========================================
+        // 3. TRUCK ASSIGNMENT - STEP 1: CREATE TRUCK MOVEMENT
+        // ==========================================
+        function renderCreateMovementTab() {
+            const tbody = document.getElementById('active-sessions-tbody');
+            if (!activeLoadingTruck) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:#888;">No planned journeys currently created. Click "Create Truck Movement" to plan a new journey.</td></tr>`;
+                return;
+            }
+
+            const routeStr = `${activeLoadingTruck.fromBranch} → ${activeLoadingTruck.destStops.join(' → ')}`;
+            const stopsParam = activeLoadingTruck.destStops.join('|');
+
+            tbody.innerHTML = `
+                <tr>
+                    <td><strong>${activeLoadingTruck.vehicleNo}</strong></td>
+                    <td>${activeLoadingTruck.fromBranch}</td>
+                    <td><strong>${activeLoadingTruck.destStops.join(', ')}</strong></td>
+                    <td>${activeLoadingTruck.driver}</td>
+                    <td><span class="badge-status badge-assigned">Waiting for Loading</span></td>
+                    <td style="text-align:right;">
+                        <div style="display:inline-flex;gap:6px;align-items:center;">
+                            <button type="button" class="btn-primary" style="height:24px;padding:0 8px;font-size:0.75rem;" onclick="switchSubTab('loading')">
+                                Verify Loading &rarr;
+                            </button>
+                            <a href="edit-truck-movement.html?veh=${encodeURIComponent(activeLoadingTruck.vehicleNo)}&driver=${encodeURIComponent(activeLoadingTruck.driver)}&from=${encodeURIComponent(activeLoadingTruck.fromBranch)}&stops=${encodeURIComponent(stopsParam)}&cap=${encodeURIComponent(activeLoadingTruck.capacity)}" class="action-icon" title="Edit Planned Journey" style="display:inline-flex;padding:4px;color:var(--color-black);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </a>
+                            <button type="button" class="action-icon" title="Cancel Planned Journey" onclick="promptDeleteJourney()" style="display:inline-flex;padding:4px;color:var(--color-black);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function promptDeleteJourney() {
+            if (!activeLoadingTruck) return;
+            document.getElementById('delete-journey-desc').textContent = `Are you sure you want to cancel the planned journey for vehicle ${activeLoadingTruck.vehicleNo}? The vehicle will be released back to Available status.`;
+            document.getElementById('delete-journey-modal').classList.add('active');
+        }
+
+        function closeDeleteJourneyModal() {
+            document.getElementById('delete-journey-modal').classList.remove('active');
+        }
+
+        function executeDeleteJourney() {
+            if (!activeLoadingTruck) return;
+
+            const cancelledVeh = activeLoadingTruck.vehicleNo;
+            const vehObj = vehiclesData.find(v => v.no === cancelledVeh);
+            if (vehObj) vehObj.status = 'Available';
+
+            activeLoadingTruck = null;
+            closeDeleteJourneyModal();
+            showToast(`✓ Planned journey for ${cancelledVeh} cancelled. Vehicle returned to Available status.`);
+
+            renderDashboard();
+            renderVehicleTable();
+            renderCreateMovementTab();
+            renderLoadingTab();
+        }
+
+        // ==========================================
+        // 3. TRUCK ASSIGNMENT - STEP 2: LOADING VERIFICATION (MULTI-DESTINATION SUPPORT)
+        // ==========================================
+        function renderLoadingTab() {
+            if (!activeLoadingTruck) {
+                document.getElementById('loading-verify-panel').innerHTML = `
+                    <div style="text-align:center;padding:40px;color:#888;background:#fff;border-radius:6px;">
+                        No truck currently in loading bay. Click "Create Truck Movement" to plan a new journey.
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('load-meta-veh').textContent = activeLoadingTruck.vehicleNo;
+            document.getElementById('load-meta-driver').textContent = activeLoadingTruck.driver;
+            document.getElementById('load-meta-route').textContent = `${activeLoadingTruck.fromBranch} → ${activeLoadingTruck.destStops.join(' → ')}`;
+            document.getElementById('load-meta-status').textContent = activeLoadingTruck.status;
+            document.getElementById('loading-truck-status-badge').textContent = activeLoadingTruck.status;
+
+            filterReadyLRsTable();
+            renderLoadedLRsTable();
+        }
+
+        function filterReadyLRsTable() {
+            if (!activeLoadingTruck) return;
+            const search = document.getElementById('filter-ready-search')?.value.trim().toLowerCase() || '';
+            const destFilter = document.querySelector('input[name="ready-dest-filter"]:checked')?.value || 'all';
+            const dateFilter = document.querySelector('input[name="ready-date-filter"]:checked')?.value || 'all';
+
+            // Filter shipments based on:
+            // 1. Source branch matches truck origin
+            // 2. Destination is part of truck's planned route (destStops)
+            // 3. Shipment is not already loaded
+            let eligibleList = warehouseHubShipmentsDb.filter(s => 
+                s.currentBranch === activeLoadingTruck.fromBranch &&
+                activeLoadingTruck.destStops.includes(s.dest) &&
+                !activeLoadingTruck.loadedShipments.some(l => l.lr === s.lr)
+            );
+
+            // Additional Filter by specific destination if chosen in filter dropdown
+            if (destFilter !== 'all') {
+                eligibleList = eligibleList.filter(s => s.dest === destFilter);
+            }
+
+            // Date filter
+            if (dateFilter !== 'all') {
+                eligibleList = eligibleList.filter(s => s.dateTag === dateFilter);
+            }
+
+            // Search filter across LR Number, Sender, Receiver, Items
+            if (search !== '') {
+                eligibleList = eligibleList.filter(s => 
+                    s.lr.toLowerCase().includes(search) || 
+                    s.sender.toLowerCase().includes(search) || 
+                    s.receiver.toLowerCase().includes(search) ||
+                    s.items.toLowerCase().includes(search)
+                );
+            }
+
+            document.getElementById('ready-lrs-counter-badge').textContent = `${eligibleList.length} Eligible LRs in Queue`;
+            document.getElementById('ready-page-info').textContent = `Showing 1-${eligibleList.length} of ${eligibleList.length} eligible LRs`;
+
+            const tbody = document.getElementById('ready-lrs-tbody');
+            if (eligibleList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:20px;color:#888;">No pending shipments matching criteria. All warehouse shipments along this route are loaded!</td></tr>`;
+            } else {
+                tbody.innerHTML = eligibleList.map(item => `
+                    <tr>
+                        <td><strong>${item.lr}</strong></td>
+                        <td>${item.sender}</td>
+                        <td>${item.receiver}</td>
+                        <td>${item.items}</td>
+                        <td>${item.packages} Boxes</td>
+                        <td>${item.weight} KG</td>
+                        <td><strong>${item.dest}</strong></td>
+                        <td>${item.date}</td>
+                        <td><span class="badge-status badge-assigned">${item.status}</span></td>
+                        <td style="text-align:right;">
+                            <button type="button" class="btn-primary" style="height:24px;padding:0 12px;font-size:0.75rem;" onclick="openScannerForLR('${item.lr}')">
+                                Scan
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function renderLoadedLRsTable() {
+            if (!activeLoadingTruck) return;
+            const loadedTbody = document.getElementById('loaded-lrs-tbody');
+            const loadedCount = activeLoadingTruck.loadedShipments.length;
+
+            document.getElementById('loaded-lrs-counter-badge').textContent = `${loadedCount} Verified LRs in Truck`;
+            document.getElementById('load-sum-count').textContent = loadedCount;
+
+            let totalPkgs = 0;
+            let totalWeight = 0;
+            activeLoadingTruck.loadedShipments.forEach(s => {
+                totalPkgs += s.packages;
+                totalWeight += s.weight;
+            });
+
+            document.getElementById('load-sum-pkgs').textContent = `${totalPkgs} Boxes`;
+            document.getElementById('load-sum-weight').textContent = `${totalWeight} KG`;
+
+            if (loadedCount === 0) {
+                loadedTbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:16px;color:#888;">No LR loaded yet. Click "Scan" on a ready shipment above to physically verify and load.</td></tr>`;
+            } else {
+                loadedTbody.innerHTML = activeLoadingTruck.loadedShipments.map(s => {
+                    const scannedBy = s.scannedBy || activeLoadingTruck.driver || 'Ramesh Kumar';
+                    const scanTime = s.scanTime || '17 Aug 2026 10:30 AM';
+                    const routeStops = activeLoadingTruck.destStops.join('|');
+                    return `
+                    <tr>
+                        <td><strong>${s.lr}</strong></td>
+                        <td><strong>${s.dest}</strong></td>
+                        <td>${s.sender}</td>
+                        <td>${s.receiver}</td>
+                        <td>${s.items}</td>
+                        <td>${s.packages} Boxes</td>
+                        <td>${s.weight} KG</td>
+                        <td><span class="badge-status badge-loaded">Loaded</span></td>
+                        <td style="text-align:right;">
+                            <div style="display:inline-flex;gap:4px;align-items:center;">
+                                <a href="loaded-lr-details.html?lr=${encodeURIComponent(s.lr)}&sender=${encodeURIComponent(s.sender)}&receiver=${encodeURIComponent(s.receiver)}&items=${encodeURIComponent(s.items)}&pkgs=${encodeURIComponent(s.packages)}&weight=${encodeURIComponent(s.weight)}&veh=${encodeURIComponent(activeLoadingTruck.vehicleNo)}&driver=${encodeURIComponent(activeLoadingTruck.driver)}&from=${encodeURIComponent(activeLoadingTruck.fromBranch)}&dest=${encodeURIComponent(s.dest)}&stops=${encodeURIComponent(routeStops)}&scannedBy=${encodeURIComponent(scannedBy)}&scanTime=${encodeURIComponent(scanTime)}" class="action-icon" title="View Loaded LR Details" style="display:inline-flex;padding:4px;color:var(--color-black);">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </a>
+                                <!-- Unload LR action icon (Package/Cargo Unload from vehicle) -->
+                                <button type="button" class="action-icon" title="Unload LR Shipment (Weight/Capacity Adjustment)" onclick="promptUnloadLR('${s.lr}', ${s.weight})" style="display:inline-flex;padding:4px;color:var(--color-black);">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path><polyline points="15 3 20 8 15 13" transform="scale(0.6) translate(12, 10)"></polyline><line x1="8" y1="12" x2="16" y2="12" stroke-width="2.5"></line></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `}).join('');
+            }
+
+            const confirmBtn = document.getElementById('btn-confirm-loading');
+            if (loadedCount === 0) {
+                confirmBtn.disabled = true;
+                confirmBtn.style.opacity = '0.5';
+            } else {
+                confirmBtn.disabled = false;
+                confirmBtn.style.opacity = '1';
+            }
+        }
+
+        // ==========================================
+        // UNLOAD LR SHIPMENT HANDLERS (WEIGHT ADJUSTMENT)
+        // ==========================================
+        let pendingUnloadLRCode = null;
+
+        function promptUnloadLR(lrCode, weight) {
+            pendingUnloadLRCode = lrCode;
+            document.getElementById('unload-lr-desc').textContent = `Are you sure you want to unload ${lrCode} (${weight} KG) from vehicle ${activeLoadingTruck.vehicleNo}? The shipment will be removed from vehicle weight and returned back to the Ready for Loading queue.`;
+            document.getElementById('unload-lr-modal').classList.add('active');
+        }
+
+        function closeUnloadLRModal() {
+            document.getElementById('unload-lr-modal').classList.remove('active');
+            pendingUnloadLRCode = null;
+        }
+
+        function executeUnloadLR() {
+            if (!pendingUnloadLRCode || !activeLoadingTruck) return;
+
+            const idx = activeLoadingTruck.loadedShipments.findIndex(s => s.lr === pendingUnloadLRCode);
+            if (idx !== -1) {
+                const removed = activeLoadingTruck.loadedShipments.splice(idx, 1);
+                showToast(`✓ Unloaded ${removed[0].lr} (${removed[0].weight} KG). Returned to Ready for Loading queue.`);
+            }
+
+            closeUnloadLRModal();
+            filterReadyLRsTable();
+            renderLoadedLRsTable();
+        }
+
+        // ==========================================
+        // INDIVIDUAL LR BARCODE LOADING VERIFICATION & VALIDATION
+        // ==========================================
+        function openScannerForLR(lrCode) {
+            targetScanningLR = lrCode;
+            verifiedLRData = null;
+
+            const errorBox = document.getElementById('scanner-error-box');
+            const successBox = document.getElementById('scanner-success-box');
+            const confirmBtn = document.getElementById('btn-modal-confirm-load');
+
+            errorBox.style.display = 'none';
+            document.getElementById('scanner-expected-lr').textContent = lrCode;
+
+            // Find in database
+            const found = warehouseHubShipmentsDb.find(s => s.lr.toUpperCase() === lrCode.toUpperCase());
+            if (!found) {
+                errorBox.textContent = 'LR is not assigned to this truck.';
+                errorBox.style.display = 'block';
+                successBox.style.display = 'none';
+                confirmBtn.style.display = 'none';
+                document.getElementById('barcode-scanner-modal').classList.add('active');
+                return;
+            }
+
+            // Check if destination is on route
+            if (!activeLoadingTruck.destStops.includes(found.dest)) {
+                errorBox.textContent = 'LR destination is not included in this truck route.';
+                errorBox.style.display = 'block';
+                successBox.style.display = 'none';
+                confirmBtn.style.display = 'none';
+                document.getElementById('barcode-scanner-modal').classList.add('active');
+                return;
+            }
+
+            // Successful scan verification
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            verifiedLRData = { 
+                ...found, 
+                scannedBy: `${activeLoadingTruck.driver} (Driver)`, 
+                scanTime: `17 Aug 2026 ${timeStr}` 
+            };
+
+            document.getElementById('scanned-success-title').textContent = `${verifiedLRData.lr} · (${verifiedLRData.dest})`;
+            document.getElementById('scanned-sender').textContent = verifiedLRData.sender;
+            document.getElementById('scanned-receiver').textContent = verifiedLRData.receiver;
+            document.getElementById('scanned-items').textContent = verifiedLRData.items;
+            document.getElementById('scanned-pkgs').textContent = `${verifiedLRData.packages} Boxes`;
+            document.getElementById('scanned-weight').textContent = `${verifiedLRData.weight} KG`;
+            document.getElementById('scanned-dest').textContent = verifiedLRData.dest;
+
+            successBox.style.display = 'flex';
+            confirmBtn.style.display = 'inline-flex';
+
+            document.getElementById('barcode-scanner-modal').classList.add('active');
+        }
+
+        function closeScannerModal() {
+            document.getElementById('barcode-scanner-modal').classList.remove('active');
+            targetScanningLR = null;
+            verifiedLRData = null;
+        }
+
+        function confirmLoadFromScanner() {
+            if (!verifiedLRData || !activeLoadingTruck) return;
+
+            activeLoadingTruck.loadedShipments.push({ ...verifiedLRData });
+            const addedCode = verifiedLRData.lr;
+            closeScannerModal();
+
+            showToast(`✓ LR ${addedCode} Verified & Loaded into Truck!`);
+            filterReadyLRsTable();
+            renderLoadedLRsTable();
+        }
+
+        function confirmLoadingAndDispatch() {
+            if (!activeLoadingTruck || activeLoadingTruck.loadedShipments.length === 0) return;
+
+            // Check if eligible LRs remain for any of the planned destination stops
+            const remainingEligible = warehouseHubShipmentsDb.filter(s => 
+                s.currentBranch === activeLoadingTruck.fromBranch && 
+                activeLoadingTruck.destStops.includes(s.dest) &&
+                !activeLoadingTruck.loadedShipments.some(l => l.lr === s.lr)
+            );
+
+            if (remainingEligible.length > 0) {
+                const proceed = confirm(`Notice: ${remainingEligible.length} LRs along this route are still pending loading in queue. Do you want to dispatch truck with currently loaded ${activeLoadingTruck.loadedShipments.length} LRs?`);
+                if (!proceed) return;
+            }
+
+            const dispatchedTruckNo = activeLoadingTruck.vehicleNo;
+            const destRoute = activeLoadingTruck.destStops.join(' → ');
+            const driver = activeLoadingTruck.driver;
+            const fromBranch = activeLoadingTruck.fromBranch;
+            const lrCount = activeLoadingTruck.loadedShipments.length;
+
+            let totalPkgs = 0;
+            let totalWeight = 0;
+            activeLoadingTruck.loadedShipments.forEach(s => {
+                totalPkgs += s.packages;
+                totalWeight += s.weight;
+            });
+
+            const vehObj = vehiclesData.find(v => v.no === dispatchedTruckNo);
+            if (vehObj) vehObj.status = 'In Transit';
+
+            inTransitTrucksData.unshift({
+                truckNo: dispatchedTruckNo,
+                fromBranch: fromBranch,
+                destBranch: destRoute,
+                driver: driver,
+                lrCount: `${lrCount} LR`,
+                packages: `${totalPkgs} Boxes`,
+                weight: `${totalWeight} KG`,
+                status: 'In Transit'
+            });
+
+            showToast(`Loading Completed! Truck ${dispatchedTruckNo} is now In Transit.`);
+
+            activeLoadingTruck = null;
+
+            renderDashboard();
+            renderVehicleTable();
+            renderCreateMovementTab();
+            renderInTransitTable();
+
+            setTimeout(() => {
+                switchSubTab('transit');
+            }, 600);
+        }
+
+        // ==========================================
+        // 3. TRUCK ASSIGNMENT - STEP 4: TRUCK MOVEMENT
+        // ==========================================
+        function renderInTransitTable() {
+            const tbody = document.getElementById('transit-trucks-tbody');
+            document.getElementById('transit-page-info').textContent = `Showing 1-${inTransitTrucksData.length} of ${inTransitTrucksData.length} truck movements`;
+
+            tbody.innerHTML = inTransitTrucksData.map(t => `
+                <tr>
+                    <td><strong>${t.truckNo}</strong></td>
+                    <td>${t.fromBranch}</td>
+                    <td><strong>${t.destBranch}</strong></td>
+                    <td>${t.driver}</td>
+                    <td>${t.lrCount}</td>
+                    <td>${t.packages}</td>
+                    <td>${t.weight}</td>
+                    <td><span class="badge-status badge-transit">${t.status}</span></td>
+                    <td style="text-align:right;">
+                        <a href="truck-details.html?no=${encodeURIComponent(t.truckNo)}&driver=${encodeURIComponent(t.driver)}&from=${encodeURIComponent(t.fromBranch)}&dest=${encodeURIComponent(t.destBranch)}&status=${encodeURIComponent(t.status)}" class="action-icon" title="View Truck Details" style="display:inline-flex;padding:4px;color:var(--color-black);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // URL Hash navigation and Query Params Handler
+        function handleHashNav() {
+            const fullHash = window.location.hash;
+            const hashParts = fullHash.split('?');
+            const mainHash = hashParts[0];
+            const queryString = hashParts[1] || '';
+            const urlParams = new URLSearchParams(queryString);
+
+            // Handle creation from create-truck-movement.html
+            if (urlParams.get('created') === 'true') {
+                const veh = urlParams.get('veh') || 'KA-19-AB-1234';
+                const driver = urlParams.get('driver') || 'Ramesh Kumar';
+                const from = urlParams.get('from') || 'Mangalore Warehouse';
+                const stopsParam = urlParams.get('stops') || 'Bangalore Hub|Hyderabad Hub';
+                const cap = urlParams.get('cap') || '2 Ton';
+                const stops = stopsParam.split('|');
+
+                const vehObj = vehiclesData.find(v => v.no === veh);
+                if (vehObj) vehObj.status = 'Assigned';
+
+                activeLoadingTruck = {
+                    vehicleNo: veh,
+                    driver: driver,
+                    fromBranch: from,
+                    destStops: stops,
+                    capacity: cap,
+                    status: 'Waiting for Loading',
+                    loadedShipments: []
+                };
+
+                showToast(`✓ Planned multi-destination truck movement created for ${veh}!`);
+            } else if (urlParams.get('updated') === 'true') {
+                const veh = urlParams.get('veh') || 'KA-19-AB-1234';
+                const driver = urlParams.get('driver') || 'Ramesh Kumar';
+                const from = urlParams.get('from') || 'Mangalore Warehouse';
+                const stopsParam = urlParams.get('stops') || 'Bangalore Hub|Hyderabad Hub';
+                const cap = urlParams.get('cap') || '2 Ton';
+                const stops = stopsParam.split('|');
+
+                if (activeLoadingTruck) {
+                    if (activeLoadingTruck.vehicleNo !== veh) {
+                        const oldVeh = vehiclesData.find(v => v.no === activeLoadingTruck.vehicleNo);
+                        if (oldVeh) oldVeh.status = 'Available';
+                        const newVeh = vehiclesData.find(v => v.no === veh);
+                        if (newVeh) newVeh.status = 'Assigned';
+                    }
+                    activeLoadingTruck.vehicleNo = veh;
+                    activeLoadingTruck.driver = driver;
+                    activeLoadingTruck.fromBranch = from;
+                    activeLoadingTruck.destStops = stops;
+                    activeLoadingTruck.capacity = cap;
+                }
+
+                showToast(`✓ Planned truck movement updated for ${veh}!`);
+            }
+
+            if (mainHash === '#vehicles') {
+                switchNav('vehicles');
+            } else if (mainHash === '#assignment' || mainHash === '#movement') {
+                switchNav('assignment');
+                switchSubTab('create');
+            } else if (mainHash === '#loading') {
+                switchNav('assignment');
+                switchSubTab('loading');
+            } else {
+                switchNav('dashboard');
+            }
+        }
+
+        window.addEventListener('hashchange', handleHashNav);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            handleHashNav();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickup Operations - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="pickup-operations.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="../User-Management/index.html" class="rail-icon active" data-tooltip="Administration">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </a>
+                    <a href="../Counter-Booking/index.html" class="rail-icon" data-tooltip="Counter Booking">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Masters">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Logistics Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Accounts">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12" /><path d="M6 8h12" /><path d="m6 13 8.5 8" /><path d="M6 13h3" /><path d="M9 13c6.667 0 6.667-10 0-10" /></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="HR">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">ADMINISTRATION</div>
+                <nav class="sidebar-nav">
+                    <a href="../User-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        User Management
+                    </a>
+                    <a href="../Branch-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Management
+                    </a>
+                    <a href="../Lorry-Receipt-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        LR Management
+                    </a>
+                    <a href="index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        Pickup Operations
+                    </a>
+                    <a href="../Delivery-Operations/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Delivery Operations
+                    </a>
+                    <a href="../Role-Permission/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Roles & Permissions
+                    </a>
+                    <a href="../Audit-Logs/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        Audit Logs
+                    </a>
+                </nav>
+
+                <div class="sidebar-nav-section">CUSTOMERS</div>
+                <nav class="sidebar-nav">
+                    <a href="../Customer-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 1 0 7.75"></path></svg>
+                        Customer Management
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Pickup Operations</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Pickup Operations</h1>
+                        <p class="page-subtitle">Manage customer pickup requests, assign pickup boys, schedule collections, and track pickup execution.</p>
+                    </div>
+                </div>
+
+                <!-- KPI CARDS (SINGLE ROW - 5 CARDS) -->
+                <div class="pickup-summary-cards">
+                    <div class="pickup-summary-card">
+                        <span class="pickup-summary-label">Total Pickup Requests</span>
+                        <span class="pickup-summary-value" id="stat-total">45</span>
+                    </div>
+                    <div class="pickup-summary-card">
+                        <span class="pickup-summary-label">Pending Assignment</span>
+                        <span class="pickup-summary-value" id="stat-pending">12</span>
+                    </div>
+                    <div class="pickup-summary-card">
+                        <span class="pickup-summary-label">Assigned Pickups</span>
+                        <span class="pickup-summary-value" id="stat-assigned">25</span>
+                    </div>
+                    <div class="pickup-summary-card">
+                        <span class="pickup-summary-label">Picked & Completed</span>
+                        <span class="pickup-summary-value" id="stat-picked">6</span>
+                    </div>
+                    <div class="pickup-summary-card">
+                        <span class="pickup-summary-label">Failed Pickups</span>
+                        <span class="pickup-summary-value" id="stat-failed">2</span>
+                    </div>
+                </div>
+
+                <!-- COMPACT HORIZONTAL FILTERS -->
+                <div class="filters-bar">
+                    <div class="search-input-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="search-input" id="search-input" placeholder="LR Number, Customer Name, Pickup Address...">
+                    </div>
+
+                    <!-- Destination Branch Filter -->
+                    <details class="custom-select-wrapper" style="width: 170px;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Destination Branch</span>
+                            <span class="selected-text text-mgl">Mangalore Branch</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="filter-branch" value="all" checked> All Destination Branches</label>
+                            <label class="custom-option"><input type="radio" name="filter-branch" value="mgl"> Mangalore Branch</label>
+                            <label class="custom-option"><input type="radio" name="filter-branch" value="udupi"> Udupi Branch</label>
+                            <label class="custom-option"><input type="radio" name="filter-branch" value="blr"> Bangalore Branch</label>
+                        </div>
+                    </details>
+
+                    <!-- Pickup Status Filter -->
+                    <details class="custom-select-wrapper" style="width: 160px;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Pickup Status</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="filter-status" value="all" checked> All Statuses</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="pending"> Pending Assignment</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="assigned"> Assigned</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="accepted"> Accepted</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="enroute"> En Route</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="reached"> Reached</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="picked"> Picked</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="completed"> Completed</label>
+                            <label class="custom-option"><input type="radio" name="filter-status" value="failed"> Failed</label>
+                        </div>
+                    </details>
+
+                    <!-- Pickup Boy Filter -->
+                    <details class="custom-select-wrapper" style="width: 160px;">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Pickup Boy</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="filter-boy" value="all" checked> All Pickup Boys</label>
+                            <label class="custom-option"><input type="radio" name="filter-boy" value="ravi"> Ravi Shetty</label>
+                            <label class="custom-option"><input type="radio" name="filter-boy" value="prakash"> Prakash Kumar</label>
+                            <label class="custom-option"><input type="radio" name="filter-boy" value="manjunath"> Manjunath Bhat</label>
+                        </div>
+                    </details>
+
+                    <!-- Date Filter with Custom Calendar Popup Connection -->
+                    <details class="custom-select-wrapper" style="width: 150px;" id="date-filter-wrapper">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Date Range</span>
+                            <span class="selected-text text-customdate">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span id="custom-date-selected-text">14 Aug 2026</span>
+                            </span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option"><input type="radio" name="filter-date" value="all"> All Dates</label>
+                            <label class="custom-option"><input type="radio" name="filter-date" value="today"> Today</label>
+                            <label class="custom-option"><input type="radio" name="filter-date" value="thisweek"> This Week</label>
+                            <label class="custom-option"><input type="radio" name="filter-date" value="customdate" id="radio-customdate"> Custom Date</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- SELECTION BATCH BAR -->
+                <div class="batch-assign-bar" id="batch-assign-bar" style="display: flex;">
+                    <div>
+                        <span id="selected-count">3</span> Pickup Requests Selected
+                    </div>
+                    <button type="button" class="btn-primary" id="btn-open-assign-modal" onclick="openAssignModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        Assign Pickup Boy
+                    </button>
+                </div>
+
+                <!-- PICKUP REQUEST TABLE -->
+                <div class="table-container">
+                    <table class="data-table" id="pickup-operations-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 32px; text-align: center;">
+                                    <input type="checkbox" id="select-all-checkbox" checked onclick="toggleSelectAll(this)">
+                                </th>
+                                <th class="sortable" onclick="sortTable(1)">
+                                    <div class="sort-header-content">
+                                        LR Number
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(2)">
+                                    <div class="sort-header-content">
+                                        Customer Name
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(3)">
+                                    <div class="sort-header-content">
+                                        Pickup Address
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(4)">
+                                    <div class="sort-header-content">
+                                        Destination Branch
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(5)">
+                                    <div class="sort-header-content">
+                                        Items
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(6)">
+                                    <div class="sort-header-content">
+                                        Weight
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(7)">
+                                    <div class="sort-header-content">
+                                        Pickup Date
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(8)">
+                                    <div class="sort-header-content">
+                                        Time Slot
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(9)">
+                                    <div class="sort-header-content">
+                                        Pickup Status
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortTable(10)">
+                                    <div class="sort-header-content">
+                                        Assigned Pickup Boy
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th>Payment</th>
+                                <th>Payment Status</th>
+                                <th style="text-align: right;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pickup-table-body">
+                            <!-- Row 1: Pending -->
+                            <tr data-lr="LR-2026-000125">
+                                <td style="text-align: center;">
+                                    <input type="checkbox" class="row-checkbox" value="LR-2026-000125" checked onclick="updateSelectedCount()">
+                                </td>
+                                <td><strong>LR-2026-000125</strong></td>
+                                <td>Coastal Traders</td>
+                                <td>Kadri, Mangalore</td>
+                                <td>Mangalore Branch</td>
+                                <td>3 Boxes</td>
+                                <td>45 KG</td>
+                                <td id="date-000125">---</td>
+                                <td id="slot-000125"><span style="color: #888; font-style: italic;">---</span></td>
+                                <td><span class="badge-status badge-pending" id="status-000125">Pending Assignment</span></td>
+                                <td id="boy-000125"><span style="color: #888; font-style: italic;">Not Assigned</span></td>
+                                <td><span style="font-size: 0.8125rem; font-weight: 600;">Paid · ₹2,450</span></td>
+                                <td><span class="badge-status badge-completed">Paid</span></td>
+                                <td>
+                                    <div class="action-icons" id="actions-000125">
+                                        <button type="button" class="btn-secondary" style="height: 24px; padding: 0 8px; font-size: 0.72rem;" onclick="openSingleAssignModal('LR-2026-000125', 'Coastal Traders', 'Kadri, Mangalore', '3 Boxes', '45 KG')">Assign</button>
+                                        <a href="view-pickup.html?lr=LR-2026-000125" class="action-icon" title="View Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: Pending -->
+                            <tr data-lr="LR-2026-000126">
+                                <td style="text-align: center;">
+                                    <input type="checkbox" class="row-checkbox" value="LR-2026-000126" checked onclick="updateSelectedCount()">
+                                </td>
+                                <td><strong>LR-2026-000126</strong></td>
+                                <td>Udupi Enterprises</td>
+                                <td>Kankanady, Mangalore</td>
+                                <td>Mangalore Branch</td>
+                                <td>2 Boxes</td>
+                                <td>25 KG</td>
+                                <td id="date-000126">---</td>
+                                <td id="slot-000126"><span style="color: #888; font-style: italic;">---</span></td>
+                                <td><span class="badge-status badge-pending" id="status-000126">Pending Assignment</span></td>
+                                <td id="boy-000126"><span style="color: #888; font-style: italic;">Not Assigned</span></td>
+                                <td><span style="font-size: 0.8125rem; font-weight: 600;">To-Pay · ₹1,800</span></td>
+                                <td><span class="badge-status badge-pending">Unpaid</span></td>
+                                <td>
+                                    <div class="action-icons" id="actions-000126">
+                                        <button type="button" class="btn-secondary" style="height: 24px; padding: 0 8px; font-size: 0.72rem;" onclick="openSingleAssignModal('LR-2026-000126', 'Udupi Enterprises', 'Kankanady, Mangalore', '2 Boxes', '25 KG')">Assign</button>
+                                        <a href="view-pickup.html?lr=LR-2026-000126" class="action-icon" title="View Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 3: Pending -->
+                            <tr data-lr="LR-2026-000127">
+                                <td style="text-align: center;">
+                                    <input type="checkbox" class="row-checkbox" value="LR-2026-000127" checked onclick="updateSelectedCount()">
+                                </td>
+                                <td><strong>LR-2026-000127</strong></td>
+                                <td>Ocean Foods</td>
+                                <td>Bejai, Mangalore</td>
+                                <td>Mangalore Branch</td>
+                                <td>5 Boxes</td>
+                                <td>80 KG</td>
+                                <td id="date-000127">---</td>
+                                <td id="slot-000127"><span style="color: #888; font-style: italic;">---</span></td>
+                                <td><span class="badge-status badge-pending" id="status-000127">Pending Assignment</span></td>
+                                <td id="boy-000127"><span style="color: #888; font-style: italic;">Not Assigned</span></td>
+                                <td><span style="font-size: 0.8125rem; font-weight: 600;">Credit · ₹3,200</span></td>
+                                <td><span class="badge-status badge-assigned">Credit</span></td>
+                                <td>
+                                    <div class="action-icons" id="actions-000127">
+                                        <button type="button" class="btn-secondary" style="height: 24px; padding: 0 8px; font-size: 0.72rem;" onclick="openSingleAssignModal('LR-2026-000127', 'Ocean Foods', 'Bejai, Mangalore', '5 Boxes', '80 KG')">Assign</button>
+                                        <a href="view-pickup.html?lr=LR-2026-000127" class="action-icon" title="View Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 4: Assigned -->
+                            <tr data-lr="LR-2026-000128">
+                                <td style="text-align: center;">
+                                    <input type="checkbox" class="row-checkbox" value="LR-2026-000128" onclick="updateSelectedCount()">
+                                </td>
+                                <td><strong>LR-2026-000128</strong></td>
+                                <td>Karnataka Logistics</td>
+                                <td>Surathkal, Mangalore</td>
+                                <td>Mangalore Branch</td>
+                                <td>4 Boxes</td>
+                                <td>60 KG</td>
+                                <td>14 Aug 2026</td>
+                                <td>02:00 PM - 03:00 PM</td>
+                                <td><span class="badge-status badge-assigned">Assigned</span></td>
+                                <td>Ravi Shetty</td>
+                                <td><span style="font-size: 0.8125rem; font-weight: 600;">Paid · ₹2,450</span></td>
+                                <td><span class="badge-status badge-completed">Paid</span></td>
+                                <td>
+                                    <div class="action-icons">
+                                        <button type="button" class="btn-secondary" style="height: 24px; padding: 0 8px; font-size: 0.72rem;" onclick="openSingleAssignModal('LR-2026-000128', 'Karnataka Logistics', 'Surathkal, Mangalore', '4 Boxes', '60 KG')">Reassign</button>
+                                        <a href="view-pickup.html?lr=LR-2026-000128" class="action-icon" title="View Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 5: Picked -->
+                            <tr data-lr="LR-2026-000129">
+                                <td style="text-align: center;">
+                                    <input type="checkbox" class="row-checkbox" value="LR-2026-000129" onclick="updateSelectedCount()">
+                                </td>
+                                <td><strong>LR-2026-000129</strong></td>
+                                <td>Apex Pharma</td>
+                                <td>Attavar, Mangalore</td>
+                                <td>Mangalore Branch</td>
+                                <td>8 Boxes</td>
+                                <td>110 KG</td>
+                                <td>13 Aug 2026</td>
+                                <td>11:00 AM - 12:00 PM</td>
+                                <td><span class="badge-status badge-picked">Picked</span></td>
+                                <td>Prakash Kumar</td>
+                                <td><span style="font-size: 0.8125rem; font-weight: 600;">To-Pay · ₹1,800</span></td>
+                                <td><span class="badge-status badge-pending">Unpaid</span></td>
+                                <td>
+                                    <div class="action-icons">
+                                        <a href="view-pickup.html?lr=LR-2026-000129" class="action-icon" title="View Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 6: Failed -->
+                            <tr data-lr="LR-2026-000130">
+                                <td style="text-align: center;">
+                                    <input type="checkbox" class="row-checkbox" value="LR-2026-000130" onclick="updateSelectedCount()">
+                                </td>
+                                <td><strong>LR-2026-000130</strong></td>
+                                <td>Mangala Agencies</td>
+                                <td>Bendoorwell, Mangalore</td>
+                                <td>Mangalore Branch</td>
+                                <td>1 Box</td>
+                                <td>12 KG</td>
+                                <td>13 Aug 2026</td>
+                                <td>10:00 AM - 11:00 AM</td>
+                                <td><span class="badge-status badge-failed">Failed</span></td>
+                                <td>Manjunath Bhat</td>
+                                <td><span style="font-size: 0.8125rem; font-weight: 600;">Credit · ₹3,200</span></td>
+                                <td><span class="badge-status badge-assigned">Credit</span></td>
+                                <td>
+                                    <div class="action-icons">
+                                        <a href="view-pickup.html?lr=LR-2026-000130" class="action-icon" title="View Details">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="pagination-bar">
+                        <span>Showing 1 to 6 of 45 pickup requests</span>
+                        <div class="pagination-controls">
+                            <button class="page-btn" disabled>&lt; Previous</button>
+                            <span class="page-number">1</span>
+                            <button class="page-btn">Next &gt;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ASSIGN PICKUP BOY POPUP MODAL -->
+    <div class="modal-overlay" id="assign-modal">
+        <div class="assign-modal-content">
+            <button class="modal-close" onclick="closeAssignModal()" title="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <!-- Fixed Modal Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid var(--color-border);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="modal-icon-header" style="margin-bottom: 0;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div>
+                        <h3 class="modal-title" style="margin-bottom: 0;">Assign Pickup Boy</h3>
+                        <p style="font-size: 0.75rem; color: #666; margin: 0;">Assign personnel and schedule customer collections.</p>
+                    </div>
+                </div>
+                <div style="background: var(--color-black); color: var(--color-white); font-weight: 700; font-size: 0.75rem; padding: 4px 10px; border-radius: 12px;">
+                    Selected Requests: <span id="popup-selected-count">3</span>
+                </div>
+            </div>
+
+            <!-- Single Scrollable Body Container -->
+            <div class="modal-scrollable-body">
+                <!-- Selected Pickup Requests List -->
+                <div>
+                    <div style="font-weight: 700; font-size: 0.8125rem; margin-bottom: 6px; color: var(--color-black);">Selected Requests Overview</div>
+                    <div class="assign-pickup-list">
+                        <div class="assign-pickup-item">
+                            <span class="assign-pickup-num">1</span>
+                            <div class="assign-pickup-info">
+                                <strong>LR-2026-000125</strong> • <span>Coastal Traders</span> • <span style="color: #666;">Kadri, Mangalore (3 Boxes • 45 KG)</span>
+                            </div>
+                        </div>
+
+                        <div class="assign-pickup-item">
+                            <span class="assign-pickup-num">2</span>
+                            <div class="assign-pickup-info">
+                                <strong>LR-2026-000126</strong> • <span>Udupi Enterprises</span> • <span style="color: #666;">Kankanady, Mangalore (2 Boxes • 25 KG)</span>
+                            </div>
+                        </div>
+
+                        <div class="assign-pickup-item">
+                            <span class="assign-pickup-num">3</span>
+                            <div class="assign-pickup-info">
+                                <strong>LR-2026-000127</strong> • <span>Ocean Foods</span> • <span style="color: #666;">Bejai, Mangalore (5 Boxes • 80 KG)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pickup Boy Selection & Default Date -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="select-pickup-boy">Select Pickup Boy</label>
+                        <select id="select-pickup-boy" required style="height: 31px;">
+                            <option value="">-- Choose Pickup Boy --</option>
+                            <option value="Ravi Shetty" selected>Ravi Shetty</option>
+                            <option value="Prakash Kumar">Prakash Kumar</option>
+                            <option value="Manjunath Bhat">Manjunath Bhat</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Default Pickup Date</label>
+                        <div class="custom-datepicker-trigger" style="height: 31px;" onclick="openCalendarPicker('global')">
+                            <span id="global-pickup-date-text" style="font-weight: 600;">14 Aug 2026</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scheduling Mode Selector Tabs -->
+                <div>
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.8125rem;">Scheduling Mode Option</label>
+                    <div class="schedule-mode-tabs">
+                        <button type="button" class="mode-tab active" id="tab-mode-same" onclick="setScheduleMode('same')">Option 1: Same Schedule for All Pickups</button>
+                        <button type="button" class="mode-tab" id="tab-mode-individual" onclick="setScheduleMode('individual')">Option 2: Individual Schedule</button>
+                    </div>
+                </div>
+
+                <!-- Option 1: Default Time Slot Dropdown -->
+                <div class="form-group" style="margin-bottom: 0; display: block;" id="global-slot-group">
+                    <label for="global-time-slot">Default Time Slot (Applies to all selected pickups)</label>
+                    <select id="global-time-slot" style="height: 31px;">
+                        <option value="09:00 AM - 10:00 AM" selected>09:00 AM - 10:00 AM</option>
+                        <option value="10:30 AM - 11:30 AM">10:30 AM - 11:30 AM</option>
+                        <option value="12:00 PM - 01:00 PM">12:00 PM - 01:00 PM</option>
+                    </select>
+                </div>
+
+                <!-- Option 2: INDIVIDUAL SCHEDULE EDITOR TABLE -->
+                <div class="individual-schedule-box" id="individual-editor-box" style="display: none;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.02em;">Individual Schedule Customizer</div>
+                    <div style="overflow-x: auto;">
+                        <table class="individual-schedule-table">
+                            <thead>
+                                <tr>
+                                    <th>LR Number</th>
+                                    <th>Customer Name</th>
+                                    <th>Pickup Location</th>
+                                    <th>Date</th>
+                                    <th>Individual Time Slot</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>LR-2026-000125</strong></td>
+                                    <td>Coastal Traders</td>
+                                    <td>Kadri</td>
+                                    <td>
+                                        <div class="custom-datepicker-trigger" style="height: 26px; padding: 2px 6px; font-size: 0.72rem;" onclick="openCalendarPicker('000125')">
+                                            <span id="editor-date-text-000125">14 Aug 2026</span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <select id="editor-slot-000125" style="font-size: 0.72rem; padding: 2px 24px 2px 6px; height: 26px;">
+                                            <option value="09:00 AM - 10:00 AM" selected>09:00 AM - 10:00 AM</option>
+                                            <option value="10:30 AM - 11:30 AM">10:30 AM - 11:30 AM</option>
+                                            <option value="12:00 PM - 01:00 PM">12:00 PM - 01:00 PM</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>LR-2026-000126</strong></td>
+                                    <td>Udupi Enterprises</td>
+                                    <td>Kankanady</td>
+                                    <td>
+                                        <div class="custom-datepicker-trigger" style="height: 26px; padding: 2px 6px; font-size: 0.72rem;" onclick="openCalendarPicker('000126')">
+                                            <span id="editor-date-text-000126">14 Aug 2026</span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <select id="editor-slot-000126" style="font-size: 0.72rem; padding: 2px 24px 2px 6px; height: 26px;">
+                                            <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
+                                            <option value="10:30 AM - 11:30 AM" selected>10:30 AM - 11:30 AM</option>
+                                            <option value="12:00 PM - 01:00 PM">12:00 PM - 01:00 PM</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>LR-2026-000127</strong></td>
+                                    <td>Ocean Foods</td>
+                                    <td>Bejai</td>
+                                    <td>
+                                        <div class="custom-datepicker-trigger" style="height: 26px; padding: 2px 6px; font-size: 0.72rem;" onclick="openCalendarPicker('000127')">
+                                            <span id="editor-date-text-000127">14 Aug 2026</span>
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <select id="editor-slot-000127" style="font-size: 0.72rem; padding: 2px 24px 2px 6px; height: 26px;">
+                                            <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
+                                            <option value="10:30 AM - 11:30 AM">10:30 AM - 11:30 AM</option>
+                                            <option value="12:00 PM - 01:00 PM" selected>12:00 PM - 01:00 PM</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fixed Modal Actions Footer -->
+            <div class="modal-actions" style="padding-top: 12px; border-top: 1px solid var(--color-border);">
+                <button type="button" class="btn-secondary" onclick="closeAssignModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="confirmAssignment()">Apply Assignment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM ERP MONOCHROME CALENDAR OVERLAY -->
+    <div class="calendar-popup-overlay" id="calendar-popup-overlay" style="display: none;">
+        <div class="calendar-popup">
+            <div class="calendar-header">
+                <button type="button" class="calendar-nav-btn" onclick="changeCalMonth(-1)">&lt;</button>
+                <span class="calendar-month-title" id="cal-month-title">August 2026</span>
+                <button type="button" class="calendar-nav-btn" onclick="changeCalMonth(1)">&gt;</button>
+            </div>
+            <div class="calendar-weekdays">
+                <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="calendar-days-grid" id="cal-days-grid">
+                <!-- Days generated by JS -->
+            </div>
+            <div class="calendar-actions">
+                <button type="button" class="btn-secondary" onclick="closeCalendarPicker()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="applyCalendarDate()">Apply Date</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Interactivity -->
+    <script>
+        function openAssignModal() {
+            document.getElementById('assign-modal').classList.add('active');
+        }
+
+        function openSingleAssignModal(lr, customer, address, items, weight) {
+            document.getElementById('popup-selected-count').innerText = "1";
+            document.getElementById('assign-modal').classList.add('active');
+        }
+
+        function closeAssignModal() {
+            document.getElementById('assign-modal').classList.remove('active');
+        }
+
+        function updateSelectedCount() {
+            const checkboxes = document.querySelectorAll('.row-checkbox:checked');
+            const count = checkboxes.length;
+            document.getElementById('selected-count').innerText = count;
+            document.getElementById('popup-selected-count').innerText = count;
+            const bar = document.getElementById('batch-assign-bar');
+            if (count > 0) {
+                bar.style.display = 'flex';
+            } else {
+                bar.style.display = 'none';
+            }
+        }
+
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            checkboxes.forEach(cb => cb.checked = master.checked);
+            updateSelectedCount();
+        }
+
+        function toggleIndividualEditor() {
+            setScheduleMode('individual');
+        }
+
+        function setScheduleMode(mode) {
+            const sameTab = document.getElementById('tab-mode-same');
+            const indivTab = document.getElementById('tab-mode-individual');
+            const globalGroup = document.getElementById('global-slot-group');
+            const indivBox = document.getElementById('individual-editor-box');
+
+            if (mode === 'individual') {
+                sameTab.classList.remove('active');
+                indivTab.classList.add('active');
+                globalGroup.style.display = 'none';
+                indivBox.style.display = 'block';
+            } else {
+                indivTab.classList.remove('active');
+                sameTab.classList.add('active');
+                globalGroup.style.display = 'block';
+                indivBox.style.display = 'none';
+            }
+        }
+
+        let activeDateTarget = 'global';
+        let calCurrentDate = new Date(2026, 7, 14);
+        let calTempSelectedDate = new Date(2026, 7, 14);
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        function openCalendarPicker(targetKey) {
+            activeDateTarget = targetKey;
+            calCurrentDate = new Date(2026, 7, 14);
+            calTempSelectedDate = new Date(calCurrentDate);
+            renderCustomCalendar();
+            document.getElementById('calendar-popup-overlay').style.display = 'flex';
+        }
+
+        function closeCalendarPicker() {
+            document.getElementById('calendar-popup-overlay').style.display = 'none';
+        }
+
+        function changeCalMonth(delta) {
+            calCurrentDate.setMonth(calCurrentDate.getMonth() + delta);
+            renderCustomCalendar();
+        }
+
+        function renderCustomCalendar() {
+            const year = calCurrentDate.getFullYear();
+            const month = calCurrentDate.getMonth();
+            document.getElementById('cal-month-title').textContent = `${monthNames[month]} ${year}`;
+
+            const grid = document.getElementById('cal-days-grid');
+            grid.innerHTML = '';
+
+            let firstDay = new Date(year, month, 1).getDay();
+            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            const totalDays = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < startOffset; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-day empty';
+                grid.appendChild(emptyCell);
+            }
+
+            for (let d = 1; d <= totalDays; d++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                dayCell.textContent = d;
+
+                if (calTempSelectedDate && 
+                    calTempSelectedDate.getFullYear() === year && 
+                    calTempSelectedDate.getMonth() === month && 
+                    calTempSelectedDate.getDate() === d) {
+                    dayCell.classList.add('selected');
+                }
+
+                dayCell.addEventListener('click', function () {
+                    grid.querySelectorAll('.calendar-day').forEach(cell => cell.classList.remove('selected'));
+                    dayCell.classList.add('selected');
+                    calTempSelectedDate = new Date(year, month, d);
+                });
+
+                grid.appendChild(dayCell);
+            }
+        }
+
+        function applyCalendarDate() {
+            if (calTempSelectedDate) {
+                const formatted = `${calTempSelectedDate.getDate()} ${monthShortNames[calTempSelectedDate.getMonth()]} ${calTempSelectedDate.getFullYear()}`;
+                if (activeDateTarget === 'global') {
+                    document.getElementById('global-pickup-date-text').textContent = formatted;
+                } else {
+                    const targetEl = document.getElementById('editor-date-text-' + activeDateTarget);
+                    if (targetEl) {
+                        targetEl.textContent = formatted;
+                    }
+                }
+            }
+            closeCalendarPicker();
+        }
+
+        function confirmAssignment() {
+            const boy = document.getElementById('select-pickup-boy').value;
+            if (!boy) {
+                alert('Please select a Pickup Boy');
+                return;
+            }
+
+            const globalDate = document.getElementById('global-pickup-date-text').textContent || '14 Aug 2026';
+            const slots = {
+                '000125': document.getElementById('editor-slot-000125').value,
+                '000126': document.getElementById('editor-slot-000126').value,
+                '000127': document.getElementById('editor-slot-000127').value
+            };
+
+            ['000125', '000126', '000127'].forEach(id => {
+                const statusBadge = document.getElementById('status-' + id);
+                if (statusBadge) {
+                    statusBadge.className = 'badge-status badge-assigned';
+                    statusBadge.innerText = 'Assigned';
+                }
+                const boyTd = document.getElementById('boy-' + id);
+                if (boyTd) {
+                    boyTd.innerHTML = `${boy}`;
+                }
+                const rowCustomDate = document.getElementById('editor-date-text-' + id);
+                const dateTd = document.getElementById('date-' + id);
+                if (dateTd) {
+                    dateTd.innerText = rowCustomDate ? rowCustomDate.textContent : globalDate;
+                }
+                const slotTd = document.getElementById('slot-' + id);
+                if (slotTd && slots[id]) {
+                    slotTd.innerHTML = `<span style="font-weight: 500;">${slots[id]}</span>`;
+                }
+                const actionTd = document.getElementById('actions-' + id);
+                if (actionTd) {
+                    actionTd.innerHTML = `
+                        <div class="action-icons">
+                            <button type="button" class="btn-secondary" style="height: 24px; padding: 0 8px; font-size: 0.72rem;" onclick="openSingleAssignModal('LR-2026-00012${id.slice(-1)}', 'Customer', 'Location', '3 Boxes', '45 KG')">Reassign</button>
+                            <a href="view-pickup.html?lr=LR-2026-00012${id.slice(-1)}" class="action-icon" title="View Details">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </a>
+                        </div>
+                    `;
+                }
+            });
+
+            let pending = parseInt(document.getElementById('stat-pending').innerText);
+            let assigned = parseInt(document.getElementById('stat-assigned').innerText);
+            document.getElementById('stat-pending').innerText = Math.max(0, pending - 3);
+            document.getElementById('stat-assigned').innerText = assigned + 3;
+
+            closeAssignModal();
+            alert(`Pickup Boy ${boy} assigned successfully! Pickup Date and Time Slots applied.`);
+        }
+
+        let sortDirections = {};
+        function sortTable(columnIndex) {
+            const table = document.getElementById("pickup-operations-table");
+            const tbody = table.querySelector("tbody");
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            
+            const currentDir = sortDirections[columnIndex] === 'asc' ? 'desc' : 'asc';
+            sortDirections[columnIndex] = currentDir;
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.cells[columnIndex].innerText.trim().toLowerCase();
+                const cellB = rowB.cells[columnIndex].innerText.trim().toLowerCase();
+
+                if (cellA < cellB) return currentDir === 'asc' ? -1 : 1;
+                if (cellA > cellB) return currentDir === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    </script>
+</body>
+</html>

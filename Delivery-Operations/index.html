@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Operations - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="delivery-operations.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (Main Admin Panel) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="../User-Management/index.html" class="rail-icon active" data-tooltip="Administration">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </a>
+                    <a href="../Counter-Booking/index.html" class="rail-icon" data-tooltip="Counter Booking">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                    </a>
+                    <a href="../Logistics-Admin/index.html" class="rail-icon" data-tooltip="Logistics Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">ADMINISTRATION</div>
+                <nav class="sidebar-nav">
+                    <a href="../User-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        User Management
+                    </a>
+                    <a href="../Branch-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Management
+                    </a>
+                    <a href="../Lorry-Receipt-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        LR Management
+                    </a>
+                    <a href="../Pickup-Operations/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        Pickup Operations
+                    </a>
+                    <a href="index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Delivery Operations
+                    </a>
+                    <a href="../Role-Permission/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Roles & Permissions
+                    </a>
+                    <a href="../Audit-Logs/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        Audit Logs
+                    </a>
+                </nav>
+
+                <div class="sidebar-nav-section">CUSTOMERS</div>
+                <nav class="sidebar-nav">
+                    <a href="../Customer-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 1 0 7.75"></path></svg>
+                        Customer Management
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Administration</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Delivery Operations</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <!-- Dashboard Header (Single Line Clean ERP) -->
+                <div class="page-header" style="margin-bottom: 14px;">
+                    <div class="page-title-group">
+                        <h1 class="page-title" style="margin-bottom: 2px;">Delivery Operations</h1>
+                        <p class="page-subtitle" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Manage customer deliveries, assign delivery personnel, schedule deliveries, and track delivery execution.</p>
+                    </div>
+                </div>
+
+                <!-- KPI CARDS (6 SUMMARY CARDS) -->
+                <div class="delivery-summary-cards" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                    <div class="delivery-summary-card" onclick="filterByStatus('all')">
+                        <span class="delivery-summary-label">Total Requests</span>
+                        <span class="delivery-summary-value" id="kpi-total">36</span>
+                    </div>
+                    <div class="delivery-summary-card" onclick="filterByStatus('Pending')">
+                        <span class="delivery-summary-label">Pending</span>
+                        <span class="delivery-summary-value" id="kpi-pending">10</span>
+                    </div>
+                    <div class="delivery-summary-card" onclick="filterByStatus('Assigned')">
+                        <span class="delivery-summary-label">Assigned</span>
+                        <span class="delivery-summary-value" id="kpi-assigned">12</span>
+                    </div>
+                    <div class="delivery-summary-card" onclick="filterByStatus('Delivered')">
+                        <span class="delivery-summary-label">Delivered</span>
+                        <span class="delivery-summary-value" id="kpi-completed">6</span>
+                    </div>
+                    <div class="delivery-summary-card" onclick="filterByStatus('Failed')">
+                        <span class="delivery-summary-label">Failed Deliveries</span>
+                        <span class="delivery-summary-value" id="kpi-failed" style="color: #000; text-decoration: underline;">2</span>
+                    </div>
+                    <div class="delivery-summary-card" onclick="filterByStatus('Reattempted')">
+                        <span class="delivery-summary-label">Reattempted</span>
+                        <span class="delivery-summary-value" id="kpi-reattempted">1</span>
+                    </div>
+                </div>
+
+                <!-- Multi-Select Bulk Action Bar -->
+                <div id="batch-action-bar" class="batch-assign-bar" style="display: none;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span id="selected-count-text">0 Delivery Requests Selected</span>
+                    </div>
+                    <button type="button" class="btn-primary" onclick="openBulkAssignModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                        Assign Delivery Person
+                    </button>
+                </div>
+
+                <!-- Table & Filters Container -->
+                <div class="table-container-wrapper">
+                    <!-- Filters Section -->
+                    <div class="filters-bar">
+                        <!-- Search Bar -->
+                        <div class="search-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="delivery-search-input" class="search-input" placeholder="Search LR Number, Customer Name, Mobile, Address..." onkeyup="applyFilters()">
+                        </div>
+
+                        <!-- Dropdown 1: Destination Branch -->
+                        <details class="custom-select-wrapper" style="width: 170px;" id="filter-branch-wrapper">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder" id="filter-branch-summary">All Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option"><input type="radio" name="dest-branch-filter" value="all" checked onchange="setBranchFilter('all', 'All Branches')"> All Branches</label>
+                                <label class="custom-option"><input type="radio" name="dest-branch-filter" value="Bangalore Hub" onchange="setBranchFilter('Bangalore Hub', 'Bangalore Hub')"> Bangalore Hub</label>
+                                <label class="custom-option"><input type="radio" name="dest-branch-filter" value="Hyderabad Hub" onchange="setBranchFilter('Hyderabad Hub', 'Hyderabad Hub')"> Hyderabad Hub</label>
+                                <label class="custom-option"><input type="radio" name="dest-branch-filter" value="Mumbai Hub" onchange="setBranchFilter('Mumbai Hub', 'Mumbai Hub')"> Mumbai Hub</label>
+                                <label class="custom-option"><input type="radio" name="dest-branch-filter" value="Chennai Hub" onchange="setBranchFilter('Chennai Hub', 'Chennai Hub')"> Chennai Hub</label>
+                            </div>
+                        </details>
+
+                        <!-- Dropdown 2: Delivery Status -->
+                        <details class="custom-select-wrapper" style="width: 160px;" id="filter-status-wrapper">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder" id="filter-status-summary">All Statuses</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option"><input type="radio" name="delivery-status-filter" value="all" checked onchange="setStatusFilter('all', 'All Statuses')"> All Statuses</label>
+                                <label class="custom-option"><input type="radio" name="delivery-status-filter" value="Pending" onchange="setStatusFilter('Pending', 'Pending Assignment')"> Pending Assignment</label>
+                                <label class="custom-option"><input type="radio" name="delivery-status-filter" value="Assigned" onchange="setStatusFilter('Assigned', 'Assigned')"> Assigned</label>
+                                <label class="custom-option"><input type="radio" name="delivery-status-filter" value="Out for Delivery" onchange="setStatusFilter('Out for Delivery', 'Out for Delivery')"> Out for Delivery</label>
+                                <label class="custom-option"><input type="radio" name="delivery-status-filter" value="Delivered" onchange="setStatusFilter('Delivered', 'Delivered & Completed')"> Delivered &amp; Completed</label>
+                                <label class="custom-option"><input type="radio" name="delivery-status-filter" value="Failed" onchange="setStatusFilter('Failed', 'Failed Deliveries')"> Failed Deliveries</label>
+                                <label class="custom-option"><input type="radio" name="delivery-status-filter" value="Reattempted" onchange="setStatusFilter('Reattempted', 'Reattempted')"> Reattempted</label>
+                            </div>
+                        </details>
+
+                        <!-- Dropdown 3: Payment Filter (NEW) -->
+                        <details class="custom-select-wrapper" style="width: 145px;" id="filter-payment-wrapper">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder" id="filter-payment-summary">All Payments</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option"><input type="radio" name="payment-filter" value="all" checked onchange="setPaymentFilter('all', 'All Payments')"> All Payments</label>
+                                <label class="custom-option"><input type="radio" name="payment-filter" value="Paid" onchange="setPaymentFilter('Paid', 'Prepaid (Paid)')"> Prepaid (Paid)</label>
+                                <label class="custom-option"><input type="radio" name="payment-filter" value="To Pay" onchange="setPaymentFilter('To Pay', 'To Pay')"> To Pay</label>
+                                <label class="custom-option"><input type="radio" name="payment-filter" value="COD" onchange="setPaymentFilter('COD', 'Cash On Delivery')"> COD</label>
+                            </div>
+                        </details>
+
+                        <!-- Dropdown 4: Delivery Person -->
+                        <details class="custom-select-wrapper" style="width: 155px;" id="filter-person-wrapper">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder" id="filter-person-summary">All Personnel</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option"><input type="radio" name="person-filter" value="all" checked onchange="setPersonFilter('all', 'All Personnel')"> All Personnel</label>
+                                <label class="custom-option"><input type="radio" name="person-filter" value="Ravi Kumar" onchange="setPersonFilter('Ravi Kumar', 'Ravi Kumar')"> Ravi Kumar</label>
+                                <label class="custom-option"><input type="radio" name="person-filter" value="Suresh Rao" onchange="setPersonFilter('Suresh Rao', 'Suresh Rao')"> Suresh Rao</label>
+                                <label class="custom-option"><input type="radio" name="person-filter" value="Manjunath Shetty" onchange="setPersonFilter('Manjunath Shetty', 'Manjunath Shetty')"> Manjunath Shetty</label>
+                                <label class="custom-option"><input type="radio" name="person-filter" value="Unassigned" onchange="setPersonFilter('Unassigned', 'Unassigned')"> Unassigned Only</label>
+                            </div>
+                        </details>
+
+                        <!-- Dropdown 5: Date Range -->
+                        <details class="custom-select-wrapper" style="width: 140px;" id="filter-date-wrapper">
+                            <summary class="custom-select-trigger">
+                                <span class="placeholder" id="filter-date-summary">All Dates</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option"><input type="radio" name="date-filter" value="all" checked onchange="setDateFilter('all', 'All Dates')"> All Dates</label>
+                                <label class="custom-option"><input type="radio" name="date-filter" value="today" onchange="setDateFilter('today', 'Today')"> Today</label>
+                                <label class="custom-option"><input type="radio" name="date-filter" value="tomorrow" onchange="setDateFilter('tomorrow', 'Tomorrow')"> Tomorrow</label>
+                                <label class="custom-option"><input type="radio" name="date-filter" value="yesterday" onchange="setDateFilter('yesterday', 'Yesterday')"> Yesterday</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Delivery Requests Table with Sort Icons on all columns except Actions -->
+                    <div class="table-container">
+                        <table class="data-table delivery-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 36px; text-align: center;">
+                                        <input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)" style="cursor: pointer;">
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('id')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            LR Number
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('customerName')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Customer Name
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('deliveryAddress')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Delivery Address
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('destBranch')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Destination Branch
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('items')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Items
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('packages')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Packages
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('weight')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Weight
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('deliveryDate')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Delivery Date
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('timeSlot')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Time Slot
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('status')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Delivery Status
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('assignedPerson')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Assigned Person
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTable('paymentStatus')" style="cursor: pointer; user-select: none;">
+                                        <div style="display: inline-flex; align-items: center; gap: 4px;">
+                                            Payment Status
+                                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                        </div>
+                                    </th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="delivery-tbody">
+                                <!-- Populated dynamically by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="pagination-bar">
+                        <span id="page-info-text">Showing 1-10 of 36 records</span>
+                        <div class="pagination-controls">
+                            <button type="button" class="page-btn" disabled>Prev</button>
+                            <span class="page-number">1</span>
+                            <button type="button" class="page-btn">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MODAL: ASSIGN DELIVERY PERSON MODAL                -->
+    <!-- ================================================== -->
+    <div class="modal-overlay" id="assign-delivery-modal">
+        <div class="assign-modal-content">
+            <button type="button" class="modal-close" onclick="closeAssignModal()" style="position: absolute; right: 16px; top: 16px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div style="display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--color-border); padding-bottom: 12px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                <h3 style="font-size: 1.0625rem; font-weight: 700; margin: 0;">Assign Delivery Person</h3>
+            </div>
+
+            <div class="modal-scrollable-body">
+                <!-- Selected LR Summary List -->
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Selected LR Deliveries (<span id="modal-selected-count">1</span>)</label>
+                    <div class="assign-delivery-list" id="modal-lr-summary-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 2-Column Row: Delivery Person & Default Delivery Date -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <!-- Field 1: Select Delivery Person (From User Management with Arrow Icon) -->
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.75rem; font-weight: 700;">Delivery Person *</label>
+                        <details class="custom-select-wrapper" style="width: 100%;" id="modal-person-select-wrapper">
+                            <summary class="custom-select-trigger" style="height: 31px; padding: 4px 8px; font-size: 0.8125rem;">
+                                <span class="placeholder" id="modal-person-summary" style="font-weight: 600; color: var(--color-black);">Ravi Kumar (Delivery Staff)</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option">
+                                    <input type="radio" name="modal-assignee-opt" value="Ravi Kumar" checked onchange="selectModalDeliveryPerson('Ravi Kumar (Delivery Staff)', 'Ravi Kumar')">
+                                    Ravi Kumar · (Role: Delivery Staff · Active · Available)
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="modal-assignee-opt" value="Suresh Rao" onchange="selectModalDeliveryPerson('Suresh Rao (Delivery Staff)', 'Suresh Rao')">
+                                    Suresh Rao · (Role: Delivery Staff · Active · Available)
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="modal-assignee-opt" value="Manjunath Shetty" onchange="selectModalDeliveryPerson('Manjunath Shetty (Delivery Staff)', 'Manjunath Shetty')">
+                                    Manjunath Shetty · (Role: Delivery Staff · Active · Available)
+                                </label>
+                                <label class="custom-option">
+                                    <input type="radio" name="modal-assignee-opt" value="Praveen Nayak" onchange="selectModalDeliveryPerson('Praveen Nayak (Delivery Staff)', 'Praveen Nayak')">
+                                    Praveen Nayak · (Role: Delivery Staff · Active · Available)
+                                </label>
+                            </div>
+                        </details>
+                        <input type="hidden" id="modal-person-select" value="Ravi Kumar">
+                    </div>
+
+                    <!-- Field 2: Default Delivery Date (Custom Datepicker Trigger) -->
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.75rem; font-weight: 700;">Default Delivery Date *</label>
+                        <div class="custom-datepicker-trigger" onclick="openCalendarPicker('global')">
+                            <span id="global-delivery-date-text" style="font-weight: 600;">17 Aug 2026</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scheduling Mode Selector Tabs (Segmented Control exactly like Pickup Operations) -->
+                <div>
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.8125rem;">Scheduling Mode Option</label>
+                    <div class="schedule-mode-tabs">
+                        <button type="button" class="mode-tab active" id="tab-mode-same" onclick="setScheduleMode('same')">Option 1: Same Schedule for All Deliveries</button>
+                        <button type="button" class="mode-tab" id="tab-mode-individual" onclick="setScheduleMode('individual')">Option 2: Individual Schedule</button>
+                    </div>
+                </div>
+
+                <!-- Option 1: Default Time Slot Dropdown -->
+                <div class="form-group" style="margin-bottom: 0; display: block;" id="global-slot-group">
+                    <label for="global-time-slot" style="font-size: 0.75rem; font-weight: 700;">Default Time Slot (Applies to all selected deliveries)</label>
+                    <select id="global-time-slot" style="height: 31px; font-size: 0.8125rem; width: 100%; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: #fff; padding: 4px 8px;">
+                        <option value="10:00 AM - 01:00 PM" selected>Morning (10:00 AM - 01:00 PM)</option>
+                        <option value="02:00 PM - 05:00 PM">Afternoon (02:00 PM - 05:00 PM)</option>
+                        <option value="05:00 PM - 08:00 PM">Evening (05:00 PM - 08:00 PM)</option>
+                        <option value="Anytime (09:00 AM - 07:00 PM)">Full Day (09:00 AM - 07:00 PM)</option>
+                    </select>
+                </div>
+
+                <!-- Option 2: INDIVIDUAL SCHEDULE EDITOR TABLE -->
+                <div class="individual-schedule-box" id="individual-editor-box" style="display: none;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.02em;">Individual Schedule Customizer</div>
+                    <div style="overflow-x: auto;">
+                        <table class="individual-schedule-table">
+                            <thead>
+                                <tr>
+                                    <th>LR Number</th>
+                                    <th>Customer Name</th>
+                                    <th>Delivery Location</th>
+                                    <th>Delivery Date</th>
+                                    <th>Individual Time Slot</th>
+                                </tr>
+                            </thead>
+                            <tbody id="individual-schedule-tbody">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer Actions -->
+            <div style="display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--color-border); padding-top: 14px;">
+                <button type="button" class="btn-secondary" onclick="closeAssignModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="executeAssignment()">Apply Assignment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- REATTEMPT DELIVERY MODAL DIALOG                     -->
+    <!-- ================================================== -->
+    <div id="reattempt-modal-overlay" class="assign-modal-overlay" style="display: none;">
+        <div class="assign-modal-content" style="width: 520px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 12px;">
+                <div>
+                    <h3 style="font-size: 1.0625rem; font-weight: 700; margin: 0; color: var(--color-black);">Schedule Delivery Reattempt</h3>
+                    <p style="font-size: 0.75rem; color: #666; margin: 2px 0 0 0;">Reschedule and reassign failed delivery request for fresh delivery attempt.</p>
+                </div>
+                <button type="button" class="btn-close" onclick="closeReattemptModal()" style="background:none; border:none; font-size:1.25rem; cursor:pointer;">&times;</button>
+            </div>
+
+            <div class="modal-scrollable-body">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 0.75rem; font-weight: 700;">Target LR Number</label>
+                    <input type="text" id="reattempt-lr-input" readonly style="background: #f9fafb; font-family: monospace; font-weight: 700;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 0.75rem; font-weight: 700;">Assign Delivery Staff *</label>
+                    <select id="reattempt-person-select" style="height: 31px; font-size: 0.8125rem; width: 100%; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: #fff; padding: 4px 8px;">
+                        <option value="Ravi Kumar">Ravi Kumar (Delivery Staff · Active)</option>
+                        <option value="Suresh Rao">Suresh Rao (Delivery Staff · Active)</option>
+                        <option value="Manjunath Shetty">Manjunath Shetty (Delivery Staff · Active)</option>
+                        <option value="Praveen Nayak">Praveen Nayak (Delivery Staff · Active)</option>
+                    </select>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.75rem; font-weight: 700;">Reattempt Date *</label>
+                        <input type="text" id="reattempt-date-input" value="18 Aug 2026" style="height: 31px; font-size: 0.8125rem; width: 100%; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 4px 8px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.75rem; font-weight: 700;">Time Slot *</label>
+                        <select id="reattempt-slot-select" style="height: 31px; font-size: 0.8125rem; width: 100%; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: #fff; padding: 4px 8px;">
+                            <option value="10:00 AM - 01:00 PM">Morning (10:00 AM - 01:00 PM)</option>
+                            <option value="02:00 PM - 05:00 PM" selected>Afternoon (02:00 PM - 05:00 PM)</option>
+                            <option value="05:00 PM - 08:00 PM">Evening (05:00 PM - 08:00 PM)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 0.75rem; font-weight: 700;">Special Instructions / Customer Notes</label>
+                    <textarea id="reattempt-notes" rows="2" style="font-size: 0.8125rem; width: 100%; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 6px;" placeholder="e.g., Customer requested delivery after 3 PM / Call before dispatch"></textarea>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--color-border); padding-top: 14px;">
+                <button type="button" class="btn-secondary" onclick="closeReattemptModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="executeReattempt()">Schedule Reattempt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- MARK AS FAILED DELIVERY MODAL                      -->
+    <!-- ================================================== -->
+    <div id="failed-modal-overlay" class="assign-modal-overlay" style="display: none;">
+        <div class="assign-modal-content" style="width: 480px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 12px;">
+                <div>
+                    <h3 style="font-size: 1.0625rem; font-weight: 700; margin: 0; color: var(--color-black);">Mark Delivery as Failed</h3>
+                    <p style="font-size: 0.75rem; color: #666; margin: 2px 0 0 0;">Record reason for undelivered shipment and log for hub return / reattempt.</p>
+                </div>
+                <button type="button" class="btn-close" onclick="closeFailedModal()" style="background:none; border:none; font-size:1.25rem; cursor:pointer;">&times;</button>
+            </div>
+
+            <div class="modal-scrollable-body">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 0.75rem; font-weight: 700;">Target LR Number</label>
+                    <input type="text" id="failed-lr-input" readonly style="background: #f9fafb; font-family: monospace; font-weight: 700;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 0.75rem; font-weight: 700;">Reason for Failed Delivery *</label>
+                    <select id="failed-reason-select" style="height: 31px; font-size: 0.8125rem; width: 100%; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: #fff; padding: 4px 8px;" onchange="handleAdminFailedReasonChange(this.value)">
+                        <option value="Customer Not Available">Customer Not Available</option>
+                        <option value="Wrong Address / Unreachable Location">Wrong Address / Unreachable Location</option>
+                        <option value="Customer Refused Shipment">Customer Refused Shipment</option>
+                        <option value="Payment Issue (Cash / UPI Not Arranged)">Payment Issue (Cash / UPI Not Arranged)</option>
+                        <option value="Delivery Rescheduled by Customer">Delivery Rescheduled by Customer</option>
+                        <option value="Premises Closed / Holiday">Premises Closed / Holiday</option>
+                        <option value="Other">Other (Specify below)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="failed-custom-reason-group" style="margin-bottom: 0; display: none;">
+                    <label style="font-size: 0.75rem; font-weight: 700;">Specify Detailed Reason</label>
+                    <input type="text" id="failed-custom-reason-input" placeholder="Enter reason...">
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--color-border); padding-top: 14px;">
+                <button type="button" class="btn-secondary" onclick="closeFailedModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="executeMarkFailed()">Submit Failed Status</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
+    <!-- CUSTOM ERP MONOCHROME CALENDAR POPUP MODAL         -->
+    <!-- ================================================== -->
+    <div id="calendar-popup-overlay" class="calendar-popup-overlay" style="display: none;">
+        <div class="calendar-popup">
+            <div class="calendar-header">
+                <button type="button" class="calendar-nav-btn" onclick="changeCalMonth(-1)">&lt;</button>
+                <span class="calendar-month-title" id="cal-month-title">August 2026</span>
+                <button type="button" class="calendar-nav-btn" onclick="changeCalMonth(1)">&gt;</button>
+            </div>
+            
+            <div class="calendar-weekdays">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+
+            <div class="calendar-days-grid" id="cal-days-grid">
+                <!-- Days populated dynamically by JS -->
+            </div>
+
+            <div class="calendar-actions">
+                <button type="button" class="btn-secondary" style="font-size: 0.75rem; padding: 4px 8px;" onclick="closeCalendarPicker()">Cancel</button>
+                <button type="button" class="btn-primary" style="font-size: 0.75rem; padding: 4px 8px;" onclick="applyCalendarDate()">Select</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic Toast Notification -->
+    <div id="delivery-toast" class="delivery-toast">Notification Message</div>
+
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+        // Delivery Operations Master Data Store
+        let deliveriesDb = [
+            {
+                id: 'LR-2026-000125',
+                customerName: 'ABC Pvt Ltd',
+                customerMobile: '+91 98860 12345',
+                deliveryAddress: 'Tech Park, Whitefield, Bangalore',
+                destBranch: 'Bangalore Hub',
+                items: 'Electronics & Chips',
+                packages: 3,
+                weight: 45,
+                deliveryDate: '17 Aug 2026',
+                timeSlot: '10:00 AM - 01:00 PM',
+                status: 'Delivered',
+                assignedPerson: 'Ravi Kumar',
+                paymentStatus: 'Paid',
+                proofStatus: 'Verified (Photo & Sign)',
+                failReason: '',
+                dateTag: 'today'
+            },
+            {
+                id: 'LR-2026-000126',
+                customerName: 'Cyber Systems Ltd',
+                customerMobile: '+91 94480 23456',
+                deliveryAddress: 'HITEC City, Phase 2, Hyderabad',
+                destBranch: 'Hyderabad Hub',
+                items: 'Server Parts & Cables',
+                packages: 2,
+                weight: 20,
+                deliveryDate: '17 Aug 2026',
+                timeSlot: '02:00 PM - 05:00 PM',
+                status: 'Out for Delivery',
+                assignedPerson: 'Suresh Rao',
+                paymentStatus: 'To Pay',
+                proofStatus: 'Pending Capture',
+                failReason: '',
+                dateTag: 'today'
+            },
+            {
+                id: 'LR-2026-000127',
+                customerName: 'Auto Works Hub',
+                customerMobile: '+91 97410 34567',
+                deliveryAddress: 'Peenya Industrial Area, Bangalore',
+                destBranch: 'Bangalore Hub',
+                items: 'Automotive Spares',
+                packages: 4,
+                weight: 60,
+                deliveryDate: '17 Aug 2026',
+                timeSlot: '02:00 PM - 05:00 PM',
+                status: 'Pending',
+                assignedPerson: 'Unassigned',
+                paymentStatus: 'Paid',
+                proofStatus: 'Not Started',
+                failReason: '',
+                dateTag: 'today'
+            },
+            {
+                id: 'LR-2026-000128',
+                customerName: 'City Supermarket Ltd',
+                customerMobile: '+91 99000 45678',
+                deliveryAddress: 'Banjara Hills Road 12, Hyderabad',
+                destBranch: 'Hyderabad Hub',
+                items: 'Spices & Food Mix',
+                packages: 6,
+                weight: 90,
+                deliveryDate: '17 Aug 2026',
+                timeSlot: '10:00 AM - 01:00 PM',
+                status: 'Assigned',
+                assignedPerson: 'Manjunath Shetty',
+                paymentStatus: 'Paid',
+                proofStatus: 'Not Started',
+                failReason: '',
+                dateTag: 'today'
+            },
+            {
+                id: 'LR-2026-000129',
+                customerName: 'Trends Retail Corp',
+                customerMobile: '+91 98450 56789',
+                deliveryAddress: 'Brigade Road, Bangalore',
+                destBranch: 'Bangalore Hub',
+                items: 'Apparel Cartons',
+                packages: 8,
+                weight: 160,
+                deliveryDate: '18 Aug 2026',
+                timeSlot: '10:00 AM - 01:00 PM',
+                status: 'Failed',
+                assignedPerson: 'Ravi Kumar',
+                paymentStatus: 'COD',
+                proofStatus: 'Failed Attempt',
+                failReason: 'Customer Not Available',
+                dateTag: 'today'
+            },
+            {
+                id: 'LR-2026-000130',
+                customerName: 'Telangana Infra Spares',
+                customerMobile: '+91 91234 56780',
+                deliveryAddress: 'Gachibowli Outer Ring, Hyderabad',
+                destBranch: 'Hyderabad Hub',
+                items: 'Hardware & Tools',
+                packages: 5,
+                weight: 140,
+                deliveryDate: '18 Aug 2026',
+                timeSlot: '02:00 PM - 05:00 PM',
+                status: 'Reattempted',
+                assignedPerson: 'Suresh Rao',
+                paymentStatus: 'Paid',
+                proofStatus: 'Reattempt Scheduled',
+                failReason: 'Wrong Address (Updated)',
+                dateTag: 'tomorrow'
+            },
+            {
+                id: 'LR-2026-000131',
+                customerName: 'Metro Electricals',
+                customerMobile: '+91 98800 67891',
+                deliveryAddress: 'Koramangala 5th Block, Bangalore',
+                destBranch: 'Bangalore Hub',
+                items: 'Motors & Wire Coils',
+                packages: 7,
+                weight: 220,
+                deliveryDate: '17 Aug 2026',
+                timeSlot: '10:00 AM - 01:00 PM',
+                status: 'Out for Delivery',
+                assignedPerson: 'Ravi Kumar',
+                paymentStatus: 'Paid',
+                proofStatus: 'Pending Capture',
+                failReason: '',
+                dateTag: 'today'
+            },
+            {
+                id: 'LR-2026-000132',
+                customerName: 'Royal Foods Mumbai',
+                customerMobile: '+91 99300 78902',
+                deliveryAddress: 'Andheri East Commercial, Mumbai',
+                destBranch: 'Mumbai Hub',
+                items: 'Packaged Confectionery',
+                packages: 12,
+                weight: 320,
+                deliveryDate: '16 Aug 2026',
+                timeSlot: '02:00 PM - 05:00 PM',
+                status: 'Delivered',
+                assignedPerson: 'Praveen Nayak',
+                paymentStatus: 'Paid',
+                proofStatus: 'Verified (Photo & Sign)',
+                failReason: '',
+                dateTag: 'yesterday'
+            },
+            {
+                id: 'LR-2026-000133',
+                customerName: 'Southern Auto Works',
+                customerMobile: '+91 98400 89013',
+                deliveryAddress: 'Guindy Industrial Estate, Chennai',
+                destBranch: 'Chennai Hub',
+                items: 'Auto Engine Valves',
+                packages: 5,
+                weight: 210,
+                deliveryDate: '17 Aug 2026',
+                timeSlot: '05:00 PM - 08:00 PM',
+                status: 'Failed',
+                assignedPerson: 'Manjunath Shetty',
+                paymentStatus: 'To Pay',
+                proofStatus: 'Failed Attempt',
+                failReason: 'Premises Closed / Holiday',
+                dateTag: 'today'
+            },
+            {
+                id: 'LR-2026-000134',
+                customerName: 'Oceanic Delights Hubli',
+                customerMobile: '+91 94490 90124',
+                deliveryAddress: 'Gokul Road, Hubli',
+                destBranch: 'Hubli Hub',
+                items: 'Cold Storage Seafood',
+                packages: 4,
+                weight: 110,
+                deliveryDate: '17 Aug 2026',
+                timeSlot: '10:00 AM - 01:00 PM',
+                status: 'Pending',
+                assignedPerson: 'Unassigned',
+                paymentStatus: 'COD',
+                proofStatus: 'Not Started',
+                failReason: '',
+                dateTag: 'today'
+            }
+        ];
+
+        // Active Selection State
+        let selectedLRs = [];
+        let currentTargetLRs = []; // LRs being processed in modal
+        // Filters State
+        let filterBranch = 'all';
+        let filterStatus = 'all';
+        let filterPayment = 'all';
+        let filterPerson = 'all';
+        let filterDate = 'all';
+
+        // Sorting State
+        let currentSortColumn = '';
+        let currentSortAsc = true;
+
+        function sortTable(column) {
+            if (currentSortColumn === column) {
+                currentSortAsc = !currentSortAsc;
+            } else {
+                currentSortColumn = column;
+                currentSortAsc = true;
+            }
+
+            deliveriesDb.sort((a, b) => {
+                let valA = a[column];
+                let valB = b[column];
+
+                if (typeof valA === 'string') {
+                    return currentSortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                } else {
+                    return currentSortAsc ? (valA - valB) : (valB - valA);
+                }
+            });
+
+            applyFilters();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('delivery-toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3200);
+        }
+
+        function setBranchFilter(val, label) {
+            filterBranch = val;
+            document.getElementById('filter-branch-summary').textContent = label;
+            document.getElementById('filter-branch-wrapper').removeAttribute('open');
+            applyFilters();
+        }
+
+        function setStatusFilter(val, label) {
+            filterStatus = val;
+            document.getElementById('filter-status-summary').textContent = label;
+            document.getElementById('filter-status-wrapper').removeAttribute('open');
+            applyFilters();
+        }
+
+        function setPaymentFilter(val, label) {
+            filterPayment = val;
+            document.getElementById('filter-payment-summary').textContent = label;
+            document.getElementById('filter-payment-wrapper').removeAttribute('open');
+            applyFilters();
+        }
+
+        function filterByStatus(val) {
+            const labels = {
+                'all': 'All Statuses',
+                'Pending': 'Pending Assignment',
+                'Assigned': 'Assigned',
+                'Out for Delivery': 'Out for Delivery',
+                'Delivered': 'Delivered & Completed',
+                'Failed': 'Failed Deliveries',
+                'Reattempted': 'Reattempted'
+            };
+            const radio = document.querySelector(`input[name="delivery-status-filter"][value="${val}"]`);
+            if (radio) radio.checked = true;
+            setStatusFilter(val, labels[val] || val);
+        }
+
+        function setPersonFilter(val, label) {
+            filterPerson = val;
+            document.getElementById('filter-person-summary').textContent = label;
+            document.getElementById('filter-person-wrapper').removeAttribute('open');
+            applyFilters();
+        }
+
+        function setDateFilter(val, label) {
+            filterDate = val;
+            document.getElementById('filter-date-summary').textContent = label;
+            document.getElementById('filter-date-wrapper').removeAttribute('open');
+            applyFilters();
+        }
+
+        function getStatusBadge(status, failReason) {
+            if (status === 'Pending') return '<span class="badge-status badge-pending">Pending</span>';
+            if (status === 'Assigned') return '<span class="badge-status badge-assigned">Assigned</span>';
+            if (status === 'Accepted') return '<span class="badge-status badge-accepted">Accepted</span>';
+            if (status === 'Out for Delivery') return '<span class="badge-status badge-out-for-delivery">Out for Delivery</span>';
+            if (status === 'Delivered') return '<span class="badge-status badge-completed">Delivered</span>';
+            if (status === 'Failed') return `<span class="badge-status badge-failed" title="${failReason || 'Failed'}">Failed</span>`;
+            if (status === 'Reattempted') return '<span class="badge-status badge-pending" style="background:#111;color:#fff;border:1px solid #000;">Reattempted</span>';
+            return `<span class="badge-status">${status}</span>`;
+        }
+
+        function getPaymentBadge(pay) {
+            if (pay === 'Paid') return '<span class="badge-paid">Paid</span>';
+            if (pay === 'To Pay') return '<span class="badge-topay">To Pay</span>';
+            if (pay === 'COD') return '<span class="badge-cod">COD</span>';
+            return `<span class="badge-status">${pay}</span>`;
+        }
+
+        function getProofBadge(proof) {
+            if (!proof || proof === 'Not Started') {
+                return '<span style="font-size: 0.6875rem; color: #888;">—</span>';
+            }
+            if (proof.includes('Verified')) {
+                return '<span style="font-size: 0.6875rem; font-weight: 700; color: #000;">✓ Verified</span>';
+            }
+            if (proof.includes('Pending')) {
+                return '<span style="font-size: 0.6875rem; color: #555; font-style: italic;">Pending</span>';
+            }
+            if (proof.includes('Failed')) {
+                return '<span style="font-size: 0.6875rem; font-weight: 700; color: #000; text-decoration: underline;">Failed Proof</span>';
+            }
+            return `<span style="font-size: 0.6875rem; color: #444;">${proof}</span>`;
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('delivery-search-input').value.trim().toLowerCase();
+
+            let filtered = deliveriesDb.filter(d => {
+                const matchBranch = (filterBranch === 'all' || d.destBranch === filterBranch);
+                const matchStatus = (filterStatus === 'all' || d.status === filterStatus);
+                const matchPayment = (filterPayment === 'all' || d.paymentStatus === filterPayment);
+                const matchPerson = (filterPerson === 'all' || (filterPerson === 'Unassigned' ? d.assignedPerson === 'Unassigned' : d.assignedPerson === filterPerson));
+                const matchDate = (filterDate === 'all' || d.dateTag === filterDate);
+
+                const matchQuery = (
+                    d.id.toLowerCase().includes(query) ||
+                    d.customerName.toLowerCase().includes(query) ||
+                    d.customerMobile.toLowerCase().includes(query) ||
+                    d.deliveryAddress.toLowerCase().includes(query)
+                );
+
+                return matchBranch && matchStatus && matchPayment && matchPerson && matchDate && matchQuery;
+            });
+
+            renderTable(filtered);
+            updateKpiCounts();
+        }
+
+        function updateKpiCounts() {
+            document.getElementById('kpi-total').textContent = deliveriesDb.length;
+            document.getElementById('kpi-pending').textContent = deliveriesDb.filter(d => d.status === 'Pending').length;
+            document.getElementById('kpi-assigned').textContent = deliveriesDb.filter(d => d.status === 'Assigned' || d.status === 'Accepted').length;
+            document.getElementById('kpi-completed').textContent = deliveriesDb.filter(d => d.status === 'Delivered').length;
+            document.getElementById('kpi-failed').textContent = deliveriesDb.filter(d => d.status === 'Failed').length;
+            document.getElementById('kpi-reattempted').textContent = deliveriesDb.filter(d => d.status === 'Reattempted').length;
+        }
+
+        function renderTable(list) {
+            const tbody = document.getElementById('delivery-tbody');
+            const pageInfo = document.getElementById('page-info-text');
+
+            pageInfo.textContent = `Showing 1-${list.length} of ${list.length} records`;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="14" style="text-align: center; padding: 24px; color: #888;">No delivery requests match the selected filters.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = list.map(item => {
+                const isChecked = selectedLRs.includes(item.id);
+                return `
+                <tr>
+                    <td style="text-align: center;">
+                        <input type="checkbox" value="${item.id}" onchange="toggleRowSelect('${item.id}', this)" ${isChecked ? 'checked' : ''} style="cursor: pointer;">
+                    </td>
+                    <td><strong>${item.id}</strong></td>
+                    <td>
+                        <div><strong>${item.customerName}</strong></div>
+                        <div style="font-size: 0.6875rem; color: #666;">${item.customerMobile}</div>
+                    </td>
+                    <td style="max-width: 170px; white-space: normal; line-height: 1.3;">${item.deliveryAddress}</td>
+                    <td><strong>${item.destBranch}</strong></td>
+                    <td>${item.items}</td>
+                    <td>${item.packages} Boxes</td>
+                    <td>${item.weight} KG</td>
+                    <td>${item.deliveryDate}</td>
+                    <td style="font-size: 0.75rem; color: #555;">${item.timeSlot}</td>
+                    <td>
+                        ${getStatusBadge(item.status, item.failReason)}
+                        ${item.failReason ? `<div style="font-size: 0.65rem; color: #666; margin-top: 2px;">${item.failReason}</div>` : ''}
+                    </td>
+                    <td>
+                        ${item.assignedPerson === 'Unassigned' 
+                            ? '<span style="color: #999; font-style: italic;">Unassigned</span>' 
+                            : `<strong>${item.assignedPerson}</strong>`}
+                    </td>
+                    <td>${getPaymentBadge(item.paymentStatus)}</td>
+                    <td style="text-align: right;">
+                        <div style="display: inline-flex; gap: 4px; align-items: center;">
+                            ${item.status === 'Failed' 
+                                ? `<button type="button" class="btn-primary" style="height: 24px; padding: 0 8px; font-size: 0.6875rem;" onclick="openReattemptModal('${item.id}')" title="Schedule Reattempt">Reattempt</button>`
+                                : `<button type="button" class="btn-primary" style="height: 24px; padding: 0 8px; font-size: 0.6875rem;" onclick="openSingleAssignModal('${item.id}')" title="Assign Delivery Staff">${item.assignedPerson === 'Unassigned' ? 'Assign' : 'Reassign'}</button>`
+                            }
+                            <a href="delivery-details.html?lr=${encodeURIComponent(item.id)}" class="action-icon" title="View Delivery Details" style="display: inline-flex; padding: 4px; color: var(--color-black);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                `;
+            }).join('');
+        }
+
+        // Selection Handlers
+        function toggleSelectAll(masterCb) {
+            const rowCheckboxes = document.querySelectorAll('#delivery-tbody input[type="checkbox"]');
+            selectedLRs = [];
+            rowCheckboxes.forEach(cb => {
+                cb.checked = masterCb.checked;
+                if (masterCb.checked) {
+                    selectedLRs.push(cb.value);
+                }
+            });
+            updateBatchActionBar();
+        }
+
+        function toggleRowSelect(lrId, cb) {
+            if (cb.checked) {
+                if (!selectedLRs.includes(lrId)) selectedLRs.push(lrId);
+            } else {
+                selectedLRs = selectedLRs.filter(id => id !== lrId);
+            }
+            const masterCb = document.getElementById('select-all-checkbox');
+            const rowCheckboxes = document.querySelectorAll('#delivery-tbody input[type="checkbox"]');
+            masterCb.checked = (selectedLRs.length > 0 && selectedLRs.length === rowCheckboxes.length);
+            updateBatchActionBar();
+        }
+
+        function updateBatchActionBar() {
+            const bar = document.getElementById('batch-action-bar');
+            const countText = document.getElementById('selected-count-text');
+            if (selectedLRs.length > 0) {
+                countText.textContent = `${selectedLRs.length} Delivery Requests Selected`;
+                bar.style.display = 'flex';
+            } else {
+                bar.style.display = 'none';
+            }
+        }
+
+        // Modal Functions
+        function openSingleAssignModal(lrId) {
+            currentTargetLRs = [lrId];
+            populateAssignModal();
+            document.getElementById('assign-delivery-modal').classList.add('active');
+        }
+
+        function openBulkAssignModal() {
+            if (selectedLRs.length === 0) return;
+            currentTargetLRs = [...selectedLRs];
+            populateAssignModal();
+            document.getElementById('assign-delivery-modal').classList.add('active');
+        }
+
+        function closeAssignModal() {
+            document.getElementById('assign-delivery-modal').classList.remove('active');
+            currentTargetLRs = [];
+        }
+
+        function selectModalDeliveryPerson(label, val) {
+            document.getElementById('modal-person-summary').textContent = label;
+            document.getElementById('modal-person-select').value = val;
+            const wrapper = document.getElementById('modal-person-select-wrapper');
+            if (wrapper) wrapper.removeAttribute('open');
+        }
+
+        // Exact Pickup Operations Segmented Control Logic
+        function setScheduleMode(mode) {
+            activeScheduleMode = mode;
+            const sameTab = document.getElementById('tab-mode-same');
+            const indivTab = document.getElementById('tab-mode-individual');
+            const globalGroup = document.getElementById('global-slot-group');
+            const indivBox = document.getElementById('individual-editor-box');
+
+            if (mode === 'individual') {
+                sameTab.classList.remove('active');
+                indivTab.classList.add('active');
+                globalGroup.style.display = 'none';
+                indivBox.style.display = 'block';
+                renderIndividualScheduleTable();
+            } else {
+                indivTab.classList.remove('active');
+                sameTab.classList.add('active');
+                globalGroup.style.display = 'block';
+                indivBox.style.display = 'none';
+            }
+        }
+
+        function populateAssignModal() {
+            document.getElementById('modal-selected-count').textContent = currentTargetLRs.length;
+            const listContainer = document.getElementById('modal-lr-summary-container');
+
+            const items = currentTargetLRs.map(id => deliveriesDb.find(d => d.id === id)).filter(Boolean);
+
+            listContainer.innerHTML = items.map(d => `
+                <div class="assign-delivery-item">
+                    <div>
+                        <strong>${d.id}</strong> · <span style="color:#555;">${d.customerName}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:#666;">
+                        ${d.packages} Pkgs · ${d.weight} KG · <span style="color:#111; font-weight:600;">${d.destBranch}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Reset mode to Option 1: Same Schedule
+            setScheduleMode('same');
+        }
+
+        function renderIndividualScheduleTable() {
+            const tbody = document.getElementById('individual-schedule-tbody');
+            const items = currentTargetLRs.map(id => deliveriesDb.find(d => d.id === id)).filter(Boolean);
+
+            tbody.innerHTML = items.map(d => `
+                <tr>
+                    <td><strong>${d.id}</strong></td>
+                    <td>${d.customerName}</td>
+                    <td style="max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${d.deliveryAddress}</td>
+                    <td>
+                        <div class="custom-datepicker-trigger" style="height: 26px; padding: 2px 6px; font-size: 0.72rem;" onclick="openCalendarPicker('${d.id}')">
+                            <span id="editor-date-text-${d.id}">${d.deliveryDate}</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        </div>
+                    </td>
+                    <td>
+                        <select id="editor-slot-${d.id}" style="font-size: 0.72rem; padding: 2px 6px; height: 26px;">
+                            <option value="10:00 AM - 01:00 PM" ${d.timeSlot.includes('10:00') ? 'selected' : ''}>10:00 AM - 01:00 PM</option>
+                            <option value="02:00 PM - 05:00 PM" ${d.timeSlot.includes('02:00') ? 'selected' : ''}>02:00 PM - 05:00 PM</option>
+                            <option value="05:00 PM - 08:00 PM" ${d.timeSlot.includes('05:00') ? 'selected' : ''}>05:00 PM - 08:00 PM</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ==========================================
+        // CUSTOM ERP CALENDAR PICKER (Matching Pickup Operations)
+        // ==========================================
+        let activeDateTarget = 'global';
+        let calCurrentDate = new Date(2026, 7, 17); // Aug 17, 2026
+        let calTempSelectedDate = new Date(2026, 7, 17);
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        function openCalendarPicker(targetKey) {
+            activeDateTarget = targetKey;
+            calCurrentDate = new Date(2026, 7, 17);
+            calTempSelectedDate = new Date(calCurrentDate);
+            renderCustomCalendar();
+            document.getElementById('calendar-popup-overlay').style.display = 'flex';
+        }
+
+        function closeCalendarPicker() {
+            document.getElementById('calendar-popup-overlay').style.display = 'none';
+        }
+
+        function changeCalMonth(delta) {
+            calCurrentDate.setMonth(calCurrentDate.getMonth() + delta);
+            renderCustomCalendar();
+        }
+
+        function renderCustomCalendar() {
+            const year = calCurrentDate.getFullYear();
+            const month = calCurrentDate.getMonth();
+            document.getElementById('cal-month-title').textContent = `${monthNames[month]} ${year}`;
+
+            const grid = document.getElementById('cal-days-grid');
+            grid.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'cal-day-cell disabled';
+                grid.appendChild(emptyCell);
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const cell = document.createElement('div');
+                cell.className = 'cal-day-cell';
+                cell.textContent = d;
+
+                if (calTempSelectedDate.getDate() === d && calTempSelectedDate.getMonth() === month && calTempSelectedDate.getFullYear() === year) {
+                    cell.classList.add('selected');
+                }
+
+                cell.onclick = () => {
+                    calTempSelectedDate = new Date(year, month, d);
+                    renderCustomCalendar();
+                };
+
+                grid.appendChild(cell);
+            }
+        }
+
+        function applyCalendarDate() {
+            const day = calTempSelectedDate.getDate();
+            const monthStr = monthShortNames[calTempSelectedDate.getMonth()];
+            const year = calTempSelectedDate.getFullYear();
+            const formatted = `${day} ${monthStr} ${year}`;
+
+            if (activeDateTarget === 'global') {
+                document.getElementById('global-delivery-date-text').textContent = formatted;
+            } else {
+                const targetText = document.getElementById(`editor-date-text-${activeDateTarget}`);
+                if (targetText) targetText.textContent = formatted;
+            }
+
+            closeCalendarPicker();
+        }
+
+        function executeAssignment() {
+            const chosenPerson = document.getElementById('modal-person-select').value;
+            const globalDate = document.getElementById('global-delivery-date-text').textContent;
+            const globalSlot = document.getElementById('global-time-slot').value;
+
+            if (activeScheduleMode === 'same') {
+                currentTargetLRs.forEach(id => {
+                    const item = deliveriesDb.find(d => d.id === id);
+                    if (item) {
+                        item.assignedPerson = chosenPerson;
+                        item.status = 'Assigned';
+                        item.deliveryDate = globalDate;
+                        item.timeSlot = globalSlot;
+                    }
+                });
+            } else {
+                currentTargetLRs.forEach(id => {
+                    const item = deliveriesDb.find(d => d.id === id);
+                    const indDateEl = document.getElementById(`editor-date-text-${id}`);
+                    const indSlotEl = document.getElementById(`editor-slot-${id}`);
+                    if (item && indDateEl && indSlotEl) {
+                        item.assignedPerson = chosenPerson;
+                        item.status = 'Assigned';
+                        item.deliveryDate = indDateEl.textContent;
+                        item.timeSlot = indSlotEl.value;
+                    }
+                });
+            }
+
+            closeAssignModal();
+            selectedLRs = [];
+            document.getElementById('select-all-checkbox').checked = false;
+            updateBatchActionBar();
+            applyFilters();
+            showToast(`✓ Successfully assigned ${currentTargetLRs.length} shipment deliveries to ${chosenPerson}!`);
+        }
+
+        // ==========================================
+        // REATTEMPT DELIVERY HANDLERS
+        // ==========================================
+        let reattemptTargetLR = '';
+
+        function openReattemptModal(lrId) {
+            reattemptTargetLR = lrId;
+            const item = deliveriesDb.find(d => d.id === lrId);
+            document.getElementById('reattempt-lr-input').value = lrId;
+            if (item) {
+                if (item.assignedPerson && item.assignedPerson !== 'Unassigned') {
+                    document.getElementById('reattempt-person-select').value = item.assignedPerson;
+                }
+                if (item.failReason) {
+                    document.getElementById('reattempt-notes').value = `Previous attempt failed: ${item.failReason}`;
+                }
+            }
+            document.getElementById('reattempt-modal-overlay').style.display = 'flex';
+        }
+
+        function closeReattemptModal() {
+            document.getElementById('reattempt-modal-overlay').style.display = 'none';
+        }
+
+        function executeReattempt() {
+            const item = deliveriesDb.find(d => d.id === reattemptTargetLR);
+            const staff = document.getElementById('reattempt-person-select').value;
+            const date = document.getElementById('reattempt-date-input').value;
+            const slot = document.getElementById('reattempt-slot-select').value;
+
+            if (item) {
+                item.status = 'Reattempted';
+                item.assignedPerson = staff;
+                item.deliveryDate = date;
+                item.timeSlot = slot;
+                item.proofStatus = 'Reattempt Scheduled';
+            }
+
+            closeReattemptModal();
+            applyFilters();
+            showToast(`✓ Scheduled Reattempt for ${reattemptTargetLR} assigned to ${staff}`);
+        }
+
+        // ==========================================
+        // MARK AS FAILED DELIVERY HANDLERS
+        // ==========================================
+        let failedTargetLR = '';
+
+        function openFailedModal(lrId) {
+            failedTargetLR = lrId;
+            document.getElementById('failed-lr-input').value = lrId;
+            document.getElementById('failed-reason-select').value = 'Customer Not Available';
+            document.getElementById('failed-custom-reason-group').style.display = 'none';
+            document.getElementById('failed-custom-reason-input').value = '';
+            document.getElementById('failed-modal-overlay').style.display = 'flex';
+        }
+
+        function closeFailedModal() {
+            document.getElementById('failed-modal-overlay').style.display = 'none';
+        }
+
+        function handleAdminFailedReasonChange(val) {
+            const group = document.getElementById('failed-custom-reason-group');
+            if (val === 'Other') {
+                group.style.display = 'block';
+                document.getElementById('failed-custom-reason-input').focus();
+            } else {
+                group.style.display = 'none';
+            }
+        }
+
+        function executeMarkFailed() {
+            const item = deliveriesDb.find(d => d.id === failedTargetLR);
+            let reason = document.getElementById('failed-reason-select').value;
+            if (reason === 'Other') {
+                reason = document.getElementById('failed-custom-reason-input').value.trim() || 'Other Reason';
+            }
+
+            if (item) {
+                item.status = 'Failed';
+                item.failReason = reason;
+                item.proofStatus = 'Failed Attempt';
+            }
+
+            closeFailedModal();
+            applyFilters();
+            showToast(`✓ Marked ${failedTargetLR} as Failed (${reason})`);
+        }
+
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            applyFilters();
+        });
+    </script>
+</body>
+</html>

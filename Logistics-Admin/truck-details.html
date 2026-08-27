@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truck Movement Details - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="logistics-admin.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (Main Admin Standard Structure) -->
+        <aside class="sidebar">
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo" title="Logistics ERP">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="javascript:void(0)" class="rail-icon active" data-tooltip="Logistics Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane: Only Dashboard, Vehicle Master, Truck Assignment -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">DASHBOARD</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Dashboard
+                    </a>
+                </nav>
+
+                <div class="sidebar-nav-section" style="margin-top: 14px;">LOGISTICS OPERATIONS</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html#vehicles" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                        Vehicle Master
+                    </a>
+                    <a href="index.html#movement" class="sidebar-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <polyline points="17 11 19 13 23 9"></polyline>
+                        </svg>
+                        Truck Assignment
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Logistics Admin</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>Truck Assignment</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Truck Details</span>
+                </div>
+
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Kiran Varma</strong>
+                        <span>Logistics Admin</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Page Scroll Area -->
+            <div class="main-scroll-area">
+                
+                <!-- Detail Page Header with Back CTA: Left Arrow Header Only -->
+                <div class="page-header">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <a href="index.html#movement" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
+                        <div class="page-title-group">
+                            <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Truck Details</h1>
+                            <p class="page-subtitle">Track manifest details, verified loaded shipments, and movement history timeline.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:14px;">
+                    
+                    <!-- 1. Compact Truck Summary Bar: Vehicle, Driver, Route, Current Status -->
+                    <div style="background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--border-radius-base);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                        <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:0.8125rem;">
+                            <div style="display:flex;flex-direction:column;gap:1px;">
+                                <span style="font-size:0.6875rem;color:#666;text-transform:uppercase;font-weight:600;">Vehicle</span>
+                                <strong id="detail-truck-no" style="font-size:0.875rem;">KA-19-AB-1234</strong>
+                            </div>
+                            <div style="width:1px;height:24px;background:var(--color-border);"></div>
+                            <div style="display:flex;flex-direction:column;gap:1px;">
+                                <span style="font-size:0.6875rem;color:#666;text-transform:uppercase;font-weight:600;">Driver</span>
+                                <strong id="detail-truck-driver" style="font-size:0.875rem;">Ramesh Kumar</strong>
+                            </div>
+                            <div style="width:1px;height:24px;background:var(--color-border);"></div>
+                            <div style="display:flex;flex-direction:column;gap:1px;">
+                                <span style="font-size:0.6875rem;color:#666;text-transform:uppercase;font-weight:600;">Route</span>
+                                <strong id="detail-truck-route" style="font-size:0.875rem;">Mangalore Warehouse → Bangalore Hub</strong>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <span class="badge-status badge-transit" id="detail-truck-status" style="font-size:0.75rem;padding:3px 10px;">In Transit</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Loaded Shipment List (Large Table) -->
+                    <div style="background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--border-radius-base);padding:16px;display:flex;flex-direction:column;gap:12px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--color-border);padding-bottom:8px;">
+                            <span style="font-size:0.8125rem;font-weight:800;text-transform:uppercase;letter-spacing:0.03em;">
+                                Loaded Shipment List
+                            </span>
+                            <span style="font-size:0.75rem;color:#666;">Total Manifest: <strong>6 Verified LRs · 34 Boxes · 820 KG</strong></span>
+                        </div>
+
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>LR Number</th>
+                                        <th>Destination Stop</th>
+                                        <th>Sender</th>
+                                        <th>Receiver</th>
+                                        <th>Items</th>
+                                        <th>Packages</th>
+                                        <th>Weight</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detail-loaded-shipments-tbody">
+                                    <tr>
+                                        <td><strong>LR-00125</strong></td>
+                                        <td><strong>Bangalore Hub</strong></td>
+                                        <td>Coastal Traders</td>
+                                        <td>ABC Pvt Ltd</td>
+                                        <td>Electronics</td>
+                                        <td>3 Boxes</td>
+                                        <td>45 KG</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>LR-00126</strong></td>
+                                        <td><strong>Hyderabad Hub</strong></td>
+                                        <td>Kudla Solutions</td>
+                                        <td>Cyber Systems</td>
+                                        <td>IT Hardware</td>
+                                        <td>2 Boxes</td>
+                                        <td>20 KG</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>LR-00127</strong></td>
+                                        <td><strong>Bangalore Hub</strong></td>
+                                        <td>Karnataka Spares</td>
+                                        <td>Auto Works Hub</td>
+                                        <td>Spare Parts</td>
+                                        <td>4 Boxes</td>
+                                        <td>60 KG</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>LR-00128</strong></td>
+                                        <td><strong>Hyderabad Hub</strong></td>
+                                        <td>Canara Spices Co</td>
+                                        <td>City Supermarket</td>
+                                        <td>Spices &amp; Seasoning</td>
+                                        <td>6 Boxes</td>
+                                        <td>90 KG</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>LR-00129</strong></td>
+                                        <td><strong>Bangalore Hub</strong></td>
+                                        <td>Pai Garments</td>
+                                        <td>Trends Retail</td>
+                                        <td>Apparel Cartons</td>
+                                        <td>8 Boxes</td>
+                                        <td>160 KG</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>LR-00130</strong></td>
+                                        <td><strong>Hyderabad Hub</strong></td>
+                                        <td>Deccan Metal Works</td>
+                                        <td>Telangana Infra</td>
+                                        <td>Hardware Tools</td>
+                                        <td>5 Boxes</td>
+                                        <td>140 KG</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 3. Movement Timeline: ✓ Truck Created, ✓ LR Loading Completed, ✓ Truck Departed, ✓ In Transit, ○ Delivered -->
+                    <div style="background:var(--color-white);border:1px solid var(--color-border);border-radius:var(--border-radius-base);padding:16px;display:flex;flex-direction:column;gap:12px;">
+                        <span style="font-size:0.8125rem;font-weight:800;text-transform:uppercase;letter-spacing:0.03em;border-bottom:1px solid var(--color-border);padding-bottom:8px;">
+                            Movement Timeline
+                        </span>
+
+                        <div class="timeline-track" style="margin-top:4px;">
+                            <div class="timeline-item completed">
+                                <div class="timeline-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="10" height="10"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-title">✓ Truck Created</span>
+                                    <span class="timeline-desc">Assigned Vehicle KA-19-AB-1234 and Driver Ramesh Kumar for journey.</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="10" height="10"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-title">✓ LR Loading Completed</span>
+                                    <span class="timeline-desc">All matching warehouse shipments physically barcode-scanned and verified.</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="10" height="10"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-title">✓ Truck Departed</span>
+                                    <span class="timeline-desc">Gate pass cleared and departed from Mangalore Warehouse.</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item completed">
+                                <div class="timeline-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="10" height="10"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-title">✓ In Transit</span>
+                                    <span class="timeline-desc">Truck active on highway route towards destination hub.</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-title">○ Delivered</span>
+                                    <span class="timeline-desc">Pending bay arrival and unloading at Bangalore Hub.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const truckNo = urlParams.get('no') || 'KA-19-AB-1234';
+        const driver = urlParams.get('driver') || 'Ramesh Kumar';
+        const from = urlParams.get('from') || 'Mangalore Warehouse';
+        const dest = urlParams.get('dest') || 'Bangalore Hub';
+        const status = urlParams.get('status') || 'In Transit';
+
+        document.getElementById('detail-truck-no').textContent = truckNo;
+        document.getElementById('detail-truck-driver').textContent = driver;
+        document.getElementById('detail-truck-route').textContent = `${from} → ${dest}`;
+        document.getElementById('detail-truck-status').textContent = status;
+        document.getElementById('detail-truck-status-text').textContent = status;
+    </script>
+</body>
+</html>

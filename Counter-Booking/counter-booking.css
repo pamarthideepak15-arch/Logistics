@@ -1,0 +1,1587 @@
+/* Counter Booking Specific Styles */
+
+/* Horizontal Progress Bar */
+.booking-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 24px 16px 24px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    overflow-x: auto;
+}
+.booking-progress::-webkit-scrollbar {
+    display: none;
+}
+.booking-progress {
+    -ms-overflow-style: none; scrollbar-width: none;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #999;
+    position: relative;
+    white-space: nowrap;
+    flex: 1; /* Allow steps to grow for the line */
+}
+
+.progress-step:last-child {
+    flex: 0;
+}
+
+.progress-step:not(:last-child)::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+    margin: 0 16px;
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--color-bg-light);
+    color: #999;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-right: 8px;
+}
+
+.step-icon {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--color-bg-light);
+    color: var(--color-black);
+    padding: 3px;
+    margin-right: 8px;
+}
+
+/* Static States for Progress Bar */
+.progress-step.active {
+    color: var(--color-black);
+}
+.progress-step.active .step-number {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.progress-step.completed {
+    color: var(--color-black);
+}
+a.progress-step.completed {
+    cursor: pointer;
+    text-decoration: none;
+}
+a.progress-step.completed:hover {
+    opacity: 0.8;
+}
+.progress-step.completed .step-number {
+    display: none;
+}
+.progress-step.completed .step-icon {
+    display: block;
+}
+
+/* Specific Layouts */
+.customer-lookup {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    margin-bottom: 24px;
+}
+.customer-lookup .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Step 1 Customer Search 2-Column Side-by-Side System */
+.customer-lookup-2col {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start; /* Keeps natural compact height for left search card */
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .customer-lookup-2col {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+    }
+    .customer-lookup-left-card,
+    .customer-lookup-right-card {
+        flex: 1 1 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+.customer-lookup-left-card {
+    flex: 0 0 420px;
+    max-width: 440px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 16px 20px;
+    background-color: var(--color-white);
+    box-sizing: border-box;
+}
+
+.customer-lookup-right-card {
+    flex: 0 0 420px;
+    max-width: 440px;
+    min-width: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 16px 20px;
+    background-color: var(--color-white);
+    box-sizing: border-box;
+}
+
+/* Equal Height specifically for Customer Not Found state, natural height when Record Found */
+.customer-lookup-2col.state-not-found,
+.customer-lookup-2col:has(#customer-not-found-card:not([style*="display: none"])) {
+    align-items: stretch;
+}
+
+.customer-lookup-2col.state-not-found .customer-lookup-left-card,
+.customer-lookup-2col.state-not-found .customer-lookup-right-card,
+.customer-lookup-2col:has(#customer-not-found-card:not([style*="display: none"])) .customer-lookup-left-card,
+.customer-lookup-2col:has(#customer-not-found-card:not([style*="display: none"])) .customer-lookup-right-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.customer-lookup-2col.state-found,
+.customer-lookup-2col:has(#customer-found-card:not([style*="display: none"])) {
+    align-items: flex-start;
+}
+
+.customer-search-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.customer-search-input-wrap {
+    flex: 0 0 68%;
+    display: flex;
+    align-items: center;
+    height: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-white);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+}
+
+.customer-search-input-wrap:focus-within {
+    border-color: var(--color-black);
+}
+
+.customer-search-input-wrap .prefix {
+    padding: 0 12px;
+    background-color: var(--color-bg-light);
+    border-right: 1px solid var(--color-border);
+    color: #666;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.input-with-prefix {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-white);
+    overflow: hidden;
+}
+
+.input-with-prefix .prefix {
+    padding: 0 10px;
+    background-color: #f5f5f5;
+    border-right: 1px solid var(--color-border);
+    color: #555;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    user-select: none;
+}
+
+.input-with-prefix input.form-input,
+.input-with-prefix input {
+    border: none !important;
+    outline: none !important;
+    height: 100% !important;
+    padding: 0 10px !important;
+    box-shadow: none !important;
+    flex: 1;
+}
+
+.customer-search-input-wrap input {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    height: 100% !important;
+    width: 100% !important;
+    padding: 0 12px !important;
+    font-family: var(--font-family-primary);
+    font-size: 0.8125rem;
+    color: var(--color-black);
+}
+
+.customer-search-btn {
+    flex: 0 0 32%;
+    height: 36px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-sizing: border-box;
+    font-size: 0.8125rem;
+}
+
+/* Compact 2-Column Result Card */
+.customer-result-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 12px 16px;
+    background-color: var(--color-white);
+    width: 100%;
+    max-width: 560px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.customer-result-card .card-title-sm {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.customer-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 640px) {
+    .customer-info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+}
+
+.customer-info-grid .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.customer-info-grid .info-label {
+    font-size: 0.6875rem;
+    color: #777777;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.customer-info-grid .info-value {
+    font-size: 0.8125rem;
+    color: var(--color-black);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.customer-result-card .card-footer-sm,
+#customer-found-card .card-footer-sm {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 1px solid var(--color-border);
+    width: 100%;
+}
+
+.customer-result-card .card-footer-sm .btn-primary,
+#customer-found-card .card-footer-sm .btn-primary,
+#customer-not-found-card .card-footer-sm .btn-primary {
+    height: 36px;
+    width: 100% !important;
+    padding: 0 16px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Not Found State Styling */
+.not-found-body {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.not-found-icon-wrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #666;
+}
+
+.not-found-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-black);
+    margin: 0 0 2px 0;
+}
+
+.not-found-desc {
+    font-size: 0.78125rem;
+    color: #666666;
+    margin: 0;
+}
+
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Step content: flex column + fill parent so sticky-actions pins to bottom */
+.step-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+/* Step section headings */
+.form-section-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin: 0 0 14px 0;
+    color: var(--color-black);
+}
+
+.shipment-select-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 54px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 0 18px 0 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #737373;
+    font-size: 1.0625rem;
+}
+
+.shipment-radio-list {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 10px 16px 12px 16px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.shipment-radio-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 38px;
+    color: var(--color-black);
+    font-size: 1.05rem;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.shipment-radio-item input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #7a7a7a;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    position: relative;
+}
+
+.shipment-radio-item input[type="radio"]:checked {
+    border-color: var(--color-black);
+}
+
+.shipment-radio-item input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--color-black);
+}
+
+.item-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.item-header-row h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.add-item-btn {
+    border: 1.5px solid var(--color-black);
+    background: transparent;
+    color: var(--color-black);
+    border-radius: 10px;
+    padding: 9px 18px;
+    min-width: 120px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.item-card-compact {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 18px 16px 16px 16px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.item-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.item-card-title {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-black);
+}
+
+.remove-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background: transparent;
+    color: var(--color-black);
+    font-size: 1.05rem;
+    cursor: pointer;
+}
+
+.item-form-grid {
+    display: grid;
+    grid-template-columns: 1.45fr 0.7fr 1.35fr;
+    gap: 16px;
+    align-items: end;
+}
+
+.dimension-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dimension-input-wrap {
+    position: relative;
+    flex: 1;
+}
+
+.dimension-suffix {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7a7a7a;
+    font-size: 0.8rem;
+}
+
+/* Radio Control Panels (CSS-only tab logic within panels) */
+input[name="customer-type-toggle"],
+input[name="payment-type-toggle"],
+input[name="payment-term-toggle"],
+input[name="payment-method-inner"] {
+    display: none;
+}
+
+.radio-panel-content {
+    display: none;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+/* Example: Show New Customer Form if 'new' is selected */
+#cust-new:checked ~ .customer-new-panel { display: block; }
+#cust-existing:checked ~ .customer-existing-panel { display: block; }
+#cust-not-found:checked ~ .customer-new-panel { display: block; }
+
+/* Example: Show specific payment method content */
+#pay-paid:checked ~ .paid-panel { display: block; }
+#pay-credit:checked ~ .credit-panel { display: block; }
+#pay-topay:checked ~ .topay-panel { display: block; }
+
+/* Items List */
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.item-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 16px;
+    background: #fafafa;
+    position: relative;
+}
+
+.item-card-remove {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: #e74c3c;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+}
+.item-card-remove:hover {
+    background: #fee;
+    border-radius: 4px;
+}
+
+/* Pricing Breakdown */
+.pricing-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.pricing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 0.8125rem;
+    color: #666;
+    border-bottom: 1px solid var(--color-bg-light);
+}
+.pricing-row:last-child {
+    border-bottom: none;
+}
+.pricing-row strong {
+    color: var(--color-black);
+    font-weight: 600;
+}
+.pricing-row.total {
+    border-top: 1px solid var(--color-border);
+    margin-top: 8px;
+    padding-top: 12px;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--color-black);
+    border-bottom: none;
+}
+
+/* LR Summary Card - Compact High-Density Confirmation System */
+.lr-summary-card.compact {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 16px 20px;
+    max-width: 740px;
+    margin: 0 auto;
+}
+
+.lr-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 16px;
+}
+
+.lr-success-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lr-status-badge.compact {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    background: var(--color-black);
+    color: var(--color-white);
+    letter-spacing: 0.02em;
+}
+
+.lr-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 640px) {
+    .lr-content-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+.lr-details-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.lr-number-box {
+    background: #fafafa;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.lr-number-label {
+    font-size: 0.625rem;
+    color: #777777;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.lr-number-val {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--color-black);
+    letter-spacing: 0.03em;
+    font-family: monospace;
+}
+
+.lr-meta-table {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 8px 12px;
+}
+
+.lr-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    padding: 4px 0;
+    border-bottom: 1px dashed var(--color-border);
+}
+
+.lr-meta-row:last-child {
+    border-bottom: none;
+}
+
+.meta-lbl {
+    color: #666666;
+    font-weight: 500;
+}
+
+.meta-val {
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.meta-val.amount {
+    font-weight: 700;
+    font-size: 0.8125rem;
+}
+
+/* Right Codes Column: Equal-height vertical Barcode & QR code */
+.lr-codes-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.code-item-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 10px;
+    text-align: center;
+}
+
+.code-box-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #777777;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.barcode-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.svg-barcode {
+    width: 100%;
+    max-width: 180px;
+    height: 44px;
+}
+
+.qr-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.svg-qrcode {
+    width: 50px;
+    height: 50px;
+}
+
+.lr-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border);
+}
+
+.btn-primary.compact,
+.btn-secondary.compact {
+    flex: 0 0 auto;
+    height: 32px;
+    padding: 0 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: var(--border-radius-base);
+}
+
+/* ─── Step 2: Two-Column Shipment Layout (mirrors Step 1 customer-lookup) ─── */
+.shipment-two-col {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+/* Left card: fixed width, same as customer-lookup-form */
+.shipment-left-card {
+    flex: 0 0 220px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 16px 18px;
+    background: var(--color-white);
+}
+
+/* Right card: takes remaining space */
+.shipment-right-card {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Radio labels in the left card */
+.shipment-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-black);
+}
+.shipment-radio-label:last-of-type {
+    border-bottom: none;
+}
+
+/* The radio circle dot */
+.shipment-radio-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #bbb;
+    flex-shrink: 0;
+    display: inline-block;
+    background: #fff;
+    transition: border-color 0.15s;
+}
+
+/* Checked state – highlight the selected shipment type radio dot */
+#ship-standard:checked ~ .form-section label[for="ship-standard"] .shipment-radio-dot,
+#ship-express:checked  ~ .form-section label[for="ship-express"]  .shipment-radio-dot,
+#ship-ftl:checked      ~ .form-section label[for="ship-ftl"]      .shipment-radio-dot {
+    border-color: var(--color-black);
+    background: var(--color-black);
+    box-shadow: inset 0 0 0 3px #fff;
+}
+
+/* FTL Truck Size panel — hidden by default */
+.ftl-truck-size-panel {
+    display: none;
+}
+/* Show truck size dropdown only when FTL radio is checked */
+#ship-ftl:checked ~ .form-section .ftl-truck-size-panel {
+    display: block;
+}
+
+/* Sticky CTA bar aligned right with proper button widths */
+.sticky-cta-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px 24px;
+    border-top: 1px solid var(--color-border);
+    gap: 10px;
+    background: #ffffff;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sticky-cta-bar .btn-secondary,
+.sticky-cta-bar .btn-primary {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 100px;
+    padding: 8px 18px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-base);
+    text-decoration: none;
+}
+
+.sticky-cta-bar .btn-primary {
+    min-width: 150px;
+}
+
+/* Pricing wrapper (compact, no scroll) */
+.pricing-wrapper {
+    max-width: 520px;
+}
+.pricing-breakdown .divider {
+    border-top: 1px dashed var(--color-border);
+    margin: 10px 0;
+}
+
+/* ──── SHIPMENT DETAILS ALIGNMENT FIX ──── */
+
+/* Sender and Receiver Details Two-Column Layout Container */
+.shipment-details-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    align-items: stretch;
+}
+
+/* Individual sender/receiver detail boxes - ensure equal height */
+.shipment-details-box {
+    flex: 1;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Title for sender/receiver sections */
+.shipment-details-title {
+    margin: 0 0 16px 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+/* Form grid inside sender/receiver sections */
+.shipment-details-box .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    flex: 1;
+}
+
+/* Form groups within sender/receiver boxes */
+.shipment-details-box .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+}
+
+/* Labels within sender/receiver sections */
+.shipment-details-box .form-label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    flex-shrink: 0;
+}
+
+/* Input fields for proper alignment */
+.shipment-details-box .form-input {
+    padding: 8px 10px;
+    height: 32px;
+    box-sizing: border-box;
+    font-family: var(--font-family-primary);
+    font-size: 0.8125rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    outline: none;
+}
+
+/* Textarea styling */
+.shipment-details-box textarea.form-input {
+    height: auto;
+    min-height: 52px;
+    padding: 8px 10px;
+    resize: vertical;
+    font-family: var(--font-family-primary);
+}
+
+/* Input with prefix styling */
+.shipment-details-box .input-with-prefix {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-white);
+    overflow: hidden;
+    height: 32px;
+    box-sizing: border-box;
+}
+
+.shipment-details-box .input-with-prefix .prefix {
+    padding: 0 12px;
+    background-color: var(--color-bg-light);
+    border-right: 1px solid var(--color-border);
+    color: #666;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.shipment-details-box .input-with-prefix input {
+    border: none !important;
+    flex: 1;
+    padding: 0 10px;
+    height: 32px;
+    box-sizing: border-box;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .shipment-details-row {
+        flex-direction: column;
+    }
+}
+
+/* ──── CUSTOM RADIO STYLING (No Blue Color) ──── */
+
+/* Shipment Type Radio Options */
+.shipment-radio-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.shipment-radio-option input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #999;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.shipment-radio-option input[type="radio"]:hover {
+    border-color: var(--color-black);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.shipment-radio-option input[type="radio"]:checked {
+    border-color: var(--color-black);
+    background: radial-gradient(circle, var(--color-black) 35%, white 35%);
+    box-shadow: 0 0 0 1px var(--color-black);
+}
+
+.shipment-radio-option input[type="radio"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.shipment-radio-option span {
+    color: var(--color-black);
+    font-weight: 500;
+}
+
+/* Bordered Radio Card Styling (Matching Branch Type UI) */
+.radio-group label,
+label.radio-card-label {
+    transition: all 0.2s ease;
+}
+
+.radio-group label:hover,
+label.radio-card-label:hover {
+    border-color: #999 !important;
+}
+
+.radio-group label:has(input[type="radio"]:checked),
+label:has(input[type="radio"]:checked) {
+    border-color: #000000 !important;
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    font-weight: 600 !important;
+}
+
+.radio-group label input[type="radio"],
+label input[type="radio"][name="shipment-type"] {
+    appearance: auto;
+    -webkit-appearance: auto;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+    accent-color: #000000;
+}
+
+/* Custom Select Display Rules for Truck Size */
+details.custom-select-wrapper:has(input[value="14ft"]:checked) .selected-text.text-14ft { display: inline; }
+details.custom-select-wrapper:has(input[value="17ft"]:checked) .selected-text.text-17ft { display: inline; }
+details.custom-select-wrapper:has(input[value="19ft"]:checked) .selected-text.text-19ft { display: inline; }
+details.custom-select-wrapper:has(input[value="22ft"]:checked) .selected-text.text-22ft { display: inline; }
+details.custom-select-wrapper:has(input[value="32ft"]:checked) .selected-text.text-32ft { display: inline; }
+
+
+/* ──── BUTTON STYLING ──── */
+
+.btn-primary, .btn-secondary {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+}
+
+.btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border: 1.5px solid var(--color-border);
+}
+
+/* ──── PAYMENT STEP REDESIGN STYLING (Ultra-Compact UI) ──── */
+
+/* CSS-only Conditional Panels for Payment Terms */
+.form-section:has(#pay-paid:checked) .paid-panel { display: block; }
+.form-section:has(#pay-topay:checked) .topay-panel { display: block; }
+.form-section:has(#pay-credit:checked) .credit-panel { display: block; }
+
+.payment-step-section {
+    margin-bottom: 12px;
+}
+
+.payment-section-heading {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-black);
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+}
+
+/* Payment Radio Grid system */
+.payment-card-grid {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+}
+
+.payment-card-grid.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+    .payment-card-grid.grid-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Radio Card Styling - Ultra Compact */
+.payment-radio-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    min-height: 48px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.payment-radio-card.compact {
+    padding: 8px 12px;
+    min-height: 38px;
+}
+
+.payment-radio-card:hover {
+    border-color: #999;
+}
+
+.payment-radio-card input[type="radio"] {
+    display: none;
+}
+
+/* Custom Radio Dot */
+.payment-radio-card .card-radio-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.payment-radio-card .custom-radio {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #bbb;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    display: inline-block;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+}
+
+/* Active Card State */
+.payment-radio-card:has(input[type="radio"]:checked) {
+    border-color: var(--color-black) !important;
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.payment-radio-card:has(input[type="radio"]:checked) .custom-radio {
+    border-color: var(--color-black);
+    background-color: var(--color-black);
+    box-shadow: inset 0 0 0 2.5px var(--color-white);
+}
+
+/* Card Content Typography & Alignment */
+.payment-radio-card .card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.payment-radio-card .card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 1px;
+}
+
+.payment-radio-card .card-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-black);
+    line-height: 1.2;
+}
+
+.payment-radio-card.compact .card-title {
+    font-size: 0.8125rem;
+}
+
+.payment-radio-card .card-subtext {
+    font-size: 0.6875rem;
+    color: #666666;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Badges - Compact */
+.payment-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.badge-immediate,
+.badge-ondelivery,
+.badge-credit {
+    background-color: #f5f5f5;
+    color: #444444;
+    border: 1px solid #e0e0e0;
+}
+
+.payment-radio-card:has(input[type="radio"]:checked) .badge-immediate,
+.payment-radio-card:has(input[type="radio"]:checked) .badge-ondelivery,
+.payment-radio-card:has(input[type="radio"]:checked) .badge-credit {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}
+
+/* Info Banner for To-Pay */
+.payment-info-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background-color: #fafafa;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    color: #555;
+    font-size: 0.75rem;
+}
+
+/* Compact Credit Panel Strip Styling */
+.credit-summary-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: #fafafa;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 8px 12px;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 640px) {
+    .credit-summary-strip {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.credit-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.credit-metric.remaining {
+    border-left: 1px solid var(--color-border);
+    padding-left: 12px;
+}
+
+.metric-label {
+    font-size: 0.65rem;
+    color: #777777;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.metric-value {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.credit-metric.charge .metric-value {
+    color: var(--color-black);
+}
+
+.metric-value.highlight {
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.credit-status-inline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.71875rem;
+    color: #555555;
+    font-weight: 500;
+}
+
+/* ──── E-WAY BILL SECTION STYLING (Compact & Monochrome Design System) ──── */
+
+.eway-bill-box {
+    border: 1px solid var(--color-border);
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-base);
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    transition: all 0.15s ease;
+}
+
+.eway-bill-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.eway-bill-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    color: var(--color-black);
+}
+
+.eway-badge-required {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    font-size: 0.625rem;
+    font-weight: 600;
+    border-radius: 3px;
+    letter-spacing: 0.01em;
+}
+
+.eway-note {
+    font-size: 0.6875rem;
+    color: #666666;
+    font-weight: 500;
+}
+
+.eway-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.eway-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--color-black);
+    border-radius: var(--border-radius-base);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.eway-upload-btn:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.eway-subtext {
+    font-size: 0.6875rem;
+    color: #777777;
+}
+
+/* Uploaded State Styling */
+.eway-file-uploaded {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+}
+
+.eway-file-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.eway-filename {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.eway-success-badge {
+    font-size: 0.625rem;
+    background-color: #f5f5f5;
+    color: var(--color-black);
+    border: 1px solid var(--color-border);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.eway-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.eway-action-btn {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+}
+
+.eway-action-btn.replace {
+    color: var(--color-black);
+    text-decoration: underline;
+}
+
+.eway-action-btn.remove {
+    color: #666666;
+}
+
+.eway-action-btn.remove:hover {
+    color: var(--color-black);
+    text-decoration: underline;
+}
+
+/* Responsive Progress Bar & Card Height Adjustments */
+@media (max-width: 768px) {
+    .booking-progress {
+        padding: 12px 12px 8px 12px !important;
+        margin-bottom: 4px !important;
+        overflow-x: hidden !important;
+    }
+    .progress-step {
+        font-size: 0 !important; /* Hide labels */
+        flex: 1 !important;
+    }
+    .progress-step.active {
+        font-size: 0.71875rem !important; /* Show only active label */
+        flex: 2 !important; /* Give active step more room */
+    }
+    .progress-step:not(:last-child)::after {
+        margin: 0 6px !important;
+    }
+    .step-number, .step-icon {
+        margin-right: 0 !important;
+    }
+    .progress-step.active .step-number,
+    .progress-step.active .step-icon {
+        margin-right: 6px !important;
+    }
+    .card[style*="height"] {
+        height: auto !important;
+        min-height: auto !important;
+    }
+    .form-section {
+        padding: 16px !important;
+        overflow-y: visible !important;
+    }
+    .booking-customer-meta {
+        flex-direction: column !important;
+        text-align: left !important;
+    }
+    .booking-customer-meta > div {
+        border-right: none !important;
+        border-bottom: 1px solid var(--color-border) !important;
+        padding: 8px 12px !important;
+        text-align: left !important;
+    }
+    .booking-customer-meta > div:last-child {
+        border-bottom: none !important;
+    }
+
+    /* Force equal 50/50 widths for sticky bottom navigation buttons on mobile */
+    .sticky-cta-bar .btn-secondary,
+    .sticky-cta-bar .btn-primary {
+        flex: 1 !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+
+

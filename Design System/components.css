@@ -1,0 +1,1899 @@
+/* Design System/components.css */
+@import url('global.css');
+
+/* Page Headers */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.page-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.page-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-black);
+}
+.page-subtitle {
+  font-size: 0.8125rem;
+  color: #666;
+}
+
+/* Primary Button */
+.btn-primary, .btn-secondary {
+  box-sizing: border-box;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--border-radius-base);
+  font-family: var(--font-family-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  outline: none !important;
+}
+
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-secondary:focus,
+.btn-secondary:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn-primary {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border: 1px solid var(--color-black);
+}
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+/* Secondary / Back Button */
+.btn-secondary {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border: 1px solid var(--color-border);
+}
+.btn-secondary:hover {
+  background-color: var(--color-bg-light);
+}
+
+.btn-primary svg, .btn-secondary svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Header Buttons Group */
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Filters & Search */
+.filters-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+.search-input-wrapper svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: #888;
+}
+.search-input {
+  width: 100%;
+  padding: 6px 12px 6px 30px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  font-family: var(--font-family-primary);
+  font-size: 0.8125rem;
+  outline: none;
+  background-color: var(--color-white);
+  transition: border-color 0.2s ease;
+}
+.search-input:focus {
+  border-color: var(--color-black);
+}
+/* Pure CSS Details Dropdown */
+details.custom-select-wrapper {
+  position: relative;
+  user-select: none;
+  min-width: 100px;
+}
+details.custom-select-wrapper[open] > summary::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 9;
+  background: transparent;
+}
+summary.custom-select-trigger {
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  font-family: var(--font-family-primary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  background-color: var(--color-white);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  list-style: none; /* Hide default triangle */
+  white-space: nowrap;
+}
+summary.custom-select-trigger::-webkit-details-marker {
+  display: none;
+}
+summary.custom-select-trigger > svg:last-child {
+  margin-left: auto !important;
+  flex-shrink: 0 !important;
+}
+details.custom-select-wrapper[open] summary.custom-select-trigger {
+  border-color: var(--color-black);
+}
+.custom-select-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  max-height: 200px;
+}
+.custom-option {
+  display: block;
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color-black);
+  transition: background-color 0.15s ease;
+}
+.custom-option:hover {
+  background-color: var(--color-bg-light);
+}
+.custom-option input[type="radio"] {
+  display: none;
+}
+.custom-option:has(input[type="radio"]:checked) {
+  font-weight: 700;
+  background-color: var(--color-bg-light);
+}
+.selected-text {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+/* When any radio is checked (except 'all'), hide the placeholder */
+details.custom-select-wrapper:has(input[type="radio"]:not([value="all"]):checked) .placeholder {
+  display: none;
+}
+details.custom-select-wrapper:has(input[value="all"]:checked) .placeholder {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Radio Group & Radio Card UI Component (Branch Type, Shipment Type, Customer Type) */
+.radio-group {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.radio-group label {
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.radio-group label:hover {
+  border-color: #999 !important;
+}
+
+.radio-group label:has(input[type="radio"]:checked) {
+  border-color: var(--color-black) !important;
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  font-weight: 600 !important;
+}
+
+.radio-group label input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: #000000;
+  outline: none;
+}
+
+/* Tables */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  background-color: var(--color-white);
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; 
+}
+.data-table th, .data-table td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.875rem;
+}
+.data-table th:first-child, .data-table td:first-child {
+  width: auto;
+}
+.data-table th:nth-child(2), .data-table td:nth-child(2) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  padding-right: 32px;
+}
+.data-table th:nth-child(3), .data-table td:nth-child(3) {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+.data-table th {
+  font-weight: 600;
+  background-color: var(--color-table-header);
+  color: var(--color-white);
+  border-bottom: none;
+}
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Actions (Edit/Delete icons) */
+.action-icons {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+.action-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-black);
+  padding: 4px;
+  display: flex;
+  border-radius: 4px;
+}
+.action-icon:hover {
+  background-color: var(--color-bg-light);
+}
+.action-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Status Toggle */
+.status-toggle {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.status-toggle input {
+  display: none;
+}
+.toggle-switch {
+  position: relative;
+  width: 28px;
+  height: 16px;
+  background-color: #ccc;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+.status-toggle input:checked + .toggle-switch {
+  background-color: var(--color-black);
+}
+.status-toggle input:checked + .toggle-switch::after {
+  left: 14px;
+}
+
+/* Pagination */
+.pagination-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  color: #666;
+}
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.page-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-black);
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.15s, color 0.15s;
+  outline: none !important;
+}
+.page-btn:hover {
+  background-color: var(--color-bg-light);
+}
+.page-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background: none !important;
+}
+.page-btn:focus,
+.page-btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.page-number {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: inline-block;
+  line-height: 1;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 12px;
+}
+.form-grid .form-group {
+  margin-bottom: 0;
+}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 0.8125rem;
+}
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select,
+.custom-select {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  font-family: var(--font-family-primary);
+  font-size: 0.8125rem;
+  outline: none;
+  box-sizing: border-box;
+  color: var(--color-black);
+}
+/* Normalize date input — remove browser-native blue accent and system color-scheme */
+.form-group input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  color-scheme: light;
+  background-color: var(--color-white);
+}
+.form-group select,
+.custom-select {
+  appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2" width="12" height="12" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right 10px center;
+  background-color: var(--color-white);
+  padding-right: 32px;
+}
+.form-group input:focus,
+.form-group input[type="date"]:focus,
+.form-group select:focus {
+  border-color: var(--color-black);
+}
+
+
+
+/* Input with Prefix / Suffix */
+.input-with-prefix {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  background-color: var(--color-white);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.input-with-prefix .prefix {
+  padding: 6px 12px;
+  background-color: var(--color-bg-light);
+  border-right: 1px solid var(--color-border);
+  color: #666;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+/* Suffix variant — label appears on the RIGHT of the input */
+.input-with-prefix .suffix {
+  padding: 6px 12px;
+  background-color: var(--color-bg-light);
+  border-left: 1px solid var(--color-border);
+  color: #666;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.input-with-prefix input,
+.input-with-prefix input[type="text"],
+.input-with-prefix input[type="number"],
+.input-with-prefix input[type="email"],
+.input-with-prefix input[type="password"] {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  flex: 1;
+  min-width: 0;
+  padding: 6px 10px !important;
+  font-size: 0.8125rem;
+  width: auto !important;
+  background: transparent;
+}
+.input-with-prefix:focus-within {
+  border-color: var(--color-black);
+
+}
+
+/* Sortable Table Headers */
+.data-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+.data-table th.sortable .sort-header-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.data-table th.sortable .sort-icon {
+  display: inline-flex;
+  align-items: center;
+  color: #999;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.data-table th.sortable.sort-asc .sort-icon {
+  color: var(--color-black);
+}
+.data-table th.sortable.sort-desc .sort-icon {
+  color: var(--color-black);
+}
+.data-table th.sortable.sort-asc .sort-icon path:nth-child(1) {
+  stroke: #ccc;
+}
+.data-table th.sortable.sort-desc .sort-icon path:nth-child(2) {
+  stroke: #ccc;
+}
+
+/* Modal Overlay & Box */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+.modal-overlay.active {
+  display: flex;
+}
+.modal-content {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  width: 240px;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+}
+.modal-close svg {
+  width: 12px;
+  height: 12px;
+}
+.modal-icon-header {
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.modal-icon-header svg {
+  width: 14px;
+  height: 14px;
+}
+.modal-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.modal-desc {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 12px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.modal-actions button {
+  flex: 1;
+}
+
+/* ==========================================================================
+   MOBILE TABLE TO CARD & LAYOUT RESPONSIVENESS OVERRIDES
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Page layouts and headers */
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .header-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .header-actions > *, .header-actions a, .header-actions button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .page-header:not(form .page-header) {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+  }
+  .page-header:not(form .page-header) .page-title-group {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .page-header:not(form .page-header) .header-actions {
+    width: auto !important;
+    flex-direction: row !important;
+    margin: 0 !important;
+  }
+  .page-header:not(form .page-header) .header-actions > *,
+  .page-header:not(form .page-header) .header-actions a,
+  .page-header:not(form .page-header) .header-actions button {
+    width: auto !important;
+    padding: 6px 12px !important;
+    font-size: 0.75rem !important;
+    height: 32px !important;
+    white-space: nowrap !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+  form .header-actions {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background-color: var(--color-white) !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding: 12px 16px !important;
+    z-index: 999 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05) !important;
+  }
+  form .header-actions > *, form .header-actions a, form .header-actions button {
+    flex: 1 !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+  form .header-actions .btn-secondary {
+    order: 1 !important;
+  }
+  form .header-actions .btn-primary {
+    order: 2 !important;
+  }
+  .main-scroll-area {
+    padding-bottom: 80px !important;
+  }
+  
+  /* Filter bar inputs & dropdowns */
+  .filters-bar {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  .filters-bar > * {
+    width: auto !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+  .filters-bar .search-input-wrapper, 
+  .filters-bar .search-box {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+
+  /* Form components scaling */
+  .form-row-2col, .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100% !important;
+  }
+
+  /* Modal responsive sizing */
+  .modal-content, .modal-content-custom {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    margin: 10px auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Table to Card Layout */
+  .table-container {
+    border: none !important;
+    background: transparent !important;
+    overflow-x: visible !important;
+  }
+  .data-table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    border-collapse: collapse !important;
+  }
+  .data-table thead {
+    display: none !important;
+  }
+  .data-table tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+  .data-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px 12px !important;
+    background-color: var(--color-white) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--border-radius-base) !important;
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .data-table td {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    justify-content: flex-start !important;
+    padding: 3px 0 !important;
+    font-size: 0.8125rem !important;
+    border: none !important;
+    background-color: transparent !important;
+    white-space: normal !important;
+    text-align: left !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .data-table td:last-child {
+    grid-column: 1 / span 2 !important;
+    border: none !important;
+    border-top: 1px solid var(--color-border) !important;
+    background-color: transparent !important;
+    padding: 8px 0 0 0 !important;
+    margin-top: 4px !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 12px !important;
+    border-radius: 0 !important;
+  }
+  .data-table td::before {
+    font-weight: 700 !important;
+    text-align: left !important;
+    color: var(--color-text-muted) !important;
+    font-size: 0.6875rem !important;
+    text-transform: uppercase !important;
+    margin-bottom: 0 !important;
+    margin-right: 6px !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* User Table Labels */
+  .user-table td:nth-child(1)::before { content: "User ID"; }
+  .user-table td:nth-child(2)::before { content: "User Name"; }
+  .user-table td:nth-child(3)::before { content: "Assigned Role"; }
+  .user-table td:nth-child(4)::before { content: "Branch"; }
+  .user-table td:nth-child(5)::before { content: "Mobile Number"; }
+  .user-table td:nth-child(6)::before { content: "Email ID"; }
+  .user-table td:nth-child(7)::before { content: "Status"; }
+  .user-table td:nth-child(8)::before { content: "Actions"; }
+
+  /* Branch Table Labels */
+  .branch-table td:nth-child(1)::before { content: "Branch Code"; }
+  .branch-table td:nth-child(2)::before { content: "Branch Name"; }
+  .branch-table td:nth-child(3)::before { content: "Branch Type"; }
+  .branch-table td:nth-child(4)::before { content: "City"; }
+  .branch-table td:nth-child(5)::before { content: "Contact Number"; }
+  .branch-table td:nth-child(6)::before { content: "Status"; }
+  .branch-table td:nth-child(7)::before { content: "Actions"; }
+
+  /* Customer Table Labels */
+  .customer-table td:nth-child(1)::before { content: "Customer Name"; }
+  .customer-table td:nth-child(2)::before { content: "Customer Type"; }
+  .customer-table td:nth-child(3)::before { content: "GSTIN"; }
+  .customer-table td:nth-child(4)::before { content: "Contact Person"; }
+  .customer-table td:nth-child(5)::before { content: "Mobile Number"; }
+  .customer-table td:nth-child(6)::before { content: "Email ID"; }
+  .customer-table td:nth-child(7)::before { content: "Credit Limit"; }
+  .customer-table td:nth-child(8)::before { content: "Status"; }
+  .customer-table td:nth-child(9)::before { content: "Actions"; }
+
+  /* Role Table Labels */
+  .role-table td:nth-child(1)::before { content: "Role Name"; }
+  .role-table td:nth-child(2)::before { content: "Status"; }
+  .role-table td:nth-child(3)::before { content: "Actions"; }
+
+  /* Audit Table Labels */
+  .audit-table td:nth-child(1)::before { content: "Date & Time"; }
+  .audit-table td:nth-child(2)::before { content: "User"; }
+  .audit-table td:nth-child(3)::before { content: "Module"; }
+  .audit-table td:nth-child(4)::before { content: "Action Perform"; }
+  .audit-table td:nth-child(5)::before { content: "Details"; }
+  .audit-table td:nth-child(6)::before { content: "IP Address"; }
+
+  /* Lorry Receipt Table Labels */
+  .lrm-table td:nth-child(1)::before { content: "LR Number"; }
+  .lrm-table td:nth-child(2)::before { content: "Origin"; }
+  .lrm-table td:nth-child(3)::before { content: "Destination"; }
+  .lrm-table td:nth-child(4)::before { content: "Current Branch"; }
+  .lrm-table td:nth-child(5)::before { content: "Shipment Type"; }
+  .lrm-table td:nth-child(6)::before { content: "Weight"; }
+  .lrm-table td:nth-child(7)::before { content: "Payment Type"; }
+  .lrm-table td:nth-child(8)::before { content: "Truck Number"; }
+  .lrm-table td:nth-child(9)::before { content: "Pickup Status"; }
+  .lrm-table td:nth-child(10)::before { content: "Delivery Status"; }
+  .lrm-table td:nth-child(11)::before { content: "E-Way Bill"; }
+  .lrm-table td:nth-child(12)::before { content: "Actions"; }
+
+  /* Pickup Table Labels */
+  #pickup-operations-table td:nth-child(1)::before { content: "LR Number"; }
+  #pickup-operations-table td:nth-child(2)::before { content: "Customer Name"; }
+  #pickup-operations-table td:nth-child(3)::before { content: "Pickup Location"; }
+  #pickup-operations-table td:nth-child(4)::before { content: "Schedule Date"; }
+  #pickup-operations-table td:nth-child(5)::before { content: "Assigned Executive"; }
+  #pickup-operations-table td:nth-child(6)::before { content: "Status"; }
+  #pickup-operations-table td:nth-child(7)::before { content: "Payment"; }
+  #pickup-operations-table td:nth-child(8)::before { content: "Actions"; }
+
+  /* Delivery Table Labels */
+  .delivery-table td:nth-child(1)::before { content: "Select"; }
+  .delivery-table td:nth-child(2)::before { content: "LR Number"; }
+  .delivery-table td:nth-child(3)::before { content: "Customer Name"; }
+  .delivery-table td:nth-child(4)::before { content: "Delivery Location"; }
+  .delivery-table td:nth-child(5)::before { content: "Schedule Date"; }
+  .delivery-table td:nth-child(6)::before { content: "Assigned Executive"; }
+  .delivery-table td:nth-child(7)::before { content: "Status"; }
+  .delivery-table td:nth-child(8)::before { content: "Actions"; }
+
+  /* Logistics Admin Table Labels */
+  /* Vehicle Master Table */
+  #view-vehicles .data-table td:nth-child(1)::before { content: "Vehicle Number"; }
+  #view-vehicles .data-table td:nth-child(2)::before { content: "Vehicle Type"; }
+  #view-vehicles .data-table td:nth-child(3)::before { content: "Capacity"; }
+  #view-vehicles .data-table td:nth-child(4)::before { content: "Document Status"; }
+  #view-vehicles .data-table td:nth-child(5)::before { content: "Status"; }
+  #view-vehicles .data-table td:nth-child(6)::before { content: "Actions"; }
+
+  /* Planned Truck Journeys Table */
+  #subtab-content-create .data-table td:nth-child(1)::before { content: "Vehicle Number"; }
+  #subtab-content-create .data-table td:nth-child(2)::before { content: "From Branch"; }
+  #subtab-content-create .data-table td:nth-child(3)::before { content: "Destination Branch"; }
+  #subtab-content-create .data-table td:nth-child(4)::before { content: "Driver"; }
+  #subtab-content-create .data-table td:nth-child(5)::before { content: "Status"; }
+  #subtab-content-create .data-table td:nth-child(6)::before { content: "Actions"; }
+
+  /* Ready for Loading Table */
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(1)::before { content: "Select"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(2)::before { content: "LR Number"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(3)::before { content: "Sender"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(4)::before { content: "Receiver"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(5)::before { content: "Items"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(6)::before { content: "Packages"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(7)::before { content: "Weight"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(8)::before { content: "Destination"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(9)::before { content: "Received Date"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(10)::before { content: "Status"; }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(11)::before { content: "Action"; }
+
+  /* Loaded in Truck Table */
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(1)::before { content: "LR Number"; }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(2)::before { content: "Destination"; }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(3)::before { content: "Sender"; }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(4)::before { content: "Receiver"; }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(5)::before { content: "Items"; }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(6)::before { content: "Packages"; }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(7)::before { content: "Weight"; }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(8)::before { content: "Loading Status"; }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(9)::before { content: "Action"; }
+
+  /* In Transit Movements Table */
+  #subtab-content-transit .data-table td:nth-child(1)::before { content: "Vehicle Number"; }
+  #subtab-content-transit .data-table td:nth-child(2)::before { content: "From Branch"; }
+  #subtab-content-transit .data-table td:nth-child(3)::before { content: "Destination Branch"; }
+  #subtab-content-transit .data-table td:nth-child(4)::before { content: "Driver"; }
+  #subtab-content-transit .data-table td:nth-child(5)::before { content: "LR Count"; }
+  #subtab-content-transit .data-table td:nth-child(6)::before { content: "Packages"; }
+  #subtab-content-transit .data-table td:nth-child(7)::before { content: "Weight"; }
+  #subtab-content-transit .data-table td:nth-child(8)::before { content: "Status"; }
+  #subtab-content-transit .data-table td:nth-child(9)::before { content: "Action"; }
+
+  /* Warehouse Admin Table Labels */
+  #incoming-table td:nth-child(1)::before { content: "LR Number"; }
+  #incoming-table td:nth-child(2)::before { content: "Origin Branch"; }
+  #incoming-table td:nth-child(3)::before { content: "Destination Branch"; }
+  #incoming-table td:nth-child(4)::before { content: "Sender"; }
+  #incoming-table td:nth-child(5)::before { content: "Receiver"; }
+  #incoming-table td:nth-child(6)::before { content: "Items / Pkgs / Wt"; }
+  #incoming-table td:nth-child(7)::before { content: "Truck Number"; }
+  #incoming-table td:nth-child(8)::before { content: "Status"; }
+  #incoming-table td:nth-child(9)::before { content: "Action"; }
+
+  #received-table td:nth-child(1)::before { content: "LR Number"; }
+  #received-table td:nth-child(2)::before { content: "Origin Branch"; }
+  #received-table td:nth-child(3)::before { content: "Items / Pkgs / Wt"; }
+  #received-table td:nth-child(4)::before { content: "Truck Number"; }
+  #received-table td:nth-child(5)::before { content: "Received Date"; }
+  #received-table td:nth-child(6)::before { content: "Verification"; }
+  #received-table td:nth-child(7)::before { content: "Status"; }
+  #received-table td:nth-child(8)::before { content: "Action"; }
+
+  #issues-table td:nth-child(1)::before { content: "LR Number"; }
+  #issues-table td:nth-child(2)::before { content: "Origin Branch"; }
+  #issues-table td:nth-child(3)::before { content: "Truck Number"; }
+  #issues-table td:nth-child(4)::before { content: "Issue Type"; }
+  #issues-table td:nth-child(5)::before { content: "Description"; }
+  #issues-table td:nth-child(6)::before { content: "Logged Date"; }
+  #issues-table td:nth-child(7)::before { content: "Status"; }
+  #issues-table td:nth-child(8)::before { content: "Action"; }
+
+  /* Mobile table column reduction to keep cards compact */
+  .user-table td:nth-child(1),
+  .user-table td:nth-child(4),
+  .user-table td:nth-child(5),
+  .user-table td:nth-child(6) {
+    display: none !important;
+  }
+  .branch-table td:nth-child(1),
+  .branch-table td:nth-child(4),
+  .branch-table td:nth-child(5) {
+    display: none !important;
+  }
+  .customer-table td:nth-child(4),
+  .customer-table td:nth-child(5) {
+    display: none !important;
+  }
+  .role-table td:nth-child(2) {
+    display: none !important;
+  }
+  .audit-table td:nth-child(5),
+  .audit-table td:nth-child(6) {
+    display: none !important;
+  }
+  .lrm-table td:nth-child(2),
+  .lrm-table td:nth-child(4),
+  .lrm-table td:nth-child(5),
+  .lrm-table td:nth-child(6),
+  .lrm-table td:nth-child(8),
+  .lrm-table td:nth-child(9),
+  .lrm-table td:nth-child(11) {
+    display: none !important;
+  }
+  #pickup-operations-table td:nth-child(4),
+  #pickup-operations-table td:nth-child(5),
+  #pickup-operations-table td:nth-child(7) {
+    display: none !important;
+  }
+  .delivery-table td:nth-child(1),
+  .delivery-table td:nth-child(5),
+  .delivery-table td:nth-child(6) {
+    display: none !important;
+  }
+  #view-vehicles .data-table td:nth-child(3),
+  #view-vehicles .data-table td:nth-child(4) {
+    display: none !important;
+  }
+  #subtab-content-create .data-table td:nth-child(4),
+  #subtab-content-create .data-table td:nth-child(5) {
+    display: none !important;
+  }
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(1),
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(5),
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(6),
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(7),
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(9),
+  #subtab-content-loading .table-container:first-of-type .data-table td:nth-child(10) {
+    display: none !important;
+  }
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(5),
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(6),
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(7),
+  #subtab-content-loading .table-container:nth-of-type(2) .data-table td:nth-child(8) {
+    display: none !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(4),
+  #subtab-content-transit .data-table td:nth-child(5),
+  #subtab-content-transit .data-table td:nth-child(6),
+  #subtab-content-transit .data-table td:nth-child(7) {
+    display: none !important;
+  }
+  #incoming-table td:nth-child(4),
+  #incoming-table td:nth-child(5),
+  #incoming-table td:nth-child(6),
+  #incoming-table td:nth-child(7) {
+    display: none !important;
+  }
+  #received-table td:nth-child(3),
+  #received-table td:nth-child(4),
+  #received-table td:nth-child(6),
+  #received-table td:nth-child(7),
+  #received-table td:nth-child(8) {
+    display: none !important;
+  }
+  #issues-table td:nth-child(3),
+  #issues-table td:nth-child(5),
+  #issues-table td:nth-child(6) {
+    display: none !important;
+  }
+
+  /* Custom Clean Dashboard Card Layouts for Key Modules */
+  
+  /* User Management */
+  .user-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  .user-table td:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: var(--color-black) !important;
+  }
+  .user-table td:nth-child(2)::before { display: none !important; }
+  .user-table td:nth-child(7) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+  }
+  .user-table td:nth-child(7)::before { display: none !important; }
+  .user-table td:nth-child(3) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 0.8125rem !important;
+    color: var(--color-text-muted) !important;
+  }
+  .user-table td:nth-child(3)::before {
+    content: "Role: " !important;
+    font-weight: 600 !important;
+    display: inline !important;
+    text-transform: none !important;
+  }
+  .user-table td:nth-child(8) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+  }
+  .user-table td:nth-child(8)::before { display: none !important; }
+
+  /* Branch Management */
+  .branch-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  .branch-table td:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: var(--color-black) !important;
+  }
+  .branch-table td:nth-child(2)::before { display: none !important; }
+  .branch-table td:nth-child(6) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+  }
+  .branch-table td:nth-child(6)::before { display: none !important; }
+  .branch-table td:nth-child(3) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 0.8125rem !important;
+    color: var(--color-text-muted) !important;
+  }
+  .branch-table td:nth-child(3)::before {
+    content: "Type: " !important;
+    font-weight: 600 !important;
+    display: inline !important;
+    text-transform: none !important;
+  }
+  .branch-table td:nth-child(7) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+  }
+  .branch-table td:nth-child(7)::before { display: none !important; }
+
+  /* Customer Management */
+  .customer-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  .customer-table td:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: var(--color-black) !important;
+  }
+  .customer-table td:nth-child(1)::before { display: none !important; }
+  .customer-table td:nth-child(3) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    display: flex !important;
+  }
+  .customer-table td:nth-child(3)::before { display: none !important; }
+  .customer-table td:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 0.8125rem !important;
+    color: var(--color-text-muted) !important;
+  }
+  .customer-table td:nth-child(2)::before {
+    content: "Phone: " !important;
+    font-weight: 600 !important;
+    display: inline !important;
+    text-transform: none !important;
+  }
+  .customer-table td:nth-child(6) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    display: flex !important;
+  }
+  .customer-table td:nth-child(6)::before { display: none !important; }
+
+  /* Roles & Permissions */
+  .role-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  .role-table td:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: var(--color-black) !important;
+  }
+  .role-table td:nth-child(1)::before { display: none !important; }
+  .role-table td:nth-child(2) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+  }
+  .role-table td:nth-child(2)::before { display: none !important; }
+  .role-table td:nth-child(3) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+  }
+  .role-table td:nth-child(3)::before { display: none !important; }
+
+  /* Audit Logs */
+  .audit-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  .audit-table td:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+  }
+  .audit-table td:nth-child(1)::before { display: none !important; }
+  .audit-table td:nth-child(2) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    font-weight: 600 !important;
+    font-size: 0.8125rem !important;
+  }
+  .audit-table td:nth-child(2)::before {
+    content: "User: " !important;
+    font-weight: 500 !important;
+    display: inline !important;
+  }
+  .audit-table td:nth-child(3) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 0.75rem !important;
+    color: var(--color-text-muted) !important;
+  }
+  .audit-table td:nth-child(3)::before {
+    content: "Role: " !important;
+    font-weight: 500 !important;
+    display: inline !important;
+  }
+  .audit-table td:nth-child(4) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    font-size: 0.75rem !important;
+  }
+  .audit-table td:nth-child(4)::before {
+    content: "Op: " !important;
+    font-weight: 500 !important;
+    display: inline !important;
+  }
+  .audit-table td:nth-child(5) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 3 !important;
+    border-top: 1px dashed var(--color-border) !important;
+    padding-top: 6px !important;
+    margin-top: 2px !important;
+    font-size: 0.8125rem !important;
+    color: var(--color-black) !important;
+  }
+  .audit-table td:nth-child(5)::before { display: none !important; }
+
+  /* Delivery Operations */
+  .delivery-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  .delivery-table td:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+  }
+  .delivery-table td:nth-child(2)::before { display: none !important; }
+  .delivery-table td:nth-child(7) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+  }
+  .delivery-table td:nth-child(7)::before { display: none !important; }
+  .delivery-table td:nth-child(3) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 0.8125rem !important;
+  }
+  .delivery-table td:nth-child(3)::before {
+    content: "Cust: " !important;
+    font-weight: 600 !important;
+    display: inline !important;
+  }
+  .delivery-table td:nth-child(4) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    font-size: 0.8125rem !important;
+  }
+  .delivery-table td:nth-child(4)::before {
+    content: "Loc: " !important;
+    font-weight: 600 !important;
+    display: inline !important;
+  }
+  .delivery-table td:nth-child(8) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 3 !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding-top: 8px !important;
+    margin-top: 4px !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+  }
+  .delivery-table td:nth-child(8)::before { display: none !important; }
+
+  /* Sticky Summary Bar Fixed Bottom on Mobile */
+  .sticky-summary-bar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background-color: var(--color-white) !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding: 12px 16px !important;
+    box-sizing: border-box !important;
+    z-index: 1000 !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 0 !important;
+  }
+  .sticky-summary-bar > div {
+    width: 100% !important;
+    justify-content: space-between !important;
+    font-size: 0.75rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+  }
+  .sticky-summary-bar button {
+    width: 100% !important;
+  }
+  #subtab-content-loading {
+    padding-bottom: 120px !important;
+  }
+
+  /* Transit Truck Movement Card Layout */
+  #subtab-content-transit .data-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: var(--color-black) !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(1)::before { display: none !important; }
+  #subtab-content-transit .data-table td:nth-child(8) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    display: flex !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(8)::before { display: none !important; }
+  #subtab-content-transit .data-table td:nth-child(2) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 2 !important;
+    font-size: 0.8125rem !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(2)::before {
+    content: "From: " !important;
+    font-weight: 600 !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(3) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 3 !important;
+    font-size: 0.8125rem !important;
+    border-top: none !important;
+    padding-top: 0 !important;
+    margin-top: -4px !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(3)::before {
+    content: "To: " !important;
+    font-weight: 600 !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(9) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 4 !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding-top: 8px !important;
+    margin-top: 4px !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+  }
+  #subtab-content-transit .data-table td:nth-child(9)::before { display: none !important; }
+
+  /* Planned Truck Journeys Card Layout */
+  #subtab-content-create .data-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  #subtab-content-create .data-table td:nth-child(1) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 1 !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: var(--color-black) !important;
+  }
+  #subtab-content-create .data-table td:nth-child(1)::before { display: none !important; }
+  #subtab-content-create .data-table td:nth-child(2) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 2 !important;
+    font-size: 0.8125rem !important;
+  }
+  #subtab-content-create .data-table td:nth-child(2)::before {
+    content: "From Branch: " !important;
+    font-weight: 600 !important;
+  }
+  #subtab-content-create .data-table td:nth-child(3) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 3 !important;
+    font-size: 0.8125rem !important;
+    border-top: none !important;
+    padding-top: 0 !important;
+    margin-top: -4px !important;
+  }
+  #subtab-content-create .data-table td:nth-child(3)::before {
+    content: "Destination Branch: " !important;
+    font-weight: 600 !important;
+  }
+  #subtab-content-create .data-table td:nth-child(6) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 4 !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding-top: 8px !important;
+    margin-top: 4px !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+  }
+  #subtab-content-create .data-table td:nth-child(6)::before { display: none !important; }
+
+  /* Empty state table row overrides */
+  .data-table tr:has(td[colspan]) {
+    display: block !important;
+    width: 100% !important;
+    padding: 16px !important;
+    text-align: center !important;
+  }
+  .data-table tr:has(td[colspan]) td {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    grid-column: 1 / -1 !important;
+    padding: 0 !important;
+  }
+  .data-table tr:has(td[colspan]) td::before {
+    display: none !important;
+  }
+
+  /* Planned Journey CTA Card Mobile Optimization */
+  .planned-journey-cta-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+  }
+  .planned-journey-cta-left {
+    align-items: flex-start !important;
+  }
+  .planned-journey-cta-card a.btn-primary {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Received Table Mobile Card Layout */
+  #received-table tr {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px 16px !important;
+    padding: 12px 16px !important;
+    align-items: center !important;
+  }
+  #received-table td:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: var(--color-black) !important;
+  }
+  #received-table td:nth-child(1)::before { display: none !important; }
+  #received-table td:nth-child(10) {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+  }
+  #received-table td:nth-child(10)::before { display: none !important; }
+  #received-table td:nth-child(2) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 0.8125rem !important;
+  }
+  #received-table td:nth-child(2)::before {
+    content: "Sender: " !important;
+    font-weight: 600 !important;
+  }
+  #received-table td:nth-child(9) {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    font-size: 0.75rem !important;
+    color: var(--color-text-muted) !important;
+  }
+  #received-table td:nth-child(9)::before { display: none !important; }
+  #received-table td:nth-child(5) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 3 !important;
+    font-size: 0.8125rem !important;
+  }
+  #received-table td:nth-child(5)::before {
+    content: "Items: " !important;
+    font-weight: 600 !important;
+  }
+  #received-table td:nth-child(11) {
+    grid-column: 1 / span 2 !important;
+    grid-row: 4 !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding-top: 8px !important;
+    margin-top: 4px !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+  }
+  #received-table td:nth-child(11)::before { display: none !important; }
+
+  /* Package Photos Upload Card mobile optimization */
+  .package-upload-full-card {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    text-align: center !important;
+    padding: 16px 12px !important;
+  }
+  .package-upload-full-card > div {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .package-upload-full-card > div > div {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  .package-upload-full-card .btn-secondary {
+    width: 100% !important;
+    justify-content: center !important;
+    height: 32px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 0.75rem !important;
+    margin-top: 4px !important;
+  }
+
+  /* Package Details 2-Column Section Stack */
+  .package-details-two-col {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+
+  /* Mobile wrapping for all Radio Groups to prevent card overflow */
+  .radio-group {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .radio-group:has(input[name="branch-type"]) {
+    flex-wrap: nowrap !important;
+  }
+  .radio-group:has(input[name="branch-type"]) label {
+    white-space: nowrap !important;
+    padding: 6px 8px !important;
+    gap: 6px !important;
+    justify-content: center !important;
+  }
+
+  /* Make dropdown select filters/inputs full width inside forms on mobile */
+  .package-details-two-col .custom-select-wrapper,
+  .form-section .custom-select-wrapper,
+  #truck-size-container .custom-select-wrapper,
+  #truck-size-select-wrap {
+    width: 100% !important;
+    display: block !important;
+  }
+  .custom-select-wrapper .custom-select-trigger,
+  #truck-size-select-wrap .custom-select-trigger {
+    width: 100% !important;
+    display: flex !important;
+  }
+  .custom-select-options,
+  #truck-size-select-wrap .custom-select-options {
+    width: 100% !important;
+    min-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Booking Confirmation Actions Vertical Stack */
+  .lr-actions-row {
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+  .lr-actions-row a {
+    width: 100% !important;
+    justify-content: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Fixed Bottom Sticky CTA navigation bar for Booking Wizard Steps */
+  .card:has(.sticky-cta-bar) {
+    height: auto !important;
+  }
+  .card:has(.sticky-cta-bar) .form-section {
+    overflow-y: visible !important;
+    padding-bottom: 90px !important;
+  }
+  .sticky-cta-bar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 2000 !important;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.12) !important;
+    background: #ffffff !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding: 12px 16px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 12px !important;
+    box-sizing: border-box !important;
+  }
+  .sticky-cta-bar .btn-secondary,
+  .sticky-cta-bar .btn-primary {
+    flex: 1 !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* HRMS KPI Cards */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.kpi-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 76px;
+  box-sizing: border-box;
+}
+
+.kpi-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.kpi-card-icon {
+  width: 18px;
+  height: 18px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.kpi-card-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}
+
+.kpi-card-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-black);
+  line-height: 1;
+  padding-left: 26px;
+}
+
+/* Mobile Styles (768px Breakpoint) */
+@media (max-width: 768px) {
+  /* Layout Spacing */
+  .app-content {
+    padding: 16px;
+  }
+  
+  /* Header Stacking */
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    height: 40px; /* larger touch target */
+  }
+
+  /* Filters Stacking */
+  .filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .search-input-wrapper {
+    width: 100%;
+  }
+
+  /* KPI Grid */
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .kpi-card {
+    padding: 12px;
+  }
+
+  /* Mobile Table Cards */
+  .data-table thead {
+    display: none;
+  }
+  
+  .data-table, .data-table tbody, .data-table tr, .data-table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .data-table tr {
+    margin-bottom: 16px;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  /* Default Cell Layout (Key-Value stack) */
+  .data-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--color-border);
+    text-align: right;
+  }
+  
+  .data-table td:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .data-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #666;
+    text-align: left;
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Structured Card - "Employee Name" acts as Title */
+  td[data-label="Employee Name"] {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--color-black);
+    text-align: left;
+    order: -10;
+  }
+  td[data-label="Employee Name"]::before {
+    display: none; /* Hide 'Employee Name' label */
+  }
+
+  /* "Payslip Status", "Status", or "Attendance Status" float right on the title row */
+  td[data-label="Payslip Status"],
+  td[data-label="Status"],
+  td[data-label="Attendance Status"] {
+    border-bottom: none;
+    padding: 0;
+    order: -9;
+    align-self: flex-start;
+    margin-top: -30px; /* pull up next to Employee Name */
+  }
+  td[data-label="Payslip Status"]::before,
+  td[data-label="Status"]::before,
+  td[data-label="Attendance Status"]::before {
+    display: none;
+  }
+
+  /* Second Row Identifiers (e.g., ID & Dept) */
+  td[data-label="Employee ID"],
+  td[data-label="Employee Code"] {
+    display: inline-flex;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 8px;
+    font-size: 0.8125rem;
+    color: #555;
+    order: -8;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  td[data-label="Employee ID"]::before,
+  td[data-label="Employee Code"]::before {
+    display: none;
+  }
+  
+  td[data-label="Department"] {
+    display: inline-flex;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 8px;
+    font-size: 0.8125rem;
+    color: #555;
+    order: -7;
+    margin-top: -36px;
+    margin-left: 80px;
+    justify-content: flex-start;
+  }
+  td[data-label="Department"]::before {
+    content: "•";
+    margin-right: 8px;
+    color: #999;
+  }
+
+  /* Net Salary Emphasis */
+  td[data-label="Net Salary"] {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-black);
+    background: #f9f9fa;
+    padding: 8px;
+    border-radius: 4px;
+    border-bottom: none;
+  }
+
+  /* Actions at Bottom */
+  td[data-label="Actions"] {
+    justify-content: center;
+    border-top: 1px solid var(--color-border);
+    padding-top: 12px;
+    margin-top: 8px;
+    order: 99;
+  }
+  td[data-label="Actions"]::before {
+    display: none;
+  }
+  .data-table td .action-icons {
+    justify-content: center;
+    width: 100%;
+  }
+}

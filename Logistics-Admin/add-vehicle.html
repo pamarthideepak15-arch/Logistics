@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Add Vehicle</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="logistics-admin.css">
+    <style>
+        /* Compact 2-Column ERP Card Grid */
+        .add-vehicle-2col-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .add-vehicle-2col-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .compact-panel-card {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .compact-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 8px;
+        }
+
+        .compact-panel-title {
+            font-size: 0.8125rem;
+            font-weight: 800;
+            color: var(--color-black);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .compact-form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .compact-form-row label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-black);
+        }
+
+        .compact-form-row input {
+            height: 32px;
+            padding: 4px 10px;
+            font-size: 0.8125rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background-color: var(--color-white);
+            color: var(--color-black);
+            outline: none;
+            font-family: var(--font-family-primary);
+        }
+
+        .compact-form-row input:focus {
+            border-color: var(--color-black);
+        }
+
+        .compact-doc-item {
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 8px 10px;
+            background-color: var(--color-bg-light);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .compact-doc-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .compact-doc-expiry {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 0.6875rem;
+            color: var(--color-text-muted);
+        }
+
+        .compact-doc-expiry input[type="date"] {
+            height: 24px;
+            font-size: 0.6875rem;
+            padding: 2px 6px;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            background: var(--color-white);
+        }
+    </style>
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo" title="Logistics ERP">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="javascript:void(0)" class="rail-icon active" data-tooltip="Logistics Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">DASHBOARD</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Dashboard
+                    </a>
+                </nav>
+
+                <div class="sidebar-nav-section" style="margin-top: 14px;">LOGISTICS OPERATIONS</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html#vehicles" class="sidebar-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                        Vehicle Master
+                    </a>
+                    <a href="index.html#assignment" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <polyline points="17 11 19 13 23 9"></polyline>
+                        </svg>
+                        Truck Assignment
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>Vehicle Master</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Add Vehicle</span>
+                </div>
+
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Kiran Varma</strong>
+                        <span>Logistics Admin</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Page Scroll Area -->
+            <div class="main-scroll-area">
+                <form action="index.html#vehicles" onsubmit="handleSaveAdd(event)">
+                    
+                    <!-- Exact Existing ERP Detail Page Header & Back UI -->
+                    <div class="page-header">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <a href="index.html#vehicles" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Add Vehicle</h1>
+                                <p class="page-subtitle">Register a new transport vehicle and configure compliance documents.</p>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a href="index.html#vehicles" class="btn-secondary">Cancel</a>
+                            <button type="submit" class="btn-primary">Save Vehicle</button>
+                        </div>
+                    </div>
+
+                    <!-- 2-Column Compact Layout -->
+                    <div class="add-vehicle-2col-layout">
+                        
+                        <!-- Column 1: Vehicle Specifications & Capacity -->
+                        <div class="compact-panel-card">
+                            <div class="compact-panel-header">
+                                <span class="compact-panel-title">1. Vehicle Details</span>
+                                <span class="badge-status badge-available" id="add-badge-status">Available</span>
+                            </div>
+
+                            <div class="compact-form-row">
+                                <label for="new-veh-no">Vehicle Number *</label>
+                                <input type="text" id="new-veh-no" name="veh-no" placeholder="e.g. KA-19-MN-4567" required style="text-transform: uppercase;">
+                            </div>
+
+                            <!-- ERP Pure CSS Custom Select Dropdown for Vehicle Type -->
+                            <div class="compact-form-row">
+                                <label>Vehicle Type *</label>
+                                <details class="custom-select-wrapper" style="width: 100%;">
+                                    <summary class="custom-select-trigger">
+                                        <span class="placeholder">Select Vehicle Type</span>
+                                        <span class="selected-text text-mini" style="display: flex;">Mini Truck</span>
+                                        <span class="selected-text text-medium">Medium Truck</span>
+                                        <span class="selected-text text-heavy">Heavy Truck</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options">
+                                        <label class="custom-option"><input type="radio" name="new-veh-type" value="mini" checked> Mini Truck</label>
+                                        <label class="custom-option"><input type="radio" name="new-veh-type" value="medium"> Medium Truck</label>
+                                        <label class="custom-option"><input type="radio" name="new-veh-type" value="heavy"> Heavy Truck</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <div class="compact-form-row">
+                                <label for="new-veh-cap">Payload Capacity *</label>
+                                <input type="text" id="new-veh-cap" placeholder="e.g. 2 Ton / 3.5 Ton" required>
+                            </div>
+
+                            <!-- ERP Pure CSS Custom Select Dropdown for Status -->
+                            <div class="compact-form-row">
+                                <label>Initial Status *</label>
+                                <details class="custom-select-wrapper" style="width: 100%;">
+                                    <summary class="custom-select-trigger">
+                                        <span class="placeholder">Select Status</span>
+                                        <span class="selected-text text-available" style="display: flex;">Available</span>
+                                        <span class="selected-text text-assigned">Assigned</span>
+                                        <span class="selected-text text-transit">In Transit</span>
+                                        <span class="selected-text text-inactive">Inactive</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options">
+                                        <label class="custom-option"><input type="radio" name="new-veh-status" value="available" checked onchange="document.getElementById('add-badge-status').textContent='Available'"> Available</label>
+                                        <label class="custom-option"><input type="radio" name="new-veh-status" value="assigned" onchange="document.getElementById('add-badge-status').textContent='Assigned'"> Assigned</label>
+                                        <label class="custom-option"><input type="radio" name="new-veh-status" value="transit" onchange="document.getElementById('add-badge-status').textContent='In Transit'"> In Transit</label>
+                                        <label class="custom-option"><input type="radio" name="new-veh-status" value="inactive" onchange="document.getElementById('add-badge-status').textContent='Inactive'"> Inactive</label>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- Column 2: Regulatory Compliance & Documents -->
+                        <div class="compact-panel-card">
+                            <div class="compact-panel-header">
+                                <span class="compact-panel-title">2. Compliance &amp; Documents</span>
+                                <span class="badge-status badge-uploaded">Required Docs</span>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                
+                                <div class="compact-doc-item">
+                                    <div class="compact-doc-top">
+                                        <span>RC Document</span>
+                                        <span class="badge-status badge-uploaded">Uploaded</span>
+                                    </div>
+                                    <div class="compact-doc-expiry">
+                                        <span>Expiry Date:</span>
+                                        <input type="date" value="2029-12-31" required>
+                                    </div>
+                                </div>
+
+                                <div class="compact-doc-item">
+                                    <div class="compact-doc-top">
+                                        <span>Insurance Certificate</span>
+                                        <span class="badge-status badge-uploaded">Uploaded</span>
+                                    </div>
+                                    <div class="compact-doc-expiry">
+                                        <span>Expiry Date:</span>
+                                        <input type="date" value="2027-10-15" required>
+                                    </div>
+                                </div>
+
+                                <div class="compact-doc-item">
+                                    <div class="compact-doc-top">
+                                        <span>Fitness Certificate</span>
+                                        <span class="badge-status badge-uploaded">Uploaded</span>
+                                    </div>
+                                    <div class="compact-doc-expiry">
+                                        <span>Expiry Date:</span>
+                                        <input type="date" value="2027-06-30" required>
+                                    </div>
+                                </div>
+
+                                <div class="compact-doc-item">
+                                    <div class="compact-doc-top">
+                                        <span>National Permit</span>
+                                        <span class="badge-status badge-uploaded">Uploaded</span>
+                                    </div>
+                                    <div class="compact-doc-expiry">
+                                        <span>Expiry Date:</span>
+                                        <input type="date" value="2028-12-31" required>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+        function handleSaveAdd(e) {
+            e.preventDefault();
+            const vehNo = document.getElementById('new-veh-no').value.trim().toUpperCase();
+            if (!vehNo) {
+                alert('Please enter a vehicle number');
+                return;
+            }
+            window.location.href = 'index.html#vehicles';
+        }
+    </script>
+</body>
+</html>

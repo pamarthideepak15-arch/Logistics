@@ -1,0 +1,120 @@
+/* Shift Management Custom Styles */
+
+/* Modal Overlays and Dialogs */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#delete-shift-toggle {
+    display: none;
+}
+
+#delete-shift-toggle:checked ~ #delete-shift-modal {
+    display: flex;
+}
+
+/* Overrides to make labels cursor pointer */
+.modal-close-label {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    color: #666;
+    padding: 4px;
+}
+.modal-close-label:hover {
+    color: var(--color-black);
+}
+
+/* Shift table styles to match Attendance row heights and font sizes */
+.shift-table th, 
+.shift-table td {
+    padding: 6px 16px !important;
+    vertical-align: middle !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    font-size: 0.8125rem;
+}
+
+/* Proportional Column Widths */
+.shift-table th:nth-child(1), .shift-table td:nth-child(1) { width: 12%; }
+.shift-table th:nth-child(2), .shift-table td:nth-child(2) { width: 22%; }
+.shift-table th:nth-child(3), .shift-table td:nth-child(3) { width: 17%; }
+.shift-table th:nth-child(4), .shift-table td:nth-child(4) { width: 17%; }
+.shift-table th:nth-child(5), .shift-table td:nth-child(5) { width: 17%; }
+.shift-table th:nth-child(6), .shift-table td:nth-child(6) { width: 10%; }
+.shift-table th:nth-child(7), .shift-table td:nth-child(7) { width: 5%; }
+
+/* Center-align Status column */
+.shift-table th:nth-child(6), 
+.shift-table td:nth-child(6) {
+    text-align: center !important;
+}
+.shift-table td:nth-child(6) .status-toggle {
+    justify-content: center;
+    display: inline-flex;
+}
+
+/* Center-align Actions column */
+.shift-table th:nth-child(7), 
+.shift-table td:nth-child(7) {
+    text-align: center !important;
+}
+.shift-table td:nth-child(7) .action-icons {
+    justify-content: center;
+    display: flex;
+}
+
+/* Form Styles */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Custom badge styles for Status */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.status-active {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--color-black);
+    border: 1px solid var(--color-black);
+}
+
+.badge-inactive {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-subtle);
+    border: 1px dashed var(--color-border);
+}
+
+/* Reset browser default outline focus rings for all controls */
+input:focus,
+select:focus,
+textarea:focus,
+summary:focus,
+.custom-select-trigger:focus,
+*:focus-visible {
+    outline: none !important;
+}

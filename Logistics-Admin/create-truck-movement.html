@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Truck Movement - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="logistics-admin.css">
+    <style>
+        .journey-2col-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            align-items: start;
+        }
+        @media (max-width: 860px) {
+            .journey-2col-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        .compact-panel-card {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .compact-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 8px;
+        }
+        .compact-panel-title {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: var(--color-black);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .compact-form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .compact-form-row label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-black);
+        }
+        .compact-info-box {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 9px 12px;
+            font-size: 0.75rem;
+            color: #444;
+            line-height: 1.4;
+        }
+        .stops-picker-box {
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            background: #ffffff;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .stop-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .stop-checkbox-item input {
+            accent-color: var(--color-black);
+            cursor: pointer;
+            width: 14px;
+            height: 14px;
+        }
+        .sequence-list-container {
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .sequence-row-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.8125rem;
+        }
+        .sequence-row-item:last-child {
+            border-bottom: none;
+        }
+        .sequence-item-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sequence-order-badge {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-black);
+            color: #fff;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sequence-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .sequence-arrow-btn {
+            background: none;
+            border: 1px solid var(--color-border);
+            border-radius: 3px;
+            width: 24px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--color-black);
+            padding: 0;
+        }
+        .sequence-arrow-btn:hover:not(:disabled) {
+            background: #f0f0f0;
+        }
+        .sequence-arrow-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .route-preview-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: #f7f7f7;
+            border: 1px solid var(--color-border);
+            padding: 6px 10px;
+            border-radius: 4px;
+            color: #111;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo" title="Logistics ERP">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="javascript:void(0)" class="rail-icon active" data-tooltip="Logistics Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">DASHBOARD</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Dashboard
+                    </a>
+                </nav>
+
+                <div class="sidebar-nav-section" style="margin-top: 14px;">LOGISTICS OPERATIONS</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html#vehicles" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                        Vehicle Master
+                    </a>
+                    <a href="index.html#assignment" class="sidebar-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <polyline points="17 11 19 13 23 9"></polyline>
+                        </svg>
+                        Truck Assignment
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Logistics Admin</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>Truck Assignment</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Create Truck Movement</span>
+                </div>
+
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Kiran Varma</strong>
+                        <span>Logistics Admin</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Page Scroll Area -->
+            <div class="main-scroll-area">
+                <form onsubmit="handleCreateMovementSubmit(event)">
+                    
+                    <!-- Exact Existing ERP Page Header & Back UI -->
+                    <div class="page-header">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <a href="index.html#assignment" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Create Truck Movement</h1>
+                                <p class="page-subtitle">Plan a multi-destination route, assign vehicle and driver before physical loading verification.</p>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a href="index.html#assignment" class="btn-secondary">Cancel</a>
+                            <button type="submit" class="btn-primary">Create Truck Movement</button>
+                        </div>
+                    </div>
+
+                    <!-- 2-Column Compact Layout -->
+                    <div class="journey-2col-layout">
+                        
+                        <!-- SECTION 1: MULTI-STOP ROUTE PLANNING -->
+                        <div class="compact-panel-card">
+                            <div class="compact-panel-header">
+                                <span class="compact-panel-title">1. MULTI-STOP ROUTE PLANNING</span>
+                                <span class="badge-status badge-assigned">WAITING FOR LOADING</span>
+                            </div>
+
+                            <!-- From Branch (Origin Hub) * -->
+                            <div class="compact-form-row">
+                                <label>From Branch (Origin Hub) *</label>
+                                <details class="custom-select-wrapper" style="width: 100%;" id="from-branch-wrapper">
+                                    <summary class="custom-select-trigger">
+                                        <span class="placeholder">Select From Branch</span>
+                                        <span class="selected-text text-from-mangalore" id="from-summary" style="display: flex;">Mangalore Warehouse</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options">
+                                        <label class="custom-option"><input type="radio" name="create-from-branch" value="Mangalore Warehouse" checked onchange="selectFromBranch(this)"> Mangalore Warehouse</label>
+                                        <label class="custom-option"><input type="radio" name="create-from-branch" value="Bangalore Warehouse" onchange="selectFromBranch(this)"> Bangalore Warehouse</label>
+                                        <label class="custom-option"><input type="radio" name="create-from-branch" value="Hyderabad Warehouse" onchange="selectFromBranch(this)"> Hyderabad Warehouse</label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <!-- Destination Hubs * (Checkbox Selection) -->
+                            <div class="compact-form-row">
+                                <label>Destination Hubs (Select hubs covered in this journey) *</label>
+                                <div class="stops-picker-box">
+                                    <label class="stop-checkbox-item">
+                                        <input type="checkbox" name="dest-stop" value="Bangalore Hub" checked onchange="syncDestinationSelection()">
+                                        <span>Bangalore Hub</span>
+                                    </label>
+                                    <label class="stop-checkbox-item">
+                                        <input type="checkbox" name="dest-stop" value="Hyderabad Hub" checked onchange="syncDestinationSelection()">
+                                        <span>Hyderabad Hub</span>
+                                    </label>
+                                    <label class="stop-checkbox-item">
+                                        <input type="checkbox" name="dest-stop" value="Mumbai Hub" onchange="syncDestinationSelection()">
+                                        <span>Mumbai Hub</span>
+                                    </label>
+                                    <label class="stop-checkbox-item">
+                                        <input type="checkbox" name="dest-stop" value="Chennai Hub" onchange="syncDestinationSelection()">
+                                        <span>Chennai Hub</span>
+                                    </label>
+                                    <label class="stop-checkbox-item">
+                                        <input type="checkbox" name="dest-stop" value="Hubli Hub" onchange="syncDestinationSelection()">
+                                        <span>Hubli Hub</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Route Sequence (Reorder Destination Order) -->
+                            <div class="compact-form-row" id="route-sequence-section">
+                                <label>Route Sequence (Arrange destination order)</label>
+                                <div class="sequence-list-container" id="sequence-list-box">
+                                    <!-- Populated dynamically with up/down controls -->
+                                </div>
+                            </div>
+
+                            <!-- Planned Route Overview -->
+                            <div class="compact-form-row">
+                                <label>Planned Route Overview</label>
+                                <div class="route-preview-badge" id="route-preview-display">
+                                    Mangalore Warehouse &rarr; Bangalore Hub &rarr; Hyderabad Hub
+                                </div>
+                            </div>
+
+                            <!-- Helper Info -->
+                            <div class="compact-info-box">
+                                ℹ️ Truck can carry LR shipments matching any selected destination hub along this route.
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: FLEET & DRIVER ALLOCATION -->
+                        <div class="compact-panel-card">
+                            <div class="compact-panel-header">
+                                <span class="compact-panel-title">2. FLEET &amp; DRIVER ALLOCATION</span>
+                                <span class="badge-status badge-available">AVAILABLE FLEET</span>
+                            </div>
+
+                            <!-- Vehicle (From Vehicle Master) * -->
+                            <div class="compact-form-row">
+                                <label>Vehicle (From Vehicle Master) *</label>
+                                <details class="custom-select-wrapper" style="width: 100%;" id="veh-wrapper">
+                                    <summary class="custom-select-trigger">
+                                        <span class="placeholder">Select Available Vehicle</span>
+                                        <span class="selected-text dynamic-selected" id="veh-summary" style="display: flex;">KA-19-AB-1234 · Mini Truck (Capacity: 2 Ton · Status: Available)</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options">
+                                        <label class="custom-option">
+                                            <input type="radio" name="create-vehicle-opt" value="KA-19-AB-1234" data-type="Mini Truck" data-cap="2 Ton" checked onchange="updateVehLabel(this)">
+                                            KA-19-AB-1234 · Mini Truck (Capacity: 2 Ton · Status: Available)
+                                        </label>
+                                        <label class="custom-option">
+                                            <input type="radio" name="create-vehicle-opt" value="KA-19-C-5678" data-type="Medium Truck" data-cap="5 Ton" onchange="updateVehLabel(this)">
+                                            KA-19-C-5678 · Medium Truck (Capacity: 5 Ton · Status: Available)
+                                        </label>
+                                        <label class="custom-option">
+                                            <input type="radio" name="create-vehicle-opt" value="KA-20-D-9012" data-type="Heavy Truck" data-cap="12 Ton" onchange="updateVehLabel(this)">
+                                            KA-20-D-9012 · Heavy Truck (Capacity: 12 Ton · Status: Available)
+                                        </label>
+                                        <label class="custom-option">
+                                            <input type="radio" name="create-vehicle-opt" value="KA-19-EF-3456" data-type="Mini Truck" data-cap="2.5 Ton" onchange="updateVehLabel(this)">
+                                            KA-19-EF-3456 · Mini Truck (Capacity: 2.5 Ton · Status: Available)
+                                        </label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <!-- Driver (From User Management) * -->
+                            <div class="compact-form-row">
+                                <label>Driver (From User Management) *</label>
+                                <details class="custom-select-wrapper" style="width: 100%;" id="driver-wrapper">
+                                    <summary class="custom-select-trigger">
+                                        <span class="placeholder">Select Driver</span>
+                                        <span class="selected-text text-ramesh" id="driver-summary" style="display: flex;">Ramesh Kumar (Role: Driver)</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options">
+                                        <label class="custom-option">
+                                            <input type="radio" name="create-driver-opt" value="Ramesh Kumar" checked onchange="selectDriver(this)">
+                                            Ramesh Kumar · (Role: Driver)
+                                        </label>
+                                        <label class="custom-option">
+                                            <input type="radio" name="create-driver-opt" value="Sunil Shetty" onchange="selectDriver(this)">
+                                            Sunil Shetty · (Role: Driver)
+                                        </label>
+                                        <label class="custom-option">
+                                            <input type="radio" name="create-driver-opt" value="Anand Poojary" onchange="selectDriver(this)">
+                                            Anand Poojary · (Role: Driver)
+                                        </label>
+                                    </div>
+                                </details>
+                            </div>
+
+                            <!-- Validation Information Card -->
+                            <div class="compact-info-box">
+                                ℹ️ Only verified active drivers and available vehicles are listed.
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+        // Ordered destination sequence array
+        let orderedStops = ['Bangalore Hub', 'Hyderabad Hub'];
+
+        function selectFromBranch(radio) {
+            document.getElementById('from-summary').textContent = radio.value;
+            const wrapper = document.getElementById('from-branch-wrapper');
+            if (wrapper) wrapper.removeAttribute('open');
+            updateRoutePreviewDisplay();
+        }
+
+        function updateVehLabel(radio) {
+            document.getElementById('veh-summary').textContent = `${radio.value} · ${radio.dataset.type} (Capacity: ${radio.dataset.cap} · Status: Available)`;
+            const wrapper = document.getElementById('veh-wrapper');
+            if (wrapper) wrapper.removeAttribute('open');
+        }
+
+        function selectDriver(radio) {
+            document.getElementById('driver-summary').textContent = `${radio.value} (Role: Driver)`;
+            const wrapper = document.getElementById('driver-wrapper');
+            if (wrapper) wrapper.removeAttribute('open');
+        }
+
+        function syncDestinationSelection() {
+            const checkedBoxes = Array.from(document.querySelectorAll('input[name="dest-stop"]:checked')).map(cb => cb.value);
+            
+            // Keep existing order for already selected stops, and append newly checked stops
+            orderedStops = orderedStops.filter(s => checkedBoxes.includes(s));
+            checkedBoxes.forEach(s => {
+                if (!orderedStops.includes(s)) orderedStops.push(s);
+            });
+
+            renderRouteSequence();
+            updateRoutePreviewDisplay();
+        }
+
+        function moveStop(index, direction) {
+            const targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= orderedStops.length) return;
+            
+            const temp = orderedStops[index];
+            orderedStops[index] = orderedStops[targetIndex];
+            orderedStops[targetIndex] = temp;
+
+            renderRouteSequence();
+            updateRoutePreviewDisplay();
+        }
+
+        function renderRouteSequence() {
+            const container = document.getElementById('sequence-list-box');
+            if (orderedStops.length === 0) {
+                container.innerHTML = `<div style="padding:10px;font-size:0.75rem;color:#888;text-align:center;">Select at least 1 destination hub above.</div>`;
+                return;
+            }
+
+            container.innerHTML = orderedStops.map((stop, i) => `
+                <div class="sequence-row-item">
+                    <div class="sequence-item-info">
+                        <span class="sequence-order-badge">${i + 1}</span>
+                        <strong>${stop}</strong>
+                    </div>
+                    <div class="sequence-btn-group">
+                        <button type="button" class="sequence-arrow-btn" title="Move Up" onclick="moveStop(${i}, -1)" ${i === 0 ? 'disabled' : ''}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                        <button type="button" class="sequence-arrow-btn" title="Move Down" onclick="moveStop(${i}, 1)" ${i === orderedStops.length - 1 ? 'disabled' : ''}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateRoutePreviewDisplay() {
+            const from = document.querySelector('input[name="create-from-branch"]:checked')?.value || 'Mangalore Warehouse';
+            const previewEl = document.getElementById('route-preview-display');
+            if (orderedStops.length === 0) {
+                previewEl.textContent = `${from} → (Select at least 1 destination hub)`;
+            } else {
+                previewEl.innerHTML = `${from} &rarr; ` + orderedStops.join(' &rarr; ');
+            }
+        }
+
+        function handleCreateMovementSubmit(e) {
+            e.preventDefault();
+            const from = document.querySelector('input[name="create-from-branch"]:checked')?.value || 'Mangalore Warehouse';
+            
+            if (orderedStops.length === 0) {
+                alert('Please select at least one destination hub for this journey.');
+                return;
+            }
+
+            const checkedVeh = document.querySelector('input[name="create-vehicle-opt"]:checked');
+            const veh = checkedVeh?.value || 'KA-19-AB-1234';
+            const cap = checkedVeh?.dataset.cap || '2 Ton';
+            const driver = document.querySelector('input[name="create-driver-opt"]:checked')?.value || 'Ramesh Kumar';
+            const stopsParam = orderedStops.join('|');
+
+            // Redirects to Loading Verification screen and sets state to Waiting for Loading
+            window.location.href = `index.html#loading?created=true&veh=${encodeURIComponent(veh)}&driver=${encodeURIComponent(driver)}&from=${encodeURIComponent(from)}&stops=${encodeURIComponent(stopsParam)}&cap=${encodeURIComponent(cap)}`;
+        }
+
+        // Initialize sequence
+        renderRouteSequence();
+        updateRoutePreviewDisplay();
+    </script>
+</body>
+</html>

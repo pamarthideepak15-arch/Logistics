@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Staff Master</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="staff-management.css">
+</head>
+<body>
+    
+    <!-- Mobile Menu Drawer Toggle -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- Modal Checkboxes positioned high in DOM -->
+    <input type="checkbox" id="delete-employee-toggle">
+    <input type="checkbox" id="staff-filters-popup-toggle" style="display: none;">
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (HRMS Specific navigation) -->
+        <aside class="sidebar">
+            
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <!-- Active HR Rail Icon -->
+                    <a href="#" class="rail-icon active" data-tooltip="HRMS">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">HUMAN RESOURCES</div>
+                <nav class="sidebar-nav">
+                    <!-- Active Staff Master Link -->
+                    <a href="index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        Staff Master
+                    </a>
+                    <a href="../Attendance/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Attendance
+                    </a>
+                    <a href="../Shift-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Shift Management
+                    </a>
+                    <a href="../Leave-Management/leave-management.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
+                        Leave Management
+                    </a>
+
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>HRMS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Staff Master</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Staff Master</h1>
+                        <p class="page-subtitle">Manage Employee Records, Assignments, and Employment Details.</p>
+                    </div>
+                    <div class="header-actions">
+                        <a href="add-employee.html" class="btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add Employee
+                        </a>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                            <div class="kpi-card-label">Total Employees</div>
+                        </div>
+                        <div class="kpi-card-value">248</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg></span>
+                            <div class="kpi-card-label">Active Employees</div>
+                        </div>
+                        <div class="kpi-card-value text-success">235</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="23" y1="11" x2="17" y2="11"></line></svg></span>
+                            <div class="kpi-card-label">Inactive Employees</div>
+                        </div>
+                        <div class="kpi-card-value text-danger">13</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></span>
+                            <div class="kpi-card-label">New Employees</div>
+                        </div>
+                        <div class="kpi-card-value">4</div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-bar" style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 12px; margin-bottom: 16px;">
+                    <div class="search-input-wrapper" style="flex: 1; min-width: 200px; position: relative;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #888; z-index: 2;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="search-input" placeholder="Search staff..." style="height: 30px; font-size: 0.8125rem; box-sizing: border-box; padding-left: 30px; width: 100%;">
+                    </div>
+                    
+                    <label for="staff-filters-popup-toggle" class="btn-secondary" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); border: 1px solid var(--color-border); background: var(--color-white); font-weight: 500; outline: none; user-select: none;">
+                        <div style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="color: #666;"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                            <span id="filters-active-dot" style="display: none; position: absolute; top: -3px; right: -3px; width: 6px; height: 6px; background-color: var(--color-black); border-radius: 50%;"></span>
+                        </div>
+                        <span>Filters</span>
+                    </label>
+                    
+                    <button type="button" class="btn-secondary reset-filters-btn" style="height: 30px; padding: 0 12px; font-size: 0.8125rem; font-weight: 500;">Reset</button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table class="data-table staff-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Employee ID
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Employee Name
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Mobile Number
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Email ID
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Department
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Branch
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Joining Date
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Role
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Assigned Shift
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Monthly Gross
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Overtime Policy
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Incentive Policy
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable">
+                                    <div class="sort-header-content">
+                                        Deduction Policy
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>EMP001</td>
+                                <td>
+                                    <span>Rajesh Kumar</span>
+                                </td>
+                                <td>+91 98765 43210</td>
+                                <td>rajesh.kumar@logisticserp.com</td>
+                                <td>HR</td>
+                                <td>HQ</td>
+                                <td>2026-08-01</td>
+                                <td>HR Manager</td>
+                                <td>General Shift</td>
+                                <td><span class="policy-chip-item">Driver Grade A — ₹30,000</span></td>
+                                <td>Driver OT 1.5x</td>
+                                <td>Driver Performance Incentive</td>
+                                <td>Standard Deduction</td>
+                                <td>
+                                    <label class="status-toggle">
+                                        <input type="checkbox" checked>
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="action-icons">
+                                        <a href="edit-employee.html" class="action-icon" title="Edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        </a>
+                                        <label for="delete-employee-toggle" class="action-icon" style="cursor: pointer;" title="Delete">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EMP002</td>
+                                <td>
+                                    <span>Amit Patel</span>
+                                </td>
+                                <td>+91 98765 54321</td>
+                                <td>amit@logistics.com</td>
+                                <td>Fleet</td>
+                                <td>Mumbai Hub</td>
+                                <td>2026-02-10</td>
+                                <td>Fleet Manager</td>
+                                <td>Morning Shift</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>
+                                    <label class="status-toggle">
+                                        <input type="checkbox" checked>
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="action-icons">
+                                        <a href="edit-employee.html" class="action-icon" title="Edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        </a>
+                                        <label for="delete-employee-toggle" class="action-icon" style="cursor: pointer;" title="Delete">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EMP003</td>
+                                <td>
+                                    <span>Priya Sharma</span>
+                                </td>
+                                <td>+91 98765 65432</td>
+                                <td>priya@logistics.com</td>
+                                <td>HR</td>
+                                <td>HQ</td>
+                                <td>2026-03-01</td>
+                                <td>HR Manager</td>
+                                <td>General Shift</td>
+                                <td><span class="policy-chip-item">Driver Grade A — ₹30,000</span></td>
+                                <td>Driver OT 1.5x</td>
+                                <td>Driver Performance Incentive</td>
+                                <td>Standard Deduction</td>
+                                <td>
+                                    <label class="status-toggle">
+                                        <input type="checkbox" checked>
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="action-icons">
+                                        <a href="edit-employee.html" class="action-icon" title="Edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        </a>
+                                        <label for="delete-employee-toggle" class="action-icon" style="cursor: pointer;" title="Delete">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-bar">
+                        <span>Showing 1-3 of 3</span>
+                        <div class="pagination-controls">
+                            <button type="button" class="page-btn">Prev</button>
+                            <span class="page-number">1</span>
+                            <button type="button" class="page-btn">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Pure CSS Delete Employee Confirmation Modal -->
+    <div class="modal-overlay" id="delete-employee-modal">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px;">
+            <label for="delete-employee-toggle" class="modal-close-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Employee</h3>
+            <p class="modal-desc">Are you sure you want to delete this employee record?</p>
+            <div class="modal-actions">
+                <label for="delete-employee-toggle" class="btn-secondary" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;">Cancel</label>
+                <button id="confirm-delete-btn" class="btn-primary" style="flex: 1;">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Staff Filters Popup Modal -->
+    <div class="modal-overlay" id="staff-filters-modal">
+        <div class="modal-content" style="position: relative; width: 620px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);">
+            <label for="staff-filters-popup-toggle" class="modal-close-label" style="position: absolute; right: 16px; top: 16px; cursor: pointer; color: #666;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.0625rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; text-align: left;">Advanced Staff Filters</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <!-- Row 1: Branch & Department -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Branch</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Branch</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> HQ</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Mumbai Hub</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Bengaluru Branch</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Vijayawada Branch</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Department</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Department</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> HR</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Fleet</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Operations</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Finance</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Warehouse</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Row 2: Role & Assigned Shift -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Role</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Role</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> HR Manager</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Fleet Manager</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Operations Manager</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Accountant</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Assigned Shift</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Shift</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> General Shift</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Morning Shift</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Afternoon Shift</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Night Shift</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Row 3: Salary Structure & Overtime Policy -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Salary Structure</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Salary Structure</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver Grade A — ₹30,000</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver Grade B — ₹25,000</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Manager Grade A — ₹50,000</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Overtime Policy</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Overtime Policy</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver OT 1.5x</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Standard OT</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> No Overtime</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Row 4: Incentive Policy & Deduction Policy -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Incentive Policy</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Incentive Policy</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver Performance Incentive</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Monthly Performance Incentive</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> No Incentive</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Deduction Policy</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Deduction Policy</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Standard Deduction</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> PF & Professional Tax</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> No Deduction</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Row 5: Status -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Status</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Status</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Active</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Inactive</label>
+                            </div>
+                        </details>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; border-top: 1px solid var(--color-border); padding-top: 16px;">
+                <label for="staff-filters-popup-toggle" class="btn-secondary reset-filters-btn" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500;">Reset</label>
+                <label for="staff-filters-popup-toggle" class="btn-primary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500;">Apply Filters</label>
+            </div>
+        </div>
+    </div>
+
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // SPA Routing to prevent white flashes and lag on page transitions
+            function initSPARouting() {
+                document.querySelectorAll('.sidebar-nav a, .rail-icon').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        const href = link.getAttribute('href');
+                        if (!href || href === '#' || href.startsWith('javascript:')) return;
+                        
+                        e.preventDefault();
+                        navigateSPA(href);
+                    });
+                });
+            }
+
+            function navigateSPA(url, push = true) {
+                const cleanHref = url.split('/').pop() || 'index.html';
+                document.querySelectorAll('.sidebar-nav a').forEach(a => {
+                    const aHref = a.getAttribute('href').split('/').pop();
+                    if (aHref === cleanHref) {
+                        a.classList.add('active');
+                    } else {
+                        a.classList.remove('active');
+                    }
+                });
+
+                fetch(url)
+                    .then(res => res.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        document.title = doc.title;
+                        
+                        const targetMain = document.querySelector('.main-panel');
+                        const sourceMain = doc.querySelector('.main-panel');
+                        if (targetMain && sourceMain) {
+                            targetMain.innerHTML = sourceMain.innerHTML;
+                        }
+                        
+                        // Execute script tags
+                        const scripts = sourceMain.querySelectorAll('script');
+                        scripts.forEach(script => {
+                            const newScript = document.createElement('script');
+                            if (script.src) {
+                                newScript.src = script.src;
+                            } else {
+                                newScript.textContent = script.textContent;
+                            }
+                            document.body.appendChild(newScript);
+                        });
+                        
+                        if (push) {
+                            history.pushState(null, '', url);
+                        }
+                        
+                        initSPARouting();
+                    })
+                    .catch(err => {
+                        window.location.href = url;
+                    });
+            }
+
+            window.addEventListener('popstate', () => {
+                navigateSPA(window.location.href, false);
+            });
+
+            initSPARouting();
+
+            // Expose configuration on window for easy mutation
+            window.staffColumns = [
+                { key: 'id', label: 'Employee ID', sortable: true, visible: true },
+                { key: 'name', label: 'Employee Name', sortable: true, visible: true },
+                { key: 'mobile', label: 'Mobile Number', sortable: true, visible: true },
+                { key: 'email', label: 'Email ID', sortable: true, visible: true },
+                { key: 'department', label: 'Department', sortable: true, visible: true },
+                { key: 'branch', label: 'Branch', sortable: true, visible: true },
+                { key: 'joiningDate', label: 'Joining Date', sortable: true, visible: true },
+                { key: 'role', label: 'Role', sortable: true, visible: true },
+                { key: 'shift', label: 'Assigned Shift', sortable: true, visible: true },
+                { key: 'monthlyGross', label: 'Monthly Gross', sortable: true, visible: true },
+                { key: 'overtimePolicy', label: 'Overtime Policy', sortable: true, visible: true },
+                { key: 'incentivePolicy', label: 'Incentive Policy', sortable: true, visible: true },
+                { key: 'deductionPolicy', label: 'Deduction Policy', sortable: true, visible: true },
+                { key: 'status', label: 'Status', sortable: false, visible: true },
+                { key: 'actions', label: 'Actions', sortable: false, visible: true }
+            ];
+
+            window.staffEmployees = [
+                {
+                    id: 'EMP001',
+                    name: 'Rajesh Kumar',
+                    mobile: '+91 98765 43210',
+                    email: 'rajesh.kumar@logisticserp.com',
+                    department: 'HR',
+                    branch: 'HQ',
+                    joiningDate: '2026-08-01',
+                    role: 'HR Manager',
+                    shift: 'General Shift',
+                    monthlyGross: '₹30,000',
+                    overtimePolicy: 'Driver OT 1.5x',
+                    incentivePolicy: 'Driver Performance Incentive',
+                    deductionPolicy: 'Standard Deduction',
+                    status: true
+                },
+                {
+                    id: 'EMP002',
+                    name: 'Amit Patel',
+                    mobile: '+91 98765 54321',
+                    email: 'amit@logistics.com',
+                    department: 'Fleet',
+                    branch: 'Mumbai Hub',
+                    joiningDate: '2026-02-10',
+                    role: 'Fleet Manager',
+                    shift: 'Morning Shift',
+                    monthlyGross: '—',
+                    overtimePolicy: '—',
+                    incentivePolicy: '—',
+                    deductionPolicy: '—',
+                    status: true
+                },
+                {
+                    id: 'EMP003',
+                    name: 'Priya Sharma',
+                    mobile: '+91 98765 65432',
+                    email: 'priya@logistics.com',
+                    department: 'HR',
+                    branch: 'HQ',
+                    joiningDate: '2026-03-01',
+                    role: 'HR Manager',
+                    shift: 'General Shift',
+                    monthlyGross: '₹30,000',
+                    overtimePolicy: 'Driver OT 1.5x',
+                    incentivePolicy: 'Driver Performance Incentive',
+                    deductionPolicy: 'Standard Deduction',
+                    status: true
+                },
+                {
+                    id: 'EMP004',
+                    name: 'Vikram Singh',
+                    mobile: '+91 98765 76543',
+                    email: 'vikram@logistics.com',
+                    department: 'Operations',
+                    branch: 'Delhi Agency',
+                    joiningDate: '2026-05-15',
+                    role: 'Pickup Staff',
+                    shift: 'General Shift',
+                    monthlyGross: '₹25,000',
+                    overtimePolicy: 'Driver OT 1.5x',
+                    incentivePolicy: '—',
+                    deductionPolicy: 'Standard Deduction',
+                    status: true
+                },
+                {
+                    id: 'EMP005',
+                    name: 'Siddharth Roy',
+                    mobile: '+91 98765 87654',
+                    email: 'siddharth@logistics.com',
+                    department: 'Fleet',
+                    branch: 'Mumbai Hub',
+                    joiningDate: '2026-06-20',
+                    role: 'Fleet Executive',
+                    shift: 'Night Shift',
+                    monthlyGross: '—',
+                    overtimePolicy: '—',
+                    incentivePolicy: '—',
+                    deductionPolicy: '—',
+                    status: false
+                },
+                {
+                    id: 'EMP006',
+                    name: 'Neha Gupta',
+                    mobile: '+91 98765 98765',
+                    email: 'neha@logistics.com',
+                    department: 'Accounts',
+                    branch: 'HQ',
+                    joiningDate: '2026-01-12',
+                    role: 'Finance Officer',
+                    shift: 'General Shift',
+                    monthlyGross: '₹45,000',
+                    overtimePolicy: 'Staff OT 1.0x',
+                    incentivePolicy: 'Sales Incentive',
+                    deductionPolicy: 'Professional Tax',
+                    status: true
+                },
+                {
+                    id: 'EMP007',
+                    name: 'Rohan Mehta',
+                    mobile: '+91 98765 09876',
+                    email: 'rohan.mehta@logistics.com',
+                    department: 'Operations',
+                    branch: 'Chennai Hub',
+                    joiningDate: '2026-04-01',
+                    role: 'Delivery Staff',
+                    shift: 'Morning Shift',
+                    monthlyGross: '₹30,000',
+                    overtimePolicy: 'Driver OT 1.5x',
+                    incentivePolicy: 'Driver Performance Incentive',
+                    deductionPolicy: 'Standard Deduction',
+                    status: true
+                }
+            ];
+
+            // Sorting State
+            let currentSort = { key: null, direction: 'asc' };
+
+            // Pagination State
+            let currentPage = 1;
+            const rowsPerPage = 10;
+
+            // Setup filter wrappers data keys and placeholders
+            const detailsList = [
+                { selector: 'Row 1:nth-child(1)', key: 'branch', text: 'Select Branch' },
+                { selector: 'Row 1:nth-child(2)', key: 'department', text: 'Select Department' },
+                { selector: 'Row 2:nth-child(1)', key: 'role', text: 'Select Role' },
+                { selector: 'Row 2:nth-child(2)', key: 'shift', text: 'Select Shift' },
+                { selector: 'Row 3:nth-child(1)', key: 'monthlyGross', text: 'Select Monthly Gross' },
+                { selector: 'Row 3:nth-child(2)', key: 'overtimePolicy', text: 'Select Overtime Policy' },
+                { selector: 'Row 4:nth-child(1)', key: 'incentivePolicy', text: 'Select Incentive Policy' },
+                { selector: 'Row 4:nth-child(2)', key: 'deductionPolicy', text: 'Select Deduction Policy' },
+                { selector: 'Row 5:nth-child(1)', key: 'status', text: 'Select Status' }
+            ];
+
+            const wrappers = document.querySelectorAll('#staff-filters-modal .custom-select-wrapper');
+            wrappers.forEach((wrapper, index) => {
+                if (index < detailsList.length) {
+                    wrapper.setAttribute('data-filter-key', detailsList[index].key);
+                    wrapper.setAttribute('data-default-placeholder', detailsList[index].text);
+                }
+            });
+
+            // Toggle Employee Status
+            window.toggleEmployeeStatus = function(empId) {
+                const emp = window.staffEmployees.find(e => e.id === empId);
+                if (emp) emp.status = !emp.status;
+            };
+
+            // Get selected filters
+            function getActiveFilters() {
+                const active = {};
+                document.querySelectorAll('#staff-filters-modal .custom-select-wrapper').forEach(wrapper => {
+                    const key = wrapper.getAttribute('data-filter-key');
+                    if (!key) return;
+                    const checked = Array.from(wrapper.querySelectorAll('.custom-select-options input[type="checkbox"]:checked'))
+                        .map(cb => cb.closest('label').textContent.trim());
+                    if (checked.length > 0) {
+                        active[key] = checked;
+                    }
+                });
+                return active;
+            }
+
+            // Sync Columns config based on staff employees data keys automatically
+            function syncColumnsWithData() {
+                if (window.staffEmployees.length === 0) return;
+                
+                const allKeys = new Set();
+                window.staffEmployees.forEach(emp => {
+                    Object.keys(emp).forEach(k => allKeys.add(k));
+                });
+                
+                // Keep status and actions, remove others not in data
+                window.staffColumns = window.staffColumns.filter(col => {
+                    if (col.key === 'status' || col.key === 'actions') return true;
+                    return allKeys.has(col.key);
+                });
+                
+                // Add new keys
+                allKeys.forEach(key => {
+                    if (key === 'status' || key === 'actions') return;
+                    const exists = window.staffColumns.some(col => col.key === key);
+                    if (!exists) {
+                        const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                        const index = window.staffColumns.findIndex(c => c.key === 'status');
+                        const newCol = { key: key, label: label, sortable: true, visible: true };
+                        if (index !== -1) {
+                            window.staffColumns.splice(index, 0, newCol);
+                        } else {
+                            window.staffColumns.push(newCol);
+                        }
+                    }
+                });
+            }
+
+            // Expose Column add/remove tools
+            window.addColumn = function(col) {
+                if (!window.staffColumns.find(c => c.key === col.key)) {
+                    window.staffColumns.push(col);
+                    renderTable();
+                }
+            };
+            window.removeColumn = function(key) {
+                window.staffColumns = window.staffColumns.filter(c => c.key !== key);
+                renderTable();
+            };
+
+            // Main rendering logic
+            function renderTable() {
+                const table = document.querySelector('.staff-table');
+                if (!table) return;
+
+                syncColumnsWithData();
+                const visibleCols = window.staffColumns.filter(col => col.visible);
+
+                // Rebuild thead
+                let theadHTML = '<tr>';
+                visibleCols.forEach(col => {
+                    if (col.sortable) {
+                        const isSorted = currentSort.key === col.key;
+                        const directionClass = isSorted ? ` sort-${currentSort.direction}` : '';
+                        theadHTML += `
+                            <th class="sortable${directionClass}" data-key="${col.key}" style="cursor: pointer;">
+                                <div class="sort-header-content">
+                                    ${col.label}
+                                    <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                </div>
+                            </th>`;
+                    } else {
+                        theadHTML += `<th>${col.label}</th>`;
+                    }
+                });
+                theadHTML += '</tr>';
+                table.querySelector('thead').innerHTML = theadHTML;
+
+                // Rebind click sorting
+                table.querySelectorAll('thead th.sortable').forEach(th => {
+                    th.addEventListener('click', () => {
+                        const key = th.getAttribute('data-key');
+                        if (currentSort.key === key) {
+                            if (currentSort.direction === 'asc') {
+                                currentSort.direction = 'desc';
+                            } else {
+                                currentSort.key = null;
+                                currentSort.direction = 'asc';
+                            }
+                        } else {
+                            currentSort.key = key;
+                            currentSort.direction = 'asc';
+                        }
+                        renderTable();
+                    });
+                });
+
+                // Filter & Sort
+                let displayData = [...window.staffEmployees];
+
+                // Search Box
+                const searchVal = document.querySelector('.search-input').value.toLowerCase().trim();
+                if (searchVal) {
+                    displayData = displayData.filter(emp => {
+                        return Object.entries(emp).some(([k, val]) => {
+                            if (k === 'status') return false;
+                            return String(val).toLowerCase().includes(searchVal);
+                        });
+                    });
+                }
+
+                // Modal Filters
+                const activeFilters = getActiveFilters();
+                for (let key in activeFilters) {
+                    const selectedVals = activeFilters[key];
+                    if (selectedVals.length > 0) {
+                        displayData = displayData.filter(emp => {
+                            let empVal = emp[key];
+                            if (key === 'status') {
+                                empVal = emp.status ? 'Active' : 'Inactive';
+                            }
+                            return selectedVals.some(v => String(v).toLowerCase() === String(empVal).toLowerCase());
+                        });
+                    }
+                }
+
+                // Sort applied
+                if (currentSort.key) {
+                    displayData.sort((a, b) => {
+                        let valA = a[currentSort.key];
+                        let valB = b[currentSort.key];
+                        if (currentSort.key === 'joiningDate') {
+                            valA = Date.parse(valA) || 0;
+                            valB = Date.parse(valB) || 0;
+                        } else {
+                            valA = String(valA || '').toLowerCase();
+                            valB = String(valB || '').toLowerCase();
+                        }
+                        if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
+                        if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+                        return 0;
+                    });
+                }
+
+                // Render rows
+                let tbodyHTML = '';
+                const totalRecords = displayData.length;
+                const totalPages = Math.ceil(totalRecords / rowsPerPage) || 1;
+                
+                if (currentPage > totalPages) {
+                    currentPage = totalPages;
+                }
+                
+                const startIndex = (currentPage - 1) * rowsPerPage;
+                const endIndex = Math.min(startIndex + rowsPerPage, totalRecords);
+                const paginatedData = displayData.slice(startIndex, endIndex);
+
+                if (paginatedData.length === 0) {
+                    tbodyHTML = `<tr><td colspan="${visibleCols.length}" style="text-align: center; padding: 20px; color: #999;">No records found</td></tr>`;
+                } else {
+                    paginatedData.forEach(emp => {
+                        tbodyHTML += '<tr>';
+                        visibleCols.forEach(col => {
+                            if (col.key === 'status') {
+                                tbodyHTML += `
+                                    <td data-label="${col.label}" style="text-align: center !important;">
+                                        <label class="status-toggle">
+                                            <input type="checkbox" ${emp.status ? 'checked' : ''} onchange="toggleEmployeeStatus('${emp.id}')">
+                                            <div class="toggle-switch"></div>
+                                        </label>
+                                    </td>`;
+                            } else if (col.key === 'actions') {
+                                tbodyHTML += `
+                                    <td data-label="${col.label}" style="text-align: center !important;">
+                                        <div class="action-icons">
+                                            <a href="edit-employee.html?id=${emp.id}" class="action-icon" title="Edit">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                            </a>
+                                            <label for="delete-employee-toggle" class="action-icon" style="cursor: pointer;" title="Delete" onclick="window.employeeToDelete='${emp.id}'">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </label>
+                                        </div>
+                                    </td>`;
+                            } else {
+                                let displayValue = emp[col.key] || '—';
+                                tbodyHTML += `<td data-label="${col.label}">${displayValue}</td>`;
+                            }
+                        });
+                        tbodyHTML += '</tr>';
+                    });
+                }
+                table.querySelector('tbody').innerHTML = tbodyHTML;
+
+                // Update pagination count
+                const countSpan = document.querySelector('.pagination-bar > span');
+                if (countSpan) {
+                    countSpan.textContent = totalRecords === 0 ? 'Showing 0-0 of 0' : `Showing ${startIndex + 1}-${endIndex} of ${totalRecords}`;
+                }
+
+                // Render dynamic pagination buttons
+                const paginationControls = document.querySelector('.pagination-controls');
+                if (paginationControls) {
+                    paginationControls.innerHTML = '';
+                    
+                    const prevBtn = document.createElement('button');
+                    prevBtn.type = 'button';
+                    prevBtn.className = 'page-btn';
+                    prevBtn.textContent = 'Prev';
+                    if (currentPage === 1) prevBtn.disabled = true;
+                    prevBtn.addEventListener('click', () => {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            renderTable();
+                        }
+                    });
+                    paginationControls.appendChild(prevBtn);
+                    
+                    for (let i = 1; i <= totalPages; i++) {
+                        if (i === currentPage) {
+                            const activeSpan = document.createElement('span');
+                            activeSpan.className = 'page-number';
+                            activeSpan.textContent = i;
+                            paginationControls.appendChild(activeSpan);
+                        } else {
+                            const numBtn = document.createElement('button');
+                            numBtn.type = 'button';
+                            numBtn.className = 'page-btn';
+                            numBtn.textContent = i;
+                            numBtn.addEventListener('click', () => {
+                                currentPage = i;
+                                renderTable();
+                            });
+                            paginationControls.appendChild(numBtn);
+                        }
+                    }
+                    
+                    const nextBtn = document.createElement('button');
+                    nextBtn.type = 'button';
+                    nextBtn.className = 'page-btn';
+                    nextBtn.textContent = 'Next';
+                    if (currentPage === totalPages) nextBtn.disabled = true;
+                    nextBtn.addEventListener('click', () => {
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            renderTable();
+                        }
+                    });
+                    paginationControls.appendChild(nextBtn);
+                }
+            }
+
+            // Update Notification Dot
+            function updateFilterDot() {
+                const active = getActiveFilters();
+                const count = Object.keys(active).length;
+                const dot = document.getElementById('filters-active-dot');
+                if (dot) {
+                    dot.style.display = count > 0 ? 'inline' : 'none';
+                }
+            }
+
+            // Setup select wrappers Select All / Deselect All / State sync
+            function setupMultiSelects() {
+                document.querySelectorAll('#staff-filters-modal .custom-select-wrapper').forEach(wrapper => {
+                    const selectTrigger = wrapper.querySelector('.custom-select-trigger');
+                    const placeholder = selectTrigger.querySelector('.placeholder');
+                    const defaultText = wrapper.getAttribute('data-default-placeholder');
+                    const optionsBox = wrapper.querySelector('.custom-select-options');
+                    if (!optionsBox) return;
+
+                    // Dynamically swap the action spans div with a Master Checkbox
+                    const actionDiv = optionsBox.querySelector('div[style*="border-bottom"]');
+                    if (actionDiv) {
+                        const newLabel = document.createElement('label');
+                        newLabel.className = 'custom-option toggle-all-option';
+                        newLabel.style.cssText = 'display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 600; cursor: pointer; color: var(--color-black); border-bottom: 1px solid var(--color-border); background-color: var(--color-bg-light); margin-bottom: 4px; box-sizing: border-box; width: 100%;';
+                        newLabel.innerHTML = `<input type="checkbox" class="toggle-all-checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Select All`;
+                        actionDiv.parentNode.replaceChild(newLabel, actionDiv);
+                    }
+
+                    const toggleAllCheckbox = wrapper.querySelector('.toggle-all-checkbox');
+                    const checkboxes = Array.from(optionsBox.querySelectorAll('input[type="checkbox"]')).filter(cb => !cb.classList.contains('toggle-all-checkbox'));
+                    if (checkboxes.length === 0) return; // Skip single-select dropdowns
+
+                    // Create Selected Chips Container if not exists
+                    let chipsContainer = optionsBox.querySelector('.selected-chips-container');
+                    if (!chipsContainer) {
+                        chipsContainer = document.createElement('div');
+                        chipsContainer.className = 'selected-chips-container';
+                        chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 8px; border-bottom: 1px solid var(--color-border); background-color: var(--color-white); max-height: 80px; overflow-y: auto; box-sizing: border-box; width: 100%;';
+                        const searchWrapper = optionsBox.querySelector('.dropdown-search-wrapper');
+                        if (searchWrapper) {
+                            optionsBox.insertBefore(chipsContainer, searchWrapper.nextSibling);
+                        } else {
+                            optionsBox.insertBefore(chipsContainer, optionsBox.firstChild);
+                        }
+                    }
+
+                    function updateMasterCheckboxState() {
+                        if (!toggleAllCheckbox) return;
+                        const visibleCheckboxes = checkboxes.filter(cb => cb.closest('label').style.display !== 'none');
+                        const checkedCount = visibleCheckboxes.filter(cb => cb.checked).length;
+                        if (checkedCount === visibleCheckboxes.length && visibleCheckboxes.length > 0) {
+                            toggleAllCheckbox.checked = true;
+                            toggleAllCheckbox.nextSibling.textContent = ' Deselect All';
+                        } else {
+                            toggleAllCheckbox.checked = false;
+                            toggleAllCheckbox.nextSibling.textContent = ' Select All';
+                        }
+                    }
+
+                    function renderChips() {
+                        chipsContainer.innerHTML = '';
+                        const checkedBoxes = checkboxes.filter(cb => cb.checked);
+                        if (checkedBoxes.length === 0) {
+                            chipsContainer.style.display = 'none';
+                        } else {
+                            chipsContainer.style.display = 'flex';
+                            checkedBoxes.forEach(cb => {
+                                const optionName = cb.closest('label').textContent.trim();
+                                const chip = document.createElement('span');
+                                chip.className = 'select-chip';
+                                chip.style.cssText = 'display: inline-flex; align-items: center; gap: 4px; background-color: var(--color-bg-light); color: var(--color-black); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 2px 6px; font-size: 0.72rem; font-weight: 500; margin: 2px 0;';
+                                chip.innerHTML = `${optionName} <span class="chip-remove" style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; margin-left: 4px; transition: background-color 0.15s, color 0.15s; box-sizing: border-box;"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none; color: #666; transition: color 0.15s;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>`;
+                                
+                                const xIcon = chip.querySelector('.chip-remove');
+                                xIcon.addEventListener('mouseover', () => {
+                                    xIcon.style.backgroundColor = 'rgba(0,0,0,0.08)';
+                                    xIcon.querySelector('svg').style.color = 'var(--color-black)';
+                                });
+                                xIcon.addEventListener('mouseout', () => {
+                                    xIcon.style.backgroundColor = 'transparent';
+                                    xIcon.querySelector('svg').style.color = '#666';
+                                });
+                                
+                                xIcon.addEventListener('click', (e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    cb.checked = false;
+                                    updateState();
+                                });
+                                chipsContainer.appendChild(chip);
+                            });
+                        }
+                    }
+
+                    function updateTriggerText() {
+                        if (!placeholder) return;
+                        const checkedCount = checkboxes.filter(cb => cb.checked).length;
+                        if (checkedCount === checkboxes.length && checkboxes.length > 0) {
+                            placeholder.textContent = 'All Selected';
+                        } else if (checkedCount === 0) {
+                            placeholder.textContent = defaultText;
+                        } else {
+                            placeholder.textContent = `${checkedCount} Selected`;
+                        }
+                    }
+
+                    function updateState() {
+                        updateMasterCheckboxState();
+                        renderChips();
+                        updateTriggerText();
+                        updateFilterDot();
+                        renderTable();
+                    }
+
+                    if (toggleAllCheckbox) {
+                        toggleAllCheckbox.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const checked = toggleAllCheckbox.checked;
+                            checkboxes.forEach(cb => {
+                                const label = cb.closest('label');
+                                if (label.style.display !== 'none') {
+                                    cb.checked = checked;
+                                }
+                            });
+                            updateState();
+                        });
+                    }
+
+                    checkboxes.forEach(cb => {
+                        cb.addEventListener('change', () => {
+                            updateState();
+                        });
+                    });
+
+                    // Initial state call
+                    updateState();
+                });
+            }
+
+            // Bind Search input keyup
+            const searchField = document.querySelector('.search-input');
+            if (searchField) {
+                searchField.addEventListener('input', () => {
+                    currentPage = 1;
+                    renderTable();
+                });
+            }
+
+            // Bind Reset actions
+            document.querySelectorAll('.reset-filters-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('#staff-filters-modal .custom-select-options input[type="checkbox"]').forEach(cb => {
+                        cb.checked = false;
+                    });
+                    document.querySelectorAll('#staff-filters-modal .custom-select-wrapper').forEach(wrapper => {
+                        const ph = wrapper.querySelector('.custom-select-trigger .placeholder');
+                        const def = wrapper.getAttribute('data-default-placeholder');
+                        if (ph && def) ph.textContent = def;
+                    });
+                    
+                    // Also clear all selected chips containers visually
+                    document.querySelectorAll('#staff-filters-modal .selected-chips-container').forEach(container => {
+                        container.innerHTML = '';
+                        container.style.display = 'none';
+                    });
+
+                    // Update master checkboxes display
+                    document.querySelectorAll('#staff-filters-modal .toggle-all-checkbox').forEach(cb => {
+                        cb.checked = false;
+                        cb.nextSibling.textContent = ' Select All';
+                    });
+
+                    currentPage = 1;
+                    updateFilterDot();
+                    renderTable();
+                });
+            });
+
+            // Bind confirm delete button action
+            const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+            if (confirmDeleteBtn) {
+                confirmDeleteBtn.addEventListener('click', () => {
+                    if (window.pendingDeleteId) {
+                        window.staffEmployees = window.staffEmployees.filter(e => e.id !== window.pendingDeleteId);
+                        localStorage.setItem('staffEmployees', JSON.stringify(window.staffEmployees));
+                        
+                        const toggle = document.getElementById('delete-employee-toggle');
+                        if (toggle) toggle.checked = false;
+                        
+                        renderTable();
+                    }
+                });
+            }
+
+            // Sync toggle check status handler for employee row status
+            window.toggleEmployeeStatus = function(empId) {
+                const emp = window.staffEmployees.find(e => e.id === empId);
+                if (emp) {
+                    emp.status = !emp.status;
+                    localStorage.setItem('staffEmployees', JSON.stringify(window.staffEmployees));
+                }
+            };
+
+            // Load and initialize staff from localStorage
+            if (!localStorage.getItem('staffEmployees') || JSON.parse(localStorage.getItem('staffEmployees')).length < 7) {
+                localStorage.setItem('staffEmployees', JSON.stringify(window.staffEmployees));
+            } else {
+                window.staffEmployees = JSON.parse(localStorage.getItem('staffEmployees'));
+            }
+
+            // Inject search inputs into dropdowns
+            function setupDropdownSearch() {
+                document.querySelectorAll('.custom-select-options').forEach(optionsBox => {
+                    if (optionsBox.querySelector('.dropdown-search-input')) return;
+                    const labels = optionsBox.querySelectorAll('label.custom-option');
+                    
+                    const searchWrapper = document.createElement('div');
+                    searchWrapper.className = 'dropdown-search-wrapper';
+                    searchWrapper.style.cssText = 'padding: 6px 8px; border-bottom: 1px solid var(--color-border); box-sizing: border-box; background: var(--color-white); position: sticky; top: 0; z-index: 10; margin-bottom: 4px;';
+                    
+                    const searchInput = document.createElement('input');
+                    searchInput.type = 'text';
+                    searchInput.className = 'dropdown-search-input';
+                    searchInput.placeholder = 'Search...';
+                    searchInput.style.cssText = 'width: 100%; height: 26px; font-size: 0.75rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 8px; box-sizing: border-box; outline: none;';
+                    
+                    searchInput.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                    
+                    searchWrapper.appendChild(searchInput);
+                    optionsBox.insertBefore(searchWrapper, optionsBox.firstChild);
+                    
+                    const noResults = document.createElement('div');
+                    noResults.className = 'dropdown-no-results';
+                    noResults.textContent = 'No results found';
+                    noResults.style.cssText = 'display: none; padding: 10px; font-size: 0.75rem; color: #999; text-align: center;';
+                    optionsBox.appendChild(noResults);
+                    
+                    searchInput.addEventListener('input', () => {
+                        const val = searchInput.value.toLowerCase().trim();
+                        let matchCount = 0;
+                        labels.forEach(label => {
+                            const text = label.textContent.toLowerCase();
+                            if (text.includes(val)) {
+                                label.style.display = 'flex';
+                                matchCount++;
+                            } else {
+                                label.style.display = 'none';
+                            }
+                        });
+                        
+                        noResults.style.display = matchCount === 0 ? 'block' : 'none';
+
+                        // Align Master Checkbox state for visible options
+                        const wrapper = optionsBox.closest('.custom-select-wrapper');
+                        if (wrapper) {
+                            const toggleAllCheckbox = wrapper.querySelector('.toggle-all-checkbox');
+                            if (toggleAllCheckbox) {
+                                const checkboxes = Array.from(optionsBox.querySelectorAll('input[type="checkbox"]')).filter(cb => !cb.classList.contains('toggle-all-checkbox'));
+                                const visibleCheckboxes = checkboxes.filter(cb => cb.closest('label').style.display !== 'none');
+                                const checkedCount = visibleCheckboxes.filter(cb => cb.checked).length;
+                                if (checkedCount === visibleCheckboxes.length && visibleCheckboxes.length > 0) {
+                                    toggleAllCheckbox.checked = true;
+                                    toggleAllCheckbox.nextSibling.textContent = ' Deselect All';
+                                } else {
+                                    toggleAllCheckbox.checked = false;
+                                    toggleAllCheckbox.nextSibling.textContent = ' Select All';
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Blur auto-focused inputs when filter modal is toggled open
+            const filtersToggle = document.getElementById('filters-popup-toggle');
+            if (filtersToggle) {
+                filtersToggle.addEventListener('change', () => {
+                    if (filtersToggle.checked) {
+                        setTimeout(() => {
+                            if (document.activeElement) document.activeElement.blur();
+                        }, 50);
+                    }
+                });
+            }
+
+            // Initial setup
+            setupMultiSelects();
+            renderTable();
+            setupDropdownSearch();
+        });
+    </script>
+</body>
+</html>

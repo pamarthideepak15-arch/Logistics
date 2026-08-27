@@ -1,0 +1,66 @@
+/* Specific column alignments and even spacing for Branch Management table */
+.data-table th, .data-table td {
+    text-align: left !important;
+    white-space: nowrap;
+    padding-right: 16px !important;
+}
+.data-table th:nth-child(1), .data-table td:nth-child(1) { width: 10%; }
+.data-table th:nth-child(2), .data-table td:nth-child(2) { width: 15%; }
+.data-table th:nth-child(3), .data-table td:nth-child(3) { width: 10%; }
+.data-table th:nth-child(4), .data-table td:nth-child(4) { width: 15%; }
+.data-table th:nth-child(5), .data-table td:nth-child(5) { width: 15%; }
+.data-table th:nth-child(6), .data-table td:nth-child(6) { width: 15%; }
+.data-table th:nth-child(7), .data-table td:nth-child(7) { width: 10%; }
+.data-table th:last-child, .data-table td:last-child {
+    text-align: center !important;
+    padding-right: 10px !important;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 1px solid #000000;
+}
+.badge-owned {
+    background-color: #000000;
+    color: #FFFFFF;
+    border: 1px solid #000000;
+}
+.badge-agency {
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 1px solid #000000;
+}
+.data-table td {
+    color: #000000 !important;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-row-3 {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+@media (max-width: 768px) {
+    .form-row-3 {
+        grid-template-columns: 1fr;
+    }
+}

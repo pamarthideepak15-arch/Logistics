@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <style>
+        body {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Customize header logo block style inside the top header */
+        .header-logo-block {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            border-radius: 4px;
+        }
+
+        .header-logo-text {
+            font-weight: 700;
+            font-size: 0.9375rem;
+            color: var(--color-black);
+        }
+
+        .header-status-badge {
+            background-color: var(--color-black);
+            color: var(--color-white);
+            font-size: 0.625rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.05em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        /* Centered content container aligned with ERP content width */
+        .welcome-page-content {
+            max-width: 1200px;
+            width: calc(100% - 48px);
+            margin: 24px auto;
+            flex: 1;
+        }
+
+        .welcome-intro {
+            margin-bottom: 20px;
+        }
+
+        .welcome-intro h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-black);
+            margin: 0;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+        }
+
+        .welcome-intro p {
+            font-size: 13px;
+            color: #666666;
+            margin-top: 4px;
+        }
+
+        /* Compact responsive grid */
+        .app-launcher-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Compact card design */
+        .app-launcher-card {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 14px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 130px; /* Compact height target 125px-140px */
+            box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .app-launcher-card:hover {
+            border-color: var(--color-black);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-top-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            background-color: var(--color-bg-light);
+            color: var(--color-black);
+        }
+
+        .card-icon-container svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .card-title {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--color-black);
+            line-height: 1.2;
+        }
+
+        .card-desc {
+            font-size: 0.8125rem;
+            color: #666666;
+            line-height: 1.3;
+        }
+
+        .card-action-chevron {
+            align-self: flex-end;
+            color: #888888;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .app-launcher-card:hover .card-action-chevron {
+            color: var(--color-black);
+            transform: translateX(2px);
+        }
+
+        /* Layout Grid Responsiveness */
+        @media (max-width: 900px) {
+            .app-launcher-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-header {
+                padding: 0 16px !important; /* Override 48px left-padding from sidebar.css on mobile since there is no sidebar menu toggle on this page */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .app-launcher-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .welcome-page-content {
+                width: calc(100% - 32px);
+                margin: 20px auto;
+            }
+            .welcome-intro h1 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Reused Logistics ERP Top Header -->
+    <header class="top-header">
+        <div class="header-logo-block">
+            <div class="header-logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                    <rect x="1" y="3" width="15" height="13"></rect>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+            </div>
+            <span class="header-logo-text">Logistics ERP</span>
+            <span class="header-status-badge">ONLINE</span>
+        </div>
+        <div class="top-profile-block">
+            <!-- Notification Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <div class="profile-info">
+                <strong>Super Admin</strong>
+                <span>HQ-NODE-01</span>
+            </div>
+            <a href="index.html" class="logout-btn" title="Logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="welcome-page-content">
+        <div class="welcome-intro">
+            <h1>Welcome to Logistics ERP</h1>
+            <p>Select an application to continue.</p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="app-launcher-grid">
+            <!-- Admin -->
+            <a href="../Role-Permission/index.html" class="app-launcher-card">
+                <div class="card-top-section">
+                    <div class="card-icon-container">
+                        <!-- Admin/Dashboard line icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-title">Admin</div>
+                        <div class="card-desc">Manage users, branches, roles and system settings.</div>
+                    </div>
+                </div>
+                <div class="card-action-chevron">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Pickup Boy App -->
+            <a href="../Pickup Boy App/index.html" class="app-launcher-card">
+                <div class="card-top-section">
+                    <div class="card-icon-container">
+                        <!-- Package icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                            <polygon points="12 22.08 12 12 3 6.92 3 17.08 12 22.08"></polygon>
+                            <polygon points="12 12 21 6.92 21 17.08 12 22.08"></polygon>
+                            <polygon points="12 2 3 6.92 12 12 21 6.92 12 2"></polygon>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-title">Pickup Boy App</div>
+                        <div class="card-desc">Manage pickup assignments and collections.</div>
+                    </div>
+                </div>
+                <div class="card-action-chevron">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Delivery Person App -->
+            <a href="../Delivery Person App/index.html" class="app-launcher-card">
+                <div class="card-top-section">
+                    <div class="card-icon-container">
+                        <!-- Delivery/Navigation line icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+                            <line x1="9" y1="3" x2="9" y2="18"></line>
+                            <line x1="15" y1="6" x2="15" y2="21"></line>
+                        </svg>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-title">Delivery Person App</div>
+                        <div class="card-desc">Manage deliveries, routes and delivery status.</div>
+                    </div>
+                </div>
+                <div class="card-action-chevron">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Warehouse Admin -->
+            <a href="../Warehouse-Admin/index.html" class="app-launcher-card">
+                <div class="card-top-section">
+                    <div class="card-icon-container">
+                        <!-- Warehouse/Home line icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-title">Warehouse Admin</div>
+                        <div class="card-desc">Manage warehouse operations and inventory.</div>
+                    </div>
+                </div>
+                <div class="card-action-chevron">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Logistics Admin -->
+            <a href="../Logistics-Admin/index.html" class="app-launcher-card">
+                <div class="card-top-section">
+                    <div class="card-icon-container">
+                        <!-- Truck icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-title">Logistics Admin</div>
+                        <div class="card-desc">Manage logistics operations and shipments.</div>
+                    </div>
+                </div>
+                <div class="card-action-chevron">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+
+            <!-- HRMS -->
+            <a href="../Staff-Management/index.html" class="app-launcher-card">
+                <div class="card-top-section">
+                    <div class="card-icon-container">
+                        <!-- People / HR line icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-title">HRMS</div>
+                        <div class="card-desc">Manage employees, attendance, leave, shifts and payroll.</div>
+                    </div>
+                </div>
+                <div class="card-action-chevron">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+        </div>
+    </main>
+</body>
+</html>

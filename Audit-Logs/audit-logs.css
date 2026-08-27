@@ -1,0 +1,15 @@
+/* Audit Logs Specific Adjustments if needed */
+.message-cell {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Override generic table alignments that break this specific table */
+.data-table th:nth-child(2), .data-table td:nth-child(2),
+.data-table th:nth-child(3), .data-table td:nth-child(3) {
+    width: auto;
+    white-space: normal;
+    text-align: left;
+    padding-right: 10px;
+}

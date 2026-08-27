@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Leave Management</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="leave-management.css">
+</head>
+<body>
+    
+    <!-- State management checkbox triggers positioned high in DOM -->
+    <input type="radio" name="page-tab" id="tab-requests-radio" checked style="display:none;">
+    <input type="radio" name="page-tab" id="tab-settings-radio" style="display:none;">
+
+    <!-- HTML/CSS Toggles for modals -->
+    <input type="checkbox" id="apply-leave-toggle">
+    <input type="checkbox" id="filters-toggle">
+    <input type="checkbox" id="review-lv-0001-toggle">
+    <input type="checkbox" id="review-lv-0002-toggle">
+    <input type="checkbox" id="review-lv-0003-toggle">
+    <input type="checkbox" id="add-leave-type-toggle">
+    <input type="checkbox" id="delete-el-toggle">
+    <input type="checkbox" id="delete-pl-toggle">
+    <input type="checkbox" id="delete-lop-toggle">
+
+    <!-- CSS State Machine for Pending Request LV-0001 -->
+    <input type="checkbox" id="lv-0001-approved">
+    <input type="checkbox" id="lv-0001-rejected">
+
+    <!-- Mobile Menu Drawer Toggle -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (HRMS Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <!-- Active HR Rail Icon -->
+                    <a href="#" class="rail-icon active" data-tooltip="HRMS">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">HUMAN RESOURCES</div>
+                <nav class="sidebar-nav">
+                    <a href="../Staff-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        Staff Master
+                    </a>
+                    <a href="../Attendance/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Attendance
+                    </a>
+                    <a href="../Shift-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Shift Management
+                    </a>
+                    <a href="leave-management.html" class="nav-item active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Leave Management
+                    </a>
+                    <a href="../Payroll-Management/payroll.html" class="nav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                        Payroll
+                    </a>
+
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>HRMS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Leave Management</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                
+                <!-- Page Header Title and Subtitle -->
+                <div class="page-header">
+                    <div class="page-title-group text-left" style="text-align: left;">
+                        <h1 class="page-title">Leave Management</h1>
+                        <p class="page-subtitle">Manage employee leave requests, approvals, and leave balances.</p>
+                    </div>
+                    <div class="header-actions">
+                        <!-- Apply Leave Button (shown on Leave Requests tab) -->
+                        <label for="apply-leave-toggle" class="btn-primary btn-apply-leave" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 600; border-radius: var(--border-radius-base); box-sizing: border-box; line-height: 30px; user-select: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Apply Leave</span>
+                        </label>
+                        <!-- Add Leave Type Button (shown on Leave Settings tab) -->
+                        <label for="add-leave-type-toggle" class="btn-primary btn-add-leave-type" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: none; align-items: center; gap: 6px; cursor: pointer; font-weight: 600; border-radius: var(--border-radius-base); box-sizing: border-box; line-height: 30px; user-select: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Add Leave Type</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></span>
+                            <div class="kpi-card-label">Total Requests</div>
+                        </div>
+                        <div class="kpi-card-value">42</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+                            <div class="kpi-card-label">Pending</div>
+                        </div>
+                        <div class="kpi-card-value">12</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
+                            <div class="kpi-card-label">Approved</div>
+                        </div>
+                        <div class="kpi-card-value text-success">28</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></span>
+                            <div class="kpi-card-label">Rejected</div>
+                        </div>
+                        <div class="kpi-card-value text-danger">2</div>
+                    </div>
+                </div>
+
+                <!-- Tab System for Switching Views -->
+                <div class="tab-nav">
+                    <label for="tab-requests-radio" class="tab-link tab-link-requests">Leave Requests</label>
+                    <label for="tab-settings-radio" class="tab-link tab-link-settings">Leave Settings</label>
+                </div>
+
+                <!-- VIEW 1: LEAVE REQUESTS -->
+                <div class="view-requests">
+                    
+                    <!-- Filters Section -->
+                    <div class="filters-bar" style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 12px; margin-bottom: 16px;">
+                        <!-- Search Bar -->
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 200px; position: relative;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #888; z-index: 2;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" class="search-input" placeholder="Search employee id, name, or leave id..." style="height: 30px; font-size: 0.8125rem; box-sizing: border-box; padding-left: 30px; width: 100%; border: 1px solid #8c8c8c; outline: none;">
+                        </div>
+                        
+                        <!-- Filters Button -->
+                        <label for="filters-toggle" class="btn-secondary" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); border: 1px solid #8c8c8c; background: var(--color-white); font-weight: 500; outline: none; user-select: none;">
+                            <div style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="color: #666;"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                                <span class="filter-btn-active"></span>
+                            </div>
+                            <span>Filters</span>
+                        </label>
+                        
+                        <!-- Reset Button -->
+                        <button type="button" class="btn-secondary" style="height: 30px; padding: 0 12px; font-size: 0.8125rem; font-weight: 500; border: 1px solid #8c8c8c; background: var(--color-white);">Reset</button>
+                    </div>
+
+                    <!-- Main Leave Request Table -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            Leave ID
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            Employee ID
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            Employee Name
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            Department
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            Leave Type
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            Shift
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            From Date
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            To Date
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            Days
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable">
+                                        <div class="sort-header-content">
+                                            Status
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row 1: Pending Request Rajesh Kumar -->
+                                <tr class="row-lv-0001">
+                                    <td>LV-0001</td>
+                                    <td>EMP001</td>
+                                    <td>Rajesh Kumar</td>
+                                    <td>Operations</td>
+                                    <td>Earned Leave</td>
+                                    <td>Day Shift</td>
+                                    <td>20 Aug 2026</td>
+                                    <td>25 Aug 2026</td>
+                                    <td>6</td>
+                                    <td>
+                                        <span class="status-badge status-active">Pending</span>
+                                    </td>
+                                    <td>
+                                        <div class="actions-pending" style="display: flex; gap: 6px; justify-content: center;">
+                                            <label for="review-lv-0001-toggle" class="btn-secondary" style="font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; cursor: pointer;">Accept</label>
+                                            <label for="review-lv-0001-toggle" class="btn-secondary" style="font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; cursor: pointer;">Reject</label>
+                                        </div>
+                                        <div class="actions-final" style="display: none; justify-content: center;">
+                                            <label for="review-lv-0001-toggle" class="action-icon" title="View Details" style="cursor: pointer;">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 2: Approved Request Priya Sharma -->
+                                <tr class="row-lv-0002">
+                                    <td>LV-0002</td>
+                                    <td>EMP002</td>
+                                    <td>Priya Sharma</td>
+                                    <td>Finance</td>
+                                    <td>Paid Leave</td>
+                                    <td>General Shift</td>
+                                    <td>22 Aug 2026</td>
+                                    <td>23 Aug 2026</td>
+                                    <td>2</td>
+                                    <td>
+                                        <span class="status-badge status-active">Approved</span>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; justify-content: center;">
+                                            <label for="review-lv-0002-toggle" class="action-icon" title="View Details" style="cursor: pointer;">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Row 3: Rejected Request Amit Kumar -->
+                                <tr class="row-lv-0003">
+                                    <td>LV-0003</td>
+                                    <td>EMP003</td>
+                                    <td>Amit Kumar</td>
+                                    <td>Fleet</td>
+                                    <td>Earned Leave</td>
+                                    <td>Night Shift</td>
+                                    <td>28 Aug 2026</td>
+                                    <td>29 Aug 2026</td>
+                                    <td>2</td>
+                                    <td>
+                                        <span class="status-badge status-active">Rejected</span>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; justify-content: center;">
+                                            <label for="review-lv-0003-toggle" class="action-icon" title="View Details" style="cursor: pointer;">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Table Pagination -->
+                        <div class="pagination-bar">
+                            <span>Showing 1-3 of 3</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <button type="button" class="page-btn" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- VIEW 2: LEAVE SETTINGS -->
+                <div class="view-settings" style="display: block;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-size: 1.0625rem; font-weight: 700; margin: 0;">Configured Leave Types</h3>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table settings-table">
+                            <thead>
+                                <tr>
+                                    <th>Leave Code</th>
+                                    <th>Leave Type</th>
+                                    <th>Paid / Unpaid</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Leave Code"><strong>EL</strong></td>
+                                    <td data-label="Leave Type">Earned Leave</td>
+                                    <td data-label="Paid / Unpaid"><span class="status-badge status-active">Paid</span></td>
+                                    <td data-label="Status">
+                                        <label class="status-toggle" style="margin: 0 auto; display: block; width: max-content;">
+                                            <input type="checkbox" checked>
+                                            <div class="toggle-switch"></div>
+                                        </label>
+                                    </td>
+                                    <td data-label="Actions">
+                                        <div class="action-icons" style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+                                            <label for="add-leave-type-toggle" class="action-icon" style="cursor: pointer; padding: 2px;" title="Edit">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                            </label>
+                                            <label for="delete-el-toggle" class="action-icon" style="cursor: pointer; padding: 2px;" title="Delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Leave Code"><strong>PL</strong></td>
+                                    <td data-label="Leave Type">Paid Leave</td>
+                                    <td data-label="Paid / Unpaid"><span class="status-badge status-active">Paid</span></td>
+                                    <td data-label="Status">
+                                        <label class="status-toggle" style="margin: 0 auto; display: block; width: max-content;">
+                                            <input type="checkbox" checked>
+                                            <div class="toggle-switch"></div>
+                                        </label>
+                                    </td>
+                                    <td data-label="Actions">
+                                        <div class="action-icons" style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+                                            <label for="add-leave-type-toggle" class="action-icon" style="cursor: pointer; padding: 2px;" title="Edit">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                            </label>
+                                            <label for="delete-pl-toggle" class="action-icon" style="cursor: pointer; padding: 2px;" title="Delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Leave Code"><strong>LOP</strong></td>
+                                    <td data-label="Leave Type">Loss of Pay</td>
+                                    <td data-label="Paid / Unpaid"><span class="status-badge status-active">Unpaid</span></td>
+                                    <td data-label="Status">
+                                        <label class="status-toggle" style="margin: 0 auto; display: block; width: max-content;">
+                                            <input type="checkbox" checked>
+                                            <div class="toggle-switch"></div>
+                                        </label>
+                                    </td>
+                                    <td data-label="Actions">
+                                        <div class="action-icons" style="display: flex; gap: 8px; justify-content: center; align-items: center;">
+                                            <label for="add-leave-type-toggle" class="action-icon" style="cursor: pointer; padding: 2px;" title="Edit">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                            </label>
+                                            <label for="delete-lop-toggle" class="action-icon" style="cursor: pointer; padding: 2px;" title="Delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL 1: APPLY LEAVE APPLICATION FORM -->
+    <div class="modal-overlay" id="apply-leave-modal">
+        <div class="modal-content" style="position: relative; width: 500px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px;">
+            <label for="apply-leave-toggle" class="modal-close-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-form-title" style="text-align: left; margin-top: 0; margin-bottom: 16px; flex-shrink: 0;">Apply for Leave</h3>
+            
+            <div class="modal-scrollable-body" style="text-align: left;">
+                <!-- Employee Field -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Employee *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 12px; background: #fff;">
+                            <span class="placeholder">Select Employee</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options" style="border: 1px solid #8c8c8c; border-radius: 4px; background: #fff; position: absolute; width: 100%; z-index: 10;">
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-employee" value="EMP001" style="display: none;"> Rajesh Kumar (EMP001)</label>
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-employee" value="EMP002" style="display: none;"> Priya Sharma (EMP002)</label>
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-employee" value="EMP003" style="display: none;"> Amit Kumar (EMP003)</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Department Field -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Department *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 12px; background: #fff;">
+                            <span class="placeholder">Select Department</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options" style="border: 1px solid #8c8c8c; border-radius: 4px; background: #fff; position: absolute; width: 100%; z-index: 10;">
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-dept" value="Operations" style="display: none;"> Operations</label>
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-dept" value="Finance" style="display: none;"> Finance</label>
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-dept" value="Fleet" style="display: none;"> Fleet</label>
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-dept" value="HR" style="display: none;"> HR</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Leave Type Field -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Leave Type *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 12px; background: #fff;">
+                            <span class="placeholder">Select Leave Type</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options" style="border: 1px solid #8c8c8c; border-radius: 4px; background: #fff; position: absolute; width: 100%; z-index: 10;">
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-type" value="EL" style="display: none;"> Earned Leave</label>
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="apply-type" value="PL" style="display: none;"> Paid Leave</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Date Range -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">From Date *</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 8px; background: #fff; font-size: 0.8125rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-right: 6px; color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <span class="placeholder">Select Date</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options calendar-popup" style="width: 196px; padding: 10px; box-sizing: border-box; background: #fff; position: absolute; z-index: 10;">
+                                <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 600; font-size: 0.75rem;">
+                                    <span>August 2026</span>
+                                </div>
+                                <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.625rem; color: #666; margin-bottom: 4px; font-weight: 500;">
+                                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                                </div>
+                                <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6875rem;">
+                                    <div></div><div></div><div></div><div></div><div></div><div></div>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-01" style="display:none;">1</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-02" style="display:none;">2</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-03" style="display:none;">3</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-04" style="display:none;">4</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-05" style="display:none;">5</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-06" style="display:none;">6</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-07" style="display:none;">7</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-08" style="display:none;">8</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-09" style="display:none;">9</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-10" style="display:none;">10</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-11" style="display:none;">11</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-12" style="display:none;">12</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-13" style="display:none;">13</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-14" style="display:none;">14</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-15" style="display:none;">15</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-16" style="display:none;">16</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-17" style="display:none;">17</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-18" style="display:none;">18</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-19" style="display:none;">19</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-20" style="display:none;">20</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-21" style="display:none;">21</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-22" style="display:none;">22</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-23" style="display:none;">23</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-24" style="display:none;">24</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-25" style="display:none;">25</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-26" style="display:none;">26</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-27" style="display:none;">27</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-28" style="display:none;">28</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-29" style="display:none;">29</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-30" style="display:none;">30</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-from-date" value="2026-08-31" style="display:none;">31</label>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">To Date *</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 8px; background: #fff; font-size: 0.8125rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-right: 6px; color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <span class="placeholder">Select Date</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options calendar-popup" style="width: 196px; padding: 10px; box-sizing: border-box; background: #fff; position: absolute; z-index: 10; right: 0;">
+                                <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 600; font-size: 0.75rem;">
+                                    <span>August 2026</span>
+                                </div>
+                                <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.625rem; color: #666; margin-bottom: 4px; font-weight: 500;">
+                                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                                </div>
+                                <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6875rem;">
+                                    <div></div><div></div><div></div><div></div><div></div><div></div>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-01" style="display:none;">1</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-02" style="display:none;">2</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-03" style="display:none;">3</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-04" style="display:none;">4</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-05" style="display:none;">5</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-06" style="display:none;">6</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-07" style="display:none;">7</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-08" style="display:none;">8</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-09" style="display:none;">9</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-10" style="display:none;">10</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-11" style="display:none;">11</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-12" style="display:none;">12</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-13" style="display:none;">13</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-14" style="display:none;">14</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-15" style="display:none;">15</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-16" style="display:none;">16</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-17" style="display:none;">17</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-18" style="display:none;">18</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-19" style="display:none;">19</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-20" style="display:none;">20</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-21" style="display:none;">21</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-22" style="display:none;">22</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-23" style="display:none;">23</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-24" style="display:none;">24</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-25" style="display:none;">25</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-26" style="display:none;">26</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-27" style="display:none;">27</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-28" style="display:none;">28</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-29" style="display:none;">29</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-30" style="display:none;">30</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="apply-to-date" value="2026-08-31" style="display:none;">31</label>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Requested Days (Display Field) -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Requested Days (Calculated)</label>
+                    <div id="requested-days-display" style="height: 32px; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 10px; background-color: var(--color-bg-light); display: flex; align-items: center; font-size: 0.8125rem; color: #666; font-weight: 600;">
+                        Auto-calculated from dates selected
+                    </div>
+                </div>
+
+                <!-- Reason / Remarks -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Reason / Remarks *</label>
+                    <textarea placeholder="Enter reason for leave..." style="height: 60px; border: 1px solid #8c8c8c; border-radius: 4px; padding: 8px 10px; font-size: 0.8125rem; font-family: inherit; box-sizing: border-box; width: 100%; outline: none; resize: none; background: #fff;" required></textarea>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="modal-form-actions">
+                <label for="apply-leave-toggle" class="btn-secondary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; border: 1px solid #8c8c8c; background: var(--color-white);">Cancel</label>
+                <label for="apply-leave-toggle" class="btn-primary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600;">Submit Application</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: FILTERS POPUP MODAL -->
+    <div class="modal-overlay" id="filters-modal">
+        <div class="modal-content" style="position: relative; width: 460px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px;">
+            <label for="filters-toggle" class="modal-close-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.0625rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; text-align: left; flex-shrink: 0;">Advanced Leave Filters</h3>
+            
+            <div class="modal-scrollable-body" style="text-align: left;">
+                <!-- Row: Department & Leave Type -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <!-- Department -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Department</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 8px; background: #fff; font-size: 0.8125rem;">
+                                <span>All Departments</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" style="border: 1px solid #8c8c8c; border-radius: 4px; background: #fff; position: absolute; width: 100%; z-index: 10; max-height: 140px; overflow-y: auto;">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Operations</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Finance</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Fleet</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> HR</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Leave Type -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Leave Type</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 8px; background: #fff; font-size: 0.8125rem;">
+                                <span>All Types</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" style="border: 1px solid #8c8c8c; border-radius: 4px; background: #fff; position: absolute; width: 100%; z-index: 10;">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Earned Leave</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Paid Leave</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Row: Status & Date -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <!-- Status -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Status</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 8px; background: #fff; font-size: 0.8125rem;">
+                                <span>All Statuses</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" style="border: 1px solid #8c8c8c; border-radius: 4px; background: #fff; position: absolute; width: 100%; z-index: 10;">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Pending</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Approved</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Rejected</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Date Reference (Custom Calendar UI) -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Date Reference</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 8px; background: #fff; font-size: 0.8125rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-right: 6px; color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <span class="placeholder">Select Date</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options calendar-popup" style="width: 196px; padding: 10px; box-sizing: border-box; background: #fff; position: absolute; z-index: 10; right: 0;">
+                                <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 600; font-size: 0.75rem;">
+                                    <span>August 2026</span>
+                                </div>
+                                <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.625rem; color: #666; margin-bottom: 4px; font-weight: 500;">
+                                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                                </div>
+                                <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6875rem;">
+                                    <div></div><div></div><div></div><div></div><div></div><div></div>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-01" style="display:none;">1</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-02" style="display:none;">2</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-03" style="display:none;">3</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-04" style="display:none;">4</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-05" style="display:none;">5</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-06" style="display:none;">6</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-07" style="display:none;">7</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-08" style="display:none;">8</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-09" style="display:none;">9</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-10" style="display:none;">10</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-11" style="display:none;">11</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-12" style="display:none;">12</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-13" style="display:none;">13</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-14" style="display:none;">14</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-15" style="display:none;">15</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-16" style="display:none;">16</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-17" style="display:none;">17</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-18" style="display:none;">18</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-19" style="display:none;">19</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-20" style="display:none;">20</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-21" style="display:none;">21</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-22" style="display:none;">22</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-23" style="display:none;">23</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-24" style="display:none;">24</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-25" style="display:none;">25</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-26" style="display:none;">26</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-27" style="display:none;">27</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-28" style="display:none;">28</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-29" style="display:none;">29</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-30" style="display:none;">30</label>
+                                    <label class="cal-day" style="cursor: pointer; padding: 2px 0; border-radius: 2px;"><input type="radio" name="filter-ref-date" value="2026-08-31" style="display:none;">31</label>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="modal-form-actions">
+                <label for="filters-toggle" class="btn-secondary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; border: 1px solid #8c8c8c; background: var(--color-white);">Reset</label>
+                <label for="filters-toggle" class="btn-primary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500;">Apply Filters</label>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: REVIEW / ACCEPT POPUP FOR LV-0001 (INSUFFICIENT BALANCE -> LOP TRIGGERED) -->
+    <div class="modal-overlay" id="review-lv-0001-modal">
+        <div class="modal-content" style="position: relative; width: 500px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px;">
+            <label for="review-lv-0001-toggle" class="modal-close-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+
+            <!-- BLOCK A: PENDING REVIEW STATE DETAILS (Visible initially) -->
+            <div class="review-details-block" style="text-align: left; display: flex; flex-direction: column; height: 100%;">
+                <h3 class="modal-form-title" style="margin-top: 0; margin-bottom: 16px; flex-shrink: 0; border-bottom: 1px solid var(--color-border); padding-bottom: 10px;">Leave Request Review - LV-0001</h3>
+                
+                <div class="modal-scrollable-body">
+                    <!-- Leave Request Details -->
+                    <div style="background-color: var(--color-bg-light); border: 1px solid var(--color-border); padding: 12px 14px; border-radius: var(--border-radius-base); display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8125rem;">
+                        <div><strong>Employee:</strong> Rajesh Kumar</div>
+                        <div><strong>Employee ID:</strong> EMP001</div>
+                        <div><strong>Department:</strong> Operations</div>
+                        <div><strong>Leave Type:</strong> Earned Leave</div>
+                        <div><strong>From Date:</strong> 20 Aug 2026</div>
+                        <div><strong>To Date:</strong> 25 Aug 2026</div>
+                        <div style="grid-column: span 2; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 2px;">
+                            <strong>Requested Duration:</strong> <span style="font-size: 0.875rem; font-weight: 700; color: var(--color-black);">6 Days</span>
+                        </div>
+                    </div>
+
+                    <!-- Leave Balances -->
+                    <div>
+                        <h4 style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin-bottom: 6px;">Employee Leave Balances</h4>
+                        <div class="balance-grid">
+                            <div class="balance-card">
+                                <div class="balance-card-title">Earned Leave</div>
+                                <div class="balance-card-val">3 Days available</div>
+                            </div>
+                            <div class="balance-card">
+                                <div class="balance-card-title">Paid Leave</div>
+                                <div class="balance-card-val">5 Days available</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leave Calculations & Validation -->
+                    <div>
+                        <h4 style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin-bottom: 2px;">Leave Calculations & LOP Identification</h4>
+                        <table class="calc-table">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left;">Category</th>
+                                    <th style="text-align: right;">Days Applied</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Earned Leave covered</td>
+                                    <td style="text-align: right; font-weight: 600;">3 Days</td>
+                                </tr>
+                                <tr>
+                                    <td>Paid Leave covered</td>
+                                    <td style="text-align: right; font-weight: 600;">3 Days</td>
+                                </tr>
+                                <tr>
+                                    <td>Loss of Pay (LOP)</td>
+                                    <td style="text-align: right; font-weight: 600;">0 Days</td>
+                                </tr>
+                                <tr style="background-color: #eee;">
+                                    <td><strong>Total Requested</strong></td>
+                                    <td style="text-align: right;"><strong>6 Days</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Info banner indicating sufficient combined balance -->
+                        <div class="warning-banner" style="background-color: var(--color-bg-light); border: 1px solid var(--color-border); color: var(--color-black);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="flex-shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            <span><strong>Balance Status:</strong> The requested duration is fully covered by available Earned Leave (3 days) and Paid Leave (3 days) balances. No Loss of Pay (LOP) will be applied.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div class="modal-form-actions">
+                    <!-- Cancel Button -->
+                    <label for="review-lv-0001-toggle" class="btn-secondary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; border: 1px solid #8c8c8c; background: var(--color-white);">Cancel</label>
+                    
+                    <!-- Reject Button -->
+                    <label for="lv-0001-rejected" class="btn-secondary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600; border: 1px solid #8c8c8c; background: var(--color-white);">Reject</label>
+                    
+                    <!-- Accept Button -->
+                    <label for="lv-0001-approved" class="btn-primary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600;">Accept</label>
+                </div>
+            </div>
+
+            <!-- BLOCK B: SUCCESS STATE - APPROVED -->
+            <div class="success-approved-block" style="display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background-color: var(--color-bg-light); color: var(--color-black); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 6px 0; color: var(--color-black);">Leave Request Accepted</h3>
+                <p style="font-size: 0.8125rem; color: #666; margin-bottom: 16px; max-width: 320px; line-height: 1.4;">LV-0001 applied by Rajesh Kumar has been approved. 3 days covered by Earned Leave, and 3 days covered by Paid Leave (0 days LOP).</p>
+                <label for="review-lv-0001-toggle" class="btn-primary" style="height: 32px; padding: 0 24px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600;">Close</label>
+            </div>
+
+            <!-- BLOCK C: SUCCESS STATE - REJECTED -->
+            <div class="success-rejected-block" style="display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                <div style="width: 48px; height: 48px; border-radius: 50%; background-color: var(--color-bg-light); color: var(--color-black); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
+                <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 6px 0; color: var(--color-black);">Leave Request Rejected</h3>
+                <p style="font-size: 0.8125rem; color: #666; margin-bottom: 16px; max-width: 320px; line-height: 1.4;">LV-0001 applied by Rajesh Kumar has been rejected.</p>
+                <label for="review-lv-0001-toggle" class="btn-primary" style="height: 32px; padding: 0 24px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600;">Close</label>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL 4: REVIEW / VIEW POPUP FOR LV-0002 (SUFFICIENT BALANCE -> APPROVED STATE) -->
+    <div class="modal-overlay" id="review-lv-0002-modal">
+        <div class="modal-content" style="position: relative; width: 500px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px;">
+            <label for="review-lv-0002-toggle" class="modal-close-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+
+            <div class="review-details-block" style="text-align: left;">
+                <h3 class="modal-form-title" style="margin-top: 0; margin-bottom: 16px; flex-shrink: 0; border-bottom: 1px solid var(--color-border); padding-bottom: 10px;">Leave Request Details - LV-0002</h3>
+                
+                <div class="modal-scrollable-body">
+                    <!-- Status Banner -->
+                    <div style="background-color: var(--color-bg-light); border: 1px solid var(--color-border); color: var(--color-black); padding: 8px 12px; border-radius: var(--border-radius-base); font-size: 0.8125rem; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>This request was Approved on 21 Aug 2026.</span>
+                    </div>
+
+                    <!-- Details -->
+                    <div style="background-color: var(--color-bg-light); border: 1px solid var(--color-border); padding: 12px 14px; border-radius: var(--border-radius-base); display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8125rem;">
+                        <div><strong>Employee:</strong> Priya Sharma</div>
+                        <div><strong>Employee ID:</strong> EMP002</div>
+                        <div><strong>Department:</strong> Finance</div>
+                        <div><strong>Leave Type:</strong> Paid Leave</div>
+                        <div><strong>From Date:</strong> 22 Aug 2026</div>
+                        <div><strong>To Date:</strong> 23 Aug 2026</div>
+                        <div style="grid-column: span 2; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 2px;">
+                            <strong>Requested Duration:</strong> 2 Days
+                        </div>
+                    </div>
+
+                    <!-- Leave Balances -->
+                    <div>
+                        <h4 style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin-bottom: 6px;">Employee Leave Balances (at review)</h4>
+                        <div class="balance-grid">
+                            <div class="balance-card">
+                                <div class="balance-card-title">Earned Leave</div>
+                                <div class="balance-card-val">8 Days available</div>
+                            </div>
+                            <div class="balance-card">
+                                <div class="balance-card-title">Paid Leave</div>
+                                <div class="balance-card-val">5 Days available</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculation details -->
+                    <div>
+                        <h4 style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin-bottom: 2px;">Leave Calculation</h4>
+                        <table class="calc-table">
+                            <tbody>
+                                <tr>
+                                    <td>Paid Leave covered</td>
+                                    <td style="text-align: right; font-weight: 600;">2 Days</td>
+                                </tr>
+                                <tr>
+                                    <td>Loss of Pay (LOP)</td>
+                                    <td style="text-align: right; font-weight: 600;">0 Days</td>
+                                </tr>
+                                <tr>
+                                    <td>Remaining Paid Leave</td>
+                                    <td style="text-align: right; font-weight: 600;">3 Days</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div class="modal-form-actions">
+                    <label for="review-lv-0002-toggle" class="btn-primary" style="height: 32px; padding: 0 24px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600;">Close</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: REVIEW / VIEW POPUP FOR LV-0003 (REJECTED STATE) -->
+    <div class="modal-overlay" id="review-lv-0003-modal">
+        <div class="modal-content" style="position: relative; width: 500px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px;">
+            <label for="review-lv-0003-toggle" class="modal-close-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+
+            <div class="review-details-block" style="text-align: left;">
+                <h3 class="modal-form-title" style="margin-top: 0; margin-bottom: 16px; flex-shrink: 0; border-bottom: 1px solid var(--color-border); padding-bottom: 10px;">Leave Request Details - LV-0003</h3>
+                
+                <div class="modal-scrollable-body">
+                    <!-- Status Banner -->
+                    <div style="background-color: var(--color-bg-light); border: 1px solid var(--color-border); color: var(--color-black); padding: 8px 12px; border-radius: var(--border-radius-base); font-size: 0.8125rem; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        <span>This request was Rejected on 27 Aug 2026. Reason: Peak logistics season demand.</span>
+                    </div>
+
+                    <!-- Details -->
+                    <div style="background-color: var(--color-bg-light); border: 1px solid var(--color-border); padding: 12px 14px; border-radius: var(--border-radius-base); display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8125rem;">
+                        <div><strong>Employee:</strong> Amit Kumar</div>
+                        <div><strong>Employee ID:</strong> EMP003</div>
+                        <div><strong>Department:</strong> Fleet</div>
+                        <div><strong>Leave Type:</strong> Earned Leave</div>
+                        <div><strong>From Date:</strong> 28 Aug 2026</div>
+                        <div><strong>To Date:</strong> 29 Aug 2026</div>
+                        <div style="grid-column: span 2; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 2px;">
+                            <strong>Requested Duration:</strong> 2 Days
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div class="modal-form-actions">
+                    <label for="review-lv-0003-toggle" class="btn-primary" style="height: 32px; padding: 0 24px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600;">Close</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 6: ADD / EDIT LEAVE TYPE -->
+    <div class="modal-overlay" id="add-leave-type-modal">
+        <div class="modal-content" style="position: relative; width: 500px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px;">
+            <label for="add-leave-type-toggle" class="modal-close-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-form-title" style="text-align: left; margin-top: 0; margin-bottom: 16px; flex-shrink: 0;">Add Leave Type</h3>
+            
+            <div class="modal-scrollable-body" style="text-align: left;">
+                <!-- Leave Code Field -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Leave Code *</label>
+                    <input type="text" placeholder="e.g. EL, PL, LOP" style="height: 32px; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 10px; font-family: inherit; font-size: 0.8125rem; outline: none; width: 100%;">
+                </div>
+
+                <!-- Leave Type Name Field -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Leave Type Name *</label>
+                    <input type="text" placeholder="e.g. Earned Leave" style="height: 32px; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 10px; font-family: inherit; font-size: 0.8125rem; outline: none; width: 100%;">
+                </div>
+
+                <!-- Paid / Unpaid Selection -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666; margin-bottom: 4px; display: block;">Paid / Unpaid *</label>
+                    <details class="custom-select-wrapper" style="width: 100%;">
+                        <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; display: flex; align-items: center; border: 1px solid #8c8c8c; border-radius: 4px; padding: 0 12px; background: #fff;">
+                            <span>Paid</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="margin-left: auto; color: #666;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options" style="border: 1px solid #8c8c8c; border-radius: 4px; background: #fff; position: absolute; width: 100%; z-index: 10;">
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="leave-paid-unpaid" value="Paid" checked style="display: none;"> Paid</label>
+                            <label class="custom-option" style="display: block; padding: 8px 12px; font-size: 0.8125rem;"><input type="radio" name="leave-paid-unpaid" value="Unpaid" style="display: none;"> Unpaid</label>
+                        </div>
+                    </details>
+                </div>
+
+            </div>
+
+            <!-- Form Actions -->
+            <div class="modal-form-actions">
+                <label for="add-leave-type-toggle" class="btn-secondary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; border: 1px solid #8c8c8c; background: var(--color-white);">Cancel</label>
+                <label for="add-leave-type-toggle" class="btn-primary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600;">Save Leave Type</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 7: DELETE EARNED LEAVE (EL) - ALLOWED -->
+    <div class="modal-overlay" id="delete-el-modal">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; box-sizing: border-box;">
+            <label for="delete-el-toggle" class="modal-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title" style="text-align: left;">Delete Leave Type</h3>
+            <p class="modal-desc" style="text-align: left; margin-bottom: 12px; line-height: 1.4;">Are you sure you want to permanently delete this leave type? EL - Earned Leave has no associated leave requests/history.</p>
+            <div class="modal-actions">
+                <label for="delete-el-toggle" class="btn-secondary" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1; border: 1px solid #8c8c8c; background: var(--color-white);">Cancel</label>
+                <label for="delete-el-toggle" class="btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;">Delete</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 8: DELETE PAID LEAVE (PL) - NOT ALLOWED -->
+    <div class="modal-overlay" id="delete-pl-modal">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; box-sizing: border-box;">
+            <label for="delete-pl-toggle" class="modal-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+            </div>
+            <h3 class="modal-title" style="text-align: left;">Cannot Delete Leave Type</h3>
+            <p class="modal-desc" style="text-align: left; margin-bottom: 12px; line-height: 1.4;">PL - Paid Leave cannot be permanently deleted because it is a required/system-configured leave type. Please deactivate it using the Status toggle switch instead.</p>
+            <div class="modal-actions">
+                <label for="delete-pl-toggle" class="btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;">Close</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 9: DELETE LOSS OF PAY (LOP) - NOT ALLOWED -->
+    <div class="modal-overlay" id="delete-lop-modal">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; box-sizing: border-box;">
+            <label for="delete-lop-toggle" class="modal-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+            </div>
+            <h3 class="modal-title" style="text-align: left;">Cannot Delete Leave Type</h3>
+            <p class="modal-desc" style="text-align: left; margin-bottom: 12px; line-height: 1.4;">LOP - Loss of Pay cannot be permanently deleted because it has already been used in employee records/leave requests. Please deactivate it using the Status toggle switch instead.</p>
+            <div class="modal-actions">
+                <label for="delete-lop-toggle" class="btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;">Close</label>
+            </div>
+        </div>
+    </div>
+
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const fromRadios = document.querySelectorAll('input[name="apply-from-date"]');
+        const toRadios = document.querySelectorAll('input[name="apply-to-date"]');
+        const daysDisplay = document.querySelector('#requested-days-display');
+
+        function updateDays() {
+            const fromChecked = document.querySelector('input[name="apply-from-date"]:checked');
+            const toChecked = document.querySelector('input[name="apply-to-date"]:checked');
+            if (fromChecked && toChecked) {
+                const fromDate = new Date(fromChecked.value);
+                const toDate = new Date(toChecked.value);
+                const diffTime = toDate - fromDate;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                if (daysDisplay) {
+                    if (diffDays >= 0) {
+                        daysDisplay.textContent = `${diffDays} Day${diffDays !== 1 ? 's' : ''}`;
+                        daysDisplay.style.color = 'var(--color-black)';
+                    } else {
+                        daysDisplay.textContent = `Invalid Date Range`;
+                        daysDisplay.style.color = '#ff4d4f';
+                    }
+                }
+            }
+        }
+
+        fromRadios.forEach(r => r.addEventListener('change', updateDays));
+        toRadios.forEach(r => r.addEventListener('change', updateDays));
+    });
+    </script>
+</body>
+</html>

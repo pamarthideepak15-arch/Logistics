@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Attendance</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="attendance.css">
+</head>
+<body>
+    
+    <!-- State management checkbox toggles -->
+    <input type="checkbox" id="kiran-corrected-toggle" style="display: none;">
+    <input type="checkbox" id="filters-popup-toggle" style="display: none;">
+    <input type="checkbox" id="correct-checkout-EMP003-toggle" style="display: none;">
+
+    <!-- Mobile Menu Drawer Toggle -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (HRMS Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <!-- Active HR Rail Icon -->
+                    <a href="#" class="rail-icon active" data-tooltip="HRMS">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">HUMAN RESOURCES</div>
+                <nav class="sidebar-nav">
+                    <a href="../Staff-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        Staff Master
+                    </a>
+                    <a href="#" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Attendance
+                    </a>
+                    <a href="../Shift-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Shift Management
+                    </a>
+                    <a href="../Leave-Management/leave-management.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
+                        Leave Management
+                    </a>
+
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>HRMS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Attendance</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Attendance</h1>
+                        <p class="page-subtitle">Track employee attendance, check-in, check-out, and working hours.</p>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                            <div class="kpi-card-label">Total Employees</div>
+                        </div>
+                        <div class="kpi-card-value">248</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg></span>
+                            <div class="kpi-card-label">Present</div>
+                        </div>
+                        <div class="kpi-card-value text-success">220</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg></span>
+                            <div class="kpi-card-label">Absent</div>
+                        </div>
+                        <div class="kpi-card-value text-danger">15</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+                            <div class="kpi-card-label">On Leave</div>
+                        </div>
+                        <div class="kpi-card-value">13</div>
+                    </div>
+                </div>
+
+                <!-- Filters Section (Compact Search, Filters popup trigger, Reset) -->
+                <div class="filters-bar" style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 12px; margin-bottom: 16px;">
+                    <!-- Employee Search -->
+                    <div class="search-input-wrapper" style="flex: 1; min-width: 200px; position: relative;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #888; z-index: 2;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="search-input" placeholder="Search employee..." style="height: 30px; font-size: 0.8125rem; box-sizing: border-box; padding-left: 30px; width: 100%;">
+                    </div>
+                    
+                    <!-- Filters Button Label -->
+                    <label for="filters-popup-toggle" class="btn-secondary" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); border: 1px solid var(--color-border); background: var(--color-white); font-weight: 500; outline: none; user-select: none;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="color: #666;"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        <span>Filters</span>
+                    </label>
+                    
+                    <!-- Reset Button -->
+                    <button type="button" id="attendance-top-reset" class="btn-secondary" style="height: 30px; padding: 0 12px; font-size: 0.8125rem; font-weight: 500;">Reset</button>
+                </div>
+
+                <!-- Desktop Table View -->
+                <div class="desktop-only-table table-container">
+                    <table class="data-table attendance-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-key="code">
+                                    <div class="sort-header-content">
+                                        Employee Code
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="name">
+                                    <div class="sort-header-content">
+                                        Employee Name
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="department">
+                                    <div class="sort-header-content">
+                                        Department
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="branch">
+                                    <div class="sort-header-content">
+                                        Branch
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="date">
+                                    <div class="sort-header-content">
+                                        Date
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="shift">
+                                    <div class="sort-header-content">
+                                        Shift
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="status">
+                                    <div class="sort-header-content">
+                                        Attendance Status
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="checkIn">
+                                    <div class="sort-header-content">
+                                        Check-In Time
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="checkOut">
+                                    <div class="sort-header-content">
+                                        Check-Out Time
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" data-key="duration">
+                                    <div class="sort-header-content">
+                                        Duration
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr>
+                                 <td>EMP001</td>
+                                 <td>Arjun Reddy</td>
+                                 <td>Operations</td>
+                                 <td>Hyderabad</td>
+                                 <td>26 Aug 2026</td>
+                                 <td>Morning Shift</td>
+                                 <td><span class="att-status-chip att-status-present">Present</span></td>
+                                 <td>08:54 AM <span class="att-status-chip att-status-late" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Late Entry</span></td>
+                                 <td>06:21 PM <span class="att-status-chip att-status-early" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Early Exit</span></td>
+                                 <td>9h 27m</td>
+                             </tr>
+                             <tr>
+                                 <td>EMP002</td>
+                                 <td>Sneha Rao</td>
+                                 <td>Finance</td>
+                                 <td>Bengaluru</td>
+                                 <td>26 Aug 2026</td>
+                                 <td>Afternoon Shift</td>
+                                 <td><span class="att-status-chip att-status-absent">Absent</span></td>
+                                 <td>—</td>
+                                 <td>—</td>
+                                 <td>—</td>
+                             </tr>
+                             <tr>
+                                 <td>EMP003</td>
+                                 <td>Kiran Kumar</td>
+                                 <td>Warehouse</td>
+                                 <td>Vijayawada</td>
+                                 <td>26 Aug 2026</td>
+                                 <td>Night Shift</td>
+                                 <td><span class="att-status-chip att-status-present">Present</span></td>
+                                 <td>12:08 AM</td>
+                                 <td>
+                                     <!-- Dynamic CSS check-out state cell displays -->
+                                     <span class="before-correct">
+                                         <label for="correct-checkout-EMP003-toggle" style="cursor: pointer; text-decoration: underline; color: var(--color-black); font-weight: 600; display: flex; flex-direction: row; gap: 2px; align-items: center; width: fit-content;">
+                                             <span class="att-status-chip att-status-missing-checkout" style="font-size: 0.6875rem; padding: 1px 4px; vertical-align: middle; text-decoration: none; border-style: double;">Not Checked Out</span>
+                                         </label>
+                                     </span>
+                                     <span class="after-correct">
+                                         <div style="display: flex; align-items: center; gap: 4px;">
+                                             06:10 PM <span class="att-status-chip" style="font-size: 0.6875rem; padding: 1px 4px; border-radius: 2px; background-color: var(--color-bg-light); color: var(--color-black); font-weight: 600; text-transform: none; line-height: 1.2;">Admin</span>
+                                         </div>
+                                         <div style="font-size: 0.6875rem; color: #666; margin-top: 2px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500;" title="Forgot to check out after leaving the branch.">
+                                             Forgot to check out after leaving the branch.
+                                         </div>
+                                     </span>
+                                 </td>
+                                 <td>
+                                     <span class="before-correct">—</span>
+                                     <span class="after-correct">9h 13m</span>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>EMP004</td>
+                                 <td>Meena Devi</td>
+                                 <td>HR</td>
+                                 <td>Chennai</td>
+                                 <td>26 Aug 2026</td>
+                                 <td>Night Shift</td>
+                                 <td><span class="att-status-chip att-status-absent">Absent</span></td>
+                                 <td>—</td>
+                                 <td>—</td>
+                                 <td>—</td>
+                             </tr>
+                             <tr>
+                                 <td>EMP005</td>
+                                 <td>Ravi Kumar</td>
+                                 <td>Fleet</td>
+                                 <td>Hyderabad</td>
+                                 <td>26 Aug 2026</td>
+                                 <td>Afternoon Shift</td>
+                                 <td><span class="att-status-chip att-status-present">Present</span></td>
+                                 <td>08:48 AM</td>
+                                 <td>03:42 PM <span class="att-status-chip att-status-early" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Early Exit</span></td>
+                                 <td>6h 54m</td>
+                             </tr>
+                             <tr>
+                                 <td>EMP006</td>
+                                 <td>Priya Sharma</td>
+                                 <td>Operations</td>
+                                 <td>Bengaluru</td>
+                                 <td>26 Aug 2026</td>
+                                 <td>General Shift</td>
+                                 <td><span class="att-status-chip att-status-leave">Leave</span></td>
+                                 <td>—</td>
+                                 <td>—</td>
+                                 <td>—</td>
+                             </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <div class="pagination-bar">
+                        <span>Showing 1-6 of 6</span>
+                        <div class="pagination-controls">
+                            <button type="button" class="page-btn">Prev</button>
+                            <span class="page-number">1</span>
+                            <button type="button" class="page-btn">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Attendance Cards View -->
+                <div class="mobile-only-cards" style="display: none; padding: 0 4px;">
+                    <!-- Arjun Reddy Card -->
+                    <div class="attendance-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-bg-light); padding-bottom: 10px; margin-bottom: 10px;">
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">Arjun Reddy</h4>
+                                <span style="font-size: 0.75rem; color: #666; font-weight: 500;">EMP001</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: #666;">Operations | Hyderabad</div>
+                                <div style="font-size: 0.75rem; color: #666; margin-top: 2px;">26 Aug 2026</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; background: var(--color-bg-light); padding: 8px 12px; border-radius: 4px;">
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Shift</span>
+                                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Morning Shift</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Attendance Status</span>
+                                <span class="att-status-chip att-status-present">Present</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-In</span>
+                                <div>
+                                    <strong>08:54 AM</strong> <span class="att-status-chip att-status-late" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Late Entry</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-Out</span>
+                                <div>
+                                    <strong>06:21 PM</strong> <span class="att-status-chip att-status-early" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Early Exit</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 4px;">
+                                <span style="color: #666; font-weight: 600;">Duration</span>
+                                <strong>9h 27m</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sneha Rao Card -->
+                    <div class="attendance-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-bg-light); padding-bottom: 10px; margin-bottom: 10px;">
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">Sneha Rao</h4>
+                                <span style="font-size: 0.75rem; color: #666; font-weight: 500;">EMP002</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: #666;">Finance | Bengaluru</div>
+                                <div style="font-size: 0.75rem; color: #666; margin-top: 2px;">26 Aug 2026</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; background: var(--color-bg-light); padding: 8px 12px; border-radius: 4px;">
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Shift</span>
+                                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Afternoon Shift</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Attendance Status</span>
+                                <span class="att-status-chip att-status-absent">Absent</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-In</span>
+                                <strong>—</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-Out</span>
+                                <strong>—</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 4px;">
+                                <span style="color: #666; font-weight: 600;">Duration</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kiran Kumar Card -->
+                    <div class="attendance-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-bg-light); padding-bottom: 10px; margin-bottom: 10px;">
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">Kiran Kumar</h4>
+                                <span style="font-size: 0.75rem; color: #666; font-weight: 500;">EMP003</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: #666;">Warehouse | Vijayawada</div>
+                                <div style="font-size: 0.75rem; color: #666; margin-top: 2px;">26 Aug 2026</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; background: var(--color-bg-light); padding: 8px 12px; border-radius: 4px;">
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Shift</span>
+                                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Night Shift</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Attendance Status</span>
+                                <span class="att-status-chip att-status-present">Present</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-In</span>
+                                <strong>12:08 AM</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-Out</span>
+                                <div>
+                                    <span class="before-correct">
+                                        <label for="correct-checkout-EMP003-toggle" style="cursor: pointer; text-decoration: underline; color: var(--color-black); font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                                            <span class="att-status-chip att-status-missing-checkout" style="font-size: 0.6875rem; padding: 1px 4px; border-radius: 2px; text-decoration: none; border-style: double;">Not Checked Out</span>
+                                        </label>
+                                    </span>
+                                    <span class="after-correct" style="display: none;">
+                                        <div style="display: flex; align-items: center; gap: 4px; justify-content: flex-end;">
+                                            <strong>06:10 PM</strong> <span class="att-status-chip" style="font-size: 0.6875rem; padding: 1px 4px; border-radius: 2px; background-color: var(--color-bg-light); color: var(--color-black); font-weight: 600; text-transform: none; line-height: 1.2;">Admin</span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 4px;">
+                                <span style="color: #666; font-weight: 600;">Duration</span>
+                                <strong>
+                                    <span class="before-correct">—</span>
+                                    <span class="after-correct" style="display: none;">9h 13m</span>
+                                </strong>
+                            </div>
+                            <div class="after-correct" style="border-top: 1px solid var(--color-border); padding-top: 8px; margin-top: 4px; display: none;">
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 2px;">Admin Remark</span>
+                                <p style="margin: 0; font-size: 0.75rem; color: #666; font-style: italic; line-height: 1.4;">Forgot to check out after leaving the branch.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Meena Devi Card -->
+                    <div class="attendance-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-bg-light); padding-bottom: 10px; margin-bottom: 10px;">
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">Meena Devi</h4>
+                                <span style="font-size: 0.75rem; color: #666; font-weight: 500;">EMP004</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: #666;">HR | Chennai</div>
+                                <div style="font-size: 0.75rem; color: #666; margin-top: 2px;">26 Aug 2026</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; background: var(--color-bg-light); padding: 8px 12px; border-radius: 4px;">
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Shift</span>
+                                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Night Shift</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Attendance Status</span>
+                                <span class="att-status-chip att-status-absent">Absent</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-In</span>
+                                <strong>—</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-Out</span>
+                                <strong>—</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 4px;">
+                                <span style="color: #666; font-weight: 600;">Duration</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ravi Kumar Card -->
+                    <div class="attendance-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-bg-light); padding-bottom: 10px; margin-bottom: 10px;">
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">Ravi Kumar</h4>
+                                <span style="font-size: 0.75rem; color: #666; font-weight: 500;">EMP005</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: #666;">Fleet | Hyderabad</div>
+                                <div style="font-size: 0.75rem; color: #666; margin-top: 2px;">26 Aug 2026</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; background: var(--color-bg-light); padding: 8px 12px; border-radius: 4px;">
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Shift</span>
+                                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Afternoon Shift</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Attendance Status</span>
+                                <span class="att-status-chip att-status-present">Present</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-In</span>
+                                <strong>08:48 AM</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-Out</span>
+                                <div>
+                                    <strong>03:42 PM</strong> <span class="att-status-chip att-status-early" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Early Exit</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 4px;">
+                                <span style="color: #666; font-weight: 600;">Duration</span>
+                                <strong>6h 54m</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Priya Sharma Card -->
+                    <div class="attendance-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-bg-light); padding-bottom: 10px; margin-bottom: 10px;">
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">Priya Sharma</h4>
+                                <span style="font-size: 0.75rem; color: #666; font-weight: 500;">EMP006</span>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 600; color: #666;">Operations | Bengaluru</div>
+                                <div style="font-size: 0.75rem; color: #666; margin-top: 2px;">26 Aug 2026</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; background: var(--color-bg-light); padding: 8px 12px; border-radius: 4px;">
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Shift</span>
+                                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">General Shift</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Attendance Status</span>
+                                <span class="att-status-chip att-status-leave">Leave</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-In</span>
+                                <strong>—</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #666; font-weight: 500;">Check-Out</span>
+                                <strong>—</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--color-border); padding-top: 6px; margin-top: 4px;">
+                                <span style="color: #666; font-weight: 600;">Duration</span>
+                                <strong>—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-bar" style="margin-top: 16px;">
+                        <span>Showing 1-6 of 6</span>
+                        <div class="pagination-controls">
+                            <button type="button" class="page-btn">Prev</button>
+                            <span class="page-number">1</span>
+                            <button type="button" class="page-btn">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Centered Filters Popup Modal -->
+    <div class="modal-overlay" id="filters-popup">
+        <div class="modal-content" style="position: relative; width: 500px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);">
+            <label for="filters-popup-toggle" class="modal-close-label" style="position: absolute; right: 16px; top: 16px; cursor: pointer; color: #666;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.0625rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; text-align: left;">Advanced Attendance Filters</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+                <!-- Row 1: Start Date & End Date -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <!-- Start Date -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Start Date</label>
+                        <details class="date-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span>01 Aug 2026</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-left: auto; color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            </summary>
+                            <div class="custom-select-options calendar-popup" style="width: 216px; padding: 10px; box-sizing: border-box;">
+                                <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 600; font-size: 0.75rem;">
+                                    <span>August 2026</span>
+                                </div>
+                                <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6875rem; color: #666; margin-bottom: 4px; font-weight: 500;">
+                                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                                </div>
+                                <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;">
+                                    <div></div><div></div><div></div><div></div><div></div><div></div>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" checked style="display:none;">1</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">2</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">3</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">4</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">5</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">6</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">7</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">8</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">9</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">10</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">11</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">12</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">13</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">14</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">15</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">16</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">17</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">18</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">19</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">20</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">21</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">22</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">23</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">24</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">25</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">26</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">27</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">28</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">29</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">30</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">31</label>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    
+                    <!-- End Date -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">End Date</label>
+                        <details class="date-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span>31 Aug 2026</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-left: auto; color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            </summary>
+                            <div class="custom-select-options calendar-popup" style="width: 216px; padding: 10px; box-sizing: border-box;">
+                                <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 600; font-size: 0.75rem;">
+                                    <span>August 2026</span>
+                                </div>
+                                <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6875rem; color: #666; margin-bottom: 4px; font-weight: 500;">
+                                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                                </div>
+                                <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;">
+                                    <div></div><div></div><div></div><div></div><div></div><div></div>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">1</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">2</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">3</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">4</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">5</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">6</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">7</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">8</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">9</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">10</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">11</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">12</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">13</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">14</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">15</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">16</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">17</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">18</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">19</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">20</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">21</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">22</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">23</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">24</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">25</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">26</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">27</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">28</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">29</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">30</label>
+                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" checked style="display:none;">31</label>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Row 2: Branch & Department (Multi-Select Checkboxes) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Branch</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" checked style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> All Branches</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Hyderabad</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Bengaluru</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Vijayawada</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Chennai</label>
+                            </div>
+                        </details>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Department</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Departments</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" checked style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> All Departments</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Operations</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Finance</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Warehouse</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> HR</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Fleet</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Row 3: Shift & Attendance Status (Multi-Select Checkboxes) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Shift</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Shifts</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" checked style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> All Shifts</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> General Shift</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Morning Shift</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Afternoon Shift</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Night Shift</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Attendance Status</label>
+                        <details class="custom-select-wrapper" style="width: 100%;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
+                                <span class="placeholder">Select Attendance Status</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
+                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" checked style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> All Statuses</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Present</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Absent</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Holiday</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Leave</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; border-top: 1px solid var(--color-border); padding-top: 16px;">
+                <label for="filters-popup-toggle" id="attendance-modal-reset" class="btn-secondary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500;">Reset</label>
+                <label for="filters-popup-toggle" id="attendance-modal-apply" class="btn-primary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500;">Apply Filters</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Centered Missing Check-Out Correction Popup Modal for EMP003 -->
+    <div class="modal-overlay" id="checkout-correction-EMP003">
+        <div class="modal-content" style="position: relative; width: 420px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);">
+            <label for="correct-checkout-EMP003-toggle" class="modal-close-label" style="position: absolute; right: 16px; top: 16px; cursor: pointer; color: #666;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-title" style="margin-top: 0; margin-bottom: 16px; font-size: 1.0625rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px;">Check-Out Correction</h3>
+            
+            <div style="margin-bottom: 16px; font-size: 0.8125rem; background: var(--color-bg-light); padding: 10px; border-radius: 4px; border: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 4px; text-align: left;">
+                <div><strong>Employee:</strong> Kiran Kumar (EMP003)</div>
+                <div><strong>Date:</strong> Aug 26, 2026</div>
+                <div><strong>Check-In Time:</strong> 12:08 AM</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+                <!-- Time Picker UI (Custom styled details wrappers matching ERP theme) -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Check-Out Time *</label>
+                    <div style="display: flex; gap: 8px; align-items: center; justify-content: flex-start; width: 100%;">
+                        <!-- Hour -->
+                        <details class="custom-select-wrapper" style="width: 75px;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px;">
+                                <span class="placeholder">06</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" style="max-height: 120px; overflow-y: auto;">
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="01"> 01</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="02"> 02</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="03"> 03</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="04"> 04</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="05"> 05</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="06" checked> 06</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="07"> 07</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="08"> 08</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="09"> 09</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="10"> 10</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="11"> 11</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="hour" value="12"> 12</label>
+                            </div>
+                        </details>
+                        <span>:</span>
+                        <!-- Minute -->
+                        <details class="custom-select-wrapper" style="width: 75px;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px;">
+                                <span class="placeholder">10</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" style="max-height: 120px; overflow-y: auto;">
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="00"> 00</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="05"> 05</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="10" checked> 10</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="15"> 15</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="20"> 20</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="25"> 25</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="30"> 30</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="35"> 35</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="40"> 40</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="45"> 45</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="50"> 50</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="minute" value="55"> 55</label>
+                            </div>
+                        </details>
+                        <!-- AM/PM -->
+                        <details class="custom-select-wrapper" style="width: 75px;">
+                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box; padding: 0 8px;">
+                                <span class="placeholder">PM</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="period" value="AM"> AM</label>
+                                <label class="custom-option" style="padding: 4px 8px; font-size: 0.75rem;"><input type="radio" name="period" value="PM" checked> PM</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Correction Remark / Reason textarea -->
+                <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px;">
+                    <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Correction Remark / Reason *</label>
+                    <textarea placeholder="Enter reason for manual check-out correction..." style="height: 60px; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 8px 10px; font-size: 0.8125rem; font-family: inherit; box-sizing: border-box; width: 100%; outline: none; background-color: var(--color-white); resize: none;" required></textarea>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--color-border); padding-top: 14px; margin-top: 4px;">
+                    <label for="correct-checkout-EMP003-toggle" class="btn-secondary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500;">Cancel</label>
+                    <!-- Toggles correction state and closes modal using the CSS state transition overlay rules -->
+                    <label for="kiran-corrected-toggle" class="btn-primary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 600; display: inline-block; text-align: center; box-sizing: border-box;">Save Check-Out</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // SPA Routing to prevent white flashes and lag on page transitions
+            function initSPARouting() {
+                document.querySelectorAll('.sidebar-nav a, .rail-icon').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        const href = link.getAttribute('href');
+                        if (!href || href === '#' || href.startsWith('javascript:')) return;
+                        
+                        e.preventDefault();
+                        navigateSPA(href);
+                    });
+                });
+            }
+
+            function navigateSPA(url, push = true) {
+                const cleanHref = url.split('/').pop() || 'index.html';
+                document.querySelectorAll('.sidebar-nav a').forEach(a => {
+                    const aHref = a.getAttribute('href').split('/').pop();
+                    if (aHref === cleanHref) {
+                        a.classList.add('active');
+                    } else {
+                        a.classList.remove('active');
+                    }
+                });
+
+                fetch(url)
+                    .then(res => res.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        document.title = doc.title;
+                        
+                        const targetMain = document.querySelector('.main-panel');
+                        const sourceMain = doc.querySelector('.main-panel');
+                        if (targetMain && sourceMain) {
+                            targetMain.innerHTML = sourceMain.innerHTML;
+                        }
+                        
+                        // Execute script tags
+                        const scripts = sourceMain.querySelectorAll('script');
+                        scripts.forEach(script => {
+                            const newScript = document.createElement('script');
+                            if (script.src) {
+                                newScript.src = script.src;
+                            } else {
+                                newScript.textContent = script.textContent;
+                            }
+                            document.body.appendChild(newScript);
+                        });
+                        
+                        if (push) {
+                            history.pushState(null, '', url);
+                        }
+                        
+                        initSPARouting();
+                    })
+                    .catch(err => {
+                        window.location.href = url;
+                    });
+            }
+
+            window.addEventListener('popstate', () => {
+                navigateSPA(window.location.href, false);
+            });
+
+            initSPARouting();
+
+            // Dataset definition
+            window.attendanceRecords = [
+                {
+                    code: 'EMP001',
+                    name: 'Arjun Reddy',
+                    department: 'Operations',
+                    branch: 'Hyderabad',
+                    date: '2026-08-26',
+                    shift: 'Morning Shift',
+                    status: 'Present',
+                    checkIn: '08:54 AM',
+                    checkOut: '06:21 PM',
+                    duration: '9h 27m',
+                    checkInLate: true,
+                    checkOutEarly: true
+                },
+                {
+                    code: 'EMP002',
+                    name: 'Sneha Rao',
+                    department: 'Finance',
+                    branch: 'Bengaluru',
+                    date: '2026-08-26',
+                    shift: 'Afternoon Shift',
+                    status: 'Absent',
+                    checkIn: '—',
+                    checkOut: '—',
+                    duration: '—'
+                },
+                {
+                    code: 'EMP003',
+                    name: 'Kiran Kumar',
+                    department: 'Warehouse',
+                    branch: 'Vijayawada',
+                    date: '2026-08-26',
+                    shift: 'Night Shift',
+                    status: 'Present',
+                    checkIn: '12:08 AM',
+                    checkOut: 'Not Checked Out',
+                    duration: '—',
+                    isAdminCorrected: false
+                },
+                {
+                    code: 'EMP004',
+                    name: 'Meena Devi',
+                    department: 'HR',
+                    branch: 'Chennai',
+                    date: '2026-08-26',
+                    shift: 'Night Shift',
+                    status: 'Absent',
+                    checkIn: '—',
+                    checkOut: '—',
+                    duration: '—'
+                },
+                {
+                    code: 'EMP005',
+                    name: 'Ravi Kumar',
+                    department: 'Fleet',
+                    branch: 'Hyderabad',
+                    date: '2026-08-26',
+                    shift: 'Afternoon Shift',
+                    status: 'Present',
+                    checkIn: '08:48 AM',
+                    checkOut: '03:42 PM',
+                    duration: '6h 54m',
+                    checkOutEarly: true
+                },
+                {
+                    code: 'EMP006',
+                    name: 'Priya Sharma',
+                    department: 'Operations',
+                    branch: 'Bengaluru',
+                    date: '2026-08-26',
+                    shift: 'General Shift',
+                    status: 'Leave',
+                    checkIn: '—',
+                    checkOut: '—',
+                    duration: '—'
+                }
+            ];
+
+            // Sorting State
+            let currentSort = { key: null, direction: 'asc' };
+
+            // Pagination State
+            let currentPage = 1;
+            const rowsPerPage = 10;
+
+            function parseTime(timeStr) {
+                if (!timeStr || timeStr === '—' || timeStr.includes('Not Checked Out')) return -1;
+                const match = timeStr.match(/(\d{2}):(\d{2})\s*(AM|PM)/i);
+                if (!match) return -1;
+                let [_, hour, minute, period] = match;
+                hour = parseInt(hour);
+                minute = parseInt(minute);
+                if (period.toUpperCase() === 'PM' && hour < 12) hour += 12;
+                if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
+                return hour * 60 + minute;
+            }
+
+            function parseDuration(durStr) {
+                if (!durStr || durStr === '—') return -1;
+                const parts = durStr.split(' ');
+                let mins = 0;
+                parts.forEach(p => {
+                    if (p.endsWith('h')) mins += parseInt(p) * 60;
+                    if (p.endsWith('m')) mins += parseInt(p);
+                });
+                return mins;
+            }
+
+            function formatDateDisplay(isoStr) {
+                const parts = isoStr.split('-');
+                if (parts.length !== 3) return isoStr;
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return `${parts[2]} ${months[parseInt(parts[1]) - 1]} ${parts[0]}`;
+            }
+
+            // Main rendering logic
+            function renderAttendanceTable() {
+                const tbody = document.querySelector('.attendance-table tbody');
+                if (!tbody) return;
+
+                let displayData = [...window.attendanceRecords];
+
+                // Filter by search input
+                const searchInputVal = document.querySelector('.search-input').value.toLowerCase().trim();
+                if (searchInputVal) {
+                    displayData = displayData.filter(rec => {
+                        return rec.name.toLowerCase().includes(searchInputVal) || rec.code.toLowerCase().includes(searchInputVal);
+                    });
+                }
+
+                // Filter by active advanced filters
+                const activeFilters = getActiveFilters();
+                for (let key in activeFilters) {
+                    const selectedVals = activeFilters[key];
+                    if (selectedVals.length > 0) {
+                        displayData = displayData.filter(rec => {
+                            const val = rec[key];
+                            return selectedVals.some(v => String(v).toLowerCase() === String(val).toLowerCase());
+                        });
+                    }
+                }
+
+                // Sort applied
+                if (currentSort.key) {
+                    displayData.sort((a, b) => {
+                        let valA = a[currentSort.key];
+                        let valB = b[currentSort.key];
+
+                        if (currentSort.key === 'date') {
+                            valA = Date.parse(a.date) || 0;
+                            valB = Date.parse(b.date) || 0;
+                        } else if (currentSort.key === 'checkIn' || currentSort.key === 'checkOut') {
+                            valA = parseTime(a[currentSort.key]);
+                            valB = parseTime(b[currentSort.key]);
+                        } else if (currentSort.key === 'duration') {
+                            valA = parseDuration(a.duration);
+                            valB = parseDuration(b.duration);
+                        } else {
+                            valA = String(valA || '').toLowerCase();
+                            valB = String(valB || '').toLowerCase();
+                        }
+
+                        if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
+                        if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+                        return 0;
+                    });
+                }
+
+                let tbodyHTML = '';
+                const totalRecords = displayData.length;
+                const totalPages = Math.ceil(totalRecords / rowsPerPage) || 1;
+
+                if (currentPage > totalPages) {
+                    currentPage = totalPages;
+                }
+
+                const startIndex = (currentPage - 1) * rowsPerPage;
+                const endIndex = Math.min(startIndex + rowsPerPage, totalRecords);
+                const paginatedData = displayData.slice(startIndex, endIndex);
+
+                if (paginatedData.length === 0) {
+                    tbodyHTML = `<tr><td colspan="10" style="text-align: center; padding: 20px; color: #999;">No records found</td></tr>`;
+                } else {
+                    paginatedData.forEach(rec => {
+                        let statusClass = 'att-status-present';
+                        if (rec.status.toLowerCase() === 'absent') statusClass = 'att-status-absent';
+                        else if (rec.status.toLowerCase() === 'leave') statusClass = 'att-status-leave';
+
+                        let checkInHTML = rec.checkIn;
+                        if (rec.checkInLate && rec.checkIn !== '—') {
+                            checkInHTML = `${rec.checkIn} <span class="att-status-chip att-status-late" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Late Entry</span>`;
+                        }
+
+                        let checkOutHTML = rec.checkOut;
+                        if (rec.code === 'EMP003' && !rec.isAdminCorrected) {
+                            checkOutHTML = `
+                                <span class="before-correct">
+                                    <label for="correct-checkout-EMP003-toggle" style="cursor: pointer; text-decoration: underline; color: var(--color-black); font-weight: 600; display: flex; flex-direction: row; gap: 2px; align-items: center; width: fit-content;">
+                                        <span class="att-status-chip att-status-missing-checkout" style="font-size: 0.6875rem; padding: 1px 4px; vertical-align: middle; text-decoration: none; border-style: double;">Not Checked Out</span>
+                                    </label>
+                                </span>`;
+                        } else if (rec.code === 'EMP003' && rec.isAdminCorrected) {
+                            checkOutHTML = `
+                                <span class="after-correct">
+                                    <div style="display: flex; align-items: center; gap: 4px;">
+                                        ${rec.checkOut} <span class="att-status-chip" style="font-size: 0.6875rem; padding: 1px 4px; border-radius: 2px; background-color: var(--color-bg-light); color: var(--color-black); font-weight: 600; text-transform: none; line-height: 1.2;">Admin</span>
+                                    </div>
+                                    <div style="font-size: 0.6875rem; color: #666; margin-top: 2px; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500;" title="Forgot to check out after leaving the branch.">
+                                        Forgot to check out after leaving the branch.
+                                    </div>
+                                </span>`;
+                        } else if (rec.checkOutEarly && rec.checkOut !== '—') {
+                            checkOutHTML = `${rec.checkOut} <span class="att-status-chip att-status-early" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Early Exit</span>`;
+                        }
+
+                        tbodyHTML += `
+                            <tr>
+                                <td data-label="Employee ID">${rec.code}</td>
+                                <td data-label="Employee Name">${rec.name}</td>
+                                <td data-label="Department">${rec.department}</td>
+                                <td data-label="Branch">${rec.branch}</td>
+                                <td data-label="Date">${formatDateDisplay(rec.date)}</td>
+                                <td data-label="Shift">${rec.shift}</td>
+                                <td data-label="Status"><span class="att-status-chip ${statusClass}">${rec.status}</span></td>
+                                <td data-label="Check In">${checkInHTML}</td>
+                                <td data-label="Check Out">${checkOutHTML}</td>
+                                <td data-label="Duration">${rec.duration}</td>
+                            </tr>`;
+                    });
+                }
+                tbody.innerHTML = tbodyHTML;
+
+                // Sync header styling classes
+                document.querySelectorAll('.attendance-table thead th.sortable').forEach(th => {
+                    const key = th.getAttribute('data-key');
+                    th.classList.remove('sort-asc', 'sort-desc');
+                    if (currentSort.key === key) {
+                        th.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+                    }
+                });
+
+                // Update pagination count
+                const countSpan = document.querySelector('.pagination-bar > span');
+                if (countSpan) {
+                    countSpan.textContent = totalRecords === 0 ? 'Showing 0-0 of 0' : `Showing ${startIndex + 1}-${endIndex} of ${totalRecords}`;
+                }
+
+                // Render dynamic pagination buttons
+                const paginationControls = document.querySelector('.pagination-controls');
+                if (paginationControls) {
+                    paginationControls.innerHTML = '';
+                    
+                    const prevBtn = document.createElement('button');
+                    prevBtn.type = 'button';
+                    prevBtn.className = 'page-btn';
+                    prevBtn.textContent = 'Prev';
+                    if (currentPage === 1) prevBtn.disabled = true;
+                    prevBtn.addEventListener('click', () => {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            renderAttendanceTable();
+                        }
+                    });
+                    paginationControls.appendChild(prevBtn);
+                    
+                    for (let i = 1; i <= totalPages; i++) {
+                        if (i === currentPage) {
+                            const activeSpan = document.createElement('span');
+                            activeSpan.className = 'page-number';
+                            activeSpan.textContent = i;
+                            paginationControls.appendChild(activeSpan);
+                        } else {
+                            const numBtn = document.createElement('button');
+                            numBtn.type = 'button';
+                            numBtn.className = 'page-btn';
+                            numBtn.textContent = i;
+                            numBtn.addEventListener('click', () => {
+                                currentPage = i;
+                                renderAttendanceTable();
+                            });
+                            paginationControls.appendChild(numBtn);
+                        }
+                    }
+                    
+                    const nextBtn = document.createElement('button');
+                    nextBtn.type = 'button';
+                    nextBtn.className = 'page-btn';
+                    nextBtn.textContent = 'Next';
+                    if (currentPage === totalPages) nextBtn.disabled = true;
+                    nextBtn.addEventListener('click', () => {
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            renderAttendanceTable();
+                        }
+                    });
+                    paginationControls.appendChild(nextBtn);
+                }
+            }
+
+            // Bind click sorting handlers
+            document.querySelectorAll('.attendance-table thead th.sortable').forEach(th => {
+                th.addEventListener('click', () => {
+                    const key = th.getAttribute('data-key');
+                    if (currentSort.key === key) {
+                        if (currentSort.direction === 'asc') {
+                            currentSort.direction = 'desc';
+                        } else {
+                            currentSort.key = null;
+                            currentSort.direction = 'asc';
+                        }
+                    } else {
+                        currentSort.key = key;
+                        currentSort.direction = 'asc';
+                    }
+                    renderAttendanceTable();
+                });
+            });
+
+            // Bind admin checkout correction click handler
+            const saveBtn = document.querySelector('label[for="kiran-corrected-toggle"]');
+            if (saveBtn) {
+                saveBtn.addEventListener('click', () => {
+                    const kiran = window.attendanceRecords.find(r => r.code === 'EMP003');
+                    if (kiran) {
+                        kiran.checkOut = '06:10 PM';
+                        kiran.duration = '9h 13m';
+                        kiran.isAdminCorrected = true;
+                        setTimeout(renderAttendanceTable, 50); // delay slightly to allow CSS toggle checkboxes to toggle
+                    }
+                });
+            }
+
+            // Inject search inputs into dropdowns
+            function setupDropdownSearch() {
+                document.querySelectorAll('.custom-select-options').forEach(optionsBox => {
+                    if (optionsBox.querySelector('.dropdown-search-input') || optionsBox.classList.contains('calendar-popup')) return;
+                    const labels = optionsBox.querySelectorAll('label.custom-option');
+                    
+                    const searchWrapper = document.createElement('div');
+                    searchWrapper.className = 'dropdown-search-wrapper';
+                    searchWrapper.style.cssText = 'padding: 6px 8px; border-bottom: 1px solid var(--color-border); box-sizing: border-box; background: var(--color-white); position: sticky; top: 0; z-index: 10; margin-bottom: 4px;';
+                    
+                    const searchInput = document.createElement('input');
+                    searchInput.type = 'text';
+                    searchInput.className = 'dropdown-search-input';
+                    searchInput.placeholder = 'Search...';
+                    searchInput.style.cssText = 'width: 100%; height: 26px; font-size: 0.75rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 8px; box-sizing: border-box; outline: none;';
+                    
+                    searchInput.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                    
+                    searchWrapper.appendChild(searchInput);
+                    optionsBox.insertBefore(searchWrapper, optionsBox.firstChild);
+                    
+                    const noResults = document.createElement('div');
+                    noResults.className = 'dropdown-no-results';
+                    noResults.textContent = 'No results found';
+                    noResults.style.cssText = 'display: none; padding: 10px; font-size: 0.75rem; color: #999; text-align: center;';
+                    optionsBox.appendChild(noResults);
+                    
+                    searchInput.addEventListener('input', () => {
+                        const val = searchInput.value.toLowerCase().trim();
+                        let matchCount = 0;
+                        labels.forEach(label => {
+                            const text = label.textContent.toLowerCase();
+                            if (text.includes(val)) {
+                                label.style.display = 'flex';
+                                matchCount++;
+                            } else {
+                                label.style.display = 'none';
+                            }
+                        });
+                        
+                        noResults.style.display = matchCount === 0 ? 'block' : 'none';
+
+                        // Align Master Checkbox state for visible options
+                        const wrapper = optionsBox.closest('.custom-select-wrapper');
+                        if (wrapper) {
+                            const toggleAllCheckbox = wrapper.querySelector('.toggle-all-checkbox');
+                            if (toggleAllCheckbox) {
+                                const checkboxes = Array.from(optionsBox.querySelectorAll('input[type="checkbox"]')).filter(cb => !cb.classList.contains('toggle-all-checkbox'));
+                                const visibleCheckboxes = checkboxes.filter(cb => cb.closest('label').style.display !== 'none');
+                                const checkedCount = visibleCheckboxes.filter(cb => cb.checked).length;
+                                if (checkedCount === visibleCheckboxes.length && visibleCheckboxes.length > 0) {
+                                    toggleAllCheckbox.checked = true;
+                                    toggleAllCheckbox.nextSibling.textContent = ' Deselect All';
+                                } else {
+                                    toggleAllCheckbox.checked = false;
+                                    toggleAllCheckbox.nextSibling.textContent = ' Select All';
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Setup select wrappers Select All / Deselect All / State sync
+            function setupMultiSelects() {
+                document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
+                    const selectTrigger = wrapper.querySelector('.custom-select-trigger');
+                    const placeholder = selectTrigger ? selectTrigger.querySelector('.placeholder') : null;
+                    if (!placeholder) return;
+                    
+                    // We store the original placeholder if not already done
+                    if (!wrapper.hasAttribute('data-original-placeholder')) {
+                        wrapper.setAttribute('data-original-placeholder', placeholder.textContent.trim());
+                    }
+                    const defaultText = wrapper.getAttribute('data-original-placeholder');
+                    const optionsBox = wrapper.querySelector('.custom-select-options');
+                    if (!optionsBox) return;
+
+                    // 1. Keep the trigger placeholder static
+                    placeholder.textContent = defaultText;
+
+                    // Dynamically swap the action spans div with a Master Checkbox
+                    const actionDiv = optionsBox.querySelector('div[style*="border-bottom"]');
+                    if (actionDiv) {
+                        const newLabel = document.createElement('label');
+                        newLabel.className = 'custom-option toggle-all-option';
+                        newLabel.style.cssText = 'display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 600; cursor: pointer; color: var(--color-black); border-bottom: 1px solid var(--color-border); background-color: var(--color-bg-light); margin-bottom: 4px; box-sizing: border-box; width: 100%;';
+                        newLabel.innerHTML = `<input type="checkbox" class="toggle-all-checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Select All`;
+                        actionDiv.parentNode.replaceChild(newLabel, actionDiv);
+                    }
+
+                    const toggleAllCheckbox = wrapper.querySelector('.toggle-all-checkbox');
+                    const checkboxes = Array.from(optionsBox.querySelectorAll('input[type="checkbox"]')).filter(cb => !cb.classList.contains('toggle-all-checkbox'));
+
+                    // Create Selected Chips Container if not exists
+                    let chipsContainer = optionsBox.querySelector('.selected-chips-container');
+                    if (!chipsContainer) {
+                        chipsContainer = document.createElement('div');
+                        chipsContainer.className = 'selected-chips-container';
+                        chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 8px; border-bottom: 1px solid var(--color-border); background-color: var(--color-white); max-height: 80px; overflow-y: auto; box-sizing: border-box; width: 100%;';
+                        const searchWrapper = optionsBox.querySelector('.dropdown-search-wrapper');
+                        if (searchWrapper) {
+                            optionsBox.insertBefore(chipsContainer, searchWrapper.nextSibling);
+                        } else {
+                            optionsBox.insertBefore(chipsContainer, optionsBox.firstChild);
+                        }
+                    }
+
+                    function updateMasterCheckboxState() {
+                        if (!toggleAllCheckbox) return;
+                        const visibleCheckboxes = checkboxes.filter(cb => cb.closest('label').style.display !== 'none');
+                        const checkedCount = visibleCheckboxes.filter(cb => cb.checked).length;
+                        if (checkedCount === visibleCheckboxes.length && visibleCheckboxes.length > 0) {
+                            toggleAllCheckbox.checked = true;
+                            toggleAllCheckbox.nextSibling.textContent = ' Deselect All';
+                        } else {
+                            toggleAllCheckbox.checked = false;
+                            toggleAllCheckbox.nextSibling.textContent = ' Select All';
+                        }
+                    }
+
+                    function renderChips() {
+                        chipsContainer.innerHTML = '';
+                        const checkedBoxes = checkboxes.filter(cb => cb.checked);
+                        if (checkedBoxes.length === 0) {
+                            chipsContainer.style.display = 'none';
+                        } else {
+                            chipsContainer.style.display = 'flex';
+                            checkedBoxes.forEach(cb => {
+                                const optionName = cb.closest('label').textContent.trim();
+                                const chip = document.createElement('span');
+                                chip.className = 'select-chip';
+                                chip.style.cssText = 'display: inline-flex; align-items: center; gap: 4px; background-color: var(--color-bg-light); color: var(--color-black); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 2px 6px; font-size: 0.72rem; font-weight: 500; margin: 2px 0;';
+                                chip.innerHTML = `${optionName} <span class="chip-remove" style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; margin-left: 4px; transition: background-color 0.15s, color 0.15s; box-sizing: border-box;"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none; color: #666; transition: color 0.15s;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>`;
+                                
+                                const xIcon = chip.querySelector('.chip-remove');
+                                xIcon.addEventListener('mouseover', () => {
+                                    xIcon.style.backgroundColor = 'rgba(0,0,0,0.08)';
+                                    xIcon.querySelector('svg').style.color = 'var(--color-black)';
+                                });
+                                xIcon.addEventListener('mouseout', () => {
+                                    xIcon.style.backgroundColor = 'transparent';
+                                    xIcon.querySelector('svg').style.color = '#666';
+                                });
+                                
+                                xIcon.addEventListener('click', (e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    cb.checked = false;
+                                    updateState();
+                                });
+                                chipsContainer.appendChild(chip);
+                            });
+                        }
+                    }
+
+                    function updateTriggerText() {
+                        if (!placeholder) return;
+                        const checkedCount = checkboxes.filter(cb => cb.checked).length;
+                        if (checkedCount === checkboxes.length && checkboxes.length > 0) {
+                            placeholder.textContent = 'All Selected';
+                        } else if (checkedCount === 0) {
+                            placeholder.textContent = defaultText;
+                        } else {
+                            placeholder.textContent = `${checkedCount} Selected`;
+                        }
+                    }
+
+                    function updateState() {
+                        updateMasterCheckboxState();
+                        renderChips();
+                        updateTriggerText();
+                    }
+
+                    if (toggleAllCheckbox) {
+                        toggleAllCheckbox.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const checked = toggleAllCheckbox.checked;
+                            checkboxes.forEach(cb => {
+                                const label = cb.closest('label');
+                                if (label.style.display !== 'none') {
+                                    cb.checked = checked;
+                                }
+                            });
+                            updateState();
+                        });
+                    }
+
+                    checkboxes.forEach(cb => {
+                        cb.addEventListener('change', () => {
+                            updateState();
+                        });
+                    });
+
+                    updateState();
+                });
+            }
+
+            // Setup filter wrappers data keys and placeholders
+            const attendanceWrappersList = [
+                { key: 'branch', text: 'Select Branches' },
+                { key: 'department', text: 'Select Departments' },
+                { key: 'shift', text: 'Select Shifts' },
+                { key: 'status', text: 'Select Attendance Status' }
+            ];
+
+            document.querySelectorAll('.custom-select-wrapper').forEach((wrapper, index) => {
+                if (index < attendanceWrappersList.length) {
+                    wrapper.setAttribute('data-filter-key', attendanceWrappersList[index].key);
+                    wrapper.setAttribute('data-default-placeholder', attendanceWrappersList[index].text);
+                }
+            });
+
+            function getActiveFilters() {
+                const active = {};
+                document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
+                    const key = wrapper.getAttribute('data-filter-key');
+                    if (!key) return;
+                    const checked = Array.from(wrapper.querySelectorAll('.custom-select-options input[type="checkbox"]:checked'))
+                        .map(cb => cb.closest('label').textContent.trim());
+                    
+                    // Filter out any "All ..." checkboxes (like "All Branches", "All Departments", etc.)
+                    const cleanChecked = checked.filter(val => !val.startsWith('All '));
+                    if (cleanChecked.length > 0) {
+                        active[key] = cleanChecked;
+                    }
+                });
+                return active;
+            }
+
+            // Bind Search input keyup
+            const searchField = document.querySelector('.search-input');
+            if (searchField) {
+                searchField.addEventListener('input', () => {
+                    currentPage = 1;
+                    renderAttendanceTable();
+                });
+            }
+
+            // Bind Reset actions (Top Reset and Modal Reset)
+            const handleReset = (e) => {
+                if (e) e.preventDefault();
+                document.querySelectorAll('.custom-select-options input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                });
+                document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
+                    const ph = wrapper.querySelector('.custom-select-trigger .placeholder');
+                    const def = wrapper.getAttribute('data-default-placeholder');
+                    if (ph && def) ph.textContent = def;
+                });
+                
+                // Clear all chips containers visually
+                document.querySelectorAll('.selected-chips-container').forEach(container => {
+                    container.innerHTML = '';
+                    container.style.display = 'none';
+                });
+
+                // Update master checkboxes display
+                document.querySelectorAll('.toggle-all-checkbox').forEach(cb => {
+                    cb.checked = false;
+                    cb.nextSibling.textContent = ' Select All';
+                });
+
+                currentPage = 1;
+                renderAttendanceTable();
+            };
+
+            const topReset = document.getElementById('attendance-top-reset');
+            if (topReset) topReset.addEventListener('click', handleReset);
+            
+            const modalReset = document.getElementById('attendance-modal-reset');
+            if (modalReset) modalReset.addEventListener('click', handleReset);
+
+            // Bind Apply button click
+            const modalApply = document.getElementById('attendance-modal-apply');
+            if (modalApply) {
+                modalApply.addEventListener('click', () => {
+                    currentPage = 1;
+                    renderAttendanceTable();
+                });
+            }
+
+            // Blur auto-focused inputs when filter modal is toggled open
+            const filtersToggle = document.getElementById('filters-popup-toggle');
+            if (filtersToggle) {
+                filtersToggle.addEventListener('change', () => {
+                    if (filtersToggle.checked) {
+                        setTimeout(() => {
+                            if (document.activeElement) document.activeElement.blur();
+                        }, 50);
+                    }
+                });
+            }
+
+            // Initial render
+            renderAttendanceTable();
+            setupMultiSelects();
+            setupDropdownSearch();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Delivery Person App - Logistics ERP</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="pickup-boy-body">
+
+    <!-- Mobile Device Frame (360px - 390px) -->
+    <div class="pb-app-container">
+        
+        <!-- Compact Header (Hidden during Login) -->
+        <header class="pb-header" id="pb-main-header" style="display:none;">
+            <div class="pb-header-left">
+                <div>
+                    <div class="pb-header-title" id="pb-header-title">Delivery App</div>
+                    <div class="pb-header-sub" id="pb-header-sub">Mangalore Branch</div>
+                </div>
+            </div>
+            <div class="pb-header-badge">ONLINE</div>
+        </header>
+
+        <!-- Dynamic In-App Toast -->
+        <div id="pb-toast" class="pb-toast">Notification message</div>
+
+        <!-- Main Viewport -->
+        <main class="pb-viewport no-nav" id="pb-viewport">
+
+            <!-- ========================================== -->
+            <!-- 1. HIGH-FIDELITY MOBILE OTP LOGIN SCREEN   -->
+            <!-- ========================================== -->
+            <section id="pb-screen-login" class="pb-screen active" style="padding:0;height:100%;">
+                <div class="pb-mobile-login-view">
+                    
+                    <div class="pb-login-top">
+                        
+                        <!-- Logo & App Name -->
+                        <div class="pb-login-brand-compact">
+                            <div class="pb-login-logo-sq">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="pb-app-title-main">Delivery Person App</div>
+                                <div class="pb-app-title-sub">Logistics Field Operations</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 1: Mobile Number Input -->
+                        <div id="login-step-phone">
+                            <div class="pb-login-prompt">
+                                <h3>Mobile Number</h3>
+                                <p>Enter registered 10-digit number to receive OTP</p>
+                            </div>
+
+                            <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;">
+                                <div class="pb-phone-input-group">
+                                    <span class="pb-country-code">+91</span>
+                                    <input type="tel" id="login-phone-val" class="pb-phone-field" placeholder="Enter mobile number" value="9886012345" maxlength="10">
+                                </div>
+
+                                <button type="button" class="pb-btn-full" onclick="sendMobileOTP()">
+                                    <span>Send OTP</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: OTP Verification -->
+                        <div id="login-step-otp" class="pb-otp-view">
+                            
+                            <!-- Top Left Back CTA -->
+                            <button type="button" class="pb-login-back-btn" onclick="backToPhoneStep()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                                <span>Back</span>
+                            </button>
+
+                            <div class="pb-login-prompt">
+                                <h3>Enter OTP</h3>
+                                <p>6-digit code sent to <strong id="display-otp-phone" style="color:var(--pb-text-primary);">+91 98860 12345</strong></p>
+                            </div>
+
+                            <div class="pb-otp-inputs">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="" onkeyup="moveOTPFocus(this, 0)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="" onkeyup="moveOTPFocus(this, 1)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="" onkeyup="moveOTPFocus(this, 2)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="" onkeyup="moveOTPFocus(this, 3)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="" onkeyup="moveOTPFocus(this, 4)">
+                                <input type="text" class="pb-otp-digit" maxlength="1" value="" onkeyup="moveOTPFocus(this, 5)">
+                            </div>
+
+                            <button type="button" class="pb-btn-full" onclick="verifyMobileOTP()">
+                                <span>Verify OTP &amp; Login →</span>
+                            </button>
+
+                            <div style="margin-top:10px;text-align:center;font-size:0.75rem;">
+                                <span id="otp-timer-text" style="color:var(--pb-text-secondary);">Resend OTP in <strong id="otp-countdown">30</strong> seconds</span>
+                                <button type="button" id="btn-resend-otp" onclick="resendMobileOTP()" style="display:none;background:none;border:none;color:var(--pb-primary);font-weight:700;font-size:0.75rem;cursor:pointer;padding:2px 6px;">Resend OTP</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="font-size:0.72rem;color:var(--pb-text-secondary);text-align:center;font-weight:500;">
+                        Mangalore Branch · Field Staff Authorization
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- 2. HOME SCREEN / DELIVERY DASHBOARD        -->
+            <!-- ========================================== -->
+            <section id="pb-screen-home" class="pb-screen">
+                
+                <!-- Minimal Header -->
+                <div class="pb-home-header-minimal">
+                    <div>
+                        <div class="pb-home-greeting-title">Good Morning, Ravi</div>
+                        <div class="pb-home-greeting-sub">Delivery Staff · Mangalore Branch</div>
+                    </div>
+                    <div class="pb-home-avatar-small">RK</div>
+                </div>
+
+                <!-- Today's Progress Horizontal KPI Bar -->
+                <div class="pb-kpi-container">
+                    <div class="pb-kpi-header">Today's Progress</div>
+                    <div class="pb-kpi-row">
+                        <div class="pb-kpi-item">
+                            <div class="pb-kpi-label">Assigned</div>
+                            <div class="pb-kpi-val" id="kpi-assigned">6</div>
+                        </div>
+                        <div class="pb-kpi-item">
+                            <div class="pb-kpi-label">Completed</div>
+                            <div class="pb-kpi-val" id="kpi-completed">2</div>
+                        </div>
+                        <div class="pb-kpi-item">
+                            <div class="pb-kpi-label">Pending</div>
+                            <div class="pb-kpi-val" id="kpi-pending">3</div>
+                        </div>
+                        <div class="pb-kpi-item">
+                            <div class="pb-kpi-label">Failed</div>
+                            <div class="pb-kpi-val" id="kpi-failed">1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fast Route Start Action Banner -->
+                <div class="pb-home-route-card" onclick="switchNav('deliveries')">
+                    <div>
+                        <div class="pb-home-route-title">Start Today's Route</div>
+                        <div class="pb-home-route-sub">3 pending deliveries in Mangalore</div>
+                    </div>
+                    <div class="pb-route-arrow-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- 3. MY DELIVERIES SCREEN                    -->
+            <!-- ========================================== -->
+            <section id="pb-screen-deliveries" class="pb-screen">
+                
+                <!-- Clean Search & Filter Bar -->
+                <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:10px;">
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <div style="flex:1;position:relative;display:flex;align-items:center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="position:absolute;left:10px;color:#888;">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input type="text" id="delivery-search-input" placeholder="Search LR, Customer, Receiver..." oninput="applyAllFilters()" style="width:100%;height:36px;padding:4px 10px 4px 30px;font-size:0.8125rem;border:1px solid var(--pb-border-light);border-radius:var(--pb-radius-md);background:#fff;outline:none;">
+                        </div>
+                        <button type="button" class="pb-chip" onclick="openFilterModal()" id="btn-filter-trigger" style="height:36px;padding:0 12px;display:flex;align-items:center;gap:6px;font-size:0.78125rem;font-weight:700;background:#111827;color:#fff;border-radius:var(--pb-radius-md);border:none;cursor:pointer;flex-shrink:0;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                            <span>Filters</span>
+                            <span id="active-filter-badge" style="display:none;background:#fff;color:#000;font-size:0.65rem;border-radius:50%;width:15px;height:15px;align-items:center;justify-content:center;font-weight:800;">0</span>
+                        </button>
+                    </div>
+
+                    <!-- Quick Status Horizontal Chips Bar -->
+                    <div class="pb-chips-row" style="margin-top:2px;">
+                        <button class="pb-chip active" onclick="selectQuickStatus(this, 'all')">All</button>
+                        <button class="pb-chip" onclick="selectQuickStatus(this, 'pending')">Pending</button>
+                        <button class="pb-chip" onclick="selectQuickStatus(this, 'completed')">Delivered</button>
+                        <button class="pb-chip" onclick="selectQuickStatus(this, 'failed')">Failed</button>
+                    </div>
+                </div>
+
+                <!-- Location Groups Container -->
+                <div id="pb-deliveries-list" style="display:flex;flex-direction:column;gap:8px;">
+
+                    <!-- LOCATION GROUP 1: Mangalore Central Area -->
+                    <div class="pb-location-group" id="group-mangalore-central">
+                        <div class="pb-location-header" onclick="toggleLocationGroup('group-mangalore-central')">
+                            <div class="pb-location-header-left">
+                                <div class="pb-location-name-row">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>Mangalore Central Area</span>
+                                </div>
+                                <div class="pb-location-sub-count">3 Deliveries</div>
+                            </div>
+                            <div class="pb-location-header-right">
+                                <div class="pb-chevron-toggle">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-location-content">
+
+                            <!-- Delivery 1: ABC Traders -->
+                            <div class="pb-card" data-lr="LR-2026-000125" data-status="pending" onclick="openDeliveryDetails('LR-2026-000125')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">ABC Traders</div>
+                                    <span class="pb-lr-chip">LR-2026-000125</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Kadri, Mangalore</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('ABC Traders', 'Kadri, Mangalore', '2.4 km', '8 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>10:00 AM</span>
+                                    <span>3 Boxes</span>
+                                    <span>45 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000125">To-Pay · ₹2,450</span>
+                                    <span class="pb-status-badge" id="card-status-LR-2026-000125">Pending</span>
+                                </div>
+                            </div>
+
+                            <!-- Delivery 2: Coastal Retail Hub -->
+                            <div class="pb-card" data-lr="LR-2026-000126" data-status="pending" onclick="openDeliveryDetails('LR-2026-000126')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Coastal Retail Hub</div>
+                                    <span class="pb-lr-chip">LR-2026-000126</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Kankanady, Mangalore</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Coastal Retail Hub', 'Kankanady, Mangalore', '3.8 km', '11 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>11:30 AM</span>
+                                    <span>2 Cartons</span>
+                                    <span>25 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000126">✓ Paid · ₹1,800</span>
+                                    <span class="pb-status-badge" id="card-status-LR-2026-000126">Pending</span>
+                                </div>
+                            </div>
+
+                            <!-- Delivery 3: Ocean Fresh Marine -->
+                            <div class="pb-card" data-lr="LR-2026-000127" data-status="pending" onclick="openDeliveryDetails('LR-2026-000127')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Ocean Fresh Marine</div>
+                                    <span class="pb-lr-chip">LR-2026-000127</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Bejai, Mangalore</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Ocean Fresh Marine', 'Bejai, Mangalore', '1.8 km', '5 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>12:15 PM</span>
+                                    <span>4 Crates</span>
+                                    <span>60 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000127">✓ Paid · ₹1,200</span>
+                                    <span class="pb-status-badge" id="card-status-LR-2026-000127">Pending</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- LOCATION GROUP 2: Baikampady Area -->
+                    <div class="pb-location-group" id="group-baikampady">
+                        <div class="pb-location-header" onclick="toggleLocationGroup('group-baikampady')">
+                            <div class="pb-location-header-left">
+                                <div class="pb-location-name-row">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>Baikampady Industrial Area</span>
+                                </div>
+                                <div class="pb-location-sub-count">2 Deliveries</div>
+                            </div>
+                            <div class="pb-location-header-right">
+                                <div class="pb-chevron-toggle">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-location-content">
+
+                            <!-- Delivery 4: Mangalore Tools & Spares -->
+                            <div class="pb-card" data-lr="LR-2026-000128" data-status="completed" onclick="openDeliveryDetails('LR-2026-000128')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Mangalore Tools &amp; Spares</div>
+                                    <span class="pb-lr-chip">LR-2026-000128</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Industrial Estate, Baikampady</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Mangalore Tools & Spares', 'Baikampady, Mangalore', '8.5 km', '20 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>09:15 AM</span>
+                                    <span>6 Bundles</span>
+                                    <span>140 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000128">✓ Paid · ₹3,800</span>
+                                    <span class="pb-status-badge completed" id="card-status-LR-2026-000128">Completed</span>
+                                </div>
+                            </div>
+
+                            <!-- Delivery 5: Karnataka Pharma Depot -->
+                            <div class="pb-card" data-lr="LR-2026-000129" data-status="completed" onclick="openDeliveryDetails('LR-2026-000129')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Karnataka Pharma Depot</div>
+                                    <span class="pb-lr-chip">LR-2026-000129</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Phase 2, Baikampady</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Karnataka Pharma Depot', 'Phase 2 Baikampady', '9.0 km', '22 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>09:45 AM</span>
+                                    <span>5 Boxes</span>
+                                    <span>85 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000129">✓ Paid · ₹2,100</span>
+                                    <span class="pb-status-badge completed" id="card-status-LR-2026-000129">Completed</span>
+                                </div>
+                            </div>
+
+                            <!-- Delivery 6: Apex Steel Co. (Failed) -->
+                            <div class="pb-card" data-lr="LR-2026-000130" data-status="failed" onclick="openDeliveryDetails('LR-2026-000130')">
+                                <div class="pb-card-top">
+                                    <div class="pb-customer-title">Apex Steel Co.</div>
+                                    <span class="pb-lr-chip">LR-2026-000130</span>
+                                </div>
+                                <div class="pb-address-row">
+                                    <span class="pb-address-text">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <span>Industrial Estate, Baikampady</span>
+                                    </span>
+                                    <button class="pb-map-icon-btn" title="Navigate" onclick="event.stopPropagation(); openNavigateSheet('Apex Steel Co.', 'Industrial Estate, Baikampady', '8.8 km', '21 mins')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="pb-card-details-row">
+                                    <span>02:00 PM</span>
+                                    <span>8 Pipes</span>
+                                    <span>190 KG</span>
+                                </div>
+                                <div class="pb-card-footer">
+                                    <span class="pb-payment-tag" id="card-pay-LR-2026-000130">To-Pay · ₹4,500</span>
+                                    <span class="pb-status-badge failed" id="card-status-LR-2026-000130">Failed</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- 4. DELIVERY DETAILS SCREEN                 -->
+            <!-- ========================================== -->
+            <section id="pb-screen-details" class="pb-screen">
+                
+                <div class="pb-back-nav" onclick="switchNav('deliveries')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to Deliveries</span>
+                </div>
+
+                <!-- Customer & Receiver Details Card -->
+                <div class="pb-detail-card">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                        <div>
+                            <h3 id="dt-customer" style="font-size:0.95rem;font-weight:800;color:var(--pb-text-primary);">ABC Traders</h3>
+                            <div id="dt-phone" style="font-size:0.72rem;color:var(--pb-text-secondary);margin-top:1px;">+91 98450 12345</div>
+                        </div>
+                        <span id="dt-status-badge" class="pb-status-badge">PENDING</span>
+                    </div>
+
+                    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--pb-border-light);display:flex;flex-direction:column;gap:6px;">
+                        <div style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Receiver Contact:</div>
+                        <div class="pb-detail-row" style="margin-top:0;">
+                            <span class="pb-detail-label">Receiver Name</span>
+                            <span class="pb-detail-val" id="dt-receiver-name" style="font-weight:700;color:#111827;">Mr. Suresh Kamath</span>
+                        </div>
+                        <div class="pb-detail-row">
+                            <span class="pb-detail-label">Receiver Phone</span>
+                            <span class="pb-detail-val" id="dt-receiver-phone">+91 98450 99881</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--pb-border-light);display:flex;flex-direction:column;gap:6px;">
+                        <div class="pb-detail-row" style="margin-top:0;">
+                            <span class="pb-detail-label">LR Number</span>
+                            <span class="pb-detail-val" id="dt-lr" style="font-family:ui-monospace, monospace;">LR-2026-000125</span>
+                        </div>
+
+                        <div class="pb-detail-row">
+                            <span class="pb-detail-label">Delivery Address</span>
+                            <span class="pb-detail-val" id="dt-address">Kadri, Mangalore</span>
+                        </div>
+
+                        <div class="pb-detail-row">
+                            <span class="pb-detail-label">Items &amp; Weight</span>
+                            <span class="pb-detail-val" id="dt-items">3 Boxes (45 KG)</span>
+                        </div>
+
+                        <div class="pb-detail-row">
+                            <span class="pb-detail-label">Scheduled Time</span>
+                            <span class="pb-detail-val" id="dt-time">10:00 AM</span>
+                        </div>
+
+                        <div class="pb-detail-row">
+                            <span class="pb-detail-label">Payment</span>
+                            <span class="pb-detail-val" id="dt-payment" style="font-weight:700;color:var(--pb-text-primary);">To-Pay · ₹2,450</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2-Column Action Grid -->
+                <div class="pb-workflow-box">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span class="pb-workflow-title">Delivery Actions</span>
+                        <span style="font-size:0.6875rem;color:var(--pb-text-secondary);font-weight:600;">Tap to execute</span>
+                    </div>
+
+                    <div class="pb-action-grid-2col">
+                        <!-- 1. Navigate -->
+                        <button class="pb-action-grid-btn" id="btn-wf-nav" onclick="openNavigateSheetCurrent()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                </svg>
+                                <span class="pb-action-card-title">Navigate</span>
+                            </div>
+                            <span class="pb-action-card-status">Open Route</span>
+                        </button>
+
+                        <!-- 2. Scan LR -->
+                        <button class="pb-action-grid-btn" id="btn-wf-scan" onclick="openScanSheet()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                    <path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"></path>
+                                </svg>
+                                <span class="pb-action-card-title">Scan LR</span>
+                            </div>
+                            <span class="pb-action-card-status">Scan Barcode</span>
+                        </button>
+
+                        <!-- 3. Verify Quantity -->
+                        <button class="pb-action-grid-btn" id="btn-wf-confirm" onclick="openConfirmItemsSheet()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span class="pb-action-card-title">Verify Items</span>
+                            </div>
+                            <span class="pb-action-card-status">Confirm Qty</span>
+                        </button>
+
+                        <!-- 4. Photos (POD Proof) -->
+                        <button class="pb-action-grid-btn" id="btn-wf-photo" onclick="openPhotosSheet()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                    <circle cx="12" cy="13" r="4"></circle>
+                                </svg>
+                                <span class="pb-action-card-title">POD Photos</span>
+                            </div>
+                            <span class="pb-action-card-status">Add Photos</span>
+                        </button>
+
+                        <!-- 5. Signature -->
+                        <button class="pb-action-grid-btn" id="btn-wf-sig" onclick="openSignatureSheet()">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 20h9"></path>
+                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                </svg>
+                                <span class="pb-action-card-title">Signature</span>
+                            </div>
+                            <span class="pb-action-card-status">Receiver Sign</span>
+                        </button>
+
+                        <!-- 6. Payment (Collect To-Pay/COD) -->
+                        <button class="pb-action-grid-btn" id="btn-wf-payment" onclick="openPaymentSheet()" style="display:none;">
+                            <div class="pb-action-card-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                                </svg>
+                                <span class="pb-action-card-title">Collection</span>
+                            </div>
+                            <span class="pb-action-card-status">Collect To-Pay</span>
+                        </button>
+                    </div>
+
+                    <!-- Failed/Reschedule trigger -->
+                    <button class="pb-btn-not-available" onclick="openFailedDeliverySheet()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <span>Failed / Unable to Deliver</span>
+                    </button>
+                </div>
+
+                <!-- Complete Delivery CTA -->
+                <button class="pb-btn-full" id="btn-complete-pickup-trigger" onclick="openCompleteDeliverySheet()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="16 10 10.5 15.5 8 13"></polyline>
+                    </svg>
+                    <span>Complete Delivery</span>
+                </button>
+
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- 5. PROFILE SCREEN                          -->
+            <!-- ========================================== -->
+            <section id="pb-screen-profile" class="pb-screen">
+                
+                <div class="pb-profile-screen-wrap">
+                    
+                    <div style="font-size:0.9375rem;font-weight:800;color:var(--pb-text-primary);">
+                        My Profile
+                    </div>
+
+                    <!-- Premium Profile Card -->
+                    <div class="pb-profile-card-premium">
+                        <div class="pb-avatar-hero">RK</div>
+                        <div class="pb-profile-hero-name" id="profile-staff-name">Ravi Kumar</div>
+                        <div class="pb-profile-hero-role">Delivery Staff</div>
+                        <div class="pb-profile-hero-branch">Mangalore Branch</div>
+                        <div class="pb-profile-hero-empid">EMP-DS-082</div>
+                    </div>
+
+                    <!-- Bottom Section: Logout Action -->
+                    <button type="button" class="pb-logout-row-btn" onclick="handleLogout()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- ========================================== -->
+        <!-- FIXED PRODUCTION BOTTOM NAVIGATION (BLACK) -->
+        <!-- ========================================== -->
+        <nav class="pb-bottom-nav hidden" id="pb-bottom-nav">
+            <button class="pb-nav-item active" id="nav-btn-home" onclick="switchNav('home')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Home</span>
+            </button>
+
+            <button class="pb-nav-item" id="nav-btn-deliveries" onclick="switchNav('deliveries')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <span>Deliveries</span>
+            </button>
+
+            <button class="pb-nav-item" id="nav-btn-profile" onclick="switchNav('profile')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Profile</span>
+            </button>
+        </nav>
+
+        <!-- ==================================================
+             HIGH-FIDELITY MOBILE BOTTOM SHEETS
+             ================================================== -->
+
+        <!-- 1. NAVIGATE BOTTOM SHEET -->
+        <div id="sheet-navigate" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Customer Navigation</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-navigate')">&times;</button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;padding:6px 0;">
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Location:</span>
+                        <span class="pb-detail-val" id="sheet-nav-loc">Kadri, Mangalore</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Distance:</span>
+                        <span class="pb-detail-val" id="sheet-nav-dist">2.4 km</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">ETA:</span>
+                        <span class="pb-detail-val" id="sheet-nav-eta">8 mins</span>
+                    </div>
+                </div>
+                <button class="pb-btn-full" onclick="confirmNavigationAction()">
+                    <span>Open Map</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. SCAN LR BOTTOM SHEET -->
+        <div id="sheet-scan-lr" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Scan LR</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-scan-lr')">&times;</button>
+                </div>
+
+                <div class="pb-scanner-view" id="scanner-view-box">
+                    <div class="pb-scan-laser"></div>
+                    <div style="font-size:0.75rem;font-weight:700;z-index:2;">Camera Active</div>
+                    <div style="font-size:0.6875rem;color:#9ca3af;z-index:2;">Align LR Barcode Inside Frame</div>
+                </div>
+
+                <div class="pb-scan-result-card" id="scan-result-box">
+                    <div style="font-weight:800;color:var(--pb-text-primary);border-bottom:1px solid var(--pb-border-light);padding-bottom:4px;">
+                        ✓ LR Verified
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Customer:</span>
+                        <span class="pb-detail-val" id="scan-res-customer">ABC Traders</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">LR Number:</span>
+                        <span class="pb-detail-val" id="scan-res-lr" style="font-family:monospace;">LR-2026-000125</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Items:</span>
+                        <span class="pb-detail-val" id="scan-res-items">3 Boxes</span>
+                    </div>
+                </div>
+
+                <button class="pb-btn-full" id="btn-scan-sim" onclick="simulateBarcodeScan()">
+                    <span>Scan Barcode</span>
+                </button>
+                <button class="pb-btn-full" id="btn-scan-confirm" style="display:none;" onclick="confirmScanDone()">
+                    <span>Confirm</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. CONFIRM ITEMS BOTTOM SHEET -->
+        <div id="sheet-confirm-items" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Confirm Items</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-confirm-items')">&times;</button>
+                </div>
+
+                <div class="pb-detail-row" style="padding:4px 0;">
+                    <span class="pb-detail-label">Expected Items:</span>
+                    <span class="pb-detail-val" id="sheet-confirm-expected">3 Boxes</span>
+                </div>
+
+                <div style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Delivered Quantity:</div>
+                <div class="pb-counter-control">
+                    <button type="button" class="pb-btn-counter" onclick="adjustItemQty(-1)">-</button>
+                    <span class="pb-counter-display" id="sheet-counter-val">3</span>
+                    <button type="button" class="pb-btn-counter" onclick="adjustItemQty(1)">+</button>
+                </div>
+
+                <button class="pb-btn-full" onclick="confirmItemsDone()">
+                    <span>Confirm</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 4. CAPTURE PHOTOS BOTTOM SHEET (POD) -->
+        <div id="sheet-photos" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Capture POD Proof</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-photos')">&times;</button>
+                </div>
+
+                <div class="pb-photo-grid">
+                    <div class="pb-photo-box" onclick="addPhotoToSheet()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                        <span>Add Photo</span>
+                    </div>
+                    <div class="pb-photo-preview" id="sheet-photo-1" style="display:none;">
+                        <span>PHOTO 1</span>
+                        <span>Cargo Delivered</span>
+                    </div>
+                    <div class="pb-photo-preview" id="sheet-photo-2" style="display:none;">
+                        <span>PHOTO 2</span>
+                        <span>Sign Slip</span>
+                    </div>
+                </div>
+
+                <div id="sheet-photo-msg" style="font-size:0.75rem;color:var(--pb-text-secondary);text-align:center;">
+                    0 / 2 Uploaded
+                </div>
+
+                <button class="pb-btn-full" onclick="confirmPhotosDone()">
+                    <span>Continue</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 5. SIGNATURE BOTTOM SHEET -->
+        <div id="sheet-signature" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Receiver Signature</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-signature')">&times;</button>
+                </div>
+
+                <div style="font-size:0.75rem;color:var(--pb-text-secondary);">
+                    Sign with finger in the signature pad:
+                </div>
+
+                <canvas id="sheet-sig-canvas" class="pb-sig-canvas" width="320" height="130"></canvas>
+
+                <div style="display:flex;gap:8px;">
+                    <button class="pb-btn-full secondary" onclick="clearSignatureCanvas()">
+                        <span>Clear</span>
+                    </button>
+                    <button class="pb-btn-full" onclick="confirmSignatureDone()">
+                        <span>Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. PAYMENT BOTTOM SHEET (TO-PAY) -->
+        <div id="sheet-payment" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">To-Pay / COD Collection</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-payment')">&times;</button>
+                </div>
+
+                <div style="text-align:center;padding:8px 0;">
+                    <div style="font-size:0.75rem;color:var(--pb-text-secondary);">Amount to Collect:</div>
+                    <div style="font-size:1.5rem;font-weight:800;color:var(--pb-text-primary);" id="sheet-pay-amount">₹2,450</div>
+                </div>
+
+                <div id="sheet-pay-qr" style="display:none;flex-direction:column;align-items:center;gap:6px;border:1px solid var(--pb-border-light);padding:10px;border-radius:var(--pb-radius-md);background:#fafafa;">
+                    <svg viewBox="0 0 100 100" width="110" height="110">
+                        <rect width="100" height="100" fill="white"/>
+                        <rect x="10" y="10" width="25" height="25" fill="#111827"/>
+                        <rect x="15" y="15" width="15" height="15" fill="white"/>
+                        <rect x="18" y="18" width="9" height="9" fill="#111827"/>
+                        <rect x="65" y="10" width="25" height="25" fill="#111827"/>
+                        <rect x="70" y="15" width="15" height="15" fill="white"/>
+                        <rect x="73" y="18" width="9" height="9" fill="#111827"/>
+                        <rect x="10" y="65" width="25" height="25" fill="#111827"/>
+                        <rect x="15" y="70" width="15" height="15" fill="white"/>
+                        <rect x="18" y="73" width="9" height="9" fill="#111827"/>
+                        <rect x="42" y="10" width="12" height="12" fill="#111827"/>
+                        <rect x="42" y="30" width="16" height="8" fill="#111827"/>
+                        <rect x="10" y="45" width="18" height="10" fill="#111827"/>
+                        <rect x="65" y="45" width="25" height="10" fill="#111827"/>
+                    </svg>
+                    <div style="font-size:0.6875rem;color:var(--pb-text-secondary);font-weight:600;">Scan with GPay/PhonePe</div>
+                </div>
+
+                <div style="display:flex;gap:8px;">
+                    <button class="pb-btn-full" onclick="completePaymentCash()">
+                        <span>Collect Cash</span>
+                    </button>
+                    <button class="pb-btn-full secondary" onclick="toggleQRView()">
+                        <span>Generate QR</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. COMPLETE DELIVERY BOTTOM SHEET -->
+        <div id="sheet-complete-pickup" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Complete Delivery</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-complete-pickup')">&times;</button>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:8px;padding:6px 0;">
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">LR Number:</span>
+                        <span class="pb-detail-val" id="sheet-sum-lr" style="font-family:monospace;">LR-2026-000125</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Customer:</span>
+                        <span class="pb-detail-val" id="sheet-sum-customer">ABC Traders</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Items:</span>
+                        <span class="pb-detail-val" id="sheet-sum-items">3 Boxes</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">Collection:</span>
+                        <span class="pb-detail-val" id="sheet-sum-pay">✓ Paid · ₹2,450</span>
+                    </div>
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">POD Status:</span>
+                        <span class="pb-detail-val" id="sheet-sum-verify">✓ Complete</span>
+                    </div>
+                </div>
+
+                <button class="pb-btn-full" onclick="finalizePickupAction()">
+                    <span>Complete Delivery</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 8. FAILED DELIVERY BOTTOM SHEET -->
+        <div id="sheet-failed-pickup" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Reason for Failed Delivery</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-failed-pickup')">&times;</button>
+                </div>
+
+                <div style="font-size:0.75rem;color:var(--pb-text-secondary);">
+                    Select reason for delivery failure:
+                </div>
+
+                <div class="pb-reasons-list">
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Customer Not Available" checked onchange="toggleOtherReasonInput()">
+                        <span>Customer Not Available</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Wrong Address" onchange="toggleOtherReasonInput()">
+                        <span>Wrong Address</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Customer Refused" onchange="toggleOtherReasonInput()">
+                        <span>Customer Refused</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Payment Issue" onchange="toggleOtherReasonInput()">
+                        <span>Payment Issue</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Delivery Rescheduled" onchange="toggleOtherReasonInput()">
+                        <span>Delivery Rescheduled</span>
+                    </label>
+                    <label class="pb-reason-label">
+                        <input type="radio" name="failed-reason" class="pb-reason-radio" value="Other" onchange="toggleOtherReasonInput()">
+                        <span>Other</span>
+                    </label>
+                </div>
+
+                <!-- Text field for Other reason -->
+                <input type="text" id="failed-reason-other-input" class="pb-reason-other-input" placeholder="Enter reason for failure...">
+
+                <div style="display:flex;gap:8px;width:100%;margin-top:10px;">
+                    <button class="pb-btn-full secondary" onclick="openReattemptPickupSheet()">
+                        <span>Schedule Reattempt</span>
+                    </button>
+                    <button class="pb-btn-full" onclick="submitFailedPickup()">
+                        <span>Mark Failed</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. REATTEMPT DELIVERY BOTTOM SHEET -->
+        <div id="sheet-reattempt-pickup" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Schedule Delivery Reattempt</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-reattempt-pickup')">&times;</button>
+                </div>
+
+                <div style="font-size:0.75rem;color:var(--pb-text-secondary);margin-bottom:8px;">
+                    Reschedule delivery attempt details:
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:12px;padding:4px 0;">
+                    <div class="pb-detail-row">
+                        <span class="pb-detail-label">LR Number:</span>
+                        <span class="pb-detail-val" id="sheet-reattempt-lr" style="font-family:monospace;">LR-2026-000125</span>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:4px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Reattempt Date *</label>
+                        <select id="reattempt-date-select" style="height:36px;border:1px solid var(--pb-border-light);border-radius:6px;padding:4px 8px;font-size:0.8125rem;background:#fff;">
+                            <option value="Tomorrow, 18 Aug 2026">Tomorrow (18 Aug 2026)</option>
+                            <option value="Day After, 19 Aug 2026">Day After (19 Aug 2026)</option>
+                            <option value="Today Evening (17 Aug 2026)">Today Evening (17 Aug 2026)</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:4px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Time Slot *</label>
+                        <select id="reattempt-slot-select" style="height:36px;border:1px solid var(--pb-border-light);border-radius:6px;padding:4px 8px;font-size:0.8125rem;background:#fff;">
+                            <option value="09:00 AM - 12:00 PM">Morning Slot (09:00 AM - 12:00 PM)</option>
+                            <option value="01:00 PM - 04:00 PM">Afternoon Slot (01:00 PM - 04:00 PM)</option>
+                            <option value="05:00 PM - 08:00 PM">Evening Slot (05:00 PM - 08:00 PM)</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;gap:4px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Delivery Instructions</label>
+                        <input type="text" id="reattempt-notes-input" placeholder="e.g. Call before coming" style="height:36px;border:1px solid var(--pb-border-light);border-radius:6px;padding:4px 8px;font-size:0.8125rem;background:#fff;">
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:8px;width:100%;margin-top:12px;">
+                    <button class="pb-btn-full secondary" onclick="closeSheet('sheet-reattempt-pickup')">
+                        <span>Cancel</span>
+                    </button>
+                    <button class="pb-btn-full" onclick="submitReattemptPickup()">
+                        <span>Confirm Reattempt</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. ADVANCED FILTER BOTTOM SHEET -->
+        <div id="sheet-advanced-filter" class="pb-sheet-overlay">
+            <div class="pb-bottom-sheet">
+                <div class="pb-sheet-handle"></div>
+                <div class="pb-sheet-header">
+                    <div class="pb-sheet-title">Advanced Filters</div>
+                    <button class="pb-btn-sheet-close" onclick="closeSheet('sheet-advanced-filter')">&times;</button>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:12px;max-height:60vh;overflow-y:auto;padding:4px 0;">
+                    
+                    <!-- Date Filters -->
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Date</label>
+                        <div class="pb-chips-row">
+                            <button class="pb-chip active" id="filter-date-today" onclick="selectFilterDate('today')">Today</button>
+                            <button class="pb-chip" id="filter-date-month" onclick="selectFilterDate('month')">This Month</button>
+                            <button class="pb-chip" id="filter-date-custom" onclick="selectFilterDate('custom')">Custom</button>
+                        </div>
+                        <input type="date" id="filter-custom-date-val" style="display:none;height:36px;border:1px solid var(--pb-border-light);border-radius:6px;padding:4px 8px;font-size:0.8125rem;background:#fff;" onchange="applyAllFilters()">
+                    </div>
+
+                    <!-- Payment Status Filters -->
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Payment Status</label>
+                        <div class="pb-chips-row">
+                            <button class="pb-chip active" id="filter-pay-all" onclick="selectFilterPay('all')">All</button>
+                            <button class="pb-chip" id="filter-pay-paid" onclick="selectFilterPay('paid')">Paid</button>
+                            <button class="pb-chip" id="filter-pay-topay" onclick="selectFilterPay('topay')">To-Pay</button>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Area Filters -->
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Delivery Area</label>
+                        <div class="pb-chips-row" style="flex-wrap:wrap;gap:6px;">
+                            <button class="pb-chip active" id="filter-area-all" onclick="selectFilterArea('all')">All Areas</button>
+                            <button class="pb-chip" id="filter-area-central" onclick="selectFilterArea('central')">Central Area</button>
+                            <button class="pb-chip" id="filter-area-baikampady" onclick="selectFilterArea('baikampady')">Baikampady</button>
+                        </div>
+                    </div>
+
+                    <!-- Sorting Options -->
+                    <div style="display:flex;flex-direction:column;gap:6px;">
+                        <label style="font-size:0.75rem;font-weight:700;color:var(--pb-text-primary);">Sort By</label>
+                        <select id="filter-sort-select" style="height:36px;border:1px solid var(--pb-border-light);border-radius:6px;padding:4px 8px;font-size:0.8125rem;background:#fff;" onchange="applyAllFilters()">
+                            <option value="time-asc">Scheduled Time (Earliest First)</option>
+                            <option value="time-desc">Scheduled Time (Latest First)</option>
+                            <option value="distance">Distance (Closest First)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div style="display:flex;gap:8px;width:100%;margin-top:14px;border-top:1px solid var(--pb-border-light);padding-top:10px;">
+                    <button class="pb-btn-full secondary" onclick="resetAllFilters()">
+                        <span>Reset All</span>
+                    </button>
+                    <button class="pb-btn-full" onclick="closeSheet('sheet-advanced-filter')">
+                        <span>Apply Filters</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // Data Store
+        const pickupDB = {
+            'LR-2026-000125': {
+                customer: 'ABC Traders',
+                receiverName: 'Mr. Suresh Kamath',
+                receiverPhone: '+91 98450 99881',
+                phone: '+91 98450 12345',
+                lr: 'LR-2026-000125',
+                address: 'Kadri, Mangalore',
+                items: '3 Boxes',
+                weight: '45 KG',
+                itemCount: 3,
+                time: '10:00 AM',
+                paid: false,
+                amount: '₹2,450',
+                status: 'pending',
+                dist: '2.4 km',
+                eta: '8 mins'
+            },
+            'LR-2026-000126': {
+                customer: 'Coastal Retail Hub',
+                receiverName: 'Ms. Priya Poojary',
+                receiverPhone: '+91 98801 77665',
+                phone: '+91 98801 44552',
+                lr: 'LR-2026-000126',
+                address: 'Kankanady, Mangalore',
+                items: '2 Cartons',
+                weight: '25 KG',
+                itemCount: 2,
+                time: '11:30 AM',
+                paid: true,
+                amount: '₹1,800',
+                status: 'pending',
+                dist: '3.8 km',
+                eta: '11 mins'
+            },
+            'LR-2026-000127': {
+                customer: 'Ocean Fresh Marine',
+                receiverName: 'Mr. Naveen Salian',
+                receiverPhone: '+91 97412 33221',
+                phone: '+91 97412 88710',
+                lr: 'LR-2026-000127',
+                address: 'Bejai, Mangalore',
+                items: '4 Crates',
+                weight: '60 KG',
+                itemCount: 4,
+                time: '12:15 PM',
+                paid: true,
+                amount: '₹1,200',
+                status: 'pending',
+                dist: '1.8 km',
+                eta: '5 mins'
+            },
+            'LR-2026-000128': {
+                customer: 'Mangalore Tools & Spares',
+                receiverName: 'Mr. Ganesh Pai',
+                receiverPhone: '+91 94481 55443',
+                phone: '+91 94481 22990',
+                lr: 'LR-2026-000128',
+                address: 'Industrial Estate, Baikampady',
+                items: '6 Bundles',
+                weight: '140 KG',
+                itemCount: 6,
+                time: '09:15 AM',
+                paid: true,
+                amount: '₹3,800',
+                status: 'completed',
+                dist: '8.5 km',
+                eta: '20 mins'
+            },
+            'LR-2026-000129': {
+                customer: 'Karnataka Pharma Depot',
+                receiverName: 'Dr. Anand Shenoy',
+                receiverPhone: '+91 99002 88990',
+                phone: '+91 99002 33441',
+                lr: 'LR-2026-000129',
+                address: 'Phase 2, Baikampady',
+                items: '5 Boxes',
+                weight: '85 KG',
+                itemCount: 5,
+                time: '09:45 AM',
+                paid: true,
+                amount: '₹2,100',
+                status: 'completed',
+                dist: '9.0 km',
+                eta: '22 mins'
+            },
+            'LR-2026-000130': {
+                customer: 'Apex Steel Co.',
+                receiverName: 'Mr. John D’Souza',
+                receiverPhone: '+91 99801 11223',
+                phone: '+91 99801 44556',
+                lr: 'LR-2026-000130',
+                address: 'Industrial Estate, Baikampady',
+                items: '8 Pipes',
+                weight: '190 KG',
+                itemCount: 8,
+                time: '02:00 PM',
+                paid: false,
+                amount: '₹4,500',
+                status: 'failed',
+                dist: '8.8 km',
+                eta: '21 mins',
+                failedReason: 'Customer Refused'
+            }
+        };
+
+        let currentSelectedLR = 'LR-2026-000125';
+        let currentStatusFilter = 'all';
+        let currentFilterDate = 'today';
+        let currentFilterPay = 'all';
+        let currentFilterArea = 'all';
+        let photosUploadedCount = 0;
+        let collectedQty = 3;
+
+        // 1. OTP Login Flow
+        function sendMobileOTP() {
+            const phone = document.getElementById('login-phone-val').value.trim();
+            if (phone.length < 10) {
+                showToast('Please enter 10-digit mobile');
+                return;
+            }
+            document.getElementById('display-otp-phone').textContent = `+91 ${phone}`;
+            document.getElementById('login-step-phone').style.display = 'none';
+            document.getElementById('login-step-otp').classList.add('visible');
+            showToast('OTP sent: 884129');
+        }
+
+        function backToPhoneStep() {
+            document.getElementById('login-step-phone').style.display = 'block';
+            document.getElementById('login-step-otp').classList.remove('visible');
+        }
+
+        function moveOTPFocus(input, idx) {
+            if (input.value.length === 1 && idx < 5) {
+                document.querySelectorAll('.pb-otp-digit')[idx + 1].focus();
+            }
+        }
+
+        function verifyMobileOTP() {
+            showToast('OTP verified successfully');
+            document.getElementById('pb-screen-login').classList.remove('active');
+            document.getElementById('pb-main-header').style.display = 'flex';
+            document.getElementById('pb-bottom-nav').classList.remove('hidden');
+            document.getElementById('pb-viewport').classList.remove('no-nav');
+            switchNav('home');
+        }
+
+        function handleLogout() {
+            if (confirm('Logout from Delivery Person App?')) {
+                document.getElementById('pb-main-header').style.display = 'none';
+                document.getElementById('pb-bottom-nav').classList.add('hidden');
+                document.getElementById('pb-viewport').classList.add('no-nav');
+
+                document.querySelectorAll('.pb-screen').forEach(s => s.classList.remove('active'));
+                document.getElementById('pb-screen-login').classList.add('active');
+                backToPhoneStep();
+                showToast('Logged out');
+            }
+        }
+
+        // 2. Fixed 3-Tab Bottom Navigation
+        function switchNav(tab) {
+            document.querySelectorAll('.pb-screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.pb-nav-item').forEach(b => b.classList.remove('active'));
+
+            const title = document.getElementById('pb-header-title');
+            const sub = document.getElementById('pb-header-sub');
+
+            if (tab === 'home') {
+                document.getElementById('pb-screen-home').classList.add('active');
+                document.getElementById('nav-btn-home').classList.add('active');
+                title.textContent = 'Delivery App';
+                sub.textContent = 'Mangalore Branch';
+            } else if (tab === 'deliveries') {
+                document.getElementById('pb-screen-deliveries').classList.add('active');
+                document.getElementById('nav-btn-deliveries').classList.add('active');
+                title.textContent = 'My Deliveries';
+                sub.textContent = 'Assigned Tasks';
+            } else if (tab === 'profile') {
+                document.getElementById('pb-screen-profile').classList.add('active');
+                document.getElementById('nav-btn-profile').classList.add('active');
+                title.textContent = 'My Profile';
+                sub.textContent = 'Staff Account';
+            }
+        }
+
+        // 3. Location Groups Collapsible Toggle
+        function toggleLocationGroup(groupId) {
+            const el = document.getElementById(groupId);
+            if (el) el.classList.toggle('collapsed');
+        }
+
+        function openFilterModal() {
+            document.getElementById('sheet-advanced-filter').classList.add('active');
+        }
+
+        function closeFilterModal() {
+            closeSheet('sheet-advanced-filter');
+        }
+
+        function selectFilterDate(dateVal) {
+            currentFilterDate = dateVal;
+            document.querySelectorAll('[id^="filter-date-"]').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-date-${dateVal}`).classList.add('active');
+            
+            const customDateInput = document.getElementById('filter-custom-date-val');
+            if (dateVal === 'custom') {
+                customDateInput.style.display = 'block';
+            } else {
+                customDateInput.style.display = 'none';
+            }
+            applyAllFilters();
+        }
+
+        function selectFilterPay(payVal) {
+            currentFilterPay = payVal;
+            document.querySelectorAll('[id^="filter-pay-"]').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-pay-${payVal}`).classList.add('active');
+            applyAllFilters();
+        }
+
+        function selectFilterArea(areaVal) {
+            currentFilterArea = areaVal;
+            document.querySelectorAll('[id^="filter-area-"]').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`filter-area-${areaVal}`).classList.add('active');
+            applyAllFilters();
+        }
+
+        function selectQuickStatus(btn, statusVal) {
+            btn.parentElement.querySelectorAll('.pb-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            currentStatusFilter = statusVal;
+            applyAllFilters();
+        }
+
+        function resetAllFilters() {
+            currentFilterDate = 'today';
+            currentFilterPay = 'all';
+            currentFilterArea = 'all';
+            currentStatusFilter = 'all';
+            
+            document.getElementById('delivery-search-input').value = '';
+            document.getElementById('filter-sort-select').value = 'time-asc';
+            
+            selectFilterDate('today');
+            selectFilterPay('all');
+            selectFilterArea('all');
+            
+            document.querySelectorAll('.pb-chips-row button').forEach(btn => {
+                if (btn.textContent.trim() === 'All') {
+                    btn.parentElement.querySelectorAll('.pb-chip').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                }
+            });
+            
+            applyAllFilters();
+            closeSheet('sheet-advanced-filter');
+            showToast('Filters Reset');
+        }
+
+        function applyAllFilters() {
+            const searchVal = document.getElementById('delivery-search-input').value.toLowerCase().trim();
+            const sortVal = document.getElementById('filter-sort-select').value;
+
+            let activeCount = 0;
+            if (currentFilterDate !== 'today') activeCount++;
+            if (currentFilterPay !== 'all') activeCount++;
+            if (currentFilterArea !== 'all') activeCount++;
+            if (searchVal) activeCount++;
+
+            const badge = document.getElementById('active-filter-badge');
+            if (badge) {
+                if (activeCount > 0) {
+                    badge.textContent = activeCount;
+                    badge.style.display = 'inline-flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+
+            // Loop cards
+            const cards = Array.from(document.querySelectorAll('.pb-card'));
+            cards.forEach(card => {
+                const lr = card.getAttribute('data-lr');
+                const data = pickupDB[lr];
+                if (!data) return;
+
+                // Match status
+                const matchStatus = (currentStatusFilter === 'all' || data.status === currentStatusFilter);
+
+                // Match payment
+                let matchPay = true;
+                if (currentFilterPay === 'paid') {
+                    matchPay = data.paid;
+                } else if (currentFilterPay === 'topay') {
+                    matchPay = !data.paid;
+                }
+
+                // Match area
+                let matchArea = true;
+                if (currentFilterArea === 'central') {
+                    matchArea = data.address.includes('Kadri') || data.address.includes('Kankanady') || data.address.includes('Bejai');
+                } else if (currentFilterArea === 'baikampady') {
+                    matchArea = data.address.includes('Baikampady');
+                }
+
+                // Match search
+                const matchSearch = (!searchVal || 
+                    data.lr.toLowerCase().includes(searchVal) || 
+                    data.customer.toLowerCase().includes(searchVal) || 
+                    data.address.toLowerCase().includes(searchVal) ||
+                    (data.receiverName && data.receiverName.toLowerCase().includes(searchVal))
+                );
+
+                if (matchStatus && matchPay && matchArea && matchSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Handle Sorting inside locations content containers
+            const locationContents = document.querySelectorAll('.pb-location-content');
+            locationContents.forEach(container => {
+                const visibleCards = Array.from(container.querySelectorAll('.pb-card'));
+                visibleCards.sort((a, b) => {
+                    const lrA = a.getAttribute('data-lr');
+                    const lrB = b.getAttribute('data-lr');
+                    const dbA = pickupDB[lrA];
+                    const dbB = pickupDB[lrB];
+                    if (!dbA || !dbB) return 0;
+
+                    if (sortVal === 'time-asc') {
+                        return dbA.time.localeCompare(dbB.time);
+                    } else if (sortVal === 'time-desc') {
+                        return dbB.time.localeCompare(dbA.time);
+                    } else if (sortVal === 'distance') {
+                        const distA = parseFloat(dbA.dist);
+                        const distB = parseFloat(dbB.dist);
+                        return distA - distB;
+                    }
+                    return 0;
+                });
+                visibleCards.forEach(c => container.appendChild(c));
+            });
+
+            // Update sub-counts in location headers
+            document.querySelectorAll('.pb-location-group').forEach(group => {
+                const visibleCardsCount = Array.from(group.querySelectorAll('.pb-card')).filter(c => c.style.display !== 'none').length;
+                const subCountEl = group.querySelector('.pb-location-sub-count');
+                if (subCountEl) {
+                    subCountEl.textContent = `${visibleCardsCount} ${visibleCardsCount === 1 ? 'Delivery' : 'Deliveries'}`;
+                }
+            });
+        }
+
+        // 4. Delivery Details Screen
+        function openDeliveryDetails(lrNumber) {
+            const data = pickupDB[lrNumber];
+            if (!data) return;
+
+            currentSelectedLR = lrNumber;
+
+            document.getElementById('dt-customer').textContent = data.customer;
+            document.getElementById('dt-phone').textContent = data.phone;
+            document.getElementById('dt-receiver-name').textContent = data.receiverName || 'Not Specified';
+            document.getElementById('dt-receiver-phone').textContent = data.receiverPhone || data.phone;
+            document.getElementById('dt-lr').textContent = data.lr;
+            document.getElementById('dt-address').textContent = data.address;
+            document.getElementById('dt-items').textContent = `${data.items} (${data.weight})`;
+            document.getElementById('dt-time').textContent = data.time;
+
+            const statusBadge = document.getElementById('dt-status-badge');
+            statusBadge.textContent = data.status.toUpperCase();
+            statusBadge.className = `pb-status-badge ${data.status === 'completed' ? 'completed' : ''}`;
+
+            const paymentText = data.paid ? `✓ Paid · ${data.amount}` : `To-Pay · ${data.amount}`;
+            document.getElementById('dt-payment').textContent = paymentText;
+
+            const payStep = document.getElementById('btn-wf-payment');
+            if (!data.paid) {
+                payStep.style.display = 'inline-flex';
+            } else {
+                payStep.style.display = 'none';
+            }
+
+            resetWorkflowState(data.status);
+
+            document.querySelectorAll('.pb-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('pb-screen-details').classList.add('active');
+            document.getElementById('pb-header-title').textContent = data.customer;
+            document.getElementById('pb-header-sub').textContent = data.lr;
+        }
+
+        function resetWorkflowState(status) {
+            const steps = [
+                { 
+                    key: 'nav', 
+                    title: 'Navigate', 
+                    statusText: 'Open Route',
+                    completedTitle: 'Navigate',
+                    icon: `<polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>`
+                },
+                { 
+                    key: 'scan', 
+                    title: 'Scan LR', 
+                    statusText: 'Scan Barcode',
+                    completedTitle: 'Scan LR',
+                    icon: `<rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"></path>`
+                },
+                { 
+                    key: 'confirm', 
+                    title: 'Verify Items', 
+                    statusText: 'Confirm Qty',
+                    completedTitle: 'Items Verified',
+                    icon: `<polyline points="20 6 9 17 4 12"></polyline>`
+                },
+                { 
+                    key: 'photo', 
+                    title: 'Cargo Photos', 
+                    statusText: 'Add Photos',
+                    completedTitle: 'Photos Uploaded',
+                    icon: `<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle>`
+                },
+                { 
+                    key: 'sig', 
+                    title: 'Signature', 
+                    statusText: 'Customer Sign',
+                    completedTitle: 'Signature',
+                    icon: `<path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>`
+                },
+                { 
+                    key: 'payment', 
+                    title: 'Payment', 
+                    statusText: 'Collect Due',
+                    completedTitle: 'Payment',
+                    icon: `<rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line>`
+                }
+            ];
+
+            const isCompleted = status === 'completed';
+            const isFailed = status === 'failed';
+
+            steps.forEach(s => {
+                const btn = document.getElementById(`btn-wf-${s.key}`);
+                if (!btn) return;
+                if (isCompleted) {
+                    btn.classList.add('completed');
+                    btn.innerHTML = `
+                        <div class="pb-action-card-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span class="pb-action-card-title">${s.completedTitle}</span>
+                        </div>
+                        <span class="pb-action-card-status">✓ Completed</span>
+                    `;
+                } else if (isFailed) {
+                    btn.classList.remove('completed');
+                    btn.disabled = true;
+                } else {
+                    btn.classList.remove('completed');
+                    btn.disabled = false;
+                    btn.innerHTML = `
+                        <div class="pb-action-card-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14" stroke-linecap="round" stroke-linejoin="round">
+                                ${s.icon}
+                            </svg>
+                            <span class="pb-action-card-title">${s.title}</span>
+                        </div>
+                        <span class="pb-action-card-status">${s.statusText}</span>
+                    `;
+                }
+            });
+
+            const completeBtn = document.getElementById('btn-complete-pickup-trigger');
+            if (isCompleted) {
+                completeBtn.textContent = '✓ Completed';
+                completeBtn.classList.add('completed-state');
+                completeBtn.disabled = true;
+            } else if (isFailed) {
+                completeBtn.textContent = 'Delivery Failed';
+                completeBtn.classList.add('completed-state');
+                completeBtn.disabled = true;
+            } else {
+                completeBtn.textContent = 'Complete Delivery';
+                completeBtn.classList.remove('completed-state');
+                completeBtn.disabled = false;
+            }
+        }
+
+        // 5. Bottom Sheets Handling
+        function closeSheet(sheetId) {
+            document.getElementById(sheetId).classList.remove('active');
+        }
+
+        // --- 1. Navigate Bottom Sheet ---
+        function openNavigateSheet(customer, address, dist, eta) {
+            document.getElementById('sheet-nav-loc').textContent = address;
+            document.getElementById('sheet-nav-dist').textContent = dist;
+            document.getElementById('sheet-nav-eta').textContent = eta;
+            document.getElementById('sheet-navigate').classList.add('active');
+        }
+
+        function openNavigateSheetCurrent() {
+            const data = pickupDB[currentSelectedLR];
+            openNavigateSheet(data.customer, data.address, data.dist, data.eta);
+        }
+
+        function confirmNavigationAction() {
+            const data = pickupDB[currentSelectedLR];
+            closeSheet('sheet-navigate');
+            markStepDone('nav');
+            showToast(`Opening Navigation to: ${data.address}`);
+            const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`;
+            window.open(mapUrl, '_blank');
+        }
+
+        // --- 2. Scan LR Bottom Sheet ---
+        function openScanSheet() {
+            const data = pickupDB[currentSelectedLR];
+            document.getElementById('scan-res-customer').textContent = data.customer;
+            document.getElementById('scan-res-lr').textContent = data.lr;
+            document.getElementById('scan-res-items').textContent = data.items;
+
+            document.getElementById('scan-result-box').classList.remove('visible');
+            document.getElementById('btn-scan-sim').style.display = 'flex';
+            document.getElementById('btn-scan-confirm').style.display = 'none';
+            document.getElementById('sheet-scan-lr').classList.add('active');
+        }
+
+        function simulateBarcodeScan() {
+            document.getElementById('scan-result-box').classList.add('visible');
+            document.getElementById('btn-scan-sim').style.display = 'none';
+            document.getElementById('btn-scan-confirm').style.display = 'flex';
+            showToast('Barcode recognized: ' + currentSelectedLR);
+        }
+
+        function confirmScanDone() {
+            closeSheet('sheet-scan-lr');
+            markStepDone('scan');
+            showToast('LR Verified');
+        }
+
+        // --- 3. Confirm Items Bottom Sheet ---
+        function openConfirmItemsSheet() {
+            const data = pickupDB[currentSelectedLR];
+            document.getElementById('sheet-confirm-expected').textContent = data.items;
+            collectedQty = data.itemCount;
+            document.getElementById('sheet-counter-val').textContent = collectedQty;
+            document.getElementById('sheet-confirm-items').classList.add('active');
+        }
+
+        function adjustItemQty(delta) {
+            collectedQty = Math.max(0, collectedQty + delta);
+            document.getElementById('sheet-counter-val').textContent = collectedQty;
+        }
+
+        // --- 4. Photos Bottom Sheet ---
+        function openPhotosSheet() {
+            photosUploadedCount = 0;
+            document.getElementById('sheet-photo-1').style.display = 'none';
+            document.getElementById('sheet-photo-2').style.display = 'none';
+            document.getElementById('sheet-photo-msg').textContent = '0 / 2 Uploaded';
+            document.getElementById('sheet-photos').classList.add('active');
+        }
+
+        function addPhotoToSheet() {
+            if (photosUploadedCount === 0) {
+                photosUploadedCount = 1;
+                document.getElementById('sheet-photo-1').style.display = 'flex';
+                document.getElementById('sheet-photo-msg').textContent = '1 / 2 Uploaded';
+                showToast('Photo 1 added');
+            } else if (photosUploadedCount === 1) {
+                photosUploadedCount = 2;
+                document.getElementById('sheet-photo-2').style.display = 'flex';
+                document.getElementById('sheet-photo-msg').textContent = '2 / 2 Uploaded';
+                showToast('Photo 2 added');
+            } else {
+                showToast('Maximum 2 photos');
+            }
+        }
+
+        function confirmPhotosDone() {
+            if (photosUploadedCount === 0) {
+                showToast('Please add at least 1 photo');
+                return;
+            }
+            closeSheet('sheet-photos');
+            markStepDone('photo');
+            showToast('Photos uploaded');
+        }
+
+        // --- 5. Signature Canvas ---
+        let sigIsDrawing = false;
+        let sigCtx = null;
+
+        function openSignatureSheet() {
+            document.getElementById('sheet-signature').classList.add('active');
+            const canvas = document.getElementById('sheet-sig-canvas');
+            sigCtx = canvas.getContext('2d');
+            sigCtx.strokeStyle = '#111827';
+            sigCtx.lineWidth = 2.5;
+
+            canvas.onmousedown = (e) => startDraw(e.offsetX, e.offsetY);
+            canvas.onmousemove = (e) => draw(e.offsetX, e.offsetY);
+            canvas.onmouseup = () => sigIsDrawing = false;
+
+            canvas.ontouchstart = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                startDraw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+            };
+            canvas.ontouchmove = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                draw(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+            };
+            canvas.ontouchend = () => sigIsDrawing = false;
+        }
+
+        function startDraw(x, y) {
+            sigIsDrawing = true;
+            sigCtx.beginPath();
+            sigCtx.moveTo(x, y);
+        }
+
+        function draw(x, y) {
+            if (!sigIsDrawing) return;
+            sigCtx.lineTo(x, y);
+            sigCtx.stroke();
+        }
+
+        function clearSignatureCanvas() {
+            const canvas = document.getElementById('sheet-sig-canvas');
+            sigCtx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function confirmSignatureDone() {
+            closeSheet('sheet-signature');
+            markStepDone('sig');
+            showToast('Signature saved');
+        }
+
+        // --- 6. Payment Bottom Sheet ---
+        function openPaymentSheet() {
+            const data = pickupDB[currentSelectedLR];
+            document.getElementById('sheet-pay-amount').textContent = data.amount;
+            document.getElementById('sheet-pay-qr').style.display = 'none';
+            document.getElementById('sheet-payment').classList.add('active');
+        }
+
+        function toggleQRView() {
+            const qr = document.getElementById('sheet-pay-qr');
+            qr.style.display = qr.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function completePaymentCash() {
+            const data = pickupDB[currentSelectedLR];
+            data.paid = true;
+            closeSheet('sheet-payment');
+            markStepDone('payment');
+
+            document.getElementById('dt-payment').textContent = `✓ Paid · ${data.amount}`;
+            const cardPay = document.getElementById(`card-pay-${currentSelectedLR}`);
+            if (cardPay) cardPay.textContent = `✓ Paid · ${data.amount}`;
+
+            showToast('Payment Completed');
+        }
+
+        // --- 7. Complete Delivery Bottom Sheet ---
+        function openCompleteDeliverySheet() {
+            const data = pickupDB[currentSelectedLR];
+            if (!data.paid) {
+                showToast('Collect payment first');
+                openPaymentSheet();
+                return;
+            }
+
+            document.getElementById('sheet-sum-lr').textContent = data.lr;
+            document.getElementById('sheet-sum-customer').textContent = data.customer;
+            document.getElementById('sheet-sum-items').textContent = data.items;
+            document.getElementById('sheet-sum-pay').textContent = `✓ Paid · ${data.amount}`;
+            document.getElementById('sheet-sum-verify').textContent = '✓ Complete';
+
+            document.getElementById('sheet-complete-pickup').classList.add('active');
+        }
+
+        function finalizePickupAction() {
+            const data = pickupDB[currentSelectedLR];
+            data.status = 'completed';
+            closeSheet('sheet-complete-pickup');
+
+            const cardBadge = document.getElementById(`card-status-${currentSelectedLR}`);
+            if (cardBadge) {
+                cardBadge.textContent = 'Completed';
+                cardBadge.className = 'pb-status-badge completed';
+            }
+            const card = document.querySelector(`.pb-card[data-lr="${currentSelectedLR}"]`);
+            if (card) card.setAttribute('data-status', 'completed');
+
+            const comp = document.getElementById('kpi-completed');
+            const pend = document.getElementById('kpi-pending');
+            comp.textContent = parseInt(comp.textContent) + 1;
+            pend.textContent = Math.max(0, parseInt(pend.textContent) - 1);
+
+            showToast(`Delivery ${data.lr} COMPLETED!`);
+
+            setTimeout(() => {
+                switchNav('deliveries');
+            }, 800);
+        }
+
+        // --- 8. Failed Flow ---
+        function openFailedDeliverySheet() {
+            document.getElementById('sheet-failed-pickup').classList.add('active');
+        }
+
+        function toggleOtherReasonInput() {
+            const checked = document.querySelector('input[name="failed-reason"]:checked');
+            const otherInput = document.getElementById('failed-reason-other-input');
+            if (checked && checked.value === 'Other') {
+                otherInput.style.display = 'block';
+                otherInput.focus();
+            } else {
+                otherInput.style.display = 'none';
+            }
+        }
+
+        function submitFailedPickup() {
+            const checked = document.querySelector('input[name="failed-reason"]:checked');
+            let reason = checked ? checked.value : 'Customer Not Available';
+            if (reason === 'Other') {
+                const custom = document.getElementById('failed-reason-other-input').value.trim();
+                if (custom) reason = custom;
+            }
+
+            const data = pickupDB[currentSelectedLR];
+            data.status = 'failed';
+            data.failedReason = reason;
+            data.failedAt = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            data.staff = 'Ravi Kumar';
+
+            closeSheet('sheet-failed-pickup');
+
+            const cardBadge = document.getElementById(`card-status-${currentSelectedLR}`);
+            if (cardBadge) {
+                cardBadge.textContent = 'Failed';
+                cardBadge.className = 'pb-status-badge failed';
+            }
+            const card = document.querySelector(`.pb-card[data-lr="${currentSelectedLR}"]`);
+            if (card) card.setAttribute('data-status', 'failed');
+
+            const failKpi = document.getElementById('kpi-failed');
+            const pendKpi = document.getElementById('kpi-pending');
+            failKpi.textContent = parseInt(failKpi.textContent) + 1;
+            pendKpi.textContent = Math.max(0, parseInt(pendKpi.textContent) - 1);
+
+            showToast(`Delivery Marked FAILED (${reason})`);
+
+            setTimeout(() => {
+                switchNav('deliveries');
+            }, 800);
+        }
+
+        // --- 9. Reattempt Flow ---
+        function openReattemptPickupSheet() {
+            closeSheet('sheet-failed-pickup');
+            const data = pickupDB[currentSelectedLR];
+            document.getElementById('sheet-reattempt-lr').textContent = data.lr;
+            document.getElementById('sheet-reattempt-pickup').classList.add('active');
+        }
+
+        function submitReattemptPickup() {
+            const data = pickupDB[currentSelectedLR];
+            const date = document.getElementById('reattempt-date-select').value;
+            const slot = document.getElementById('reattempt-slot-select').value;
+            const notes = document.getElementById('reattempt-notes-input').value.trim();
+
+            data.status = 'reattempted';
+            data.reattemptDate = date;
+            data.reattemptSlot = slot;
+            data.reattemptNotes = notes;
+
+            closeSheet('sheet-reattempt-pickup');
+
+            const cardBadge = document.getElementById(`card-status-${currentSelectedLR}`);
+            if (cardBadge) {
+                cardBadge.textContent = 'Reattempt';
+                cardBadge.className = 'pb-status-badge reattempt';
+            }
+            const card = document.querySelector(`.pb-card[data-lr="${currentSelectedLR}"]`);
+            if (card) card.setAttribute('data-status', 'reattempted');
+
+            showToast(`✓ Reattempt Scheduled for ${data.lr} (${date})`);
+
+            setTimeout(() => {
+                switchNav('deliveries');
+            }, 800);
+        }
+
+        function confirmItemsDone() {
+            closeSheet('sheet-confirm-items');
+            markStepDone('confirm');
+            showToast(`Confirmed ${collectedQty} items`);
+        }
+
+        function markStepDone(stepKey) {
+            const stepTitles = {
+                'nav': 'Navigate',
+                'scan': 'Scan LR',
+                'confirm': 'Items Verified',
+                'photo': 'Photos Uploaded',
+                'sig': 'Signature',
+                'payment': 'Payment'
+            };
+
+            const title = stepTitles[stepKey] || 'Task';
+            const btn = document.getElementById(`btn-wf-${stepKey}`);
+            if (!btn) return;
+            btn.classList.add('completed');
+            btn.innerHTML = `
+                <div class="pb-action-card-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span class="pb-action-card-title">${title}</span>
+                </div>
+                <span class="pb-action-card-status">✓ Completed</span>
+            `;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('pb-toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2200);
+        }
+
+        // Initialize lists and counts
+        applyAllFilters();
+    </script>
+</body>
+</html>

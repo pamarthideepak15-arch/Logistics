@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Sidebar Demo</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+    
+    <!-- Mobile Menu Drawer Toggle -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            
+            <!-- Left Rail (Primary Modules) -->
+            <nav class="sidebar-rail">
+                <a href="#" class="rail-icon" data-tooltip="Dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                </a>
+                
+                <a href="#" class="rail-icon" data-tooltip="Masters">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                </a>
+
+                <a href="#" class="rail-icon" data-tooltip="Logistics Operations">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                </a>
+
+                <a href="#" class="rail-icon" data-tooltip="Accounts">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </a>
+
+                <a href="#" class="rail-icon" data-tooltip="HR">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </a>
+                
+                <a href="#" class="rail-icon active" data-tooltip="Administration">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </a>
+            </nav>
+
+            <!-- Right Expandable Nav (Module Pages) -->
+            <div class="sidebar-expanded">
+                <div class="sidebar-expanded-title">Administration</div>
+                <ul class="sidebar-nav">
+                    <li><a href="../User-Management/index.html">User Management</a></li>
+                    <li><a href="../Branch-Management/index.html">Branch Management</a></li>
+                    <li><a href="../Lorry-Receipt-Management/index.html">LR Management</a></li>
+                    <li><a href="../Pickup-Operations/index.html">Pickup Operations</a></li>
+                    <li><a href="../Delivery-Operations/index.html">Delivery Operations</a></li>
+                    <li><a href="../Role-Permission/index.html" class="active">Role & Permission Management</a></li>
+                    <li><a href="../Audit-Logs/index.html">Audit Logs</a></li>
+                </ul>
+            </div>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            <div class="breadcrumb">Administration &gt; Role & Permission Management</div>
+            <div class="page-header">
+                <h1 class="page-title">Role & Permission Management</h1>
+                <a href="../Role-Permission/add-role.html" class="btn-primary">+ Add Role</a>
+            </div>
+            <p>This is a demonstration of the sidebar layout. Navigate to the actual Roles index page to see the module.</p>
+        </main>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Edit Employee</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="staff-management.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (HRMS Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <!-- Active HR Rail Icon -->
+                    <a href="#" class="rail-icon active" data-tooltip="HRMS">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">HUMAN RESOURCES</div>
+                <nav class="sidebar-nav">
+                    <!-- Active Staff Master Link -->
+                    <a href="index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        Staff Master
+                    </a>
+                    <a href="../Attendance/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Attendance
+                    </a>
+                    <a href="../Shift-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Shift Management
+                    </a>
+                    <a href="../Leave-Management/leave-management.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
+                        Leave Management
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>HRMS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>Staff Master</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Edit Employee</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <form action="index.html">
+                    <div class="page-header">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <a href="index.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Edit Employee</h1>
+                                <p class="page-subtitle">Update employee profile and details configuration.</p>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a href="index.html" class="btn-secondary">Cancel</a>
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="padding-bottom: 120px;">
+                        
+                        <!-- Row 1: Left: Employee ID (Auto-generated / read-only) | Right: Employee Name * -->
+                        <div class="form-group">
+                            <label>Employee ID (Auto-generated)</label>
+                            <input type="text" id="emp-id" name="emp-id" value="EMP001" readonly style="background-color: var(--color-bg-light); cursor: not-allowed; font-weight: 600;">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Employee Name *</label>
+                            <input type="text" id="emp-name" name="emp-name" value="Rajesh Kumar" placeholder="Enter Full Name" required>
+                        </div>
+
+                        <!-- Row 2: Mobile Number * | Email ID -->
+                        <div class="form-group">
+                            <label>Mobile Number *</label>
+                            <div class="input-with-prefix">
+                                <span class="prefix">+91</span>
+                                <input type="text" id="emp-mobile" name="emp-mobile" value="9876543210" placeholder="Enter mobile number" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email ID</label>
+                            <input type="email" id="emp-email" name="emp-email" value="rajesh.kumar@logisticserp.com" placeholder="Enter email id">
+                        </div>
+
+                        <!-- Row 3: Department | Branch * -->
+                        <div class="form-group">
+                            <label>Department</label>
+                            <details class="custom-select-wrapper" id="emp-dept">
+                                <summary class="custom-select-trigger">
+                                    <span class="placeholder">Select Department</span>
+                                    <span class="selected-text text-operations">Operations</span>
+                                    <span class="selected-text text-fleet">Fleet</span>
+                                    <span class="selected-text text-hr" style="display: flex;">HR</span>
+                                    <span class="selected-text text-accounts">Accounts</span>
+                                    <span class="selected-text text-warehouse">Warehouse</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <label class="custom-option"><input type="radio" name="emp-dept" value="operations"> Operations</label>
+                                    <label class="custom-option"><input type="radio" name="emp-dept" value="fleet"> Fleet</label>
+                                    <label class="custom-option"><input type="radio" name="emp-dept" value="hr" checked> HR</label>
+                                    <label class="custom-option"><input type="radio" name="emp-dept" value="accounts"> Accounts</label>
+                                    <label class="custom-option"><input type="radio" name="emp-dept" value="warehouse"> Warehouse</label>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Branch *</label>
+                            <details class="custom-select-wrapper" id="emp-branch">
+                                <summary class="custom-select-trigger">
+                                    <span class="placeholder">Select Branch</span>
+                                    <span class="selected-text text-hq" style="display: flex;">HQ</span>
+                                    <span class="selected-text text-mumbai">Mumbai Hub</span>
+                                    <span class="selected-text text-hyderabad">Hyderabad Hub</span>
+                                    <span class="selected-text text-delhi">Delhi Agency</span>
+                                    <span class="selected-text text-chennai">Chennai Hub</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <label class="custom-option"><input type="radio" name="emp-branch" value="hq" checked> HQ</label>
+                                    <label class="custom-option"><input type="radio" name="emp-branch" value="mumbai"> Mumbai Hub</label>
+                                    <label class="custom-option"><input type="radio" name="emp-branch" value="hyderabad"> Hyderabad Hub</label>
+                                    <label class="custom-option"><input type="radio" name="emp-branch" value="delhi"> Delhi Agency</label>
+                                    <label class="custom-option"><input type="radio" name="emp-branch" value="chennai"> Chennai Hub</label>
+                                </div>
+                            </details>
+                        </div>
+
+                        <!-- Row 4: Date of Joining * | Role * -->
+                        <div class="form-group">
+                            <label for="emp-join-date">Date of Joining *</label>
+                            <details class="custom-select-wrapper" id="emp-join-date-wrapper">
+                                <summary class="custom-select-trigger">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-right: 6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    <span class="selected-text dynamic-selected" style="display: flex;">2026-08-01</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="margin-left: auto;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options calendar-popup" style="width: 250px; padding: 12px; box-sizing: border-box;">
+                                    <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 600; font-size: 0.8125rem;">
+                                        <span>August 2026</span>
+                                    </div>
+                                    <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 0.75rem; color: #666; margin-bottom: 4px; font-weight: 500;">
+                                        <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                                    </div>
+                                    <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;">
+                                        <div></div><div></div><div></div><div></div><div></div><div></div>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-01" style="display:none;" checked>1</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-02" style="display:none;">2</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-03" style="display:none;">3</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-04" style="display:none;">4</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-05" style="display:none;">5</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-06" style="display:none;">6</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-07" style="display:none;">7</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-08" style="display:none;">8</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-09" style="display:none;">9</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-10" style="display:none;">10</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-11" style="display:none;">11</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-12" style="display:none;">12</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-13" style="display:none;">13</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-14" style="display:none;">14</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-15" style="display:none;">15</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-16" style="display:none;">16</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-17" style="display:none;">17</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-18" style="display:none;">18</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-19" style="display:none;">19</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-20" style="display:none;">20</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-21" style="display:none;">21</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-22" style="display:none;">22</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-23" style="display:none;">23</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-24" style="display:none;">24</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-25" style="display:none;">25</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-26" style="display:none;">26</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-27" style="display:none;">27</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-28" style="display:none;">28</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-29" style="display:none;">29</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-30" style="display:none;">30</label>
+                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-31" style="display:none;">31</label>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Role *</label>
+                            <details class="custom-select-wrapper" id="emp-role">
+                                <summary class="custom-select-trigger">
+                                    <span class="placeholder">Select Role</span>
+                                    <span class="selected-text text-super_admin">Super Admin</span>
+                                    <span class="selected-text text-branch_admin">Branch Admin / Operator</span>
+                                    <span class="selected-text text-hr_manager" style="display: flex;">HR Manager</span>
+                                    <span class="selected-text text-accounts">Accounts / Finance</span>
+                                    <span class="selected-text text-fleet_manager">Fleet Manager</span>
+                                    <span class="selected-text text-pickup_staff">Pickup Staff</span>
+                                    <span class="selected-text text-delivery_staff">Delivery Staff</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <label class="custom-option"><input type="radio" name="emp-role" value="super_admin" required> Super Admin</label>
+                                    <label class="custom-option"><input type="radio" name="emp-role" value="branch_admin"> Branch Admin / Operator</label>
+                                    <label class="custom-option"><input type="radio" name="emp-role" value="hr_manager" checked> HR Manager</label>
+                                    <label class="custom-option"><input type="radio" name="emp-role" value="accounts"> Accounts / Finance</label>
+                                    <label class="custom-option"><input type="radio" name="emp-role" value="fleet_manager"> Fleet Manager</label>
+                                    <label class="custom-option"><input type="radio" name="emp-role" value="pickup_staff"> Pickup Staff</label>
+                                    <label class="custom-option"><input type="radio" name="emp-role" value="delivery_staff"> Delivery Staff</label>
+                                </div>
+                            </details>
+                        </div>
+
+                        <!-- Row 5: Assigned Shift * | Salary Structure * -->
+                        <div class="form-group">
+                            <label>Assigned Shift *</label>
+                            <details class="custom-select-wrapper" id="emp-shift">
+                                <summary class="custom-select-trigger">
+                                    <span class="placeholder">Select Shift</span>
+                                    <span class="selected-text text-general" style="display: flex;">General Shift</span>
+                                    <span class="selected-text text-morning">Morning Shift</span>
+                                    <span class="selected-text text-afternoon">Afternoon Shift</span>
+                                    <span class="selected-text text-night">Night Shift</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <label class="custom-option"><input type="radio" name="emp-shift" value="general" checked> General Shift</label>
+                                    <label class="custom-option"><input type="radio" name="emp-shift" value="morning"> Morning Shift</label>
+                                    <label class="custom-option"><input type="radio" name="emp-shift" value="afternoon"> Afternoon Shift</label>
+                                    <label class="custom-option"><input type="radio" name="emp-shift" value="night"> Night Shift</label>
+                                </div>
+                            </details>
+                        </div>
+                        
+                        <!-- ═══ SALARY & COMPENSATION SECTION ═══ -->
+                        <div style="grid-column: 1 / -1; margin-top: 8px;">
+                            <div style="border-top: 2px solid var(--color-border); padding-top: 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+                                <h2 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-black); margin: 0;">Salary &amp; Compensation</h2>
+                            </div>
+
+                            <!-- ── 1. CURRENT SALARY INPUTS ── -->
+                            <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr 1fr; margin-bottom:20px;">
+                                <div class="form-group">
+                                    <label>Monthly Gross Salary *</label>
+                                    <div class="input-with-prefix">
+                                        <span class="prefix">₹</span>
+                                        <input type="number" id="monthly-gross" name="monthly-gross" value="30000" placeholder="e.g. 23000" min="1" step="1" required oninput="calcSalary()">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Past Years of Experience *</label>
+                                    <div class="input-with-prefix">
+                                        <input type="number" id="emp-experience" name="emp-experience" value="3" placeholder="e.g. 2.5" min="0" step="0.5" required>
+                                        <span class="suffix">yrs</span>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="position:relative;">
+                                    <label>Effective From *</label>
+                                    <input type="text" id="salary-effective-from" name="salary-effective-from" placeholder="Select effective date" value="01 Aug 2026" required style="width:100%; cursor:pointer; padding-right: 32px; background-color: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); height: 36px; padding-left: 12px; font-size: 0.8125rem; font-family: inherit; color: var(--color-black);">
+                                    <span style="position:absolute; right:10px; bottom: 10px; pointer-events:none; color:#666; display: flex; align-items: center;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Updated</label>
+                                    <input type="text" id="salary-last-updated" value="01 Aug 2026" readonly style="background:var(--color-bg-light);cursor:not-allowed;">
+                                </div>
+                            </div>
+
+                            <!-- ── 2. SALARY BREAKDOWN ── -->
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size:0.8125rem; font-weight:700; color:var(--color-black); margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--color-border);">Salary Breakdown</div>
+                                <div class="table-container">
+                                    <table class="data-table" id="salary-components-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Component</th>
+                                                <th style="text-align:center;">%</th>
+                                                <th style="text-align:right;">Calculated Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Basic Salary</td><td style="text-align:center;color:#666;">40%</td><td style="text-align:right;" id="sc-basic" class="salary-calc-cell">₹12,000</td></tr>
+                                            <tr><td>HRA</td><td style="text-align:center;color:#666;">16%</td><td style="text-align:right;" id="sc-hra" class="salary-calc-cell">₹4,800</td></tr>
+                                            <tr><td>Conveyance</td><td style="text-align:center;color:#666;">14%</td><td style="text-align:right;" id="sc-conv" class="salary-calc-cell">₹4,200</td></tr>
+                                            <tr><td>Medical Allowance</td><td style="text-align:center;color:#666;">10%</td><td style="text-align:right;" id="sc-med" class="salary-calc-cell">₹3,000</td></tr>
+                                            <tr><td>Special Allowance</td><td style="text-align:center;color:#666;">20%</td><td style="text-align:right;" id="sc-special" class="salary-calc-cell">₹6,000</td></tr>
+                                            <tr style="border-top:2px solid var(--color-border);font-weight:700;">
+                                                <td>Total Gross Salary</td><td></td><td style="text-align:right;" id="sc-total-gross" class="salary-calc-cell">₹30,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- ── 3. ADDITIONAL COMPENSATION ── -->
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size:0.8125rem; font-weight:700; color:var(--color-black); margin-bottom:14px; padding-bottom:6px; border-bottom:1px solid var(--color-border);">Additional Compensation</div>
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+                                    <!-- ── OT BLOCK ── -->
+                                    <div style="border:1px solid var(--color-border); border-radius:var(--border-radius-base); padding:14px 16px; background:var(--color-bg-light);">
+                                        <div style="font-size:0.8rem; font-weight:700; color:var(--color-black); margin-bottom:12px;">Overtime (OT)</div>
+
+                                        <!-- OT Rate -->
+                                        <div class="form-group" style="margin-bottom:12px;">
+                                            <label>OT Rate</label>
+                                            <select id="ot-rate" name="ot-rate" style="width:100%;" onchange="onOtRateChange(); calcSalary();">
+                                                <option value="">— Select OT Rate —</option>
+                                                <option value="1">1× (Regular)</option>
+                                                <option value="1.5" selected>1.5× (Standard OT)</option>
+                                                <option value="2">2× (Double Time)</option>
+                                                <option value="custom">Custom</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Custom multiplier (conditional) -->
+                                        <div class="form-group" id="ot-custom-block" style="margin-bottom:12px; display:none;">
+                                            <label>OT Multiplier</label>
+                                            <input type="number" id="ot-multiplier" name="ot-multiplier" placeholder="e.g. 1.75" min="1" step="0.01" oninput="calcSalary()">
+                                        </div>
+
+                                        <!-- Helper text -->
+                                        <div style="font-size:0.75rem; color:#666; line-height:1.5; padding:8px 10px; border-left:2px solid var(--color-border); background:var(--color-white); border-radius:0 var(--border-radius-base) var(--border-radius-base) 0;">
+                                            Overtime is calculated using the selected multiplier of the applicable hourly rate.
+                                        </div>
+                                    </div>
+
+                                    <!-- ── INCREMENT BLOCK ── -->
+                                    <div style="border:1px solid var(--color-border); border-radius:var(--border-radius-base); padding:14px 16px; background:var(--color-bg-light);">
+                                        <div style="font-size:0.8rem; font-weight:700; color:var(--color-black); margin-bottom:12px;">Increment</div>
+
+                                        <!-- Increment Type -->
+                                        <div class="form-group" style="margin-bottom:12px;">
+                                            <label>Increment Type</label>
+                                            <select id="increment-type" name="increment-type" style="width:100%;" onchange="onIncrTypeChange(); calcSalary();">
+                                                <option value="">— Select Type —</option>
+                                                <option value="pct">Percentage (%)</option>
+                                                <option value="amt">Fixed Amount (₹)</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Percentage input (conditional) -->
+                                        <div class="form-group" id="incr-pct-block" style="margin-bottom:12px; display:none;">
+                                            <label>Increment Percentage</label>
+                                            <div class="input-with-prefix">
+                                                <span class="prefix">%</span>
+                                                <input type="number" id="emp-increment-pct" name="emp-increment-pct" placeholder="e.g. 10" min="0" step="0.01" oninput="calcSalary()">
+                                            </div>
+                                        </div>
+
+                                        <!-- Fixed amount input (conditional) -->
+                                        <div class="form-group" id="incr-amt-block" style="margin-bottom:12px; display:none;">
+                                            <label>Increment Amount</label>
+                                            <div class="input-with-prefix">
+                                                <span class="prefix">₹</span>
+                                                <input type="number" id="emp-increment-amt" name="emp-increment-amt" placeholder="e.g. 2000" min="0" step="1" oninput="calcSalary()">
+                                            </div>
+                                        </div>
+
+                                        <!-- Increment preview (conditional) -->
+                                        <div id="increment-preview" style="display:none; font-size:0.8125rem; border:1px solid var(--color-border); border-radius:var(--border-radius-base); overflow:hidden;">
+                                            <div style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--color-border);"><span style="color:#666;">Current Salary</span><strong id="incr-current">—</strong></div>
+                                            <div style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--color-border);"><span style="color:#666;">Increment Amount</span><strong id="incr-amount">—</strong></div>
+                                            <div style="display:flex;justify-content:space-between;padding:7px 12px;background:var(--color-white);"><span style="font-weight:700;">Revised Salary</span><strong id="incr-revised" style="color:var(--color-black);">—</strong></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- ── 4. DEDUCTIONS ── -->
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size:0.8125rem; font-weight:700; color:var(--color-black); margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--color-border);">Deductions</div>
+                                <div class="table-container">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Deduction</th>
+                                                <th>Rule</th>
+                                                <th style="text-align:right;">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Provident Fund (PF)</td>
+                                                <td style="color:#666;font-size:0.75rem;">12% of Basic Salary</td>
+                                                <td style="text-align:right;" id="ded-pf" class="salary-calc-cell">₹1,440</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Professional Tax (PT)</td>
+                                                <td style="color:#666;font-size:0.75rem;">₹200 if Gross ≥ ₹25,000</td>
+                                                <td style="text-align:right;" id="ded-pt" class="salary-calc-cell">₹200</td>
+                                            </tr>
+                                            <tr style="border-top:2px solid var(--color-border);font-weight:700;">
+                                                <td>Total Deductions</td><td></td>
+                                                <td style="text-align:right;" id="ded-total" class="salary-calc-cell">₹1,640</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- ── 5. SALARY SUMMARY (full width) ── -->
+                            <div style="border:1px solid var(--color-border);border-radius:var(--border-radius-base);background:var(--color-bg-light);padding:20px;margin-bottom:20px;">
+                                <div style="font-size:0.8125rem;font-weight:700;color:var(--color-black);margin-bottom:16px;border-bottom:1px solid var(--color-border);padding-bottom:8px;">Salary Summary</div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+                                    <!-- Earnings column -->
+                                    <div>
+                                        <div style="font-size:0.75rem;font-weight:700;color:#666;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;">Earnings</div>
+                                        <div style="display:flex;flex-direction:column;gap:5px;font-size:0.8125rem;">
+                                            <div style="display:flex;justify-content:space-between;"><span>Basic Salary</span><span id="sum-basic">₹12,000</span></div>
+                                            <div style="display:flex;justify-content:space-between;"><span>HRA</span><span id="sum-hra">₹4,800</span></div>
+                                            <div style="display:flex;justify-content:space-between;"><span>Conveyance</span><span id="sum-conv">₹4,200</span></div>
+                                            <div style="display:flex;justify-content:space-between;"><span>Medical Allowance</span><span id="sum-med">₹3,000</span></div>
+                                            <div style="display:flex;justify-content:space-between;"><span>Special Allowance</span><span id="sum-special">₹6,000</span></div>
+                                            <div style="display:flex;justify-content:space-between;"><span>Overtime (OT)</span><span id="sum-ot">—</span></div>
+                                            <div style="display:flex;justify-content:space-between;" id="sum-increment-row" style="display:none;"><span>Increment</span><span id="sum-increment">—</span></div>
+                                            <div style="display:flex;justify-content:space-between;font-weight:700;border-top:1px dashed var(--color-border);padding-top:6px;margin-top:4px;">
+                                                <span>Total Earnings</span><span id="sum-earnings">—</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Deductions + Net column -->
+                                    <div>
+                                        <div style="font-size:0.75rem;font-weight:700;color:#666;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;">Deductions</div>
+                                        <div style="display:flex;flex-direction:column;gap:5px;font-size:0.8125rem;">
+                                            <div style="display:flex;justify-content:space-between;"><span>Provident Fund (PF)</span><span id="sum-pf">₹1,440</span></div>
+                                            <div style="display:flex;justify-content:space-between;"><span>Professional Tax (PT)</span><span id="sum-pt">₹200</span></div>
+                                            <div style="display:flex;justify-content:space-between;font-weight:700;border-top:1px dashed var(--color-border);padding-top:6px;margin-top:4px;">
+                                                <span>Total Deductions</span><span id="sum-deductions">₹1,640</span>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:16px;padding:8px 12px;background:var(--color-bg-light, #f9fafb);border:1px solid var(--color-border);border-radius:var(--border-radius-base);display:flex;justify-content:space-between;align-items:center;">
+                                            <span style="color:var(--color-black);font-size:0.8125rem;font-weight:600;">Net Salary</span>
+                                            <span id="sum-net" style="color:var(--color-black);font-size:1.125rem;font-weight:700;">₹30,360</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ── 6. SALARY HISTORY ── -->
+                            <div style="margin-bottom:20px;">
+                                <div style="font-size:0.8125rem;font-weight:700;color:var(--color-black);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--color-border);">Salary History</div>
+                                <div class="table-container">
+                                    <table class="data-table" id="salary-history-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Effective From</th>
+                                                <th style="text-align:right;">Prev. Gross</th>
+                                                <th style="text-align:center;">Increment</th>
+                                                <th style="text-align:right;">Revised Gross</th>
+                                                <th style="text-align:right;">OT</th>
+                                                <th>Reason</th>
+                                                <th>Updated By</th>
+                                                <th>Last Updated</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>01 Aug 2026</td>
+                                                <td style="text-align:right;">₹21,000</td>
+                                                <td style="text-align:center;">₹9,000</td>
+                                                <td style="text-align:right;font-weight:600;">₹30,000</td>
+                                                <td style="text-align:right;">₹2,000</td>
+                                                <td>Annual Increment</td>
+                                                <td>Super Admin</td>
+                                                <td>01 Aug 2026</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01 Jan 2026</td>
+                                                <td style="text-align:right;">—</td>
+                                                <td style="text-align:center;">—</td>
+                                                <td style="text-align:right;font-weight:600;">₹21,000</td>
+                                                <td style="text-align:right;">₹1,500</td>
+                                                <td>Joining Salary</td>
+                                                <td>Super Admin</td>
+                                                <td>01 Jan 2026</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="../Design System/dropdown.js"></script>
+    <script>
+        // ── Conditional field visibility ──
+        window.onOtRateChange = function() {
+            const rate = document.getElementById('ot-rate').value;
+            const block = document.getElementById('ot-custom-block');
+            if (block) block.style.display = rate === 'custom' ? 'block' : 'none';
+        };
+
+        window.onIncrTypeChange = function() {
+            const type = document.getElementById('increment-type').value;
+            const pctBlock = document.getElementById('incr-pct-block');
+            const amtBlock = document.getElementById('incr-amt-block');
+            const preview  = document.getElementById('increment-preview');
+            if (pctBlock) pctBlock.style.display = type === 'pct' ? 'block' : 'none';
+            if (amtBlock) amtBlock.style.display = type === 'amt' ? 'block' : 'none';
+            if (preview)  preview.style.display  = 'none';
+        };
+
+        // ═══ SALARY CALCULATION ENGINE ═══
+        window.calcSalary = function() {
+            const gross = parseFloat(document.getElementById('monthly-gross') ? document.getElementById('monthly-gross').value : 0) || 0;
+            const fmt = v => '₹' + Math.round(v).toLocaleString('en-IN');
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+            // Component breakdown
+            const basic   = Math.round(gross * 0.40);
+            const hra     = Math.round(gross * 0.16);
+            const conv    = Math.round(gross * 0.14);
+            const med     = Math.round(gross * 0.10);
+            const special = Math.round(gross * 0.20);
+
+            // Deductions
+            const pf       = Math.round(basic * 0.12);
+            const pt       = gross >= 25000 ? 200 : 0;
+            const totalDed = pf + pt;
+
+            // ── Increment amount (computed early so totals can use it) ──
+            const incrType   = document.getElementById('increment-type');
+            const incrPctEl  = document.getElementById('emp-increment-pct');
+            const incrAmtEl  = document.getElementById('emp-increment-amt');
+            const preview    = document.getElementById('increment-preview');
+            const incrRow    = document.getElementById('sum-increment-row');
+
+            let incrAmt = 0;
+            if (incrType && gross > 0) {
+                const type     = incrType.value;
+                const incrPct  = parseFloat(incrPctEl ? incrPctEl.value : 0) || 0;
+                const incrFixd = parseFloat(incrAmtEl ? incrAmtEl.value : 0) || 0;
+                if (type === 'pct' && incrPct > 0)       incrAmt = Math.round(gross * incrPct / 100);
+                else if (type === 'amt' && incrFixd > 0) incrAmt = Math.round(incrFixd);
+            }
+
+            // OT rate label
+            const otRateEl = document.getElementById('ot-rate');
+            const otRate   = otRateEl ? otRateEl.value : '';
+            const otMult   = otRate === 'custom'
+                ? (parseFloat(document.getElementById('ot-multiplier') ? document.getElementById('ot-multiplier').value : 0) || 0)
+                : (parseFloat(otRate) || 0);
+            const otLabel  = otRate === '' ? '—'
+                : otRate === 'custom' ? (otMult > 0 ? otMult + '×' : 'Custom')
+                : otRate + '×';
+
+            // Totals (include increment in earnings)
+            const totalEarnings = gross + incrAmt;
+            const netSalary     = totalEarnings - totalDed;
+
+            // Breakdown table
+            set('sc-basic',       gross > 0 ? fmt(basic)   : '—');
+            set('sc-hra',         gross > 0 ? fmt(hra)     : '—');
+            set('sc-conv',        gross > 0 ? fmt(conv)    : '—');
+            set('sc-med',         gross > 0 ? fmt(med)     : '—');
+            set('sc-special',     gross > 0 ? fmt(special) : '—');
+            set('sc-total-gross', gross > 0 ? fmt(gross)   : '—');
+
+            // Deductions table
+            set('ded-pf',    gross > 0 ? fmt(pf)      : '—');
+            set('ded-pt',    gross > 0 ? fmt(pt)       : '—');
+            set('ded-total', gross > 0 ? fmt(totalDed) : '—');
+
+            // Summary panel — Earnings
+            set('sum-basic',      gross > 0 ? fmt(basic)         : '—');
+            set('sum-hra',        gross > 0 ? fmt(hra)           : '—');
+            set('sum-conv',       gross > 0 ? fmt(conv)          : '—');
+            set('sum-med',        gross > 0 ? fmt(med)           : '—');
+            set('sum-special',    gross > 0 ? fmt(special)       : '—');
+            set('sum-ot',         otLabel);
+
+            // Increment row — show only when a value is entered
+            if (incrRow) incrRow.style.display = (incrAmt > 0 && gross > 0) ? 'flex' : 'none';
+            set('sum-increment',  incrAmt > 0 && gross > 0 ? fmt(incrAmt) : '—');
+
+            set('sum-earnings',   gross > 0 ? fmt(totalEarnings) : '—');
+
+            // Summary panel — Deductions + Net
+            set('sum-pf',         gross > 0 ? fmt(pf)            : '—');
+            set('sum-pt',         gross > 0 ? fmt(pt)            : '—');
+            set('sum-deductions', gross > 0 ? fmt(totalDed)      : '—');
+            set('sum-net',        gross > 0 ? fmt(netSalary)     : '—');
+
+            // Increment preview card
+            if (incrAmt > 0 && gross > 0 && preview) {
+                set('incr-current', fmt(gross));
+                set('incr-amount',  fmt(incrAmt));
+                set('incr-revised', fmt(gross + incrAmt));
+                preview.style.display = 'block';
+            } else if (preview) {
+                preview.style.display = 'none';
+            }
+        };
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Run initial calculation on page load
+            calcSalary();
+
+
+            // Dynamically load shifts list from localStorage
+            let staffShifts = [];
+            if (localStorage.getItem('staffShifts')) {
+                staffShifts = JSON.parse(localStorage.getItem('staffShifts'));
+            } else {
+                staffShifts = [
+                    { code: 'GEN-01', name: 'General Shift', start: '09:00 AM', end: '06:00 PM', hours: '9h', status: true },
+                    { code: 'MOR-01', name: 'Morning Shift', start: '08:00 AM', end: '04:00 PM', hours: '8h', status: true },
+                    { code: 'AFT-01', name: 'Afternoon Shift', start: '04:00 PM', end: '12:00 AM', hours: '8h', status: true },
+                    { code: 'NGT-01', name: 'Night Shift', start: '12:00 AM', end: '08:00 AM', hours: '8h', status: true }
+                ];
+                localStorage.setItem('staffShifts', JSON.stringify(staffShifts));
+            }
+            
+            const activeShifts = staffShifts.filter(s => s.status);
+            const shiftWrapper = document.getElementById('emp-shift');
+            if (shiftWrapper) {
+                const trigger = shiftWrapper.querySelector('.custom-select-trigger');
+                trigger.querySelectorAll('.selected-text').forEach(el => el.remove());
+                
+                activeShifts.forEach(s => {
+                    const cleanClass = s.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                    const span = document.createElement('span');
+                    span.className = `selected-text text-${cleanClass}`;
+                    span.textContent = s.name;
+                    trigger.insertBefore(span, trigger.querySelector('svg'));
+                });
+                
+                const optionsBox = shiftWrapper.querySelector('.custom-select-options');
+                optionsBox.innerHTML = '';
+                activeShifts.forEach(s => {
+                    const cleanVal = s.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                    const label = document.createElement('label');
+                    label.className = 'custom-option';
+                    label.innerHTML = `<input type="radio" name="emp-shift" value="${cleanVal}"> ${s.name}`;
+                    optionsBox.appendChild(label);
+                });
+
+                // Bind click change handlers to dynamic radios
+                const newRadios = shiftWrapper.querySelectorAll('input[type="radio"]');
+                newRadios.forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        const arrowSvg = trigger.querySelector('svg:last-child');
+                        const placeholder = trigger.querySelector('.placeholder');
+                        
+                        trigger.querySelectorAll('.selected-text').forEach(el => {
+                            el.style.display = 'none';
+                        });
+
+                        let dynamicSelected = trigger.querySelector('.selected-text.dynamic-selected');
+                        if (!dynamicSelected) {
+                            dynamicSelected = document.createElement('span');
+                            dynamicSelected.className = 'selected-text dynamic-selected';
+                            dynamicSelected.style.alignItems = 'center';
+                            dynamicSelected.style.gap = '6px';
+                            trigger.insertBefore(dynamicSelected, arrowSvg);
+                        }
+                        if (placeholder) placeholder.style.display = 'none';
+                        dynamicSelected.textContent = radio.closest('label').textContent.trim();
+                        dynamicSelected.style.display = 'flex';
+                        
+                        shiftWrapper.removeAttribute('open');
+                    });
+                });
+            }
+
+            // Load staff employees from localStorage
+            let staffEmployees = [];
+            if (localStorage.getItem('staffEmployees')) {
+                staffEmployees = JSON.parse(localStorage.getItem('staffEmployees'));
+            }
+
+            // Get Employee ID from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const empId = urlParams.get('id');
+
+            // Find employee
+            const emp = staffEmployees.find(e => e.id === empId);
+            if (!emp) {
+                alert('Employee record not found.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Pre-fill inputs
+            const idField = document.getElementById('emp-id');
+            if (idField) idField.value = emp.id;
+
+            const nameField = document.getElementById('emp-name');
+            if (nameField) nameField.value = emp.name;
+
+            const mobileField = document.getElementById('emp-mobile');
+            if (mobileField) mobileField.value = emp.mobile.replace(/^\+91\s*/, '');
+
+            const emailField = document.getElementById('emp-email');
+            if (emailField) emailField.value = emp.email === '—' ? '' : emp.email;
+
+            // Helper to check custom select wrapper trigger option by label text
+            function prefillSelect(name, textVal) {
+                if (!textVal || textVal === '—') return;
+                const radios = document.querySelectorAll(`input[name="${name}"]`);
+                radios.forEach(radio => {
+                    const labelText = radio.closest('label').textContent.trim();
+                    if (labelText.toLowerCase() === textVal.toLowerCase()) {
+                        radio.checked = true;
+                        
+                        // Update placeholder display inside summary trigger
+                        const wrapper = radio.closest('.custom-select-wrapper');
+                        if (wrapper) {
+                            const placeholder = wrapper.querySelector('.custom-select-trigger .placeholder');
+                            if (placeholder) placeholder.textContent = labelText;
+                        }
+                    }
+                });
+            }
+
+            prefillSelect('emp-dept', emp.department);
+            prefillSelect('emp-branch', emp.branch);
+            prefillSelect('emp-role', emp.role);
+            prefillSelect('emp-shift', emp.shift);
+            prefillSelect('emp-salary', emp.salaryStructure);
+            prefillSelect('emp-ot-policy', emp.overtimePolicy);
+            prefillSelect('emp-incentive-policy', emp.incentivePolicy);
+            prefillSelect('emp-deduction-policy', emp.deductionPolicy);
+
+            // Pre-fill Date
+            if (emp.joiningDate && emp.joiningDate !== '—') {
+                const dateRadio = document.querySelector(`input[name="emp-join-date"][value="${emp.joiningDate}"]`);
+                if (dateRadio) {
+                    dateRadio.checked = true;
+                    const wrapper = dateRadio.closest('.custom-select-wrapper');
+                    if (wrapper) {
+                        const placeholder = wrapper.querySelector('.custom-select-trigger .placeholder');
+                        if (placeholder) placeholder.textContent = emp.joiningDate;
+                    }
+                }
+            }
+
+            // Form Submit Handler
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // Get values
+                    const name = document.getElementById('emp-name').value.trim();
+                    const mobile = document.getElementById('emp-mobile').value.trim();
+                    const email = document.getElementById('emp-email').value.trim();
+                    
+                    const deptEl = document.querySelector('input[name="emp-dept"]:checked');
+                    const deptText = deptEl ? deptEl.closest('label').textContent.trim() : '—';
+
+                    const branchEl = document.querySelector('input[name="emp-branch"]:checked');
+                    const branchText = branchEl ? branchEl.closest('label').textContent.trim() : '—';
+
+                    const dateEl = document.querySelector('input[name="emp-join-date"]:checked');
+                    const dateText = dateEl ? dateEl.value : '—';
+
+                    const roleEl = document.querySelector('input[name="emp-role"]:checked');
+                    const roleText = roleEl ? roleEl.closest('label').textContent.trim() : '—';
+
+                    const shiftEl = document.querySelector('input[name="emp-shift"]:checked');
+                    const shiftText = shiftEl ? shiftEl.closest('label').textContent.trim() : '—';
+
+                    const salaryEl = document.querySelector('input[name="emp-salary"]:checked');
+                    const salaryText = salaryEl ? salaryEl.closest('label').textContent.trim() : '—';
+
+                    const otEl = document.querySelector('input[name="emp-ot-policy"]:checked');
+                    const otText = otEl ? otEl.closest('label').textContent.trim() : '—';
+
+                    const incEl = document.querySelector('input[name="emp-incentive-policy"]:checked');
+                    const incText = incEl ? incEl.closest('label').textContent.trim() : '—';
+
+                    const dedEl = document.querySelector('input[name="emp-deduction-policy"]:checked');
+                    const dedText = dedEl ? dedEl.closest('label').textContent.trim() : '—';
+
+                    // Update values in original staff list
+                    emp.name = name;
+                    emp.mobile = mobile.startsWith('+91') ? mobile : '+91 ' + mobile.replace(/^\s*/, '');
+                    emp.email = email || '—';
+                    emp.department = deptText;
+                    emp.branch = branchText;
+                    emp.joiningDate = dateText;
+                    emp.role = roleText;
+                    emp.shift = shiftText;
+                    emp.salaryStructure = salaryText;
+                    emp.overtimePolicy = otText;
+                    emp.incentivePolicy = incText;
+                    emp.deductionPolicy = dedText;
+
+                    localStorage.setItem('staffEmployees', JSON.stringify(staffEmployees));
+
+                    // Redirect
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Inject search inputs into dropdowns
+            function setupDropdownSearch() {
+                document.querySelectorAll('.custom-select-options').forEach(optionsBox => {
+                    if (optionsBox.querySelector('.dropdown-search-input') || optionsBox.classList.contains('calendar-popup')) return;
+                    const labels = optionsBox.querySelectorAll('label.custom-option');
+                    
+                    const searchWrapper = document.createElement('div');
+                    searchWrapper.className = 'dropdown-search-wrapper';
+                    searchWrapper.style.cssText = 'padding: 6px 8px; border-bottom: 1px solid var(--color-border); box-sizing: border-box; background: var(--color-white); position: sticky; top: 0; z-index: 10; margin-bottom: 4px;';
+                    
+                    const searchInput = document.createElement('input');
+                    searchInput.type = 'text';
+                    searchInput.className = 'dropdown-search-input';
+                    searchInput.placeholder = 'Search...';
+                    searchInput.style.cssText = 'width: 100%; height: 26px; font-size: 0.75rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 8px; box-sizing: border-box; outline: none;';
+                    
+                    searchInput.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                    
+                    searchWrapper.appendChild(searchInput);
+                    optionsBox.insertBefore(searchWrapper, optionsBox.firstChild);
+                    
+                    const noResults = document.createElement('div');
+                    noResults.className = 'dropdown-no-results';
+                    noResults.textContent = 'No results found';
+                    noResults.style.cssText = 'display: none; padding: 10px; font-size: 0.75rem; color: #999; text-align: center;';
+                    optionsBox.appendChild(noResults);
+                    
+                    searchInput.addEventListener('input', () => {
+                        const val = searchInput.value.toLowerCase().trim();
+                        let matchCount = 0;
+                        labels.forEach(label => {
+                            const text = label.textContent.toLowerCase();
+                            if (text.includes(val)) {
+                                label.style.display = 'flex';
+                                matchCount++;
+                            } else {
+                                label.style.display = 'none';
+                            }
+                        });
+                        
+                        noResults.style.display = matchCount === 0 ? 'block' : 'none';
+                    });
+                });
+            }
+            setupDropdownSearch();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#salary-effective-from", {
+            dateFormat: "d M Y",
+            allowInput: true
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+/* Logistics Management Platform - Design System */
+
+:root {
+  /* Typography */
+  --font-family-primary: 'Manrope', sans-serif;
+
+  /* Color System - STRICTLY BLACK AND WHITE */
+  --color-black: #252525;
+  --color-white: #ffffff;
+  
+  /* Additional UI Colors from Mockup */
+  --color-sidebar: #252525;
+  --color-border: #e5e5e5;
+  --color-table-header: #252525;
+  --color-bg-light: #f7f7f7;
+
+  /* Shape System */
+  --border-radius-base: 6px;
+}
+
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}

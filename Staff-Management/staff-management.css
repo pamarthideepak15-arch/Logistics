@@ -1,0 +1,282 @@
+/* Staff Management Custom Styles */
+
+/* CSS-Only Checkbox Hack for Modals */
+#add-employee-toggle,
+#delete-employee-toggle {
+    display: none;
+}
+
+#add-employee-toggle:checked ~ #add-employee-modal,
+#delete-employee-toggle:checked ~ #delete-employee-modal {
+    display: flex;
+}
+
+/* Modal Overlay custom sizing and positioning */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+/* Custom width for add form modal */
+#add-employee-modal .modal-content {
+    width: 520px;
+    max-width: 90%;
+    padding: 24px;
+    background-color: var(--color-white);
+    border-radius: 8px;
+}
+
+.modal-form-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--color-black);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 10px;
+}
+
+.modal-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+/* Full width for specific form elements */
+.full-width-field {
+    grid-column: span 2;
+}
+
+.modal-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 16px;
+}
+
+/* Custom badge styles for Status */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.status-active {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--color-black);
+    border: 1px solid var(--color-black);
+}
+
+/* Overrides to make labels cursor pointer */
+.modal-close-label {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    color: #666;
+    padding: 4px;
+}
+.modal-close-label:hover {
+    color: var(--color-black);
+}
+
+/* Form Grid & Multi-column layouts */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Staff Table column widths and alignments */
+.staff-table th, 
+.staff-table td {
+    text-align: left !important;
+    white-space: nowrap;
+    padding-right: 12px !important;
+    font-size: 0.8125rem;
+}
+
+/* Alignments for status and actions */
+.staff-table th:nth-child(14), .staff-table td:nth-child(14) { 
+    text-align: center !important; 
+} /* Status toggle */
+.staff-table th:last-child, .staff-table td:last-child {
+    text-align: center !important;
+    padding-right: 8px !important;
+} /* Actions */
+
+/* Custom Calendar Picker Styling */
+#emp-join-date-wrapper .calendar-popup {
+    max-height: none !important;
+    overflow: visible !important;
+}
+.calendar-popup {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    margin-top: 4px;
+}
+details[open] .calendar-popup {
+    display: block;
+}
+.cal-day {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 28px !important;
+    width: 28px !important;
+    cursor: pointer !important;
+    font-size: 0.75rem !important;
+    border-radius: 4px !important;
+    color: var(--color-black) !important;
+    user-select: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
+.cal-day:hover {
+    background-color: var(--color-bg-light) !important;
+}
+.cal-day:has(input:checked) {
+    background-color: var(--color-black) !important;
+    color: var(--color-white) !important;
+    font-weight: 600 !important;
+}
+
+/* Mobile responsive card labels for Staff Master table */
+@media (max-width: 768px) {
+    .staff-table td:nth-child(1)::before { content: "Employee ID"; }
+    .staff-table td:nth-child(2)::before { content: "Employee Name"; }
+    .staff-table td:nth-child(3)::before { content: "Mobile Number"; }
+    .staff-table td:nth-child(4)::before { content: "Email ID"; }
+    .staff-table td:nth-child(5)::before { content: "Department"; }
+    .staff-table td:nth-child(6)::before { content: "Branch"; }
+    .staff-table td:nth-child(7)::before { content: "Joining Date"; }
+    .staff-table td:nth-child(8)::before { content: "Role"; }
+    .staff-table td:nth-child(9)::before { content: "Assigned Shift"; }
+    .staff-table td:nth-child(10)::before { content: "Salary Structure"; }
+    .staff-table td:nth-child(11)::before { content: "Overtime Policy"; }
+    .staff-table td:nth-child(12)::before { content: "Incentive Policy"; }
+    .staff-table td:nth-child(13)::before { content: "Deduction Policy"; }
+    .staff-table td:nth-child(14)::before { content: "Status"; }
+    .staff-table td:nth-child(15)::before { content: "Actions"; }
+}
+
+/* Policy Badge Chips */
+.policy-chip-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 5px;
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #555;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    text-transform: none;
+    line-height: 1.1;
+    margin-top: 1px;
+    white-space: nowrap;
+}
+
+/* CSS state trigger for Staff Filters modal */
+#staff-filters-popup-toggle:checked ~ #staff-filters-modal {
+    display: flex;
+}
+
+/* Better Visibility Input Field Strokes */
+.form-grid .form-group input[type="text"],
+.form-grid .form-group input[type="email"],
+.form-grid .form-group input[type="number"],
+.form-grid .form-group input[type="date"],
+.form-grid .form-group select,
+.form-grid .input-with-prefix,
+.search-input,
+.custom-select-trigger,
+.filters-bar label[for="staff-filters-popup-toggle"],
+.filters-bar .reset-filters-btn {
+    border: 1px solid #8c8c8c !important; /* Subtle but clearly visible neutral gray border */
+    background-color: var(--color-white);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Ensure borders are not duplicated in prefixes */
+.form-grid .form-group .input-with-prefix input[type="text"],
+.form-grid .form-group .input-with-prefix input[type="number"],
+.form-grid .form-group .input-with-prefix input[type="email"] {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.form-grid .form-group input[type="text"]:focus,
+.form-grid .form-group input[type="email"]:focus,
+.form-grid .form-group input[type="number"]:focus,
+.form-grid .form-group input[type="date"]:focus,
+.form-grid .form-group select:focus,
+.search-input:focus,
+details.custom-select-wrapper[open] .custom-select-trigger,
+.form-grid .input-with-prefix:focus-within,
+.filters-bar label[for="staff-filters-popup-toggle"]:hover,
+.filters-bar .reset-filters-btn:hover,
+.custom-select-trigger:focus,
+summary:focus {
+    border-color: var(--color-black) !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Reset browser default outline focus rings for all controls */
+input:focus,
+select:focus,
+textarea:focus,
+summary:focus,
+.custom-select-trigger:focus,
+*:focus-visible {
+    outline: none !important;
+}
+
+/* ─── Salary Details Section ─── */
+.salary-calc-cell {
+    color: var(--color-black);
+    font-weight: 600;
+    background: var(--color-bg-light);
+    font-size: 0.8125rem;
+}
+
+#salary-components-table tbody tr td:last-child {
+    background: var(--color-bg-light);
+}
+
+/* Prevent number input spinner arrows */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
+
+

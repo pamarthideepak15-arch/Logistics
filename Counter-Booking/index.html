@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter Booking - Logistics Management Platform</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="counter-booking.css">
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <aside class="sidebar">
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                <nav class="rail-nav">
+                    <a href="../User-Management/index.html" class="rail-icon" data-tooltip="Administration">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </a>
+                    <a href="index.html" class="rail-icon active" data-tooltip="Counter Booking">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Masters">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Logistics Operations">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="Accounts">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12" /><path d="M6 8h12" /><path d="m6 13 8.5 8" /><path d="M6 13h3" /><path d="M9 13c6.667 0 6.667-10 0-10" /></svg>
+                    </a>
+                    <a href="#" class="rail-icon" data-tooltip="HR">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+                
+                <div class="sidebar-nav-section">COUNTER BOOKING</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                        Counter Booking
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Counter Booking</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Counter Booking</h1>
+                        <p class="page-subtitle">Create walk-in bookings and generate Lorry Receipts.</p>
+                    </div>
+                </div>
+
+                <!-- Form Card -->
+                <div class="card" style="display: flex; flex-direction: column; height: calc(100vh - 120px); padding: 0;">
+                    <div class="booking-progress">
+                        <div class="progress-step active">
+                            <span class="step-number">1</span>
+                            <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Search Customer
+                        </div>
+                        <div class="progress-step">
+                            <span class="step-number">2</span>
+                            <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Shipment Details
+                        </div>
+                        <div class="progress-step">
+                            <span class="step-number">3</span>
+                            <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Price Calculation
+                        </div>
+                        <div class="progress-step">
+                            <span class="step-number">4</span>
+                            <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Payment
+                        </div>
+                        <div class="progress-step">
+                            <span class="step-number">5</span>
+                            <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Confirmation
+                        </div>
+                    </div>
+                    
+                    <div class="form-section" style="flex: 1; overflow-y: auto; padding: 24px;">
+                        <h2 class="form-section-title">Lookup Customer Details Using Mobile Number</h2>
+                        
+                        <div class="customer-lookup-2col">
+                            <!-- Left Side: Mobile Input & Search CTA Card -->
+                            <div class="customer-lookup-left-card">
+                                <form id="customer-search-form" onsubmit="handleCustomerSearch(event); return false;">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 600;">Mobile Number *</label>
+                                        <div class="customer-search-row">
+                                            <div class="customer-search-input-wrap">
+                                                <span class="prefix">+91</span>
+                                                <input type="text" id="customer-mobile-input" class="form-input" placeholder="Enter mobile number" value="82977 12345" autocomplete="off">
+                                            </div>
+                                            <button type="submit" id="btn-search-customer" class="btn-primary customer-search-btn">
+                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Right Side: Search Found Data UI -->
+                            <div id="customer-result-container" class="customer-lookup-right-card">
+                                
+                                <!-- Card 1: Customer Record Found (Hidden Initially) -->
+                                <div id="customer-found-card" style="display: none; padding: 2px 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                        <div style="display: flex; align-items: center; gap: 6px;">
+                                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                            <span style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black);">Customer Record Found</span>
+                                        </div>
+                                        <span style="background: var(--color-black); color: white; font-size: 0.6875rem; padding: 2px 8px; font-weight: 600; border-radius: 4px;">Business</span>
+                                    </div>
+                                    <div class="customer-info-grid">
+                                        <div class="info-item">
+                                            <span class="info-label">Customer Name</span>
+                                            <span class="info-value">Anil Mehta</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Company Name</span>
+                                            <span class="info-value">Precision Logistics</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Mobile Number</span>
+                                            <span class="info-value">+91 82977 12345</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer-sm" style="display: flex; padding-top: 8px; margin-top: 4px; border-top: 1px solid var(--color-border); width: 100%;">
+                                        <a href="shipment.html" class="btn-primary" style="text-decoration: none; height: 36px; width: 100%; padding: 0 16px; font-size: 0.8125rem; font-weight: 600; display: flex; align-items: center; justify-content: center; text-align: center;">Continue Booking &rarr;</a>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: Customer Not Found (Default Initial State) -->
+                                <div id="customer-not-found-card" style="display: block;">
+                                    <div class="not-found-body">
+                                        <div class="not-found-icon-wrap" style="background: var(--color-bg-light); border: 1px solid var(--color-border); color: #000000;">
+                                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="not-found-title">Customer Not Found</h4>
+                                            <p id="not-found-desc-text" class="not-found-desc">Search using the customer's mobile number to continue.</p>
+                                        </div>
+                                    </div>
+                                    <div id="add-customer-cta-wrap" class="card-footer-sm" style="display: flex; padding-top: 8px; margin-top: 4px; border-top: 1px solid var(--color-border); width: 100%;">
+                                        <a href="../Customer-Management/add-customer.html" class="btn-primary" style="text-decoration: none; height: 36px; width: 100%; padding: 0 16px; font-size: 0.8125rem; font-weight: 600; display: flex; align-items: center; justify-content: center; text-align: center;">+ Add Customer</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function handleCustomerSearch(event) {
+            if (event) event.preventDefault();
+            const input = document.getElementById('customer-mobile-input');
+            const val = input ? input.value.trim() : '';
+            const foundCard = document.getElementById('customer-found-card');
+            const notFoundCard = document.getElementById('customer-not-found-card');
+            const notFoundDesc = document.getElementById('not-found-desc-text');
+            const addCustomerCta = document.getElementById('add-customer-cta-wrap');
+            const container2Col = document.querySelector('.customer-lookup-2col');
+
+            if (!val || val === '0' || val.startsWith('00000') || val.toLowerCase().includes('not')) {
+                // Unsuccessful Search
+                foundCard.style.display = 'none';
+                notFoundCard.style.display = 'block';
+                if (notFoundDesc) notFoundDesc.textContent = "No customer is registered with this mobile number.";
+                if (addCustomerCta) addCustomerCta.style.display = 'flex';
+                if (container2Col) {
+                    container2Col.classList.add('state-not-found');
+                    container2Col.classList.remove('state-found');
+                }
+            } else {
+                // Successful Search
+                notFoundCard.style.display = 'none';
+                foundCard.style.display = 'block';
+                if (container2Col) {
+                    container2Col.classList.remove('state-not-found');
+                    container2Col.classList.add('state-found');
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('search') === 'true' || params.get('state') === 'found') {
+                handleCustomerSearch();
+            } else if (params.get('state') === 'notfound') {
+                const input = document.getElementById('customer-mobile-input');
+                if (input) input.value = '00000 00000';
+                handleCustomerSearch();
+            }
+        });
+    </script>
+</body>
+</html>

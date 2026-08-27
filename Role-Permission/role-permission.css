@@ -1,0 +1,142 @@
+/* Role-Permission/role-permission.css */
+
+/* Permission Matrix Grid */
+.permission-matrix {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  overflow: hidden;
+}
+
+.matrix-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+}
+.matrix-row:last-child {
+  border-bottom: none;
+}
+.permission-matrix .pagination-bar {
+  border-top: none;
+}
+
+.matrix-header-row {
+  background-color: var(--color-table-header);
+  color: var(--color-white);
+  border-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+.matrix-header-row .matrix-col-module,
+.matrix-header-row .matrix-col-action {
+  color: var(--color-white);
+}
+
+/* Module Column */
+.matrix-col-module {
+  flex: 2;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+/* Sub-module rows */
+.sub-module {
+  font-weight: 500;
+  padding-left: 12px;
+}
+
+/* Action Columns (View, Add, Edit, Delete) */
+.matrix-col-action {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Checkboxes */
+.matrix-col-action label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.matrix-col-action input[type="checkbox"] {
+  display: none;
+}
+.custom-checkbox {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--color-black);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  background-color: var(--color-white);
+}
+.matrix-col-action input[type="checkbox"]:checked + .custom-checkbox {
+  background-color: var(--color-black);
+}
+.matrix-col-action input[type="checkbox"]:checked + .custom-checkbox::after {
+  content: '';
+  width: 4px;
+  height: 8px;
+  border: solid var(--color-white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+
+/* Responsive Matrix */
+@media (max-width: 768px) {
+  .matrix-header-row {
+    display: none !important;
+  }
+  .matrix-row {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    padding: 8px 0 !important;
+    border-bottom: 1px solid var(--color-border) !important;
+  }
+  .matrix-col-module {
+    grid-column: 1 / span 4 !important;
+    padding: 4px 12px !important;
+    font-weight: 700 !important;
+    border-bottom: none !important;
+  }
+  .matrix-col-action {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 6px 0 !important;
+    width: 100% !important;
+  }
+  .matrix-col-action:empty,
+  .matrix-col-action:not([data-label]) {
+    display: none !important;
+  }
+  .matrix-col-action::before {
+    content: attr(data-label) !important;
+    font-size: 0.6875rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 4px !important;
+    display: block !important;
+  }
+  .matrix-col-action[data-label="View"] { grid-column: 1 !important; }
+  .matrix-col-action[data-label="Add"] { grid-column: 2 !important; }
+  .matrix-col-action[data-label="Edit"] { grid-column: 3 !important; }
+  .matrix-col-action[data-label="Delete"] { grid-column: 4 !important; }
+}

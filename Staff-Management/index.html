@@ -19,6 +19,7 @@
 
     <!-- Modal Checkboxes positioned high in DOM -->
     <input type="checkbox" id="delete-employee-toggle">
+    <input type="checkbox" id="add-employee-type-toggle">
     <input type="checkbox" id="staff-filters-popup-toggle" style="display: none;">
 
     <div class="app-layout">
@@ -56,6 +57,18 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
                         Staff Master
                     </a>
+                    <a href="department-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Department Master
+                    </a>
+                    <a href="role-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Role Master
+                    </a>
+                    <a href="branch-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Master
+                    </a>
                     <a href="../Attendance/index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                         Attendance
@@ -65,10 +78,17 @@
                         Shift Management
                     </a>
                     <a href="../Leave-Management/leave-management.html">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
-                        Leave Management
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Leave &amp; WFH
                     </a>
-
+                    <a href="../Payroll-Management/payroll.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                        Payroll
+                    </a>
+                    <a href="../Offboarding/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Offboarding
+                    </a>
                 </nav>
             </div>
         </aside>
@@ -105,10 +125,10 @@
                         <p class="page-subtitle">Manage Employee Records, Assignments, and Employment Details.</p>
                     </div>
                     <div class="header-actions">
-                        <a href="add-employee.html" class="btn-primary">
+                        <label for="add-employee-type-toggle" class="btn-primary" style="cursor: pointer;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                             Add Employee
-                        </a>
+                        </label>
                     </div>
                 </div>
 
@@ -167,105 +187,45 @@
                     <table class="data-table staff-table">
                         <thead>
                             <tr>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Employee ID
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Employee Name
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Mobile Number
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Email ID
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Department
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Branch
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Joining Date
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Role
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Assigned Shift
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Monthly Gross
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Overtime Policy
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Incentive Policy
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
-                                <th class="sortable">
-                                    <div class="sort-header-content">
-                                        Deduction Policy
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
+                                <th class="sortable"><div class="sort-header-content">Employee ID</div></th>
+                                <th class="sortable"><div class="sort-header-content">Employee Name</div></th>
+                                <th class="sortable"><div class="sort-header-content">Mobile Number</div></th>
+                                <th class="sortable"><div class="sort-header-content">Email ID</div></th>
+                                <th class="sortable"><div class="sort-header-content">Blood Group</div></th>
+                                <th class="sortable"><div class="sort-header-content">Department</div></th>
+                                <th class="sortable"><div class="sort-header-content">Branch</div></th>
+                                <th class="sortable"><div class="sort-header-content">Role / Designation</div></th>
+                                <th class="sortable"><div class="sort-header-content">Assigned Shift</div></th>
+                                <th class="sortable"><div class="sort-header-content">Monthly Gross</div></th>
+                                <th class="sortable"><div class="sort-header-content">Overtime (OT)</div></th>
+                                <th class="sortable"><div class="sort-header-content">Bank &amp; IFSC</div></th>
+                                <th class="sortable"><div class="sort-header-content">Statutory (EPF &amp; PT)</div></th>
+                                <th class="sortable"><div class="sort-header-content">Documents / BGV</div></th>
+                                <th class="sortable"><div class="sort-header-content">Onboarding Status</div></th>
+                                <th class="sortable"><div class="sort-header-content">Joining Date</div></th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- EMP001 -->
                             <tr>
-                                <td>EMP001</td>
-                                <td>
-                                    <span>Rajesh Kumar</span>
-                                </td>
+                                <td><strong>EMP001</strong></td>
+                                <td>Rajesh Kumar</td>
                                 <td>+91 98765 43210</td>
                                 <td>rajesh.kumar@logisticserp.com</td>
+                                <td><span class="status-badge" style="font-weight: 700; font-size: 0.6875rem; padding: 2px 6px;">O+</span></td>
                                 <td>HR</td>
                                 <td>HQ</td>
-                                <td>2026-08-01</td>
                                 <td>HR Manager</td>
-                                <td>General Shift</td>
-                                <td><span class="policy-chip-item">Driver Grade A — ₹30,000</span></td>
-                                <td>Driver OT 1.5x</td>
-                                <td>Driver Performance Incentive</td>
-                                <td>Standard Deduction</td>
+                                <td>General Shift (09:00 - 18:00)</td>
+                                <td><strong>₹30,000</strong></td>
+                                <td>Standard OT (1.5x)</td>
+                                <td>HDFC •••• 1001 (HDFC0000123)</td>
+                                <td>EPF 12% • PT Maharashtra</td>
+                                <td>Verified (Internal HR)</td>
+                                <td><span class="status-badge status-active" style="font-size: 0.6875rem;">Completed</span></td>
+                                <td>2026-08-01</td>
                                 <td>
                                     <label class="status-toggle">
                                         <input type="checkbox" checked>
@@ -283,22 +243,24 @@
                                     </div>
                                 </td>
                             </tr>
+                            <!-- EMP002 -->
                             <tr>
-                                <td>EMP002</td>
-                                <td>
-                                    <span>Amit Patel</span>
-                                </td>
+                                <td><strong>EMP002</strong></td>
+                                <td>Amit Patel</td>
                                 <td>+91 98765 54321</td>
                                 <td>amit@logistics.com</td>
+                                <td><span class="status-badge" style="font-weight: 700; font-size: 0.6875rem; padding: 2px 6px;">B+</span></td>
                                 <td>Fleet</td>
                                 <td>Mumbai Hub</td>
-                                <td>2026-02-10</td>
                                 <td>Fleet Manager</td>
-                                <td>Morning Shift</td>
-                                <td>—</td>
-                                <td>—</td>
-                                <td>—</td>
-                                <td>—</td>
+                                <td>Morning Shift (06:00 - 14:00)</td>
+                                <td><strong>₹32,000</strong></td>
+                                <td>Standard OT (1.5x)</td>
+                                <td>ICICI •••• 4521 (ICIC0000452)</td>
+                                <td>EPF 12% • PT Maharashtra</td>
+                                <td>Verified (FirstAdvantage)</td>
+                                <td><span class="status-badge status-active" style="font-size: 0.6875rem;">Completed</span></td>
+                                <td>2026-02-10</td>
                                 <td>
                                     <label class="status-toggle">
                                         <input type="checkbox" checked>
@@ -316,22 +278,94 @@
                                     </div>
                                 </td>
                             </tr>
+                            <!-- EMP003 -->
                             <tr>
-                                <td>EMP003</td>
-                                <td>
-                                    <span>Priya Sharma</span>
-                                </td>
+                                <td><strong>EMP003</strong></td>
+                                <td>Priya Sharma</td>
                                 <td>+91 98765 65432</td>
                                 <td>priya@logistics.com</td>
+                                <td><span class="status-badge" style="font-weight: 700; font-size: 0.6875rem; padding: 2px 6px;">A+</span></td>
                                 <td>HR</td>
                                 <td>HQ</td>
-                                <td>2026-03-01</td>
                                 <td>HR Manager</td>
-                                <td>General Shift</td>
-                                <td><span class="policy-chip-item">Driver Grade A — ₹30,000</span></td>
-                                <td>Driver OT 1.5x</td>
-                                <td>Driver Performance Incentive</td>
-                                <td>Standard Deduction</td>
+                                <td>General Shift (09:00 - 18:00)</td>
+                                <td><strong>₹30,000</strong></td>
+                                <td>Exempt</td>
+                                <td>SBI •••• 8821 (SBIN0001234)</td>
+                                <td>EPF 12% • PT Maharashtra</td>
+                                <td>Verified (AuthBridge)</td>
+                                <td><span class="status-badge status-active" style="font-size: 0.6875rem;">Completed</span></td>
+                                <td>2026-03-01</td>
+                                <td>
+                                    <label class="status-toggle">
+                                        <input type="checkbox" checked>
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="action-icons">
+                                        <a href="edit-employee.html" class="action-icon" title="Edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        </a>
+                                        <label for="delete-employee-toggle" class="action-icon" style="cursor: pointer;" title="Delete">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- EMP004 -->
+                            <tr>
+                                <td><strong>EMP004</strong></td>
+                                <td>Kiran Patel</td>
+                                <td>+91 98765 78901</td>
+                                <td>kiran.patel@logistics.com</td>
+                                <td><span class="status-badge" style="font-weight: 700; font-size: 0.6875rem; padding: 2px 6px;">AB+</span></td>
+                                <td>IT</td>
+                                <td>Delhi Hub</td>
+                                <td>Systems Engineer</td>
+                                <td>Night Shift (22:00 - 06:00)</td>
+                                <td><strong>₹35,000</strong></td>
+                                <td>Double OT (2.0x)</td>
+                                <td>Axis •••• 9923 (UTIB0000312)</td>
+                                <td>EPF 12% • PT Delhi</td>
+                                <td>Verified (Internal IT)</td>
+                                <td><span class="status-badge status-active" style="font-size: 0.6875rem;">Completed</span></td>
+                                <td>2026-04-15</td>
+                                <td>
+                                    <label class="status-toggle">
+                                        <input type="checkbox" checked>
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="action-icons">
+                                        <a href="edit-employee.html" class="action-icon" title="Edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        </a>
+                                        <label for="delete-employee-toggle" class="action-icon" style="cursor: pointer;" title="Delete">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- EMP011 -->
+                            <tr>
+                                <td><strong>EMP011</strong></td>
+                                <td>Suresh Nair</td>
+                                <td>+91 98450 12345</td>
+                                <td>suresh.nair@logistics.com</td>
+                                <td><span class="status-badge" style="font-weight: 700; font-size: 0.6875rem; padding: 2px 6px;">O-</span></td>
+                                <td>Operations</td>
+                                <td>Bengaluru Branch</td>
+                                <td>Logistics Coordinator</td>
+                                <td>General Shift (09:00 - 18:00)</td>
+                                <td><strong>₹28,500</strong></td>
+                                <td>Standard OT (1.5x)</td>
+                                <td>Canara •••• 6543 (CNRB0001099)</td>
+                                <td>EPF 12% • PT Karnataka</td>
+                                <td>Under Verification</td>
+                                <td><span class="status-badge" style="font-size: 0.6875rem; border-style: dashed;">In Progress</span></td>
+                                <td>2026-08-25</td>
                                 <td>
                                     <label class="status-toggle">
                                         <input type="checkbox" checked>
@@ -354,7 +388,7 @@
                     
                     <!-- Pagination -->
                     <div class="pagination-bar">
-                        <span>Showing 1-3 of 3</span>
+                        <span>Showing 1-5 of 5</span>
                         <div class="pagination-controls">
                             <button type="button" class="page-btn">Prev</button>
                             <span class="page-number">1</span>
@@ -385,13 +419,28 @@
         </div>
     </div>
 
+    <!-- Choice Modal: How would you like to add this employee? -->
+    <div class="modal-overlay" id="add-employee-type-modal">
+        <div class="modal-content" style="position: relative; width: 450px; padding: 24px; text-align: center; box-sizing: border-box; background: var(--color-white); border-radius: 8px;">
+            <label for="add-employee-type-toggle" class="modal-close-label" style="position: absolute; right: 16px; top: 16px; cursor: pointer; color: #666;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-title" style="margin-top: 0; margin-bottom: 12px; font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px;">How would you like to add this employee?</h3>
+            <p style="font-size: 0.8125rem; color:#666; margin-bottom: 20px;">Choose a workflow to register this worker in the Logistics system.</p>
+            <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 10px;">
+                <a href="add-employee.html?flow=new" class="btn-primary" style="flex: 1; height: 40px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight:600;">+ New Employee</a>
+                <a href="add-employee.html?flow=rehire" class="btn-secondary" style="flex: 1; height: 40px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; font-weight:600; border: 1px solid var(--color-border);">Rehire Employee</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Advanced Staff Filters Popup Modal -->
     <div class="modal-overlay" id="staff-filters-modal">
-        <div class="modal-content" style="position: relative; width: 620px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);">
+        <div class="modal-content" style="position: relative; width: 660px; max-width: 95vw; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);">
             <label for="staff-filters-popup-toggle" class="modal-close-label" style="position: absolute; right: 16px; top: 16px; cursor: pointer; color: #666;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </label>
-            <h3 class="modal-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.0625rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; text-align: left;">Advanced Staff Filters</h3>
+            <h3 class="modal-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.0625rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; text-align: left;">Filter Staff</h3>
             
             <div style="display: flex; flex-direction: column; gap: 16px;">
                 <!-- Row 1: Branch & Department -->
@@ -410,6 +459,8 @@
                                 </div>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> HQ</label>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Mumbai Hub</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Delhi Hub</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Chennai Branch</label>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Bengaluru Branch</label>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Vijayawada Branch</label>
                             </div>
@@ -431,17 +482,17 @@
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> HR</label>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Fleet</label>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Operations</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Finance</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Accounts</label>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Warehouse</label>
                             </div>
                         </details>
                     </div>
                 </div>
 
-                <!-- Row 2: Role & Assigned Shift -->
+                <!-- Row 2: Role / Designation & Assigned Shift -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
                     <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Role</label>
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Role / Designation</label>
                         <details class="custom-select-wrapper" style="width: 100%;">
                             <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
                                 <span class="placeholder">Select Role</span>
@@ -454,9 +505,10 @@
                                 </div>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> HR Manager</label>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Fleet Manager</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Operations Manager</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Accountant</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Fleet Executive</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Pickup Staff</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Delivery Staff</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Finance Officer</label>
                             </div>
                         </details>
                     </div>
@@ -482,13 +534,13 @@
                     </div>
                 </div>
 
-                <!-- Row 3: Salary Structure & Overtime Policy -->
+                <!-- Row 3: Blood Group & Documents / BGV -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
                     <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Salary Structure</label>
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Blood Group</label>
                         <details class="custom-select-wrapper" style="width: 100%;">
                             <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
-                                <span class="placeholder">Select Salary Structure</span>
+                                <span class="placeholder">Select Blood Group</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </summary>
                             <div class="custom-select-options">
@@ -496,18 +548,23 @@
                                     <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
                                     <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
                                 </div>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver Grade A — ₹30,000</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver Grade B — ₹25,000</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Manager Grade A — ₹50,000</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> A+</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> A-</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> B+</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> B-</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> O+</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> O-</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> AB+</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> AB-</label>
                             </div>
                         </details>
                     </div>
 
                     <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Overtime Policy</label>
+                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Documents / BGV Status</label>
                         <details class="custom-select-wrapper" style="width: 100%;">
                             <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
-                                <span class="placeholder">Select Overtime Policy</span>
+                                <span class="placeholder">Select BGV Status</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </summary>
                             <div class="custom-select-options">
@@ -515,56 +572,16 @@
                                     <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
                                     <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
                                 </div>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver OT 1.5x</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Standard OT</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> No Overtime</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Verified (Internal HR)</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Verified (FirstAdvantage)</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Verified (AuthBridge)</label>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Pending BGV</label>
                             </div>
                         </details>
                     </div>
                 </div>
 
-                <!-- Row 4: Incentive Policy & Deduction Policy -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
-                    <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Incentive Policy</label>
-                        <details class="custom-select-wrapper" style="width: 100%;">
-                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
-                                <span class="placeholder">Select Incentive Policy</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </summary>
-                            <div class="custom-select-options">
-                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
-                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
-                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
-                                </div>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Driver Performance Incentive</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Monthly Performance Incentive</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> No Incentive</label>
-                            </div>
-                        </details>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Deduction Policy</label>
-                        <details class="custom-select-wrapper" style="width: 100%;">
-                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
-                                <span class="placeholder">Select Deduction Policy</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </summary>
-                            <div class="custom-select-options">
-                                <div style="padding: 6px 12px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; font-size: 0.75rem; background-color: var(--color-bg-light);">
-                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Select All</span>
-                                    <span style="cursor: pointer; text-decoration: underline; color: #666; font-weight: 600;">Deselect All</span>
-                                </div>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> Standard Deduction</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> PF & Professional Tax</label>
-                                <label class="custom-option" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; color: var(--color-black);"><input type="checkbox" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);"> No Deduction</label>
-                            </div>
-                        </details>
-                    </div>
-                </div>
-
-                <!-- Row 5: Status -->
+                <!-- Row 4: Status -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
                     <div style="display: flex; flex-direction: column; gap: 6px;">
                         <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Status</label>
@@ -671,15 +688,18 @@
                 { key: 'name', label: 'Employee Name', sortable: true, visible: true },
                 { key: 'mobile', label: 'Mobile Number', sortable: true, visible: true },
                 { key: 'email', label: 'Email ID', sortable: true, visible: true },
+                { key: 'bloodGroup', label: 'Blood Group', sortable: true, visible: true },
                 { key: 'department', label: 'Department', sortable: true, visible: true },
                 { key: 'branch', label: 'Branch', sortable: true, visible: true },
-                { key: 'joiningDate', label: 'Joining Date', sortable: true, visible: true },
-                { key: 'role', label: 'Role', sortable: true, visible: true },
+                { key: 'role', label: 'Role / Designation', sortable: true, visible: true },
                 { key: 'shift', label: 'Assigned Shift', sortable: true, visible: true },
                 { key: 'monthlyGross', label: 'Monthly Gross', sortable: true, visible: true },
-                { key: 'overtimePolicy', label: 'Overtime Policy', sortable: true, visible: true },
-                { key: 'incentivePolicy', label: 'Incentive Policy', sortable: true, visible: true },
-                { key: 'deductionPolicy', label: 'Deduction Policy', sortable: true, visible: true },
+                { key: 'overtimePolicy', label: 'Overtime (OT)', sortable: true, visible: true },
+                { key: 'bankDetails', label: 'Bank & IFSC', sortable: true, visible: true },
+                { key: 'statutory', label: 'Statutory (EPF & PT)', sortable: true, visible: true },
+                { key: 'verification', label: 'Documents / BGV', sortable: true, visible: true },
+                { key: 'onboardingStatus', label: 'Onboarding Status', sortable: true, visible: true },
+                { key: 'joiningDate', label: 'Joining Date', sortable: true, visible: true },
                 { key: 'status', label: 'Status', sortable: false, visible: true },
                 { key: 'actions', label: 'Actions', sortable: false, visible: true }
             ];
@@ -690,15 +710,18 @@
                     name: 'Rajesh Kumar',
                     mobile: '+91 98765 43210',
                     email: 'rajesh.kumar@logisticserp.com',
+                    bloodGroup: 'O+',
                     department: 'HR',
                     branch: 'HQ',
-                    joiningDate: '2026-08-01',
                     role: 'HR Manager',
-                    shift: 'General Shift',
+                    shift: 'General Shift (09:00 - 18:00)',
                     monthlyGross: '₹30,000',
-                    overtimePolicy: 'Driver OT 1.5x',
-                    incentivePolicy: 'Driver Performance Incentive',
-                    deductionPolicy: 'Standard Deduction',
+                    overtimePolicy: 'Standard OT (1.5x)',
+                    bankDetails: 'HDFC •••• 1001 (HDFC0000123)',
+                    statutory: 'EPF 12% • PT Maharashtra',
+                    verification: 'Verified (Internal HR)',
+                    onboardingStatus: 'Completed',
+                    joiningDate: '2026-08-01',
                     status: true
                 },
                 {
@@ -706,15 +729,18 @@
                     name: 'Amit Patel',
                     mobile: '+91 98765 54321',
                     email: 'amit@logistics.com',
+                    bloodGroup: 'B+',
                     department: 'Fleet',
                     branch: 'Mumbai Hub',
-                    joiningDate: '2026-02-10',
                     role: 'Fleet Manager',
-                    shift: 'Morning Shift',
-                    monthlyGross: '—',
-                    overtimePolicy: '—',
-                    incentivePolicy: '—',
-                    deductionPolicy: '—',
+                    shift: 'Morning Shift (06:00 - 14:00)',
+                    monthlyGross: '₹32,000',
+                    overtimePolicy: 'Standard OT (1.5x)',
+                    bankDetails: 'ICICI •••• 4521 (ICIC0000452)',
+                    statutory: 'EPF 12% • PT Maharashtra',
+                    verification: 'Verified (FirstAdvantage)',
+                    onboardingStatus: 'Completed',
+                    joiningDate: '2026-02-10',
                     status: true
                 },
                 {
@@ -722,15 +748,18 @@
                     name: 'Priya Sharma',
                     mobile: '+91 98765 65432',
                     email: 'priya@logistics.com',
+                    bloodGroup: 'A+',
                     department: 'HR',
                     branch: 'HQ',
-                    joiningDate: '2026-03-01',
                     role: 'HR Manager',
-                    shift: 'General Shift',
+                    shift: 'General Shift (09:00 - 18:00)',
                     monthlyGross: '₹30,000',
-                    overtimePolicy: 'Driver OT 1.5x',
-                    incentivePolicy: 'Driver Performance Incentive',
-                    deductionPolicy: 'Standard Deduction',
+                    overtimePolicy: 'Exempt',
+                    bankDetails: 'SBI •••• 8821 (SBIN0001234)',
+                    statutory: 'EPF 12% • PT Maharashtra',
+                    verification: 'Verified (AuthBridge)',
+                    onboardingStatus: 'Completed',
+                    joiningDate: '2026-03-01',
                     status: true
                 },
                 {
@@ -738,15 +767,18 @@
                     name: 'Vikram Singh',
                     mobile: '+91 98765 76543',
                     email: 'vikram@logistics.com',
+                    bloodGroup: 'AB+',
                     department: 'Operations',
-                    branch: 'Delhi Agency',
-                    joiningDate: '2026-05-15',
+                    branch: 'Delhi Hub',
                     role: 'Pickup Staff',
-                    shift: 'General Shift',
+                    shift: 'General Shift (09:00 - 18:00)',
                     monthlyGross: '₹25,000',
-                    overtimePolicy: 'Driver OT 1.5x',
-                    incentivePolicy: '—',
-                    deductionPolicy: 'Standard Deduction',
+                    overtimePolicy: 'Double OT (2.0x)',
+                    bankDetails: 'Axis •••• 9912 (UTIB0000123)',
+                    statutory: 'EPF 12% • PT Delhi',
+                    verification: 'Pending BGV',
+                    onboardingStatus: 'In Progress',
+                    joiningDate: '2026-05-15',
                     status: true
                 },
                 {
@@ -754,15 +786,18 @@
                     name: 'Siddharth Roy',
                     mobile: '+91 98765 87654',
                     email: 'siddharth@logistics.com',
+                    bloodGroup: 'O-',
                     department: 'Fleet',
                     branch: 'Mumbai Hub',
-                    joiningDate: '2026-06-20',
                     role: 'Fleet Executive',
-                    shift: 'Night Shift',
-                    monthlyGross: '—',
-                    overtimePolicy: '—',
-                    incentivePolicy: '—',
-                    deductionPolicy: '—',
+                    shift: 'Night Shift (22:00 - 06:00)',
+                    monthlyGross: '₹28,000',
+                    overtimePolicy: 'Standard OT (1.5x)',
+                    bankDetails: 'Kotak •••• 3341 (KKBK0000123)',
+                    statutory: 'EPF 12% • PT Maharashtra',
+                    verification: 'Verified (Internal HR)',
+                    onboardingStatus: 'Completed',
+                    joiningDate: '2026-06-20',
                     status: false
                 },
                 {
@@ -770,15 +805,18 @@
                     name: 'Neha Gupta',
                     mobile: '+91 98765 98765',
                     email: 'neha@logistics.com',
+                    bloodGroup: 'B-',
                     department: 'Accounts',
                     branch: 'HQ',
-                    joiningDate: '2026-01-12',
                     role: 'Finance Officer',
-                    shift: 'General Shift',
+                    shift: 'General Shift (09:00 - 18:00)',
                     monthlyGross: '₹45,000',
-                    overtimePolicy: 'Staff OT 1.0x',
-                    incentivePolicy: 'Sales Incentive',
-                    deductionPolicy: 'Professional Tax',
+                    overtimePolicy: 'Exempt',
+                    bankDetails: 'HDFC •••• 5512 (HDFC0000123)',
+                    statutory: 'EPF 12% • PT Maharashtra',
+                    verification: 'Verified (AuthBridge)',
+                    onboardingStatus: 'Completed',
+                    joiningDate: '2026-01-12',
                     status: true
                 },
                 {
@@ -786,15 +824,18 @@
                     name: 'Rohan Mehta',
                     mobile: '+91 98765 09876',
                     email: 'rohan.mehta@logistics.com',
+                    bloodGroup: 'A-',
                     department: 'Operations',
-                    branch: 'Chennai Hub',
-                    joiningDate: '2026-04-01',
+                    branch: 'Chennai Branch',
                     role: 'Delivery Staff',
-                    shift: 'Morning Shift',
+                    shift: 'Morning Shift (06:00 - 14:00)',
                     monthlyGross: '₹30,000',
-                    overtimePolicy: 'Driver OT 1.5x',
-                    incentivePolicy: 'Driver Performance Incentive',
-                    deductionPolicy: 'Standard Deduction',
+                    overtimePolicy: 'Standard OT (1.5x)',
+                    bankDetails: 'Canara •••• 1102 (CNRB0000123)',
+                    statutory: 'EPF 12% • PT Tamil Nadu',
+                    verification: 'Verified (FirstAdvantage)',
+                    onboardingStatus: 'Completed',
+                    joiningDate: '2026-04-01',
                     status: true
                 }
             ];
@@ -812,11 +853,9 @@
                 { selector: 'Row 1:nth-child(2)', key: 'department', text: 'Select Department' },
                 { selector: 'Row 2:nth-child(1)', key: 'role', text: 'Select Role' },
                 { selector: 'Row 2:nth-child(2)', key: 'shift', text: 'Select Shift' },
-                { selector: 'Row 3:nth-child(1)', key: 'monthlyGross', text: 'Select Monthly Gross' },
-                { selector: 'Row 3:nth-child(2)', key: 'overtimePolicy', text: 'Select Overtime Policy' },
-                { selector: 'Row 4:nth-child(1)', key: 'incentivePolicy', text: 'Select Incentive Policy' },
-                { selector: 'Row 4:nth-child(2)', key: 'deductionPolicy', text: 'Select Deduction Policy' },
-                { selector: 'Row 5:nth-child(1)', key: 'status', text: 'Select Status' }
+                { selector: 'Row 3:nth-child(1)', key: 'bloodGroup', text: 'Select Blood Group' },
+                { selector: 'Row 3:nth-child(2)', key: 'verification', text: 'Select BGV Status' },
+                { selector: 'Row 4:nth-child(1)', key: 'status', text: 'Select Status' }
             ];
 
             const wrappers = document.querySelectorAll('#staff-filters-modal .custom-select-wrapper');
@@ -830,7 +869,10 @@
             // Toggle Employee Status
             window.toggleEmployeeStatus = function(empId) {
                 const emp = window.staffEmployees.find(e => e.id === empId);
-                if (emp) emp.status = !emp.status;
+                if (emp) {
+                    emp.status = !emp.status;
+                    localStorage.setItem('staffEmployees_v2', JSON.stringify(window.staffEmployees));
+                }
             };
 
             // Get selected filters
@@ -943,7 +985,7 @@
                 let displayData = [...window.staffEmployees];
 
                 // Search Box
-                const searchVal = document.querySelector('.search-input').value.toLowerCase().trim();
+                const searchVal = document.querySelector('.search-input') ? document.querySelector('.search-input').value.toLowerCase().trim() : '';
                 if (searchVal) {
                     displayData = displayData.filter(emp => {
                         return Object.entries(emp).some(([k, val]) => {
@@ -1005,7 +1047,16 @@
                     paginatedData.forEach(emp => {
                         tbodyHTML += '<tr>';
                         visibleCols.forEach(col => {
-                            if (col.key === 'status') {
+                            if (col.key === 'id') {
+                                tbodyHTML += `<td data-label="${col.label}"><strong>${emp.id}</strong></td>`;
+                            } else if (col.key === 'bloodGroup') {
+                                tbodyHTML += `<td data-label="${col.label}"><span class="status-badge" style="font-weight: 700; font-size: 0.6875rem; padding: 2px 6px;">${emp.bloodGroup || '—'}</span></td>`;
+                            } else if (col.key === 'monthlyGross') {
+                                tbodyHTML += `<td data-label="${col.label}"><strong>${emp.monthlyGross || '—'}</strong></td>`;
+                            } else if (col.key === 'onboardingStatus') {
+                                const isComp = (emp.onboardingStatus || '').toLowerCase() === 'completed';
+                                tbodyHTML += `<td data-label="${col.label}"><span class="status-badge ${isComp ? 'status-active' : ''}" style="font-size: 0.6875rem; ${isComp ? '' : 'border-style: dashed;'}">${emp.onboardingStatus || 'In Progress'}</span></td>`;
+                            } else if (col.key === 'status') {
                                 tbodyHTML += `
                                     <td data-label="${col.label}" style="text-align: center !important;">
                                         <label class="status-toggle">
@@ -1107,7 +1158,7 @@
             function setupMultiSelects() {
                 document.querySelectorAll('#staff-filters-modal .custom-select-wrapper').forEach(wrapper => {
                     const selectTrigger = wrapper.querySelector('.custom-select-trigger');
-                    const placeholder = selectTrigger.querySelector('.placeholder');
+                    const placeholder = selectTrigger ? selectTrigger.querySelector('.placeholder') : null;
                     const defaultText = wrapper.getAttribute('data-default-placeholder');
                     const optionsBox = wrapper.querySelector('.custom-select-options');
                     if (!optionsBox) return;
@@ -1201,21 +1252,20 @@
                     }
 
                     function updateState() {
-                        updateMasterCheckboxState();
                         renderChips();
                         updateTriggerText();
+                        updateMasterCheckboxState();
                         updateFilterDot();
+                        currentPage = 1;
                         renderTable();
                     }
 
                     if (toggleAllCheckbox) {
-                        toggleAllCheckbox.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            const checked = toggleAllCheckbox.checked;
+                        toggleAllCheckbox.addEventListener('change', () => {
+                            const isChecked = toggleAllCheckbox.checked;
                             checkboxes.forEach(cb => {
-                                const label = cb.closest('label');
-                                if (label.style.display !== 'none') {
-                                    cb.checked = checked;
+                                if (cb.closest('label').style.display !== 'none') {
+                                    cb.checked = isChecked;
                                 }
                             });
                             updateState();
@@ -1279,7 +1329,7 @@
                 confirmDeleteBtn.addEventListener('click', () => {
                     if (window.pendingDeleteId) {
                         window.staffEmployees = window.staffEmployees.filter(e => e.id !== window.pendingDeleteId);
-                        localStorage.setItem('staffEmployees', JSON.stringify(window.staffEmployees));
+                        localStorage.setItem('staffEmployees_v2', JSON.stringify(window.staffEmployees));
                         
                         const toggle = document.getElementById('delete-employee-toggle');
                         if (toggle) toggle.checked = false;
@@ -1294,15 +1344,15 @@
                 const emp = window.staffEmployees.find(e => e.id === empId);
                 if (emp) {
                     emp.status = !emp.status;
-                    localStorage.setItem('staffEmployees', JSON.stringify(window.staffEmployees));
+                    localStorage.setItem('staffEmployees_v2', JSON.stringify(window.staffEmployees));
                 }
             };
 
             // Load and initialize staff from localStorage
-            if (!localStorage.getItem('staffEmployees') || JSON.parse(localStorage.getItem('staffEmployees')).length < 7) {
-                localStorage.setItem('staffEmployees', JSON.stringify(window.staffEmployees));
+            if (!localStorage.getItem('staffEmployees_v2') || JSON.parse(localStorage.getItem('staffEmployees_v2')).length < 7) {
+                localStorage.setItem('staffEmployees_v2', JSON.stringify(window.staffEmployees));
             } else {
-                window.staffEmployees = JSON.parse(localStorage.getItem('staffEmployees'));
+                window.staffEmployees = JSON.parse(localStorage.getItem('staffEmployees_v2'));
             }
 
             // Inject search inputs into dropdowns

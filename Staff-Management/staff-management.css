@@ -2,11 +2,13 @@
 
 /* CSS-Only Checkbox Hack for Modals */
 #add-employee-toggle,
+#add-employee-type-toggle,
 #delete-employee-toggle {
     display: none;
 }
 
 #add-employee-toggle:checked ~ #add-employee-modal,
+#add-employee-type-toggle:checked ~ #add-employee-type-modal,
 #delete-employee-toggle:checked ~ #delete-employee-modal {
     display: flex;
 }
@@ -173,17 +175,19 @@ details[open] .calendar-popup {
     .staff-table td:nth-child(2)::before { content: "Employee Name"; }
     .staff-table td:nth-child(3)::before { content: "Mobile Number"; }
     .staff-table td:nth-child(4)::before { content: "Email ID"; }
-    .staff-table td:nth-child(5)::before { content: "Department"; }
-    .staff-table td:nth-child(6)::before { content: "Branch"; }
-    .staff-table td:nth-child(7)::before { content: "Joining Date"; }
-    .staff-table td:nth-child(8)::before { content: "Role"; }
+    .staff-table td:nth-child(5)::before { content: "Blood Group"; }
+    .staff-table td:nth-child(6)::before { content: "Department"; }
+    .staff-table td:nth-child(7)::before { content: "Branch"; }
+    .staff-table td:nth-child(8)::before { content: "Role / Designation"; }
     .staff-table td:nth-child(9)::before { content: "Assigned Shift"; }
-    .staff-table td:nth-child(10)::before { content: "Salary Structure"; }
-    .staff-table td:nth-child(11)::before { content: "Overtime Policy"; }
-    .staff-table td:nth-child(12)::before { content: "Incentive Policy"; }
-    .staff-table td:nth-child(13)::before { content: "Deduction Policy"; }
-    .staff-table td:nth-child(14)::before { content: "Status"; }
-    .staff-table td:nth-child(15)::before { content: "Actions"; }
+    .staff-table td:nth-child(10)::before { content: "Monthly Gross"; }
+    .staff-table td:nth-child(11)::before { content: "Overtime (OT)"; }
+    .staff-table td:nth-child(12)::before { content: "Bank & IFSC"; }
+    .staff-table td:nth-child(13)::before { content: "Statutory (EPF & PT)"; }
+    .staff-table td:nth-child(14)::before { content: "Documents / BGV"; }
+    .staff-table td:nth-child(15)::before { content: "Joining Date"; }
+    .staff-table td:nth-child(16)::before { content: "Status"; }
+    .staff-table td:nth-child(17)::before { content: "Actions"; }
 }
 
 /* Policy Badge Chips */

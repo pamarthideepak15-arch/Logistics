@@ -26,8 +26,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Basic accessibility focus states */
+/* Clean focus states across all devices and browsers */
 *:focus {
-  outline: 2px solid var(--color-black);
-  outline-offset: 2px;
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 1.5px solid var(--color-black);
+  outline-offset: 1px;
+}
+
+/* Remove default focus outline from mouse clicks on interactive elements */
+a, button, input, select, textarea, [tabindex] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus, button:focus, .app-launcher-card:focus, .btn-primary:focus, .btn-secondary:focus {
+  outline: none !important;
+  box-shadow: none;
 }

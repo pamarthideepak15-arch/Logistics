@@ -51,6 +51,18 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
                         Staff Master
                     </a>
+                    <a href="../Staff-Management/department-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Department Master
+                    </a>
+                    <a href="../Staff-Management/role-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Role Master
+                    </a>
+                    <a href="../Staff-Management/branch-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Master
+                    </a>
                     <a href="../Attendance/index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                         Attendance
@@ -60,12 +72,16 @@
                         Shift Management
                     </a>
                     <a href="../Leave-Management/leave-management.html">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
-                        Leave Management
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Leave &amp; WFH
                     </a>
                     <a href="payroll.html" class="active nav-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
                         Payroll
+                    </a>
+                    <a href="../Offboarding/index.html" class="nav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Offboarding
                     </a>
                 </nav>
             </div>
@@ -131,6 +147,9 @@
                         <button type="button" class="btn-primary" id="btn-generate-payroll" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); background: var(--color-black); color: var(--color-white); font-weight: 500; outline: none; user-select: none; border: 1px solid var(--color-black);">
                             Generate Payroll
                         </button>
+                        <a href="payroll-settings.html" class="btn-secondary" title="Payroll Settings" style="height: 30px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--border-radius-base); border: 1px solid var(--color-border); background: var(--color-white); text-decoration: none; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </a>
                     </div>
                 </div>
 
@@ -193,23 +212,62 @@
                 <div id="payroll-empty-state" class="empty-state" style="text-align: center; padding: 40px 20px; background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base);">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="40" height="40" style="margin-bottom: 12px; margin-left: auto; margin-right: auto; display: block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     <h3 style="margin: 0 0 8px 0; font-size: 1rem; color: var(--color-black); font-weight: 600;">Payroll not generated</h3>
-                    <p style="margin: 0 0 16px 0; font-size: 0.8125rem; color: #666;">August 2026 payroll has not been generated yet.</p>
-                    <button type="button" class="btn-primary" onclick="document.getElementById('btn-generate-payroll').click();">Generate Payroll</button>
+                    <p style="margin: 0; font-size: 0.8125rem; color: #666;">August 2026 payroll has not been generated yet.</p>
                 </div>
 
                 <!-- Table Container (Hidden Initially) -->
                 <div class="table-container" id="payroll-table-container" style="display: none;">
-                    <table class="data-table">
+                    <table class="data-table" id="payroll-table">
                         <thead>
                             <tr>
-                                <th style="text-align: left;">Payroll ID</th>
-                                <th style="text-align: left;">Employee ID</th>
-                                <th style="text-align: left;">Employee Name</th>
-                                <th style="text-align: left;">Department</th>
-                                <th style="text-align: right;">Gross Salary</th>
-                                <th style="text-align: right;">Deductions</th>
-                                <th style="text-align: right;">Net Salary</th>
-                                <th style="text-align: center;">Payslip Status</th>
+                                <th class="sortable" onclick="sortPayrollTable(0)" style="text-align: left;">
+                                    <div class="sort-header-content">
+                                        Payroll ID
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortPayrollTable(1)" style="text-align: left;">
+                                    <div class="sort-header-content">
+                                        Employee ID
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortPayrollTable(2)" style="text-align: left;">
+                                    <div class="sort-header-content">
+                                        Employee Name
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortPayrollTable(3)" style="text-align: left;">
+                                    <div class="sort-header-content">
+                                        Department
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortPayrollTable(4)" style="text-align: right;">
+                                    <div class="sort-header-content" style="justify-content: flex-end;">
+                                        Gross Salary
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortPayrollTable(5)" style="text-align: right;">
+                                    <div class="sort-header-content" style="justify-content: flex-end;">
+                                        Deductions
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortPayrollTable(6)" style="text-align: right;">
+                                    <div class="sort-header-content" style="justify-content: flex-end;">
+                                        Net Salary
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
+                                <th class="sortable" onclick="sortPayrollTable(7)" style="text-align: center;">
+                                    <div class="sort-header-content" style="justify-content: center;">
+                                        Payslip Status
+                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                    </div>
+                                </th>
                                 <th style="text-align: right;">Actions</th>
                             </tr>
                         </thead>
@@ -223,92 +281,257 @@
         </main>
     </div>
 
-    <!-- MODAL: PAYSLIP POPUP -->
-    <input type="checkbox" id="payslip-modal-toggle" style="display: none;">
+    <!-- =========================================================================
+         MODAL: PROFESSIONAL PAYSLIP VIEW & DOWNLOAD POPUP
+         ========================================================================= -->
     <div class="modal-overlay" id="payslip-modal">
-        <div class="modal-content" style="position: relative; width: 500px; padding: 24px; box-sizing: border-box; background: var(--color-white); border-radius: 8px;">
-            <label for="payslip-modal-toggle" class="modal-close-label" style="position: absolute; right: 24px; top: 24px; cursor: pointer; color: #666;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </label>
-            <h3 class="modal-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.0625rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; text-align: left;">Payslip - August 2026</h3>
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="payslip-modal-header">
+                <h3 id="ps-hdr-title">Employee Payslip — August 2026</h3>
+                <button type="button" class="payslip-modal-close" onclick="closePayslipModal()" title="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
             
-            <div class="modal-scrollable-body" style="text-align: left; font-size: 0.8125rem;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <!-- Payslip Paper Layout -->
+            <div class="payslip-body" id="payslip-print-area">
+                
+                <!-- Company Header -->
+                <div class="payslip-company-header">
                     <div>
-                        <div style="color: #666; font-weight: 600; margin-bottom: 4px;">Employee Name</div>
-                        <div style="font-weight: 700; font-size: 0.9375rem;">Rajesh Kumar</div>
+                        <div class="payslip-company-name">Logistics ERP Enterprises Ltd.</div>
+                        <div class="payslip-company-address">
+                            Corporate HQ: Node 01, Logistics Hub, Andheri East, Mumbai - 400069<br>
+                            PAN: AAACL1234F • TAN: MUMB12345E • GSTIN: 27AAACL1234F1ZV
+                        </div>
                     </div>
-                    <div>
-                        <div style="color: #666; font-weight: 600; margin-bottom: 4px;">Employee ID</div>
-                        <div style="font-weight: 500;">EMP001</div>
-                    </div>
-                    <div>
-                        <div style="color: #666; font-weight: 600; margin-bottom: 4px;">Department</div>
-                        <div style="font-weight: 500;">Operations</div>
-                    </div>
-                    <div>
-                        <div style="color: #666; font-weight: 600; margin-bottom: 4px;">Payroll ID</div>
-                        <div style="font-weight: 500;">PAY-AUG-001</div>
+                    <div class="payslip-title-badge">
+                        <div class="title">Payslip</div>
+                        <div class="period" id="ps-period">Month: August 2026</div>
                     </div>
                 </div>
 
-                <div style="border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; margin-bottom: 16px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--color-border); background: var(--color-bg-light); padding: 8px 12px; font-weight: 600;">
-                        <div>Earnings</div>
-                        <div style="text-align: right;">Amount</div>
+                <!-- Employee & Employment Information Grid -->
+                <div class="payslip-emp-grid">
+                    <div class="payslip-emp-item">
+                        <span class="payslip-emp-label">Employee ID</span>
+                        <span class="payslip-emp-value" id="ps-emp-id">EMP001</span>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; padding: 8px 12px; border-bottom: 1px solid var(--color-border);">
-                        <div>Basic Salary</div>
-                        <div style="text-align: right;">₹30,000</div>
+                    <div class="payslip-emp-item">
+                        <span class="payslip-emp-label">Employee Name</span>
+                        <span class="payslip-emp-value" id="ps-emp-name">Rajesh Kumar</span>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; padding: 8px 12px; border-bottom: 1px solid var(--color-border);">
-                        <div>HRA</div>
-                        <div style="text-align: right;">₹10,000</div>
+                    <div class="payslip-emp-item">
+                        <span class="payslip-emp-label">Department</span>
+                        <span class="payslip-emp-value" id="ps-emp-dept">Operations</span>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; padding: 8px 12px;">
-                        <div>Special Allowance</div>
-                        <div style="text-align: right;">₹10,000</div>
+                    <div class="payslip-emp-item">
+                        <span class="payslip-emp-label">Designation</span>
+                        <span class="payslip-emp-value" id="ps-emp-desig">Operations Lead</span>
+                    </div>
+                    <div class="payslip-emp-item">
+                        <span class="payslip-emp-label">Bank Account</span>
+                        <span class="payslip-emp-value" id="ps-emp-bank">HDFC •••• 1001</span>
+                    </div>
+                    <div class="payslip-emp-item">
+                        <span class="payslip-emp-label">IFSC Code</span>
+                        <span class="payslip-emp-value">HDFC0000123</span>
+                    </div>
+                    <div class="payslip-emp-item">
+                        <span class="payslip-emp-label">PF Number</span>
+                        <span class="payslip-emp-value" id="ps-emp-pf">MH/BAN/0012345/101</span>
+                    </div>
+                    <div class="payslip-emp-item">
+                        <span class="payslip-emp-label">Days Payable</span>
+                        <span class="payslip-emp-value">31 Days (Full)</span>
                     </div>
                 </div>
 
-                <div style="border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; margin-bottom: 20px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--color-border); background: var(--color-bg-light); padding: 8px 12px; font-weight: 600;">
-                        <div>Deductions</div>
-                        <div style="text-align: right;">Amount</div>
+                <!-- Earnings & Deductions Tables -->
+                <div class="payslip-tables-grid">
+                    <!-- Left: Earnings -->
+                    <div class="payslip-table-box">
+                        <div class="payslip-table-header">
+                            <span>Earnings</span>
+                            <span>Amount (₹)</span>
+                        </div>
+                        <div class="payslip-row">
+                            <span>Basic Salary</span>
+                            <span id="ps-earn-basic">₹25,000.00</span>
+                        </div>
+                        <div class="payslip-row">
+                            <span>House Rent Allowance (HRA)</span>
+                            <span id="ps-earn-hra">₹12,500.00</span>
+                        </div>
+                        <div class="payslip-row">
+                            <span>Special Allowance</span>
+                            <span id="ps-earn-spl">₹10,000.00</span>
+                        </div>
+                        <div class="payslip-row">
+                            <span>Overtime &amp; Incentives</span>
+                            <span id="ps-earn-ot">₹2,500.00</span>
+                        </div>
+                        <div class="payslip-total-row">
+                            <span>Gross Earnings</span>
+                            <span id="ps-gross-total">₹50,000.00</span>
+                        </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; padding: 8px 12px; border-bottom: 1px solid var(--color-border);">
-                        <div>Provident Fund</div>
-                        <div style="text-align: right;">₹1,800</div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; padding: 8px 12px;">
-                        <div>Professional Tax</div>
-                        <div style="text-align: right;">₹800</div>
+
+                    <!-- Right: Deductions -->
+                    <div class="payslip-table-box">
+                        <div class="payslip-table-header">
+                            <span>Deductions</span>
+                            <span>Amount (₹)</span>
+                        </div>
+                        <div class="payslip-row">
+                            <span>Provident Fund (EPF 12%)</span>
+                            <span id="ps-ded-pf">₹1,800.00</span>
+                        </div>
+                        <div class="payslip-row">
+                            <span>Professional Tax (PT)</span>
+                            <span id="ps-ded-pt">₹200.00</span>
+                        </div>
+                        <div class="payslip-row">
+                            <span>Income Tax / TDS</span>
+                            <span id="ps-ded-tds">₹400.00</span>
+                        </div>
+                        <div class="payslip-row">
+                            <span>Other Deductions</span>
+                            <span id="ps-ded-other">₹200.00</span>
+                        </div>
+                        <div class="payslip-total-row">
+                            <span>Total Deductions</span>
+                            <span id="ps-ded-total">₹2,600.00</span>
+                        </div>
                     </div>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid var(--color-black); padding-top: 12px;">
-                    <div style="font-size: 1rem; font-weight: 700;">Net Salary</div>
-                    <div style="font-size: 1.125rem; font-weight: 800;">₹47,400</div>
+                <!-- Net Pay Banner -->
+                <div class="payslip-net-banner">
+                    <div class="payslip-net-left">
+                        <span class="payslip-net-label">Net Salary Payable</span>
+                        <span class="payslip-net-words" id="ps-net-words">Rupees Forty-Seven Thousand Four Hundred Only</span>
+                    </div>
+                    <div class="payslip-net-amount" id="ps-net-amount">₹47,400.00</div>
                 </div>
+
+                <!-- Footer Note -->
+                <div class="payslip-footer-note">
+                    This is a computer-generated official salary payslip of Logistics ERP and does not require a physical signature.
+                </div>
+
             </div>
 
-            <!-- Form Actions -->
-            <div class="modal-form-actions" style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
-                <label for="payslip-modal-toggle" class="btn-secondary" style="height: 32px; padding: 0 16px; line-height: 32px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; border: 1px solid #8c8c8c; background: var(--color-white);">Close</label>
-                <button type="button" class="btn-primary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem; font-weight: 600;">Download PDF</button>
+            <!-- Modal Action Buttons -->
+            <div class="payslip-modal-actions">
+                <button type="button" class="btn-secondary" onclick="closePayslipModal()" style="height: 32px; padding: 0 16px; border: 1px solid #8c8c8c;">Close</button>
+                <button type="button" class="btn-secondary" onclick="emailCurrentPayslip()" style="height: 32px; padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #8c8c8c;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    Email Payslip
+                </button>
+                <button type="button" class="btn-primary" onclick="downloadCurrentPayslipPDF()" style="height: 32px; padding: 0 16px; display: inline-flex; align-items: center; gap: 6px;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download PDF
+                </button>
             </div>
         </div>
     </div>
 
     <script>
         const payrollData = [
-            { pid: 'PAY-AUG-001', eid: 'EMP001', name: 'Rajesh Kumar', dept: 'Operations', gross: '₹50,000', ded: '₹2,600', net: '₹47,400' },
-            { pid: 'PAY-AUG-002', eid: 'EMP002', name: 'Ravi Kumar', dept: 'Fleet', gross: '₹45,000', ded: '₹2,400', net: '₹42,600' },
-            { pid: 'PAY-AUG-003', eid: 'EMP003', name: 'Priya Sharma', dept: 'HR', gross: '₹55,000', ded: '₹5,000', net: '₹50,000' },
-            { pid: 'PAY-AUG-004', eid: 'EMP004', name: 'Amit Patel', dept: 'Finance', gross: '₹49,000', ded: '₹9,760', net: '₹39,240' }
+            { 
+                pid: 'PAY-AUG-001', 
+                eid: 'EMP001', 
+                name: 'Rajesh Kumar', 
+                dept: 'Operations', 
+                desig: 'Operations Lead', 
+                bank: 'HDFC •••• 1001',
+                pf: 'MH/BAN/0012345/101',
+                basic: '₹25,000.00',
+                hra: '₹12,500.00',
+                spl: '₹10,000.00',
+                ot: '₹2,500.00',
+                gross: '₹50,000.00', 
+                dedPf: '₹1,800.00',
+                dedPt: '₹200.00',
+                dedTds: '₹400.00',
+                dedOther: '₹200.00',
+                ded: '₹2,600.00', 
+                net: '₹47,400.00',
+                words: 'Rupees Forty-Seven Thousand Four Hundred Only'
+            },
+            { 
+                pid: 'PAY-AUG-002', 
+                eid: 'EMP002', 
+                name: 'Ravi Kumar', 
+                dept: 'Fleet', 
+                desig: 'Fleet Manager', 
+                bank: 'SBI •••• 4421',
+                pf: 'MH/BAN/0012345/102',
+                basic: '₹22,500.00',
+                hra: '₹11,250.00',
+                spl: '₹9,000.00',
+                ot: '₹2,250.00',
+                gross: '₹45,000.00', 
+                dedPf: '₹1,800.00',
+                dedPt: '₹200.00',
+                dedTds: '₹300.00',
+                dedOther: '₹100.00',
+                ded: '₹2,400.00', 
+                net: '₹42,600.00',
+                words: 'Rupees Forty-Two Thousand Six Hundred Only'
+            },
+            { 
+                pid: 'PAY-AUG-003', 
+                eid: 'EMP003', 
+                name: 'Priya Sharma', 
+                dept: 'HR', 
+                desig: 'HR Specialist', 
+                bank: 'ICICI •••• 8892',
+                pf: 'MH/BAN/0012345/103',
+                basic: '₹28,000.00',
+                hra: '₹14,000.00',
+                spl: '₹11,000.00',
+                ot: '₹2,000.00',
+                gross: '₹55,000.00', 
+                dedPf: '₹1,800.00',
+                dedPt: '₹200.00',
+                dedTds: '₹2,500.00',
+                dedOther: '₹500.00',
+                ded: '₹5,000.00', 
+                net: '₹50,000.00',
+                words: 'Rupees Fifty Thousand Only'
+            },
+            { 
+                pid: 'PAY-AUG-004', 
+                eid: 'EMP004', 
+                name: 'Amit Patel', 
+                dept: 'Finance', 
+                desig: 'Senior Accountant', 
+                bank: 'Axis •••• 6310',
+                pf: 'MH/BAN/0012345/104',
+                basic: '₹24,500.00',
+                hra: '₹12,250.00',
+                spl: '₹9,750.00',
+                ot: '₹2,500.00',
+                gross: '₹49,000.00', 
+                dedPf: '₹1,800.00',
+                dedPt: '₹200.00',
+                dedTds: '₹7,500.00',
+                dedOther: '₹260.00',
+                ded: '₹9,760.00', 
+                net: '₹39,240.00',
+                words: 'Rupees Thirty-Nine Thousand Two Hundred Forty Only'
+            }
         ];
 
-        document.getElementById('btn-generate-payroll').addEventListener('click', function() {
+        let currentActiveRecord = payrollData[0];
+
+        // Auto-generate sample table on page load or on button click
+        document.getElementById('btn-generate-payroll').addEventListener('click', generatePayrollTable);
+
+        function generatePayrollTable() {
             // Update KPIs
             document.getElementById('kpi-emp').textContent = '4';
             document.getElementById('kpi-gross').textContent = '₹199,000';
@@ -325,18 +548,25 @@
             payrollData.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td data-label="Payroll ID" style="text-align: left;">${row.pid}</td>
+                    <td data-label="Payroll ID" style="text-align: left; font-weight: 600;">${row.pid}</td>
                     <td data-label="Employee ID" style="text-align: left;">${row.eid}</td>
-                    <td data-label="Employee Name" style="text-align: left;">${row.name}</td>
+                    <td data-label="Employee Name" style="text-align: left; font-weight: 600;">${row.name}</td>
                     <td data-label="Department" style="text-align: left;">${row.dept}</td>
                     <td data-label="Gross Salary" style="text-align: right;">${row.gross}</td>
                     <td data-label="Deductions" style="text-align: right;">${row.ded}</td>
                     <td data-label="Net Salary" style="text-align: right; font-weight: 700;">${row.net}</td>
-                    <td data-label="Payslip Status" style="text-align: center;"><span class="badge status-badge" style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:0.75rem;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #d1d5db;">Ready</span></td>
+                    <td data-label="Payslip Status" style="text-align: center;"><span class="badge status-badge" style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #d1d5db;">Ready</span></td>
                     <td data-label="Actions" style="text-align: right;">
-                        <div class="action-icons" style="display: flex; gap: 12px;">
-                            <label for="payslip-modal-toggle" title="View Payslip" style="color: #666; cursor: pointer; transition: color 0.2s;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></label>
-                            <a href="#" title="Download Payslip" style="color: #666; transition: color 0.2s;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></a>
+                        <div class="action-icons" style="display: flex; gap: 8px; justify-content: flex-end; align-items: center;">
+                            <button type="button" class="action-icon" onclick="viewPayslip('${row.eid}')" title="View Official Payslip">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                            <button type="button" class="action-icon" onclick="sendIndividualEmail('${row.name}', '${row.eid}')" title="Email Payslip">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            </button>
+                            <button type="button" class="action-icon" onclick="downloadPayslipDirect('${row.eid}')" title="Download Payslip PDF">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            </button>
                         </div>
                     </td>
                 `;
@@ -345,7 +575,111 @@
 
             // Enable Send Payslips
             document.getElementById('btn-send-payslips').disabled = false;
-        });
+        }
+
+        // View Payslip Modal Pop Up
+        function viewPayslip(eid) {
+            const row = payrollData.find(r => r.eid === eid) || payrollData[0];
+            currentActiveRecord = row;
+
+            const selectedMonth = document.getElementById('payroll-month').value;
+            const selectedYear = document.getElementById('payroll-year').value;
+            const periodStr = `${selectedMonth} ${selectedYear}`;
+
+            document.getElementById('ps-hdr-title').textContent = `Employee Payslip — ${periodStr}`;
+            document.getElementById('ps-period').textContent = `Month: ${periodStr}`;
+
+            // Populate Employee Info
+            document.getElementById('ps-emp-id').textContent = row.eid;
+            document.getElementById('ps-emp-name').textContent = row.name;
+            document.getElementById('ps-emp-dept').textContent = row.dept;
+            document.getElementById('ps-emp-desig').textContent = row.desig || 'Executive';
+            document.getElementById('ps-emp-bank').textContent = row.bank || 'HDFC Bank';
+            document.getElementById('ps-emp-pf').textContent = row.pf || 'MH/BAN/0012345/101';
+
+            // Populate Earnings
+            document.getElementById('ps-earn-basic').textContent = row.basic;
+            document.getElementById('ps-earn-hra').textContent = row.hra;
+            document.getElementById('ps-earn-spl').textContent = row.spl;
+            document.getElementById('ps-earn-ot').textContent = row.ot;
+            document.getElementById('ps-gross-total').textContent = row.gross;
+
+            // Populate Deductions
+            document.getElementById('ps-ded-pf').textContent = row.dedPf;
+            document.getElementById('ps-ded-pt').textContent = row.dedPt;
+            document.getElementById('ps-ded-tds').textContent = row.dedTds;
+            document.getElementById('ps-ded-other').textContent = row.dedOther;
+            document.getElementById('ps-ded-total').textContent = row.ded;
+
+            // Populate Net
+            document.getElementById('ps-net-amount').textContent = row.net;
+            document.getElementById('ps-net-words').textContent = row.words;
+
+            // Show modal
+            document.getElementById('payslip-modal').classList.add('active');
+        }
+
+        function closePayslipModal() {
+            document.getElementById('payslip-modal').classList.remove('active');
+        }
+
+        function downloadCurrentPayslipPDF() {
+            const period = `${document.getElementById('payroll-month').value}_${document.getElementById('payroll-year').value}`;
+            const fileName = `Payslip_${currentActiveRecord.eid}_${period}.txt`;
+            const content = `=================================================================\n` +
+                            `                   LOGISTICS ERP ENTERPRISES LTD.                \n` +
+                            `            Corporate HQ: Node 01, Andheri East, Mumbai          \n` +
+                            `=================================================================\n` +
+                            `SALARY PAYSLIP - ${document.getElementById('payroll-month').value} ${document.getElementById('payroll-year').value}\n` +
+                            `-----------------------------------------------------------------\n` +
+                            `Employee ID   : ${currentActiveRecord.eid}\n` +
+                            `Employee Name : ${currentActiveRecord.name}\n` +
+                            `Department    : ${currentActiveRecord.dept}\n` +
+                            `Designation   : ${currentActiveRecord.desig}\n` +
+                            `Bank Account  : ${currentActiveRecord.bank}\n` +
+                            `PF Account    : ${currentActiveRecord.pf}\n` +
+                            `-----------------------------------------------------------------\n` +
+                            `EARNINGS                                 AMOUNT (INR)\n` +
+                            `Basic Salary                             ${currentActiveRecord.basic}\n` +
+                            `House Rent Allowance (HRA)               ${currentActiveRecord.hra}\n` +
+                            `Special Allowance                        ${currentActiveRecord.spl}\n` +
+                            `Overtime / Incentives                    ${currentActiveRecord.ot}\n` +
+                            `TOTAL GROSS EARNINGS                     ${currentActiveRecord.gross}\n` +
+                            `-----------------------------------------------------------------\n` +
+                            `DEDUCTIONS                               AMOUNT (INR)\n` +
+                            `Provident Fund (EPF)                     ${currentActiveRecord.dedPf}\n` +
+                            `Professional Tax (PT)                    ${currentActiveRecord.dedPt}\n` +
+                            `Income Tax / TDS                         ${currentActiveRecord.dedTds}\n` +
+                            `Other Deductions                         ${currentActiveRecord.dedOther}\n` +
+                            `TOTAL DEDUCTIONS                         ${currentActiveRecord.ded}\n` +
+                            `-----------------------------------------------------------------\n` +
+                            `NET SALARY PAYABLE                       ${currentActiveRecord.net}\n` +
+                            `Amount in Words: ${currentActiveRecord.words}\n` +
+                            `=================================================================\n` +
+                            `This is a computer generated document and does not require signature.\n`;
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', fileName);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function downloadPayslipDirect(eid) {
+            const row = payrollData.find(r => r.eid === eid) || payrollData[0];
+            currentActiveRecord = row;
+            downloadCurrentPayslipPDF();
+        }
+
+        function emailCurrentPayslip() {
+            sendIndividualEmail(currentActiveRecord.name, currentActiveRecord.eid);
+        }
+
+        function sendIndividualEmail(name, eid) {
+            alert(`Official payslip PDF for ${name} (${eid}) has been dispatched to their registered email address.`);
+        }
 
         document.getElementById('btn-send-payslips').addEventListener('click', function() {
             const badges = document.querySelectorAll('.status-badge');
@@ -358,6 +692,48 @@
             this.textContent = 'Payslips Sent';
             this.disabled = true;
         });
+
+        // Sort Payroll Table function
+        let payrollSortDirections = {};
+        function sortPayrollTable(colIndex) {
+            const table = document.getElementById('payroll-table');
+            const tbody = document.getElementById('payroll-tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            const th = table.querySelectorAll('thead th')[colIndex];
+
+            const currentDir = payrollSortDirections[colIndex] === 'asc' ? 'desc' : 'asc';
+            payrollSortDirections = {};
+            payrollSortDirections[colIndex] = currentDir;
+
+            table.querySelectorAll('thead th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+            th.classList.add(currentDir === 'asc' ? 'sort-asc' : 'sort-desc');
+
+            rows.sort((a, b) => {
+                let cellA = (a.children[colIndex]?.textContent || '').trim().replace(/[₹,]/g, '');
+                let cellB = (b.children[colIndex]?.textContent || '').trim().replace(/[₹,]/g, '');
+
+                const numA = parseFloat(cellA);
+                const numB = parseFloat(cellB);
+
+                if (!isNaN(numA) && !isNaN(numB)) {
+                    return currentDir === 'asc' ? numA - numB : numB - numA;
+                }
+
+                return currentDir === 'asc' 
+                    ? cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' })
+                    : cellB.localeCompare(cellA, undefined, { numeric: true, sensitivity: 'base' });
+            });
+
+            rows.forEach(r => tbody.appendChild(r));
+        }
+
+        // Close on backdrop click
+        document.getElementById('payslip-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePayslipModal();
+            }
+        });
     </script>
 </body>
 </html>
+

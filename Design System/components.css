@@ -214,28 +214,77 @@ details.custom-select-wrapper:has(input[value="all"]:checked) .placeholder {
   width: 100%;
 }
 
-.radio-group label {
-  transition: all 0.2s ease;
+.radio-group label,
+.radio-group .radio-card {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border-radius: var(--border-radius-base);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: var(--color-white);
+  border: 1px solid #8c8c8c !important; /* Matches form input field borders precisely */
+  transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
   user-select: none;
 }
 
-.radio-group label:hover {
-  border-color: #999 !important;
+.radio-group label:hover,
+.radio-group .radio-card:hover {
+  border-color: var(--color-black) !important;
 }
 
-.radio-group label:has(input[type="radio"]:checked) {
+.radio-group label:has(input[type="radio"]:checked),
+.radio-group .radio-card:has(input[type="radio"]:checked) {
   border-color: var(--color-black) !important;
-  background-color: rgba(0, 0, 0, 0.03) !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
   font-weight: 600 !important;
 }
 
-.radio-group label input[type="radio"] {
+.radio-group label input[type="radio"],
+.radio-group .radio-card input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
   width: 16px;
   height: 16px;
+  border: 1.5px solid #8c8c8c;
+  border-radius: 50%;
+  background-color: #ffffff;
   margin: 0;
   cursor: pointer;
-  accent-color: #000000;
   outline: none;
+  display: inline-grid;
+  place-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.radio-group label:hover input[type="radio"],
+.radio-group .radio-card:hover input[type="radio"] {
+  border-color: var(--color-black);
+}
+
+.radio-group label input[type="radio"]:checked,
+.radio-group .radio-card input[type="radio"]:checked {
+  border-color: var(--color-black);
+  background-color: #ffffff;
+}
+
+.radio-group label input[type="radio"]::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background-color: var(--color-black);
+}
+
+.radio-group label input[type="radio"]:checked::before {
+  transform: scale(1);
 }
 
 /* Tables */

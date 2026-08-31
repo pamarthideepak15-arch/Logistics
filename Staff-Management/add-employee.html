@@ -3,12 +3,479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logistics Management Platform - Add Employee</title>
+    <title>Logistics Management Platform - Add/Onboard Employee</title>
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
     <link rel="stylesheet" href="../Sidebar/sidebar.css">
     <link rel="stylesheet" href="staff-management.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        /* Compact Form & Typography System */
+        .app-content {
+            font-size: 0.75rem;
+        }
+        .page-title {
+            font-size: 1.125rem !important;
+            font-weight: 700;
+        }
+        .page-subtitle {
+            font-size: 0.75rem !important;
+            color: #666;
+        }
+        .card {
+            padding: 16px !important;
+            margin-bottom: 14px !important;
+        }
+        .card-header {
+            margin-bottom: 12px !important;
+        }
+        .card-title {
+            font-size: 0.875rem !important;
+            font-weight: 700 !important;
+            margin: 0 !important;
+        }
+        .card-helper {
+            font-size: 0.7rem !important;
+            color: #666;
+            margin-top: 2px;
+        }
+        .form-grid {
+            gap: 12px 14px !important;
+        }
+        .form-group {
+            margin-bottom: 0 !important;
+        }
+        .form-group label {
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 3px !important;
+            color: #222;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="number"],
+        .form-group input[type="email"],
+        .form-group input[type="date"],
+        .form-group select,
+        .custom-select {
+            font-size: 0.75rem !important;
+            height: 30px !important;
+            padding: 4px 8px !important;
+        }
+        .input-with-prefix .prefix-label {
+            font-size: 0.75rem !important;
+            height: 30px !important;
+            padding: 0 8px !important;
+        }
+        .btn-primary, .btn-secondary {
+            font-size: 0.75rem !important;
+            height: 30px !important;
+            padding: 0 14px !important;
+        }
+
+        /* Multi-Select Dropdown with Icon */
+        .ms-dropdown-container {
+            position: relative;
+            width: 100%;
+        }
+        .ms-dropdown-trigger {
+            width: 100%;
+            height: 30px;
+            padding: 4px 28px 4px 8px;
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            box-sizing: border-box;
+            user-select: none;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .ms-dropdown-trigger:focus,
+        .ms-dropdown-trigger.active {
+            border-color: var(--color-black);
+            outline: none;
+        }
+        .ms-dropdown-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            color: #333;
+            transition: transform 0.2s ease;
+        }
+        .ms-dropdown-container.open .ms-dropdown-icon {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        .ms-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            width: 100%;
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 500;
+            max-height: 180px;
+            overflow-y: auto;
+            display: none;
+            padding: 4px 0;
+        }
+        .ms-dropdown-container.open .ms-dropdown-menu {
+            display: block;
+        }
+        .ms-option-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .ms-option-item:hover {
+            background: var(--color-bg-light);
+        }
+        .ms-option-item input[type="checkbox"] {
+            accent-color: var(--color-black);
+            width: 14px;
+            height: 14px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        /* Compact wizard progress tracker */
+        .step-progress-container {
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 8px 12px;
+            margin-bottom: 14px;
+            overflow-x: auto;
+        }
+        .step-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 650px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .step-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #8c8c8c;
+        }
+        .step-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: var(--color-border);
+            z-index: 1;
+        }
+        .step-item.active {
+            color: var(--color-black);
+            font-weight: 700;
+        }
+        .step-item.active .step-dot {
+            background: var(--color-black);
+            border-color: var(--color-black);
+            color: var(--color-white);
+        }
+        .step-item.completed {
+            color: var(--color-black);
+            font-weight: 600;
+        }
+        .step-item.completed .step-dot {
+            background: var(--color-black);
+            border-color: var(--color-black);
+            color: var(--color-white);
+        }
+        .step-item.completed:not(:last-child)::after {
+            background: var(--color-black);
+        }
+        .step-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1.5px solid var(--color-border);
+            background: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 4px auto;
+            position: relative;
+            z-index: 2;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        /* Flow Selection Screen styling */
+        .selection-card {
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 32px;
+            max-width: 520px;
+            margin: 30px auto;
+            text-align: center;
+        }
+        .selection-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--color-black);
+        }
+        .selection-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        .selection-btn {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background: var(--color-white);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            outline: none;
+        }
+        .selection-btn:hover {
+            border-color: var(--color-black);
+            background: var(--color-bg-light);
+        }
+        .selection-btn svg {
+            width: 20px;
+            height: 20px;
+            color: #666;
+        }
+
+        /* Enhanced Document Slot Item list style */
+        .doc-upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .doc-slot {
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .doc-slot:hover {
+            border-color: #9ca3af;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .doc-slot-left {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+        .doc-icon-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #374151;
+            flex-shrink: 0;
+        }
+        .doc-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+            min-width: 0;
+        }
+        .doc-title {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: var(--color-black);
+            line-height: 1.2;
+        }
+        .doc-helper {
+            font-size: 0.6875rem;
+            color: #6b7280;
+            line-height: 1.3;
+        }
+        .doc-action-row {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .doc-file-badge {
+            font-size: 0.75rem;
+            color: #6b7280;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
+        }
+
+        /* General Tab/Wizard Content */
+        .wizard-step-content {
+            display: none;
+        }
+        .wizard-step-content.active {
+            display: block;
+        }
+
+        /* Sticky Wizard Nav Buttons Footer - aligned right */
+        .wizard-footer {
+            position: fixed;
+            bottom: 0;
+            left: 256px; /* Offset for the two-tier sidebar: 56px rail + 200px menu */
+            right: 0;
+            background: var(--color-white);
+            border-top: 1px solid var(--color-border);
+            padding: 12px 32px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            box-shadow: 0 -3px 10px rgba(0,0,0,0.04);
+        }
+        @media (max-width: 768px) {
+            .wizard-footer {
+                left: 0;
+                padding: 10px 16px;
+            }
+        }
+        /* Spacing below headers and tracker */
+        .step-progress-container {
+            margin-bottom: 24px;
+        }
+        .card-header {
+            margin-bottom: 16px;
+        }
+
+        /* Timeline styling for Rehire Employment History */
+        .rehire-history-timeline {
+            border-left: 2px solid var(--color-border);
+            margin: 16px 0 16px 8px;
+            padding-left: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .timeline-episode {
+            position: relative;
+        }
+        .timeline-episode::before {
+            content: "";
+            position: absolute;
+            left: -23px;
+            top: 3px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-border);
+            border: 2px solid var(--color-white);
+        }
+        .timeline-episode.active::before {
+            background: var(--color-black);
+        }
+        .timeline-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 6px;
+            text-transform: uppercase;
+        }
+        .badge-active { background: var(--color-bg-light); color: var(--color-black); border: 1px solid var(--color-border); }
+        .badge-former { background: #f5f5f5; color: #666; }
+
+        /* Modal Overlay custom sizing */
+        .onboard-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+        }
+        .onboard-modal-content {
+            background: var(--color-white);
+            border-radius: 8px;
+            width: 400px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        /* Compact Flatpickr Calendar theme overrides */
+        .flatpickr-calendar {
+            font-family: var(--font-family-primary);
+            font-size: 0.8125rem;
+            width: 250px !important;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+        }
+        .flatpickr-calendar.open {
+            z-index: 9999 !important;
+        }
+        .flatpickr-days {
+            width: 250px !important;
+        }
+        .dayContainer {
+            width: 250px !important;
+            min-width: 250px !important;
+            max-width: 250px !important;
+        }
+        .flatpickr-day {
+            height: 28px !important;
+            line-height: 28px !important;
+            max-width: 32px !important;
+            font-weight: 500;
+        }
+        .flatpickr-day.selected, .flatpickr-day.selected:hover {
+            background: var(--color-black) !important;
+            border-color: var(--color-black) !important;
+        }
+        .flatpickr-months {
+            height: 34px !important;
+        }
+        .flatpickr-current-month {
+            font-size: 0.875rem !important;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
     
@@ -30,7 +497,6 @@
                 </div>
                 
                 <nav class="rail-nav">
-                    <!-- Active HR Rail Icon -->
                     <a href="#" class="rail-icon active" data-tooltip="HRMS">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     </a>
@@ -46,10 +512,21 @@
 
                 <div class="sidebar-nav-section">HUMAN RESOURCES</div>
                 <nav class="sidebar-nav">
-                    <!-- Active Staff Master Link -->
                     <a href="index.html" class="active">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
                         Staff Master
+                    </a>
+                    <a href="department-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Department Master
+                    </a>
+                    <a href="role-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Role Master
+                    </a>
+                    <a href="branch-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Master
                     </a>
                     <a href="../Attendance/index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
@@ -60,8 +537,16 @@
                         Shift Management
                     </a>
                     <a href="../Leave-Management/leave-management.html">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
-                        Leave Management
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Leave &amp; WFH
+                    </a>
+                    <a href="../Payroll-Management/payroll.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                        Payroll
+                    </a>
+                    <a href="../Offboarding/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Offboarding
                     </a>
                 </nav>
             </div>
@@ -69,7 +554,6 @@
 
         <!-- Main Content -->
         <main class="app-content">
-            
             <!-- Top Header -->
             <header class="top-header">
                 <div class="top-breadcrumb">
@@ -80,7 +564,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     <span>Staff Master</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    <span class="current">Add Employee</span>
+                    <span class="current">Onboarding</span>
                 </div>
                 <div class="top-profile-block">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -88,752 +572,1426 @@
                         <strong>Super Admin</strong>
                         <span>HQ-NODE-01</span>
                     </div>
-                    <a href="../Login/index.html" class="logout-btn" title="Logout">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    </a>
                 </div>
             </header>
 
-            <div class="main-scroll-area">
-                <form action="index.html">
+            <div class="main-scroll-area" style="padding-bottom: 120px;">
+                
+                <!-- ═══ SCREEN 1: DECISION SCREEN ═══ -->
+                <div id="screen-selection" class="selection-card">
+                    <h2 class="selection-title">How would you like to add this employee?</h2>
+                    <div class="selection-buttons">
+                        <button type="button" class="selection-btn" onclick="startFlow('new')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="17" y1="11" x2="23" y2="11"></line></svg>
+                            <span>+ New Employee</span>
+                        </button>
+                        <button type="button" class="selection-btn" onclick="startFlow('rehire')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                            <span>Rehire Existing Employee</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ═══ OPTION 1: NEW EMPLOYEE ONBOARDING WIZARD ═══ -->
+                <div id="flow-new-employee" style="display: none;">
                     <div class="page-header">
                         <div style="display: flex; align-items: flex-start; gap: 12px;">
                             <a href="index.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
                             <div class="page-title-group">
-                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Add Employee</h1>
-                                <p class="page-subtitle">Create A New Employee And Assign HR Details.</p>
+                                <h1 class="page-title" id="wizard-main-title" style="line-height: 1.2; margin-bottom: 4px;">New Employee Onboarding</h1>
+                                <p class="page-subtitle" id="wizard-main-subtitle">Complete the 7-step progressive onboarding details.</p>
                             </div>
-                        </div>
-                        <div class="header-actions">
-                            <a href="index.html" class="btn-secondary">Cancel</a>
-                            <button type="submit" class="btn-primary">Save Employee</button>
                         </div>
                     </div>
 
-                    <div class="form-grid" style="padding-bottom: 120px;">
-                        
-                        <!-- Row 1: Left: Employee ID (Auto-generated / read-only) | Right: Employee Name * -->
-                        <div class="form-group">
-                            <label>Employee ID (Auto-generated)</label>
-                            <input type="text" id="emp-id" name="emp-id" value="EMP004" readonly style="background-color: var(--color-bg-light); cursor: not-allowed; font-weight: 600;">
-                        </div>
+                    <!-- Wizard Progress Tracker (7 Steps Total) -->
+                    <div class="step-progress-container">
+                        <ul class="step-progress" style="min-width: 650px;">
+                            <li class="step-item active" id="step-tab-1" onclick="showStep(1)" style="cursor: pointer;"><div class="step-dot">1</div>Basic &amp; Personal</li>
+                            <li class="step-item" id="step-tab-2" onclick="showStep(2)" style="cursor: pointer;"><div class="step-dot">2</div>Compensation</li>
+                            <li class="step-item" id="step-tab-3" onclick="showStep(3)" style="cursor: pointer;"><div class="step-dot">3</div>Bank &amp; Payroll</li>
+                            <li class="step-item" id="step-tab-4" onclick="showStep(4)" style="cursor: pointer;"><div class="step-dot">4</div>Statutory</li>
+                            <li class="step-item" id="step-tab-5" onclick="showStep(5)" style="cursor: pointer;"><div class="step-dot">5</div>Documents</li>
+                            <li class="step-item" id="step-tab-6" onclick="showStep(6)" style="cursor: pointer;"><div class="step-dot">6</div>Verification</li>
+                            <li class="step-item" id="step-tab-7" onclick="showStep(7)" style="cursor: pointer;"><div class="step-dot">7</div>Review</li>
+                        </ul>
+                    </div>
 
-                        <div class="form-group">
-                            <label>Employee Name *</label>
-                            <input type="text" id="emp-name" name="emp-name" placeholder="Enter Full Name" required>
-                        </div>
-
-                        <!-- Row 2: Mobile Number * | Email ID -->
-                        <div class="form-group">
-                            <label>Mobile Number *</label>
-                            <div class="input-with-prefix">
-                                <span class="prefix">+91</span>
-                                <input type="text" id="emp-mobile" name="emp-mobile" placeholder="Enter mobile number" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Email ID</label>
-                            <input type="email" id="emp-email" name="emp-email" placeholder="Enter email id">
-                        </div>
-
-                        <!-- Row 3: Department | Branch * -->
-                        <div class="form-group">
-                            <label>Department</label>
-                            <details class="custom-select-wrapper" id="emp-dept">
-                                <summary class="custom-select-trigger">
-                                    <span class="placeholder">Select Department</span>
-                                    <span class="selected-text text-operations">Operations</span>
-                                    <span class="selected-text text-fleet">Fleet</span>
-                                    <span class="selected-text text-hr">HR</span>
-                                    <span class="selected-text text-accounts">Accounts</span>
-                                    <span class="selected-text text-warehouse">Warehouse</span>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </summary>
-                                <div class="custom-select-options">
-                                    <label class="custom-option"><input type="radio" name="emp-dept" value="operations"> Operations</label>
-                                    <label class="custom-option"><input type="radio" name="emp-dept" value="fleet"> Fleet</label>
-                                    <label class="custom-option"><input type="radio" name="emp-dept" value="hr"> HR</label>
-                                    <label class="custom-option"><input type="radio" name="emp-dept" value="accounts"> Accounts</label>
-                                    <label class="custom-option"><input type="radio" name="emp-dept" value="warehouse"> Warehouse</label>
-                                </div>
-                            </details>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Branch *</label>
-                            <details class="custom-select-wrapper" id="emp-branch">
-                                <summary class="custom-select-trigger">
-                                    <span class="placeholder">Select Branch</span>
-                                    <span class="selected-text text-hq">HQ</span>
-                                    <span class="selected-text text-mumbai">Mumbai Hub</span>
-                                    <span class="selected-text text-hyderabad">Hyderabad Hub</span>
-                                    <span class="selected-text text-delhi">Delhi Agency</span>
-                                    <span class="selected-text text-chennai">Chennai Hub</span>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </summary>
-                                <div class="custom-select-options">
-                                    <label class="custom-option"><input type="radio" name="emp-branch" value="hq" required> HQ</label>
-                                    <label class="custom-option"><input type="radio" name="emp-branch" value="mumbai"> Mumbai Hub</label>
-                                    <label class="custom-option"><input type="radio" name="emp-branch" value="hyderabad"> Hyderabad Hub</label>
-                                    <label class="custom-option"><input type="radio" name="emp-branch" value="delhi"> Delhi Agency</label>
-                                    <label class="custom-option"><input type="radio" name="emp-branch" value="chennai"> Chennai Hub</label>
-                                </div>
-                            </details>
-                        </div>
-
-                        <!-- Row 4: Date of Joining * | Role * -->
-                        <div class="form-group">
-                            <label>Date of Joining *</label>
-                            <details class="custom-select-wrapper" id="emp-join-date-wrapper">
-                                <summary class="custom-select-trigger">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-right: 6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                    <span class="placeholder">Select Joining Date</span>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="margin-left: auto;"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </summary>
-                                <div class="custom-select-options calendar-popup" style="width: 250px; padding: 12px; box-sizing: border-box;">
-                                    <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 600; font-size: 0.8125rem;">
-                                        <span>August 2026</span>
-                                    </div>
-                                    <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 0.75rem; color: #666; margin-bottom: 4px; font-weight: 500;">
-                                        <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
-                                    </div>
-                                    <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;">
-                                        <div></div><div></div><div></div><div></div><div></div><div></div>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-01" style="display:none;">1</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-02" style="display:none;">2</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-03" style="display:none;">3</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-04" style="display:none;">4</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-05" style="display:none;">5</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-06" style="display:none;">6</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-07" style="display:none;">7</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-08" style="display:none;">8</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-09" style="display:none;">9</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-10" style="display:none;">10</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-11" style="display:none;">11</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-12" style="display:none;">12</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-13" style="display:none;">13</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-14" style="display:none;">14</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-15" style="display:none;">15</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-16" style="display:none;">16</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-17" style="display:none;">17</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-18" style="display:none;">18</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-19" style="display:none;">19</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-20" style="display:none;">20</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-21" style="display:none;">21</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-22" style="display:none;">22</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-23" style="display:none;">23</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-24" style="display:none;">24</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-25" style="display:none;">25</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-26" style="display:none;">26</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-27" style="display:none;">27</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-28" style="display:none;">28</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-29" style="display:none;">29</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-30" style="display:none;">30</label>
-                                        <label class="cal-day"><input type="radio" name="emp-join-date" value="2026-08-31" style="display:none;">31</label>
-                                    </div>
-                                </div>
-                            </details>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Role *</label>
-                            <details class="custom-select-wrapper" id="emp-role">
-                                <summary class="custom-select-trigger">
-                                    <span class="placeholder">Select Role</span>
-                                    <span class="selected-text text-super_admin">Super Admin</span>
-                                    <span class="selected-text text-branch_admin">Branch Admin / Operator</span>
-                                    <span class="selected-text text-hr_manager">HR Manager</span>
-                                    <span class="selected-text text-accounts">Accounts / Finance</span>
-                                    <span class="selected-text text-fleet_manager">Fleet Manager</span>
-                                    <span class="selected-text text-pickup_staff">Pickup Staff</span>
-                                    <span class="selected-text text-delivery_staff">Delivery Staff</span>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </summary>
-                                <div class="custom-select-options">
-                                    <label class="custom-option"><input type="radio" name="emp-role" value="super_admin" required> Super Admin</label>
-                                    <label class="custom-option"><input type="radio" name="emp-role" value="branch_admin"> Branch Admin / Operator</label>
-                                    <label class="custom-option"><input type="radio" name="emp-role" value="hr_manager"> HR Manager</label>
-                                    <label class="custom-option"><input type="radio" name="emp-role" value="accounts"> Accounts / Finance</label>
-                                    <label class="custom-option"><input type="radio" name="emp-role" value="fleet_manager"> Fleet Manager</label>
-                                    <label class="custom-option"><input type="radio" name="emp-role" value="pickup_staff"> Pickup Staff</label>
-                                    <label class="custom-option"><input type="radio" name="emp-role" value="delivery_staff"> Delivery Staff</label>
-                                </div>
-                            </details>
-                        </div>
-
-                        <!-- Row 5: Assigned Shift * | Salary Structure * -->
-                        <div class="form-group">
-                            <label>Assigned Shift *</label>
-                            <details class="custom-select-wrapper" id="emp-shift">
-                                <summary class="custom-select-trigger">
-                                    <span class="placeholder">Select Shift</span>
-                                    <span class="selected-text text-general">General Shift</span>
-                                    <span class="selected-text text-morning">Morning Shift</span>
-                                    <span class="selected-text text-afternoon">Afternoon Shift</span>
-                                    <span class="selected-text text-night">Night Shift</span>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </summary>
-                                <div class="custom-select-options">
-                                    <label class="custom-option"><input type="radio" name="emp-shift" value="general" required> General Shift</label>
-                                    <label class="custom-option"><input type="radio" name="emp-shift" value="morning"> Morning Shift</label>
-                                    <label class="custom-option"><input type="radio" name="emp-shift" value="afternoon"> Afternoon Shift</label>
-                                    <label class="custom-option"><input type="radio" name="emp-shift" value="night"> Night Shift</label>
-                                </div>
-                            </details>
-                        </div>
-                        
-                        <!-- ═══ SALARY & COMPENSATION SECTION ═══ -->
-                        <div style="grid-column: 1 / -1; margin-top: 8px;">
-                            <div style="border-top: 2px solid var(--color-border); padding-top: 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
-                                <h2 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-black); margin: 0;">Salary &amp; Compensation</h2>
-                            </div>
-
-                            <!-- ── 1. CURRENT SALARY INPUTS ── -->
-                            <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr 1fr; margin-bottom:20px;">
-                                <div class="form-group">
-                                    <label>Monthly Gross Salary *</label>
-                                    <div class="input-with-prefix">
-                                        <span class="prefix">₹</span>
-                                        <input type="number" id="monthly-gross" name="monthly-gross" placeholder="e.g. 23000" min="1" step="1" required oninput="calcSalary()">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Past Years of Experience *</label>
-                                    <div class="input-with-prefix">
-                                        <input type="number" id="emp-experience" name="emp-experience" placeholder="e.g. 2.5" min="0" step="0.5" required>
-                                        <span class="suffix">yrs</span>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="position:relative;">
-                                    <label>Effective From *</label>
-                                    <input type="text" id="salary-effective-from" name="salary-effective-from" placeholder="Select effective date" required style="width:100%; cursor:pointer; padding-right: 32px; background-color: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); height: 36px; padding-left: 12px; font-size: 0.8125rem; font-family: inherit; color: var(--color-black);">
-                                    <span style="position:absolute; right:10px; bottom: 10px; pointer-events:none; color:#666; display: flex; align-items: center;">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                    </span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Last Updated</label>
-                                    <input type="text" id="salary-last-updated" value="—" readonly style="background:var(--color-bg-light);cursor:not-allowed;">
-                                </div>
-                            </div>
-
-                            <!-- ── 2. SALARY BREAKDOWN ── -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="font-size:0.8125rem; font-weight:700; color:var(--color-black); margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--color-border);">Salary Breakdown</div>
-                                <div class="table-container">
-                                    <table class="data-table" id="salary-components-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Component</th>
-                                                <th style="text-align:center;">%</th>
-                                                <th style="text-align:right;">Calculated Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td>Basic Salary</td><td style="text-align:center;color:#666;">40%</td><td style="text-align:right;" id="sc-basic" class="salary-calc-cell">—</td></tr>
-                                            <tr><td>HRA</td><td style="text-align:center;color:#666;">16%</td><td style="text-align:right;" id="sc-hra" class="salary-calc-cell">—</td></tr>
-                                            <tr><td>Conveyance</td><td style="text-align:center;color:#666;">14%</td><td style="text-align:right;" id="sc-conv" class="salary-calc-cell">—</td></tr>
-                                            <tr><td>Medical Allowance</td><td style="text-align:center;color:#666;">10%</td><td style="text-align:right;" id="sc-med" class="salary-calc-cell">—</td></tr>
-                                            <tr><td>Special Allowance</td><td style="text-align:center;color:#666;">20%</td><td style="text-align:right;" id="sc-special" class="salary-calc-cell">—</td></tr>
-                                            <tr style="border-top:2px solid var(--color-border);font-weight:700;">
-                                                <td>Total Gross Salary</td><td></td><td style="text-align:right;" id="sc-total-gross" class="salary-calc-cell">—</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- ── 3. ADDITIONAL COMPENSATION ── -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="font-size:0.8125rem; font-weight:700; color:var(--color-black); margin-bottom:14px; padding-bottom:6px; border-bottom:1px solid var(--color-border);">Additional Compensation</div>
-                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-
-                                    <!-- ── OT BLOCK ── -->
-                                    <div style="border:1px solid var(--color-border); border-radius:var(--border-radius-base); padding:14px 16px; background:var(--color-bg-light);">
-                                        <div style="font-size:0.8rem; font-weight:700; color:var(--color-black); margin-bottom:12px;">Overtime (OT)</div>
-
-                                        <!-- OT Rate -->
-                                        <div class="form-group" style="margin-bottom:12px;">
-                                            <label>OT Rate</label>
-                                            <select id="ot-rate" name="ot-rate" style="width:100%;" onchange="onOtRateChange(); calcSalary();">
-                                                <option value="">— Select OT Rate —</option>
-                                                <option value="1">1× (Regular)</option>
-                                                <option value="1.5">1.5× (Standard OT)</option>
-                                                <option value="2">2× (Double Time)</option>
-                                                <option value="custom">Custom</option>
-                                            </select>
-                                        </div>
-
-                                        <!-- Custom multiplier (conditional) -->
-                                        <div class="form-group" id="ot-custom-block" style="margin-bottom:12px; display:none;">
-                                            <label>OT Multiplier</label>
-                                            <input type="number" id="ot-multiplier" name="ot-multiplier" placeholder="e.g. 1.75" min="1" step="0.01" oninput="calcSalary()">
-                                        </div>
-
-                                        <!-- Helper text -->
-                                        <div style="font-size:0.75rem; color:#666; line-height:1.5; padding:8px 10px; border-left:2px solid var(--color-border); background:var(--color-white); border-radius:0 var(--border-radius-base) var(--border-radius-base) 0;">
-                                            Overtime is calculated using the selected multiplier of the applicable hourly rate.
-                                        </div>
-                                    </div>
-
-                                    <!-- ── INCREMENT BLOCK ── -->
-                                    <div style="border:1px solid var(--color-border); border-radius:var(--border-radius-base); padding:14px 16px; background:var(--color-bg-light);">
-                                        <div style="font-size:0.8rem; font-weight:700; color:var(--color-black); margin-bottom:12px;">Increment</div>
-
-                                        <!-- Increment Type -->
-                                        <div class="form-group" style="margin-bottom:12px;">
-                                            <label>Increment Type</label>
-                                            <select id="increment-type" name="increment-type" style="width:100%;" onchange="onIncrTypeChange(); calcSalary();">
-                                                <option value="">— Select Type —</option>
-                                                <option value="pct">Percentage (%)</option>
-                                                <option value="amt">Fixed Amount (₹)</option>
-                                            </select>
-                                        </div>
-
-                                        <!-- Percentage input (conditional) -->
-                                        <div class="form-group" id="incr-pct-block" style="margin-bottom:12px; display:none;">
-                                            <label>Increment Percentage</label>
-                                            <div class="input-with-prefix">
-                                                <span class="prefix">%</span>
-                                                <input type="number" id="emp-increment-pct" name="emp-increment-pct" placeholder="e.g. 10" min="0" step="0.01" oninput="calcSalary()">
+                    <!-- Wizard Form Content -->
+                    <form id="wizard-form" onsubmit="submitNewEmployee(event)">
+                        <!-- Step 1: Basic Details -->
+                        <div class="wizard-step-content active" id="step-pane-1">
+                            <div class="card">
+                                <div class="card-header"><h3 class="card-title">Basic Details</h3></div>
+                                <div class="card-body form-grid">
+                                    <div class="form-group" style="grid-column: span 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: var(--color-bg-light);">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div id="avatar-preview" style="width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--color-black); background: var(--color-white); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="#252525" stroke-width="1.5" width="18" height="18"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                            </div>
+                                            <div style="display: flex; flex-direction: column; gap: 1px;">
+                                                <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-black);">Profile Photo</span>
+                                                <span style="font-size: 0.65rem; color: #666;">JPG or PNG (Max 2MB)</span>
                                             </div>
                                         </div>
+                                        <div>
+                                            <input type="file" id="new-emp-avatar" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
+                                            <button type="button" class="btn-secondary" style="height: 26px; font-size: 0.7rem; padding: 0 10px;" onclick="document.getElementById('new-emp-avatar').click()">
+                                                Upload Photo
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Employee ID (Auto-generated)</label>
+                                        <input type="text" id="new-emp-id" readonly style="background: var(--color-bg-light); cursor: not-allowed; font-weight: 600;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Employee Name *</label>
+                                        <input type="text" id="new-emp-name" placeholder="Enter Full Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mobile Number *</label>
+                                        <div class="input-with-prefix">
+                                            <span class="prefix">+91</span>
+                                            <input type="tel" id="new-emp-mobile" placeholder="Enter 10 digit mobile" required pattern="[0-9]{10}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email ID *</label>
+                                        <input type="email" id="new-emp-email" placeholder="Enter email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Department *</label>
+                                        <select id="new-emp-dept" required>
+                                            <option value="">Select Department</option>
+                                            <option value="Operations">Operations</option>
+                                            <option value="Fleet">Fleet</option>
+                                            <option value="HR">HR</option>
+                                            <option value="Accounts">Accounts</option>
+                                            <option value="Warehouse">Warehouse</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Branch *</label>
+                                        <select id="new-emp-branch" required>
+                                            <option value="">Select Branch</option>
+                                            <option value="HQ">HQ</option>
+                                            <option value="Mumbai Hub">Mumbai Hub</option>
+                                            <option value="Hyderabad Hub">Hyderabad Hub</option>
+                                            <option value="Delhi Agency">Delhi Agency</option>
+                                            <option value="Chennai Hub">Chennai Hub</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Role / Designation *</label>
+                                        <select id="new-emp-role" required>
+                                            <option value="">Select Role</option>
+                                            <option value="Super Admin">Super Admin</option>
+                                            <option value="Branch Admin / Operator">Branch Admin / Operator</option>
+                                            <option value="HR Manager">HR Manager</option>
+                                            <option value="Accounts / Finance">Accounts / Finance</option>
+                                            <option value="Fleet Manager">Fleet Manager</option>
+                                            <option value="Pickup Staff">Pickup Staff</option>
+                                            <option value="Delivery Staff">Delivery Staff</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Employment Type *</label>
+                                        <select id="new-emp-type" required>
+                                            <option value="Full-Time">Full-Time</option>
+                                            <option value="Part-Time">Part-Time</option>
+                                            <option value="Contractor">Contractor</option>
+                                            <option value="On-Demand / Driver">On-Demand / Driver</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Shift *</label>
+                                        <select id="new-emp-shift" required>
+                                            <option value="General Shift">General Shift</option>
+                                            <option value="Morning Shift">Morning Shift</option>
+                                            <option value="Afternoon Shift">Afternoon Shift</option>
+                                            <option value="Night Shift">Night Shift</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Date of Joining *</label>
+                                        <div class="input-with-icon" style="position: relative;">
+                                            <input type="text" id="new-emp-joining-date" placeholder="Select date" required class="datepicker" style="width: 100%; padding-right: 32px;">
+                                            <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #666; display: flex; align-items: center;">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                            </span>
+                                        </div>
+                                    </div>
 
-                                        <!-- Fixed amount input (conditional) -->
-                                        <div class="form-group" id="incr-amt-block" style="margin-bottom:12px; display:none;">
-                                            <label>Increment Amount</label>
+                                    <!-- Personal Details Section added directly inside Basic Details Form Card -->
+                                    <div style="grid-column: span 2; font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin-top: 16px; padding-bottom: 6px; border-bottom: 1px solid var(--color-border);">Personal Details</div>
+                                    <div class="form-group">
+                                        <label>Date of Birth *</label>
+                                        <div class="input-with-icon" style="position: relative;">
+                                            <input type="text" id="new-emp-dob" placeholder="Select date" required class="datepicker" style="width: 100%; padding-right: 32px;">
+                                            <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #666; display: flex; align-items: center;">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Gender *</label>
+                                        <select id="new-emp-gender" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Marital Status</label>
+                                        <select id="new-emp-marital">
+                                            <option value="Single">Single</option>
+                                            <option value="Married">Married</option>
+                                            <option value="Divorced">Divorced</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Blood Group</label>
+                                        <input type="text" id="new-emp-blood" placeholder="e.g. O+">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>PAN *</label>
+                                        <input type="text" id="new-emp-pan" placeholder="Enter 10 digit PAN" required pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Aadhaar Number *</label>
+                                        <input type="text" id="new-emp-aadhaar" placeholder="Enter 12 digit Aadhaar" required pattern="[0-9]{12}">
+                                    </div>
+                                    <div class="form-group" style="grid-column: span 2; border-top: 1px solid var(--color-border); padding-top: 14px; margin-top: 8px;">
+                                        <h4 style="margin: 0 0 12px 0; font-size: 0.8125rem; font-weight: 700;">Emergency Contact</h4>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 12px;">
+                                            <div>
+                                                <label>Name *</label>
+                                                <input type="text" id="new-emp-emerg-name" placeholder="Contact Name" required>
+                                            </div>
+                                            <div>
+                                                <label>Relationship *</label>
+                                                <select id="new-emp-emerg-rel" required>
+                                                    <option value="">Select Relation</option>
+                                                    <option value="Father">Father</option>
+                                                    <option value="Mother">Mother</option>
+                                                    <option value="Spouse">Spouse</option>
+                                                    <option value="Sibling">Sibling</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label>Mobile Number *</label>
+                                                <div class="input-with-prefix">
+                                                    <span class="prefix">+91</span>
+                                                    <input type="tel" id="new-emp-emerg-mobile" placeholder="Mobile number" required style="width: 100%;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Compensation -->
+                        <div class="wizard-step-content" id="step-pane-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Compensation</h3>
+                                    <p class="card-helper">Enter Gross Salary. Components are auto-calculated based on configured global rules.</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid" style="margin-bottom: 20px;">
+                                        <div class="form-group">
+                                            <label>Monthly Gross Salary *</label>
                                             <div class="input-with-prefix">
                                                 <span class="prefix">₹</span>
-                                                <input type="number" id="emp-increment-amt" name="emp-increment-amt" placeholder="e.g. 2000" min="0" step="1" oninput="calcSalary()">
+                                                <input type="number" id="new-emp-gross" placeholder="e.g. 30000" required oninput="calcCompensation()">
                                             </div>
                                         </div>
-
-                                        <!-- Increment preview (conditional) -->
-                                        <div id="increment-preview" style="display:none; font-size:0.8125rem; border:1px solid var(--color-border); border-radius:var(--border-radius-base); overflow:hidden;">
-                                            <div style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--color-border);"><span style="color:#666;">Current Salary</span><strong id="incr-current">—</strong></div>
-                                            <div style="display:flex;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--color-border);"><span style="color:#666;">Increment Amount</span><strong id="incr-amount">—</strong></div>
-                                            <div style="display:flex;justify-content:space-between;padding:7px 12px;background:var(--color-white);"><span style="font-weight:700;">Revised Salary</span><strong id="incr-revised" style="color:var(--color-black);">—</strong></div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- ── 4. DEDUCTIONS ── -->
-                            <div style="margin-bottom: 20px;">
-                                <div style="font-size:0.8125rem; font-weight:700; color:var(--color-black); margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--color-border);">Deductions</div>
-                                <div class="table-container">
-                                    <table class="data-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Deduction</th>
-                                                <th>Rule</th>
-                                                <th style="text-align:right;">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Provident Fund (PF)</td>
-                                                <td style="color:#666;font-size:0.75rem;">12% of Basic Salary</td>
-                                                <td style="text-align:right;" id="ded-pf" class="salary-calc-cell">—</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Professional Tax (PT)</td>
-                                                <td style="color:#666;font-size:0.75rem;">₹200 if Gross ≥ ₹25,000</td>
-                                                <td style="text-align:right;" id="ded-pt" class="salary-calc-cell">—</td>
-                                            </tr>
-                                            <tr style="border-top:2px solid var(--color-border);font-weight:700;">
-                                                <td>Total Deductions</td><td></td>
-                                                <td style="text-align:right;" id="ded-total" class="salary-calc-cell">—</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- ── 5. SALARY SUMMARY (full width) ── -->
-                            <div style="border:1px solid var(--color-border);border-radius:var(--border-radius-base);background:var(--color-white);margin-bottom:20px;">
-                                <div style="font-size:0.9375rem;font-weight:700;color:var(--color-black);padding:16px 20px;border-bottom:1px solid var(--color-border);">Salary Summary</div>
-                                <div style="padding:20px;">
-                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;">
-                                        <!-- Earnings column -->
-                                        <div>
-                                            <div style="font-size:0.8125rem;font-weight:700;color:var(--color-black);margin-bottom:12px;">Earnings</div>
-                                            <div style="display:flex;flex-direction:column;gap:8px;font-size:0.8125rem;">
-                                                <div style="display:flex;justify-content:space-between;"><span>Basic Salary</span><span id="sum-basic">—</span></div>
-                                                <div style="display:flex;justify-content:space-between;"><span>HRA</span><span id="sum-hra">—</span></div>
-                                                <div style="display:flex;justify-content:space-between;"><span>Conveyance</span><span id="sum-conv">—</span></div>
-                                                <div style="display:flex;justify-content:space-between;"><span>Medical Allowance</span><span id="sum-med">—</span></div>
-                                                <div style="display:flex;justify-content:space-between;"><span>Special Allowance</span><span id="sum-special">—</span></div>
-                                                <div style="display:flex;justify-content:space-between;"><span>Overtime (OT)</span><span id="sum-ot">₹0</span></div>
-                                                <div style="display:flex;justify-content:space-between;" id="sum-increment-row" style="display:none;"><span>Increment</span><span id="sum-increment">—</span></div>
-                                                <div style="display:flex;justify-content:space-between;font-weight:700;border-top:1px solid var(--color-border);padding-top:12px;margin-top:4px;">
-                                                    <span>Total Earnings</span><span id="sum-earnings">—</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Deductions column -->
-                                        <div>
-                                            <div style="font-size:0.8125rem;font-weight:700;color:var(--color-black);margin-bottom:12px;">Deductions</div>
-                                            <div style="display:flex;flex-direction:column;gap:8px;font-size:0.8125rem;">
-                                                <div style="display:flex;justify-content:space-between;"><span>Provident Fund (PF)</span><span id="sum-pf">—</span></div>
-                                                <div style="display:flex;justify-content:space-between;"><span>Professional Tax (PT)</span><span id="sum-pt">—</span></div>
-                                                <div style="display:flex;justify-content:space-between;font-weight:700;border-top:1px solid var(--color-border);padding-top:12px;margin-top:auto;">
-                                                    <span>Total Deductions</span><span id="sum-deductions">—</span>
-                                                </div>
+                                        <div class="form-group">
+                                            <label>Salary Effective From *</label>
+                                            <div class="input-with-icon" style="position: relative;">
+                                                <input type="text" id="new-emp-salary-effective" placeholder="Select date" class="datepicker" required style="width: 100%; padding-right: 32px;">
+                                                <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #666; display: flex; align-items: center;">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div style="padding:12px 20px;background:var(--color-bg-light, #f9fafb);border-top:1px solid var(--color-border);border-bottom-left-radius:var(--border-radius-base);border-bottom-right-radius:var(--border-radius-base);display:flex;justify-content:space-between;align-items:center;">
-                                    <span style="color:var(--color-black);font-size:0.9375rem;font-weight:600;">Net Salary</span>
-                                    <span id="sum-net" style="color:var(--color-black);font-size:1.25rem;font-weight:700;">—</span>
-                                </div>
-                            </div>
 
-                            <!-- ── 6. SALARY HISTORY ── -->
-                            <div style="margin-bottom:20px;">
-                                <div style="font-size:0.8125rem;font-weight:700;color:var(--color-black);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--color-border);">Salary History</div>
-                                <div class="table-container">
-                                    <table class="data-table" id="salary-history-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Effective From</th>
-                                                <th style="text-align:right;">Prev. Gross</th>
-                                                <th style="text-align:center;">Increment</th>
-                                                <th style="text-align:right;">Revised Gross</th>
-                                                <th style="text-align:right;">OT</th>
-                                                <th>Reason</th>
-                                                <th>Updated By</th>
-                                                <th>Last Updated</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td colspan="8" style="text-align:center;color:#999;">No salary history yet.</td></tr>
-                                        </tbody>
-                                    </table>
+                                    <div style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--color-border);">Salary Components Preview</div>
+                                    <div class="table-container" style="margin-bottom: 16px;">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Salary Component</th>
+                                                    <th>Calculation Rule</th>
+                                                    <th style="text-align: right;">Calculated Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Basic Salary</td>
+                                                    <td style="color:#666;">40% of Gross</td>
+                                                    <td style="text-align: right; font-weight: 600;" id="comp-basic">₹0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>HRA</td>
+                                                    <td style="color:#666;">20% of Gross</td>
+                                                    <td style="text-align: right;" id="comp-hra">₹0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Conveyance</td>
+                                                    <td style="color:#666;">10% of Gross</td>
+                                                    <td style="text-align: right;" id="comp-conv">₹0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Medical Allowance</td>
+                                                    <td style="color:#666;">10% of Gross</td>
+                                                    <td style="text-align: right;" id="comp-med">₹0</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Special Allowance</td>
+                                                    <td style="color:#666;">20% of Gross</td>
+                                                    <td style="text-align: right;" id="comp-special">₹0</td>
+                                                </tr>
+                                                <tr style="border-top: 2px solid var(--color-border); font-weight: 700;">
+                                                    <td>Total Monthly Gross</td>
+                                                    <td></td>
+                                                    <td style="text-align: right;" id="comp-total">₹0</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Overtime & Appraisal / Increment configuration -->
+                                    <div style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin-top: 20px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--color-border);">Overtime &amp; Increment Cycle</div>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label>Overtime Policy (OT) *</label>
+                                            <select id="new-emp-ot-policy" required>
+                                                <option value="Standard OT 1.5x">Standard OT 1.5x</option>
+                                                <option value="Driver OT Flat Rate">Driver OT Flat Rate</option>
+                                                <option value="Double Rate 2.0x">Double Rate 2.0x</option>
+                                                <option value="Not Applicable">Not Applicable</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Appraisal / Increment Frequency *</label>
+                                            <select id="new-emp-increment-cycle" required>
+                                                <option value="Annual Cycle (default)">Annual Cycle (default)</option>
+                                                <option value="Bi-Annual Cycle">Bi-Annual Cycle</option>
+                                                <option value="Performance Based">Performance Based</option>
+                                                <option value="Not Applicable">Not Applicable</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Step 3: Bank & Payroll -->
+                        <div class="wizard-step-content" id="step-pane-3">
+                            <div class="card">
+                                <div class="card-header"><h3 class="card-title">Bank &amp; Payroll</h3></div>
+                                <div class="card-body form-grid">
+                                    <div class="form-group">
+                                        <label>Account Holder Name *</label>
+                                        <input type="text" id="new-emp-bank-holder" placeholder="Name as per Passbook" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bank Name *</label>
+                                        <input type="text" id="new-emp-bank-name" placeholder="Enter bank name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Account Number *</label>
+                                        <input type="text" id="new-emp-bank-acc" placeholder="Enter bank account number" required style="border: 1px solid var(--color-border); height: 32px; width: 100%; box-sizing: border-box;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirm Account Number *</label>
+                                        <input type="text" id="new-emp-bank-acc-confirm" placeholder="Confirm account number" required style="border: 1px solid var(--color-border); height: 32px; width: 100%; box-sizing: border-box;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>IFSC Code *</label>
+                                        <input type="text" id="new-emp-bank-ifsc" placeholder="IFSC Code" required pattern="^[A-Z]{4}0[A-Z0-9]{6}$">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Account Type *</label>
+                                        <select id="new-emp-bank-type" required>
+                                            <option value="Savings">Savings</option>
+                                            <option value="Current">Current</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="grid-column: span 2;">
+                                        <label>Branch Name</label>
+                                        <input type="text" id="new-emp-bank-branch" placeholder="Branch location">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Statutory Details -->
+                        <div class="wizard-step-content" id="step-pane-4">
+                            <!-- Compact EPF Card -->
+                            <div class="card" style="margin-bottom: 16px;">
+                                <div class="card-header">
+                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                        <div>
+                                            <h3 class="card-title">Employees' Provident Fund (EPF)</h3>
+                                            <p class="card-helper">Provident Fund deduction (12% of Basic Salary).</p>
+                                        </div>
+                                        <label style="display:inline-flex; align-items:center; gap:8px; font-size:0.8125rem; font-weight:600; cursor:pointer;">
+                                            <span>EPF Applicable (12%)</span>
+                                            <input type="checkbox" id="new-emp-pf" onchange="togglePFDetails()" style="accent-color: var(--color-black); width: 16px; height: 16px; cursor: pointer;">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="card-body" id="pf-details-group" style="display: none;">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label>Universal Account Number (UAN)</label>
+                                            <input type="text" id="new-emp-uan" placeholder="12-digit UAN" maxlength="12" pattern="[0-9]{12}">
+                                            <span style="font-size: 0.65rem; color: #666; margin-top: 3px; display: block;">Permanent for lifetime across all employments &amp; rehires.</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>PF Member ID / Account No</label>
+                                            <input type="text" id="new-emp-pf-num" placeholder="e.g. MH/BAN/0012345/000/0001234">
+                                            <span id="pf-member-helper" style="font-size: 0.65rem; color: #666; margin-top: 3px; display: block;">New Member ID generated under company establishment.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Income Tax Card -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Income Tax / TDS Declaration</h3>
+                                    <p class="card-helper">Choose applicable tax regime.</p>
+                                </div>
+                                <div class="card-body form-grid">
+                                    <div class="form-group" style="grid-column: span 2;">
+                                        <label>Income Tax Regime *</label>
+                                        <select id="new-emp-tax-regime">
+                                            <option value="New Regime">New Tax Regime (Default u/s 115BAC)</option>
+                                            <option value="Old Regime">Old Tax Regime (With Deductions)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Documents -->
+                        <div class="wizard-step-content" id="step-pane-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                        <div>
+                                            <h3 class="card-title">Employee Document Repository &amp; Verification</h3>
+                                            <p class="card-helper">Upload mandatory compliance documents (PDF, JPG, PNG &mdash; Max 5MB each) and set verification status.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="doc-upload-grid">
+                                         <!-- 1. Offer Letter -->
+                                         <div class="doc-slot">
+                                             <div class="doc-slot-left">
+                                                 <div class="doc-icon-box">
+                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                                 </div>
+                                                 <div class="doc-info">
+                                                     <span class="doc-title">Signed Offer / Appointment Letter *</span>
+                                                     <span class="doc-helper">Company signed employment contract</span>
+                                                     <div class="doc-action-row">
+                                                         <input type="file" id="file-offer" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleDocUpload(this, 'badge-offer')">
+                                                         <button type="button" class="btn-secondary" style="height: 28px; font-size: 0.75rem; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;" onclick="document.getElementById('file-offer').click()">
+                                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                             Upload File
+                                                         </button>
+                                                         <span id="badge-offer" class="doc-file-badge">No file selected</span>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+                                                 <label style="font-size: 0.6875rem; font-weight: 600; color: #6b7280; margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">Status</label>
+                                                 <select class="doc-status" id="doc-offer" style="height: 30px; font-size: 0.75rem; font-weight: 600; padding: 0 8px; border-radius: 6px; border: 1px solid var(--color-border); background: #ffffff;">
+                                                     <option value="Pending">Pending</option>
+                                                     <option value="Verified">Verified</option>
+                                                     <option value="Rejected">Rejected</option>
+                                                 </select>
+                                             </div>
+                                         </div>
+
+                                         <!-- 2. Aadhaar Card -->
+                                         <div class="doc-slot">
+                                             <div class="doc-slot-left">
+                                                 <div class="doc-icon-box">
+                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><line x1="15" y1="8" x2="17" y2="8"></line><line x1="15" y1="12" x2="17" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>
+                                                 </div>
+                                                 <div class="doc-info">
+                                                     <span class="doc-title">Aadhaar Card (Front &amp; Back) *</span>
+                                                     <span class="doc-helper">Government Issued National Identity Proof</span>
+                                                     <div class="doc-action-row">
+                                                         <input type="file" id="file-aadhaar" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleDocUpload(this, 'badge-aadhaar')">
+                                                         <button type="button" class="btn-secondary" style="height: 28px; font-size: 0.75rem; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;" onclick="document.getElementById('file-aadhaar').click()">
+                                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                             Upload File
+                                                         </button>
+                                                         <span id="badge-aadhaar" class="doc-file-badge">No file selected</span>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+                                                 <label style="font-size: 0.6875rem; font-weight: 600; color: #6b7280; margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">Status</label>
+                                                 <select class="doc-status" id="doc-aadhaar" style="height: 30px; font-size: 0.75rem; font-weight: 600; padding: 0 8px; border-radius: 6px; border: 1px solid var(--color-border); background: #ffffff;">
+                                                     <option value="Pending">Pending</option>
+                                                     <option value="Verified">Verified</option>
+                                                     <option value="Rejected">Rejected</option>
+                                                 </select>
+                                             </div>
+                                         </div>
+
+                                         <!-- 3. PAN Card -->
+                                         <div class="doc-slot">
+                                             <div class="doc-slot-left">
+                                                 <div class="doc-icon-box">
+                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                                                 </div>
+                                                 <div class="doc-info">
+                                                     <span class="doc-title">PAN Card *</span>
+                                                     <span class="doc-helper">Income Tax Permanent Account Number</span>
+                                                     <div class="doc-action-row">
+                                                         <input type="file" id="file-pan" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleDocUpload(this, 'badge-pan')">
+                                                         <button type="button" class="btn-secondary" style="height: 28px; font-size: 0.75rem; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;" onclick="document.getElementById('file-pan').click()">
+                                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                             Upload File
+                                                         </button>
+                                                         <span id="badge-pan" class="doc-file-badge">No file selected</span>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+                                                 <label style="font-size: 0.6875rem; font-weight: 600; color: #6b7280; margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">Status</label>
+                                                 <select class="doc-status" id="doc-pan" style="height: 30px; font-size: 0.75rem; font-weight: 600; padding: 0 8px; border-radius: 6px; border: 1px solid var(--color-border); background: #ffffff;">
+                                                     <option value="Pending">Pending</option>
+                                                     <option value="Verified">Verified</option>
+                                                     <option value="Rejected">Rejected</option>
+                                                 </select>
+                                             </div>
+                                         </div>
+
+                                         <!-- 4. Bank Proof -->
+                                         <div class="doc-slot">
+                                             <div class="doc-slot-left">
+                                                 <div class="doc-icon-box">
+                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4.5 4.5 0 0 0 4.5-4.5V8"></path></svg>
+                                                 </div>
+                                                 <div class="doc-info">
+                                                     <span class="doc-title">Bank Proof / Cancelled Cheque *</span>
+                                                     <span class="doc-helper">Bank Passbook front page or cancelled cheque</span>
+                                                     <div class="doc-action-row">
+                                                         <input type="file" id="file-bank" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleDocUpload(this, 'badge-bank')">
+                                                         <button type="button" class="btn-secondary" style="height: 28px; font-size: 0.75rem; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;" onclick="document.getElementById('file-bank').click()">
+                                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                             Upload File
+                                                         </button>
+                                                         <span id="badge-bank" class="doc-file-badge">No file selected</span>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+                                                 <label style="font-size: 0.6875rem; font-weight: 600; color: #6b7280; margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">Status</label>
+                                                 <select class="doc-status" id="doc-bank" style="height: 30px; font-size: 0.75rem; font-weight: 600; padding: 0 8px; border-radius: 6px; border: 1px solid var(--color-border); background: #ffffff;">
+                                                     <option value="Pending">Pending</option>
+                                                     <option value="Verified">Verified</option>
+                                                     <option value="Rejected">Rejected</option>
+                                                 </select>
+                                             </div>
+                                         </div>
+
+                                         <!-- 5. Commercial Driving License / Fleet Badge -->
+                                         <div class="doc-slot">
+                                             <div class="doc-slot-left">
+                                                 <div class="doc-icon-box">
+                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                                 </div>
+                                                 <div class="doc-info">
+                                                     <span class="doc-title">Driving License / Heavy Vehicle Badge</span>
+                                                     <span class="doc-helper">Mandatory for Drivers &amp; Logistics Delivery Fleet</span>
+                                                     <div class="doc-action-row">
+                                                         <input type="file" id="file-dl" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleDocUpload(this, 'badge-dl')">
+                                                         <button type="button" class="btn-secondary" style="height: 28px; font-size: 0.75rem; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;" onclick="document.getElementById('file-dl').click()">
+                                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                             Upload File
+                                                         </button>
+                                                         <span id="badge-dl" class="doc-file-badge">No file selected</span>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+                                                 <label style="font-size: 0.6875rem; font-weight: 600; color: #6b7280; margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">Status</label>
+                                                 <select class="doc-status" id="doc-dl" style="height: 30px; font-size: 0.75rem; font-weight: 600; padding: 0 8px; border-radius: 6px; border: 1px solid var(--color-border); background: #ffffff;">
+                                                     <option value="Pending">Pending</option>
+                                                     <option value="Verified">Verified</option>
+                                                     <option value="Rejected">Rejected</option>
+                                                 </select>
+                                             </div>
+                                         </div>
+
+                                         <!-- 6. Education / Experience Certificates -->
+                                         <div class="doc-slot">
+                                             <div class="doc-slot-left">
+                                                 <div class="doc-icon-box">
+                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                                                 </div>
+                                                 <div class="doc-info">
+                                                     <span class="doc-title">Education / Previous Relieving Letters</span>
+                                                     <span class="doc-helper">Certificates or experience credentials</span>
+                                                     <div class="doc-action-row">
+                                                         <input type="file" id="file-edu" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleDocUpload(this, 'badge-edu')">
+                                                         <button type="button" class="btn-secondary" style="height: 28px; font-size: 0.75rem; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;" onclick="document.getElementById('file-edu').click()">
+                                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                             Upload File
+                                                         </button>
+                                                         <span id="badge-edu" class="doc-file-badge">No file selected</span>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+                                                 <label style="font-size: 0.6875rem; font-weight: 600; color: #6b7280; margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">Status</label>
+                                                 <select class="doc-status" id="doc-edu" style="height: 30px; font-size: 0.75rem; font-weight: 600; padding: 0 8px; border-radius: 6px; border: 1px solid var(--color-border); background: #ffffff;">
+                                                     <option value="Pending">Pending</option>
+                                                     <option value="Verified">Verified</option>
+                                                     <option value="Rejected">Rejected</option>
+                                                 </select>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Background Verification -->
+                        <div class="wizard-step-content" id="step-pane-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                        <div>
+                                            <h3 class="card-title">Background Verification (BGV)</h3>
+                                            <p class="card-helper">Track employee background screening status and checks.</p>
+                                        </div>
+                                        <label style="display:inline-flex; align-items:center; gap:8px; font-size:0.8125rem; font-weight:600; cursor:pointer;">
+                                            <span>BGV Required</span>
+                                            <input type="checkbox" id="bgv-required-toggle" onchange="toggleBGVSection()" style="accent-color: var(--color-black); width: 16px; height: 16px; cursor: pointer;">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="card-body" id="bgv-form-section" style="display: none;">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label>Verification Mode / Agency</label>
+                                            <select id="bgv-agency">
+                                                <option value="Internal HR Verification">Internal HR Verification</option>
+                                                <option value="Third-Party Agency (AuthBridge)">Third-Party Agency (AuthBridge)</option>
+                                                <option value="Third-Party Agency (IDfy)">Third-Party Agency (IDfy)</option>
+                                                <option value="Police Clearance Certificate">Police Clearance Certificate</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Overall Verification Status</label>
+                                            <select id="bgv-result">
+                                                <option value="Pending">Pending / In Progress</option>
+                                                <option value="Verified - Clear">Verified (Clear)</option>
+                                                <option value="Discrepancy Found">Discrepancy Found</option>
+                                                <option value="Exempt">Exempt / Waived</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" style="grid-column: span 2;">
+                                            <label style="margin-bottom: 8px;">Verification Checks (Select when completed by Admin)</label>
+                                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 12px; background: var(--color-bg-light); border-radius: var(--border-radius-base); border: 1px solid var(--color-border);">
+                                                <label style="display:flex; align-items:center; gap:8px; font-size:0.8125rem; cursor:pointer; margin:0; font-weight:500;">
+                                                    <input type="checkbox" id="bgv-check-id" style="accent-color: var(--color-black); width:16px; height:16px; cursor:pointer;">
+                                                    <span>Identity &amp; Address</span>
+                                                </label>
+                                                <label style="display:flex; align-items:center; gap:8px; font-size:0.8125rem; cursor:pointer; margin:0; font-weight:500;">
+                                                    <input type="checkbox" id="bgv-check-criminal" style="accent-color: var(--color-black); width:16px; height:16px; cursor:pointer;">
+                                                    <span>Criminal Record</span>
+                                                </label>
+                                                <label style="display:flex; align-items:center; gap:8px; font-size:0.8125rem; cursor:pointer; margin:0; font-weight:500;">
+                                                    <input type="checkbox" id="bgv-check-prev" style="accent-color: var(--color-black); width:16px; height:16px; cursor:pointer;">
+                                                    <span>Past Employment</span>
+                                                </label>
+                                                <label style="display:flex; align-items:center; gap:8px; font-size:0.8125rem; cursor:pointer; margin:0; font-weight:500;">
+                                                    <input type="checkbox" id="bgv-check-edu" style="accent-color: var(--color-black); width:16px; height:16px; cursor:pointer;">
+                                                    <span>Education</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" style="grid-column: span 2;">
+                                            <label>BGV Notes / Remarks</label>
+                                            <input type="text" id="bgv-remarks" placeholder="Optional notes or remarks">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 7: Review & Complete -->
+                        <div class="wizard-step-content" id="step-pane-7">
+                            <div class="card" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base);">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px;">
+                                    <div>
+                                        <h3 class="card-title" id="step-7-title" style="margin: 0; font-size: 0.9375rem; font-weight: 700;">Review &amp; Complete Onboarding</h3>
+                                        <p class="card-helper" id="step-7-subtitle" style="margin: 3px 0 0 0; font-size: 0.75rem; color: #666;">Please review the summary details below before finalizing employee onboarding.</p>
+                                    </div>
+                                </div>
+                                <div class="card-body" style="padding: 20px;">
+                                    <div id="review-summary-block" style="display: flex; flex-direction: column; gap: 16px;">
+                                        <!-- Will populate dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wizard Footer Actions -->
+                        <div class="wizard-footer">
+                            <button type="button" class="btn-secondary" id="btn-wizard-prev" onclick="prevStep()">Back</button>
+                            <div style="display: flex; gap: 12px;">
+                                <button type="button" class="btn-primary" id="btn-wizard-next" onclick="nextStep()">Next</button>
+                                <button type="button" class="btn-primary" id="btn-wizard-submit" onclick="openOnboardingConfirmationModal(event)" style="display:none;">Complete Onboarding</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ═══ CONFIRMATION MODAL BEFORE COMPLETING ONBOARDING ═══ -->
+                <div class="modal-overlay" id="modal-onboarding-confirm" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; padding: 16px;">
+                    <div class="modal-content" style="background: var(--color-white); width: 480px; max-width: 95vw; border-radius: 8px; padding: 24px; box-sizing: border-box; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+                        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-bg-light); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            </div>
+                            <div style="flex: 1;">
+                                <h3 id="confirm-modal-title" style="margin: 0 0 6px 0; font-size: 1.0625rem; font-weight: 700; color: var(--color-black);">Complete onboarding for EMP011?</h3>
+                                <p style="margin: 0; font-size: 0.8125rem; color: #555; line-height: 1.45;">Please confirm that all employee, payroll, statutory, document and verification details are correct.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--color-border); padding-top: 16px; margin-top: 8px;">
+                            <button type="button" class="btn-secondary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem; font-weight: 500; border: 1px solid #8c8c8c; background: #fff; cursor: pointer; border-radius: 4px;" onclick="closeOnboardingConfirmationModal()">Cancel</button>
+                            <button type="button" class="btn-primary" id="confirm-modal-action-btn" style="height: 32px; padding: 0 18px; font-size: 0.8125rem; font-weight: 600; cursor: pointer; border-radius: 4px;" onclick="confirmAndExecuteOnboarding()">Complete Onboarding</button>
+                        </div>
                     </div>
-                </form>
+                </div>
+
+                <!-- ═══ SUCCESS CONFIRMATION MODAL AFTER COMPLETING ONBOARDING ═══ -->
+                <div class="modal-overlay" id="modal-onboarding-success" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; align-items: center; justify-content: center; padding: 16px;">
+                    <div class="modal-content" style="background: var(--color-white); width: 480px; max-width: 95vw; border-radius: 8px; padding: 24px; box-sizing: border-box; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+                        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 20px;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--color-bg-light); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="24" height="24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <h3 style="font-size: 1.125rem; font-weight: 700; margin: 0 0 4px 0; color: var(--color-black);">Onboarding Completed Successfully</h3>
+                            <p style="font-size: 0.8125rem; color: #666; margin: 0;">The employee record is activated and enrolled in the HRMS master database.</p>
+                        </div>
+
+                        <!-- Employee Details Summary Box -->
+                        <div style="background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 6px; padding: 14px 16px; margin-bottom: 20px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; row-gap: 10px; column-gap: 16px; font-size: 0.8125rem;">
+                                <div>
+                                    <span style="color: #666; font-size: 0.75rem; display: block;">Employee ID</span>
+                                    <strong id="success-emp-id" style="color: var(--color-black); font-size: 0.875rem;">EMP011</strong>
+                                </div>
+                                <div>
+                                    <span style="color: #666; font-size: 0.75rem; display: block;">Employee Name</span>
+                                    <strong id="success-emp-name" style="color: var(--color-black); font-size: 0.875rem;">Arun Mehta</strong>
+                                </div>
+                                <div>
+                                    <span style="color: #666; font-size: 0.75rem; display: block;">Date of Joining</span>
+                                    <strong id="success-emp-doj" style="color: var(--color-black); font-size: 0.875rem;">30 Aug 2026</strong>
+                                </div>
+                                <div>
+                                    <span style="color: #666; font-size: 0.75rem; display: block;">Onboarding Status</span>
+                                    <strong style="color: var(--color-black); font-size: 0.875rem;">Completed</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--color-border); padding-top: 16px;">
+                            <button type="button" class="btn-primary" style="height: 32px; padding: 0 24px; font-size: 0.8125rem; font-weight: 600; cursor: pointer; border-radius: 4px; width: 100%; text-align: center;" onclick="finishAndRedirect()">View in Staff Directory</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ═══ OPTION 2: REHIRE EXISTING EMPLOYEE FLOW (Search Screen) ═══ -->
+                <div id="flow-rehire-employee" style="display: none;">
+                    <div class="page-header">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <a href="index.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Rehire Former Employee</h1>
+                                <p class="page-subtitle">Search former employee and proceed with the progressive onboarding wizard.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search Block -->
+                    <div class="card" style="margin-bottom: 14px;">
+                        <div class="card-body">
+                            <div style="display: flex; gap: 12px; align-items: flex-end; width: 100%;">
+                                <div class="form-group" style="flex: 1; margin: 0;">
+                                    <label style="margin-bottom: 4px;">Search Former Employee</label>
+                                    <input type="text" id="rehire-search-input" placeholder="Search by Employee ID / Name / Mobile (e.g. Deepak or EMP001)" style="height: 30px; width: 100%; box-sizing: border-box; font-size: 0.75rem;">
+                                </div>
+                                <button type="button" class="btn-primary" onclick="searchFormerEmployees()" style="height: 30px; padding: 0 16px; font-size: 0.75rem; display: inline-flex; align-items: center; justify-content: center; font-weight: 600;">Search</button>
+                            </div>
+                            <div id="rehire-search-results" style="margin-top: 12px;"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
+
+    <!-- ═══ MODAL 1: ONBOARDING INVITATION MODAL ═══ -->
+    <div class="onboard-modal-overlay" id="modal-invitation">
+        <div class="onboard-modal-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-black)" stroke-width="2" width="48" height="48" style="margin-bottom:16px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 12 12 14 14"></polyline></svg>
+            <h3 style="margin:0 0 8px 0; font-size:1.125rem; font-weight:700;">Employee Onboarding Created</h3>
+            <p style="font-size:0.8125rem; color:#666; margin-bottom:24px;">How would you like to finish the onboarding document collections?</p>
+            <div style="display:flex; gap:12px;">
+                <button type="button" class="btn-secondary" style="flex:1;" onclick="finalizeInvitation('link')">Send Onboarding Link</button>
+                <button type="button" class="btn-primary" style="flex:1;" onclick="finalizeInvitation('admin')">Complete as Admin</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../Design System/dropdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        // ── Conditional field visibility ──
-        window.onOtRateChange = function() {
-            const rate = document.getElementById('ot-rate').value;
-            const block = document.getElementById('ot-custom-block');
-            if (block) block.style.display = rate === 'custom' ? 'block' : 'none';
-        };
+        // Global Flow State
+        let currentStep = 1;
+        let onboardingEmployeeData = {};
 
-        window.onIncrTypeChange = function() {
-            const type = document.getElementById('increment-type').value;
-            const pctBlock = document.getElementById('incr-pct-block');
-            const amtBlock = document.getElementById('incr-amt-block');
-            const preview  = document.getElementById('increment-preview');
-            if (pctBlock) pctBlock.style.display = type === 'pct' ? 'block' : 'none';
-            if (amtBlock) amtBlock.style.display = type === 'amt' ? 'block' : 'none';
-            if (preview)  preview.style.display  = 'none';
-        };
-
-        // ═══ SALARY CALCULATION ENGINE ═══
-        window.calcSalary = function() {
-            const gross = parseFloat(document.getElementById('monthly-gross') ? document.getElementById('monthly-gross').value : 0) || 0;
-            const fmt = v => '₹' + Math.round(v).toLocaleString('en-IN');
-            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-
-            // Component breakdown
-            const basic   = Math.round(gross * 0.40);
-            const hra     = Math.round(gross * 0.16);
-            const conv    = Math.round(gross * 0.14);
-            const med     = Math.round(gross * 0.10);
-            const special = Math.round(gross * 0.20);
-
-            // Deductions
-            const pf       = Math.round(basic * 0.12);
-            const pt       = gross >= 25000 ? 200 : 0;
-            const totalDed = pf + pt;
-
-            // ── Increment amount (computed early so totals can use it) ──
-            const incrType   = document.getElementById('increment-type');
-            const incrPctEl  = document.getElementById('emp-increment-pct');
-            const incrAmtEl  = document.getElementById('emp-increment-amt');
-            const preview    = document.getElementById('increment-preview');
-            const incrRow    = document.getElementById('sum-increment-row');
-
-            let incrAmt = 0;
-            if (incrType && gross > 0) {
-                const type     = incrType.value;
-                const incrPct  = parseFloat(incrPctEl ? incrPctEl.value : 0) || 0;
-                const incrFixd = parseFloat(incrAmtEl ? incrAmtEl.value : 0) || 0;
-                if (type === 'pct' && incrPct > 0)       incrAmt = Math.round(gross * incrPct / 100);
-                else if (type === 'amt' && incrFixd > 0) incrAmt = Math.round(incrFixd);
+        // Mock Former Employees database to showcase Rehiring Search
+        const formerEmployeesMock = [
+            {
+                id: "EMP001",
+                name: "Deepak Sharma",
+                mobile: "+91 9900998877",
+                email: "deepak@logistics.com",
+                department: "Fleet",
+                branch: "HQ",
+                role: "Driver",
+                dob: "1994-05-12",
+                gender: "Male",
+                marital: "Married",
+                pan: "ABCDE1234F",
+                aadhaar: "123412341234",
+                emergName: "Ramesh Sharma",
+                emergRel: "Brother",
+                emergMobile: "+91 9876543210",
+                pfUan: "100982348811",
+                esiNum: "31000983480010001",
+                prevSalary: "₹25,000",
+                bgvAgency: "VerifiedNow Solutions",
+                bgvResult: "Verified",
+                exitDetails: "Resigned on 2029-04-10. Clear exit verification completed.",
+                episodes: [
+                    { role: "Driver", tenure: "2026 – 2029", type: "Former Employee" }
+                ]
             }
+        ];
 
-            // OT rate label
-            const otRateEl = document.getElementById('ot-rate');
-            const otRate   = otRateEl ? otRateEl.value : '';
-            const otMult   = otRate === 'custom'
-                ? (parseFloat(document.getElementById('ot-multiplier') ? document.getElementById('ot-multiplier').value : 0) || 0)
-                : (parseFloat(otRate) || 0);
-            const otLabel  = otRate === '' ? '—'
-                : otRate === 'custom' ? (otMult > 0 ? otMult + '×' : 'Custom')
-                : otRate + '×';
-
-            // Totals (include increment in earnings)
-            const totalEarnings = gross + incrAmt;
-            const netSalary     = totalEarnings - totalDed;
-
-            // Breakdown table
-            set('sc-basic',       gross > 0 ? fmt(basic)   : '—');
-            set('sc-hra',         gross > 0 ? fmt(hra)     : '—');
-            set('sc-conv',        gross > 0 ? fmt(conv)    : '—');
-            set('sc-med',         gross > 0 ? fmt(med)     : '—');
-            set('sc-special',     gross > 0 ? fmt(special) : '—');
-            set('sc-total-gross', gross > 0 ? fmt(gross)   : '—');
-
-            // Deductions table
-            set('ded-pf',    gross > 0 ? fmt(pf)      : '—');
-            set('ded-pt',    gross > 0 ? fmt(pt)       : '—');
-            set('ded-total', gross > 0 ? fmt(totalDed) : '—');
-
-            // Summary panel — Earnings
-            set('sum-basic',      gross > 0 ? fmt(basic)         : '—');
-            set('sum-hra',        gross > 0 ? fmt(hra)           : '—');
-            set('sum-conv',       gross > 0 ? fmt(conv)          : '—');
-            set('sum-med',        gross > 0 ? fmt(med)           : '—');
-            set('sum-special',    gross > 0 ? fmt(special)       : '—');
-            set('sum-ot',         gross > 0 && otRate ? otLabel : '₹0');
-
-            // Increment row — show only when a value is entered
-            if (incrRow) incrRow.style.display = (incrAmt > 0 && gross > 0) ? 'flex' : 'none';
-            set('sum-increment',  incrAmt > 0 && gross > 0 ? fmt(incrAmt) : '—');
-
-            set('sum-earnings',   gross > 0 ? fmt(totalEarnings) : '—');
-
-            // Summary panel — Deductions + Net
-            set('sum-pf',         gross > 0 ? fmt(pf)            : '—');
-            set('sum-pt',         gross > 0 ? fmt(pt)            : '—');
-            set('sum-deductions', gross > 0 ? fmt(totalDed)      : '—');
-            set('sum-net',        gross > 0 ? fmt(netSalary)     : '—');
-
-            // Increment preview card
-            if (incrAmt > 0 && gross > 0 && preview) {
-                const revised = gross + incrAmt;
-                set('incr-current', fmt(gross));
-                set('incr-amount',  fmt(incrAmt));
-                set('incr-revised', fmt(revised));
-                preview.style.display = 'block';
-            } else if (preview) {
-                preview.style.display = 'none';
+        // Avatar profile preview handler
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const container = document.getElementById('avatar-preview');
+                    container.innerHTML = '';
+                    container.style.backgroundImage = `url('${e.target.result}')`;
+                    container.style.backgroundSize = 'cover';
+                    container.style.backgroundPosition = 'center';
+                }
+                reader.readAsDataURL(file);
             }
-        };
-
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Setup Datepicker
+            flatpickr(".datepicker", {
+                dateFormat: "Y-m-d",
+                allowInput: true
+            });
 
-            // Dynamically load shifts list from localStorage
-            let staffShifts = [];
-            if (localStorage.getItem('staffShifts')) {
-                staffShifts = JSON.parse(localStorage.getItem('staffShifts'));
-            } else {
-                staffShifts = [
-                    { code: 'GEN-01', name: 'General Shift', start: '09:00 AM', end: '06:00 PM', hours: '9h', status: true },
-                    { code: 'MOR-01', name: 'Morning Shift', start: '08:00 AM', end: '04:00 PM', hours: '8h', status: true },
-                    { code: 'AFT-01', name: 'Afternoon Shift', start: '04:00 PM', end: '12:00 AM', hours: '8h', status: true },
-                    { code: 'NGT-01', name: 'Night Shift', start: '12:00 AM', end: '08:00 AM', hours: '8h', status: true }
-                ];
-                localStorage.setItem('staffShifts', JSON.stringify(staffShifts));
-            }
-            
-            const activeShifts = staffShifts.filter(s => s.status);
-            const shiftWrapper = document.getElementById('emp-shift');
-            if (shiftWrapper) {
-                const trigger = shiftWrapper.querySelector('.custom-select-trigger');
-                trigger.querySelectorAll('.selected-text').forEach(el => el.remove());
-                
-                activeShifts.forEach(s => {
-                    const cleanClass = s.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
-                    const span = document.createElement('span');
-                    span.className = `selected-text text-${cleanClass}`;
-                    span.textContent = s.name;
-                    trigger.insertBefore(span, trigger.querySelector('svg'));
-                });
-                
-                const optionsBox = shiftWrapper.querySelector('.custom-select-options');
-                optionsBox.innerHTML = '';
-                activeShifts.forEach(s => {
-                    const cleanVal = s.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
-                    const label = document.createElement('label');
-                    label.className = 'custom-option';
-                    label.innerHTML = `<input type="radio" name="emp-shift" value="${cleanVal}"> ${s.name}`;
-                    optionsBox.appendChild(label);
-                });
-
-                // Bind click change handlers to dynamic radios
-                const newRadios = shiftWrapper.querySelectorAll('input[type="radio"]');
-                newRadios.forEach(radio => {
-                    radio.addEventListener('change', () => {
-                        const arrowSvg = trigger.querySelector('svg:last-child');
-                        const placeholder = trigger.querySelector('.placeholder');
-                        
-                        trigger.querySelectorAll('.selected-text').forEach(el => {
-                            el.style.display = 'none';
-                        });
-
-                        let dynamicSelected = trigger.querySelector('.selected-text.dynamic-selected');
-                        if (!dynamicSelected) {
-                            dynamicSelected = document.createElement('span');
-                            dynamicSelected.className = 'selected-text dynamic-selected';
-                            dynamicSelected.style.alignItems = 'center';
-                            dynamicSelected.style.gap = '6px';
-                            trigger.insertBefore(dynamicSelected, arrowSvg);
-                        }
-                        if (placeholder) placeholder.style.display = 'none';
-                        dynamicSelected.textContent = radio.closest('label').textContent.trim();
-                        dynamicSelected.style.display = 'flex';
-                        
-                        shiftWrapper.removeAttribute('open');
-                    });
-                });
-            }
-
-            // Load staff employees to calculate the next ID
-            let staffEmployees = [];
-            if (localStorage.getItem('staffEmployees')) {
-                staffEmployees = JSON.parse(localStorage.getItem('staffEmployees'));
-            }
-            
-            // Compute and prefill new Employee ID
+            // Set next auto ID
+            // Set next auto ID
+            let staff = getStaffList();
             let maxNum = 0;
-            staffEmployees.forEach(e => {
+            staff.forEach(e => {
                 const num = parseInt(e.id.replace('EMP', ''));
                 if (num > maxNum) maxNum = num;
             });
-            const nextId = 'EMP' + String(maxNum + 1).padStart(3, '0');
-            const idField = document.getElementById('emp-id');
-            if (idField) idField.value = nextId;
+            document.getElementById('new-emp-id').value = 'EMP' + String(maxNum + 1).padStart(3, '0');
 
-            // Form Submit Handler
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    
-                    // Get values
-                    const name = document.getElementById('emp-name').value.trim();
-                    const mobile = document.getElementById('emp-mobile').value.trim();
-                    const email = document.getElementById('emp-email').value.trim();
-                    
-                    const deptEl = document.querySelector('input[name="emp-dept"]:checked');
-                    const deptText = deptEl ? deptEl.closest('label').textContent.trim() : '—';
+            // Detect URL flow parameter to auto-launch workflow
+            const urlParams = new URLSearchParams(window.location.search);
+            const flowType = urlParams.get('flow');
+            if (flowType === 'new') {
+                startFlow('new');
+            } else if (flowType === 'rehire') {
+                startFlow('rehire');
+            }
+        });
 
-                    const branchEl = document.querySelector('input[name="emp-branch"]:checked');
-                    const branchText = branchEl ? branchEl.closest('label').textContent.trim() : '—';
+        function getStaffList() {
+            return JSON.parse(localStorage.getItem('staffEmployees')) || [];
+        }
 
-                    const dateEl = document.querySelector('input[name="emp-join-date"]:checked');
-                    const dateText = dateEl ? dateEl.value : '—';
+        function saveStaffList(list) {
+            localStorage.setItem('staffEmployees', JSON.stringify(list));
+        }
 
-                    const roleEl = document.querySelector('input[name="emp-role"]:checked');
-                    const roleText = roleEl ? roleEl.closest('label').textContent.trim() : '—';
+        // Navigation flow control
+        let currentFlowType = 'new'; // 'new' or 'rehire'
 
-                    const shiftEl = document.querySelector('input[name="emp-shift"]:checked');
-                    const shiftText = shiftEl ? shiftEl.closest('label').textContent.trim() : '—';
+        function startFlow(type) {
+            currentFlowType = type;
+            document.getElementById('screen-selection').style.display = 'none';
+            if (type === 'new') {
+                document.getElementById('flow-new-employee').style.display = 'block';
+                
+                // Update headers for New Employee
+                document.getElementById('wizard-main-title').textContent = 'New Employee Onboarding';
+                document.getElementById('wizard-main-subtitle').textContent = 'Complete the 7-step progressive onboarding details.';
+                document.getElementById('step-7-title').textContent = 'Review & Complete Onboarding';
+                document.getElementById('step-7-subtitle').textContent = 'Please review the summary details below before finalizing employee onboarding.';
+                document.getElementById('btn-wizard-submit').textContent = 'Complete Onboarding';
 
-                    const grossVal = document.getElementById('monthly-gross').value.trim();
+                currentStep = 1;
+                showStep(1);
+            } else {
+                document.getElementById('flow-rehire-employee').style.display = 'block';
+            }
+        }
 
+        function cancelFlow() {
+            document.getElementById('flow-new-employee').style.display = 'none';
+            document.getElementById('flow-rehire-employee').style.display = 'none';
+            document.getElementById('screen-selection').style.display = 'block';
+        }
 
+        // Wizard navigation helper functions
+        function showStep(step) {
+            currentStep = step;
+            for (let i = 1; i <= 7; i++) {
+                const pane = document.getElementById(`step-pane-${i}`);
+                const tab = document.getElementById(`step-tab-${i}`);
+                if (pane) pane.classList.toggle('active', i === step);
+                if (tab) {
+                    tab.classList.toggle('active', i === step);
+                    tab.classList.toggle('completed', i < step);
+                }
+            }
+            
+            // Populate review summary when on Step 7
+            if (step === 7) {
+                populateReviewSummary();
+            }
 
-                    // Basic validation
-                    if (!name || !mobile || branchText === '—' || dateText === '—' || roleText === '—' || !grossVal || Number(grossVal) <= 0) {
-                        alert('Please fill out all required fields including Monthly Gross Salary.');
-                        return;
+            // Toggle footer button visibility
+            document.getElementById('btn-wizard-prev').style.display = step === 1 ? 'none' : 'inline-flex';
+            document.getElementById('btn-wizard-next').style.display = step === 7 ? 'none' : 'inline-flex';
+            document.getElementById('btn-wizard-submit').style.display = step === 7 ? 'inline-flex' : 'none';
+        }
+
+        function nextStep() {
+            // Basic required validation on the active step fields - disabled to allow check-through
+            /*
+            const activePane = document.getElementById(`step-pane-${currentStep}`);
+            const inputs = activePane.querySelectorAll('[required]');
+            let isValid = true;
+            inputs.forEach(el => {
+                if (!el.checkValidity()) {
+                    isValid = false;
+                    el.reportValidity();
+                }
+            });
+
+            if (!isValid) return;
+            */
+
+            // Extra validate for bank confirm Account Number - disabled for checkout demo
+            /*
+            if (currentStep === 5) {
+                const acc = document.getElementById('new-emp-bank-acc').value;
+                const confirmAcc = document.getElementById('new-emp-bank-acc-confirm').value;
+                if (acc !== confirmAcc) {
+                    alert("Account numbers do not match.");
+                    return;
+                }
+            }
+            */
+
+            if (currentStep < 7) {
+                currentStep++;
+                showStep(currentStep);
+                if (currentStep === 7) {
+                    populateReviewSummary();
+                }
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        // Auto Calculation for Compensation components
+        function calcCompensation() {
+            const gross = parseFloat(document.getElementById('new-emp-gross').value) || 0;
+            const fmt = val => '₹' + Math.round(val).toLocaleString('en-IN');
+
+            const basic = gross * 0.40;
+            const hra = gross * 0.20;
+            const conv = gross * 0.10;
+            const med = gross * 0.10;
+            const special = gross * 0.20;
+
+            document.getElementById('comp-basic').textContent = fmt(basic);
+            document.getElementById('comp-hra').textContent = fmt(hra);
+            document.getElementById('comp-conv').textContent = fmt(conv);
+            document.getElementById('comp-med').textContent = fmt(med);
+            document.getElementById('comp-special').textContent = fmt(special);
+            document.getElementById('comp-total').textContent = fmt(gross);
+        }
+
+        // Handle file uploads in Document Checklist
+        function handleDocUpload(input, badgeId) {
+            const badge = document.getElementById(badgeId);
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const sizeKb = Math.round(file.size / 1024);
+                badge.innerHTML = `<strong style="color:var(--color-black);">✓ ${file.name}</strong> <span style="color:#888;">(${sizeKb} KB)</span>`;
+            } else {
+                badge.innerHTML = `<span style="color:#666;">No file selected</span>`;
+            }
+        }
+
+        // Toggle PF/PT/BGV Details
+        function togglePFDetails() {
+            const check = document.getElementById('new-emp-pf').checked;
+            document.getElementById('pf-details-group').style.display = check ? 'block' : 'none';
+        }
+        function togglePTDetails() {
+            const check = document.getElementById('new-emp-pt-applicable').checked;
+            document.getElementById('pt-details-group').style.display = check ? 'block' : 'none';
+        }
+        function toggleBGVSection() {
+            const check = document.getElementById('bgv-required-toggle').checked;
+            document.getElementById('bgv-form-section').style.display = check ? 'block' : 'none';
+        }
+
+        // Multi-Select Dropdown Handler for PT States
+        function togglePTStateDropdown(event) {
+            event.stopPropagation();
+            const container = document.getElementById('pt-ms-container');
+            container.classList.toggle('open');
+        }
+
+        function updatePTSelectedStates() {
+            const menu = document.getElementById('pt-ms-menu');
+            const checkedBoxes = menu.querySelectorAll('input[type="checkbox"]:checked');
+            const label = document.getElementById('pt-ms-label');
+            
+            if (checkedBoxes.length === 0) {
+                label.textContent = 'Select Applicable States';
+                label.style.color = '#888';
+            } else if (checkedBoxes.length === 1) {
+                label.textContent = checkedBoxes[0].value;
+                label.style.color = 'var(--color-black)';
+            } else {
+                const names = Array.from(checkedBoxes).map(cb => cb.value);
+                label.textContent = names.join(', ');
+                label.style.color = 'var(--color-black)';
+            }
+        }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', () => {
+            const container = document.getElementById('pt-ms-container');
+            if (container) container.classList.remove('open');
+        });
+
+        // Compute probation expected confirmation date
+        function updateProbationDates() {
+            const startVal = document.getElementById('new-emp-prob-start').value;
+            const months = parseInt(document.getElementById('new-emp-probation').value) || 0;
+            if (startVal && months > 0) {
+                let startDate = new Date(startVal);
+                startDate.setMonth(startDate.getMonth() + months);
+                const year = startDate.getFullYear();
+                const month = String(startDate.getMonth() + 1).padStart(2, '0');
+                const date = String(startDate.getDate()).padStart(2, '0');
+                document.getElementById('new-emp-prob-confirm').value = `${year}-${month}-${date}`;
+            } else {
+                document.getElementById('new-emp-prob-confirm').value = '';
+            }
+        }
+
+        // Build HTML for Review Summary tab
+        function populateReviewSummary() {
+            const summaryBlock = document.getElementById('review-summary-block');
+            if (!summaryBlock) return;
+            
+            const deptSelect = document.getElementById('new-emp-dept');
+            const branchSelect = document.getElementById('new-emp-branch');
+            const roleSelect = document.getElementById('new-emp-role');
+            const typeSelect = document.getElementById('new-emp-type');
+            const shiftSelect = document.getElementById('new-emp-shift');
+            const otSelect = document.getElementById('new-emp-ot-policy');
+            const taxSelect = document.getElementById('new-emp-tax-regime');
+            const bgvAgency = document.getElementById('bgv-agency');
+            const bgvResult = document.getElementById('bgv-result');
+            const ptLabel = document.getElementById('pt-ms-label') ? document.getElementById('pt-ms-label').textContent : 'Maharashtra';
+
+            const deptText = (deptSelect && deptSelect.selectedIndex >= 0) ? deptSelect.options[deptSelect.selectedIndex].text : 'Operations';
+            const branchText = (branchSelect && branchSelect.selectedIndex >= 0) ? branchSelect.options[branchSelect.selectedIndex].text : 'HQ - Mumbai';
+            const roleText = (roleSelect && roleSelect.selectedIndex >= 0) ? roleSelect.options[roleSelect.selectedIndex].text : 'Driver';
+            const typeText = (typeSelect && typeSelect.selectedIndex >= 0) ? typeSelect.options[typeSelect.selectedIndex].text : 'Full Time';
+            const shiftText = (shiftSelect && shiftSelect.selectedIndex >= 0) ? shiftSelect.options[shiftSelect.selectedIndex].text : 'General Shift';
+            const otText = (otSelect && otSelect.selectedIndex >= 0) ? otSelect.options[otSelect.selectedIndex].text : 'Standard OT';
+            const taxText = (taxSelect && taxSelect.selectedIndex >= 0) ? taxSelect.options[taxSelect.selectedIndex].text : 'New Regime';
+            const agencyText = (bgvAgency && bgvAgency.selectedIndex >= 0) ? bgvAgency.options[bgvAgency.selectedIndex].text : 'Internal HR';
+            const resultText = (bgvResult && bgvResult.selectedIndex >= 0) ? bgvResult.options[bgvResult.selectedIndex].text : 'Pending';
+
+            const grossInput = document.getElementById('new-emp-gross');
+            const grossVal = grossInput ? parseInt(grossInput.value || 30000) : 30000;
+            const basicText = document.getElementById('comp-basic') ? document.getElementById('comp-basic').textContent : '₹12,000';
+            const hraText = document.getElementById('comp-hra') ? document.getElementById('comp-hra').textContent : '₹6,000';
+            const convText = document.getElementById('comp-conv') ? document.getElementById('comp-conv').textContent : '₹3,000';
+            const medText = document.getElementById('comp-med') ? document.getElementById('comp-med').textContent : '₹6,000';
+            const isPfChecked = document.getElementById('new-emp-pf') ? document.getElementById('new-emp-pf').checked : true;
+
+            const offerFileInput = document.getElementById('file-offer');
+            const offerFileName = (offerFileInput && offerFileInput.files && offerFileInput.files.length > 0) ? offerFileInput.files[0].name : 'Uploaded';
+
+            const content = `
+                <!-- 1. Basic & Personal Details -->
+                <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--color-bg-light); border-bottom: 1px solid var(--color-border);">
+                        <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.8125rem; color: var(--color-black);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>1. Basic &amp; Personal Details</span>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="showStep(1)" style="height: 24px; font-size: 0.6875rem; padding: 0 8px;">Edit</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 20px; padding: 14px 16px; font-size: 0.75rem;">
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Employee ID</span><strong>${document.getElementById('new-emp-id')?.value || 'EMP-AUTO'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Full Name</span><strong>${document.getElementById('new-emp-name')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Mobile</span><strong>+91 ${document.getElementById('new-emp-mobile')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Email</span><strong>${document.getElementById('new-emp-email')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Date of Birth</span><strong>${document.getElementById('new-emp-dob')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Gender</span><strong>${document.getElementById('new-emp-gender')?.value || 'Male'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">PAN Number</span><strong>${document.getElementById('new-emp-pan')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Aadhaar Number</span><strong>${document.getElementById('new-emp-aadhaar')?.value || '—'}</strong></div>
+                    </div>
+                </div>
+
+                <!-- 2. Employment & Role -->
+                <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--color-bg-light); border-bottom: 1px solid var(--color-border);">
+                        <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.8125rem; color: var(--color-black);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <span>2. Employment &amp; Role</span>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="showStep(1)" style="height: 24px; font-size: 0.6875rem; padding: 0 8px;">Edit</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 20px; padding: 14px 16px; font-size: 0.75rem;">
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Department</span><strong>${deptText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Branch</span><strong>${branchText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Role / Designation</span><strong>${roleText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Employment Type</span><strong>${typeText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Assigned Shift</span><strong>${shiftText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Joining Date</span><strong>${document.getElementById('new-emp-joining-date')?.value || '—'}</strong></div>
+                    </div>
+                </div>
+
+                <!-- 3. Compensation Breakdown -->
+                <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--color-bg-light); border-bottom: 1px solid var(--color-border);">
+                        <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.8125rem; color: var(--color-black);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                            <span>3. Compensation &amp; Salary</span>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="showStep(2)" style="height: 24px; font-size: 0.6875rem; padding: 0 8px;">Edit</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 20px; padding: 14px 16px; font-size: 0.75rem;">
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Monthly Gross</span><strong style="font-size: 0.875rem; color: var(--color-black);">₹${grossVal.toLocaleString('en-IN')}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Basic (40%)</span><strong>${basicText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">HRA (20%)</span><strong>${hraText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Effective Date</span><strong>${document.getElementById('new-emp-salary-effective')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Allowances (Conv / Med)</span><strong>${convText} / ${medText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Overtime Policy</span><strong>${otText}</strong></div>
+                    </div>
+                </div>
+
+                <!-- 4. Bank & Statutory Configuration -->
+                <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--color-bg-light); border-bottom: 1px solid var(--color-border);">
+                        <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.8125rem; color: var(--color-black);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                            <span>4. Bank &amp; Statutory Details</span>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="showStep(3)" style="height: 24px; font-size: 0.6875rem; padding: 0 8px;">Edit</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 20px; padding: 14px 16px; font-size: 0.75rem;">
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Bank Name</span><strong>${document.getElementById('new-emp-bank-name')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Account Number</span><strong>${document.getElementById('new-emp-bank-acc-confirm')?.value || document.getElementById('new-emp-bank-acc')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">IFSC Code</span><strong>${document.getElementById('new-emp-bank-ifsc')?.value || '—'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">EPF (PF 12%)</span><strong>${isPfChecked ? 'Applicable (12%)' : 'Exempt'}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">PT Circle</span><strong>${ptLabel}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Tax Regime</span><strong>${taxText}</strong></div>
+                    </div>
+                </div>
+
+                <!-- 5. Documents & Background Verification -->
+                <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--color-bg-light); border-bottom: 1px solid var(--color-border);">
+                        <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.8125rem; color: var(--color-black);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                            <span>5. Documents &amp; Verification</span>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="showStep(5)" style="height: 24px; font-size: 0.6875rem; padding: 0 8px;">Edit</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 20px; padding: 14px 16px; font-size: 0.75rem;">
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Aadhaar &amp; PAN Proof</span><strong>Verified</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">Offer Letter</span><strong>${offerFileName}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">BGV Agency</span><strong>${agencyText}</strong></div>
+                        <div><span style="color: #666; display: block; margin-bottom: 2px;">BGV Status</span><strong style="color: var(--color-black);">${resultText}</strong></div>
+                    </div>
+                </div>
+            `;
+            summaryBlock.innerHTML = content;
+        }
+
+        // Open Confirmation Modal
+        function openOnboardingConfirmationModal(event) {
+            if (event && event.preventDefault) {
+                event.preventDefault();
+            }
+            const empId = document.getElementById('new-emp-id')?.value || 'EMP011';
+            const actionText = currentFlowType === 'rehire' ? 'rehire' : 'onboarding';
+            const titleElement = document.getElementById('confirm-modal-title');
+            if (titleElement) {
+                titleElement.textContent = `Complete ${actionText} for ${empId}?`;
+            }
+            const confirmBtn = document.getElementById('confirm-modal-action-btn');
+            if (confirmBtn) {
+                confirmBtn.textContent = currentFlowType === 'rehire' ? 'Complete Rehire' : 'Complete Onboarding';
+            }
+            const modal = document.getElementById('modal-onboarding-confirm');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeOnboardingConfirmationModal() {
+            const modal = document.getElementById('modal-onboarding-confirm');
+            if (modal) modal.style.display = 'none';
+        }
+
+        // On confirming inside modal, save data and show success confirmation modal
+        function confirmAndExecuteOnboarding() {
+            closeOnboardingConfirmationModal();
+            
+            try {
+                const deptSelect = document.getElementById('new-emp-dept');
+                const branchSelect = document.getElementById('new-emp-branch');
+                const roleSelect = document.getElementById('new-emp-role');
+                const shiftSelect = document.getElementById('new-emp-shift');
+
+                const empId = document.getElementById('new-emp-id')?.value || 'EMP011';
+                const empName = document.getElementById('new-emp-name')?.value || 'Arun Mehta';
+                const rawJoiningDate = document.getElementById('new-emp-joining-date')?.value || '2026-08-30';
+                
+                // Format joining date nicely (e.g. 30 Aug 2026)
+                let formattedDoj = rawJoiningDate;
+                try {
+                    const d = new Date(rawJoiningDate);
+                    if (!isNaN(d.getTime())) {
+                        formattedDoj = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
                     }
+                } catch(e) {}
 
-                    // Create new employee object
-                    const newEmp = {
-                        id: nextId,
-                        name: name,
-                        mobile: mobile.startsWith('+91') ? mobile : '+91 ' + mobile.replace(/^\s*/, ''),
-                        email: email || '—',
-                        department: deptText,
-                        branch: branchText,
-                        joiningDate: dateText,
-                        role: roleText,
-                        shift: shiftText,
-                        monthlyGross: grossVal ? '₹' + Number(grossVal).toLocaleString('en-IN') : '—',
-                        status: true
-                    };
+                onboardingEmployeeData = {
+                    id: empId,
+                    name: empName,
+                    mobile: '+91 ' + (document.getElementById('new-emp-mobile')?.value || '9876543210'),
+                    email: document.getElementById('new-emp-email')?.value || 'employee@logistics.com',
+                    bloodGroup: document.getElementById('new-emp-blood')?.value || 'O+',
+                    department: (deptSelect && deptSelect.selectedIndex >= 0) ? deptSelect.options[deptSelect.selectedIndex].text : 'Operations',
+                    branch: (branchSelect && branchSelect.selectedIndex >= 0) ? branchSelect.options[branchSelect.selectedIndex].text : 'HQ - Mumbai',
+                    joiningDate: rawJoiningDate,
+                    role: (roleSelect && roleSelect.selectedIndex >= 0) ? roleSelect.options[roleSelect.selectedIndex].text : 'Staff',
+                    shift: (shiftSelect && shiftSelect.selectedIndex >= 0) ? shiftSelect.options[shiftSelect.selectedIndex].text : 'General Shift',
+                    monthlyGross: '₹' + parseInt(document.getElementById('new-emp-gross')?.value || 30000).toLocaleString('en-IN'),
+                    overtimePolicy: 'Standard OT (1.5x)',
+                    bankDetails: `${document.getElementById('new-emp-bank-name')?.value || 'HDFC'} (${document.getElementById('new-emp-bank-ifsc')?.value || 'HDFC0000123'})`,
+                    statutory: 'EPF 12% • PT Maharashtra',
+                    verification: 'Verified (Internal HR)',
+                    status: true,
+                    onboardingStatus: "Completed"
+                };
 
-                    // Add and save
-                    staffEmployees.push(newEmp);
-                    localStorage.setItem('staffEmployees', JSON.stringify(staffEmployees));
+                let staff = getStaffList();
+                const existingIdx = staff.findIndex(s => s.id === onboardingEmployeeData.id);
+                if (existingIdx > -1) {
+                    staff[existingIdx] = onboardingEmployeeData;
+                } else {
+                    staff.push(onboardingEmployeeData);
+                }
+                saveStaffList(staff);
 
-                    // Redirect
-                    window.location.href = 'index.html';
-                });
+                // Populate success modal fields
+                document.getElementById('success-emp-id').textContent = empId;
+                document.getElementById('success-emp-name').textContent = empName;
+                document.getElementById('success-emp-doj').textContent = formattedDoj;
+
+                // Show Success Confirmation Modal
+                document.getElementById('modal-onboarding-success').style.display = 'flex';
+            } catch (err) {
+                console.error("Save staff error:", err);
+                window.location.href = 'index.html';
+            }
+        }
+
+        function finishAndRedirect() {
+            window.location.href = 'index.html';
+        }
+
+
+        // ═══ REHIRE FLOW LOGIC ═══
+        let rehiredEmployeeHistorical = null;
+
+        function searchFormerEmployees() {
+            const val = document.getElementById('rehire-search-input').value.toLowerCase().trim();
+            const container = document.getElementById('rehire-search-results');
+            container.innerHTML = "";
+
+            if (!val) {
+                container.innerHTML = `<div style="font-size:0.75rem; color:#d9534f;">Please enter a search query.</div>`;
+                return;
             }
 
-            // Inject search inputs into dropdowns
-            function setupDropdownSearch() {
-                document.querySelectorAll('.custom-select-options').forEach(optionsBox => {
-                    if (optionsBox.querySelector('.dropdown-search-input') || optionsBox.classList.contains('calendar-popup')) return;
-                    const labels = optionsBox.querySelectorAll('label.custom-option');
-                    
-                    const searchWrapper = document.createElement('div');
-                    searchWrapper.className = 'dropdown-search-wrapper';
-                    searchWrapper.style.cssText = 'padding: 6px 8px; border-bottom: 1px solid var(--color-border); box-sizing: border-box; background: var(--color-white); position: sticky; top: 0; z-index: 10; margin-bottom: 4px;';
-                    
-                    const searchInput = document.createElement('input');
-                    searchInput.type = 'text';
-                    searchInput.className = 'dropdown-search-input';
-                    searchInput.placeholder = 'Search...';
-                    searchInput.style.cssText = 'width: 100%; height: 26px; font-size: 0.75rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 8px; box-sizing: border-box; outline: none;';
-                    
-                    searchInput.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                    });
-                    
-                    searchWrapper.appendChild(searchInput);
-                    optionsBox.insertBefore(searchWrapper, optionsBox.firstChild);
-                    
-                    const noResults = document.createElement('div');
-                    noResults.className = 'dropdown-no-results';
-                    noResults.textContent = 'No results found';
-                    noResults.style.cssText = 'display: none; padding: 10px; font-size: 0.75rem; color: #999; text-align: center;';
-                    optionsBox.appendChild(noResults);
-                    
-                    searchInput.addEventListener('input', () => {
-                        const val = searchInput.value.toLowerCase().trim();
-                        let matchCount = 0;
-                        labels.forEach(label => {
-                            const text = label.textContent.toLowerCase();
-                            if (text.includes(val)) {
-                                label.style.display = 'flex';
-                                matchCount++;
-                            } else {
-                                label.style.display = 'none';
-                            }
-                        });
-                        
-                        noResults.style.display = matchCount === 0 ? 'block' : 'none';
-                    });
-                });
+            const matches = formerEmployeesMock.filter(e => e.name.toLowerCase().includes(val) || e.id.toLowerCase().includes(val) || e.mobile.includes(val));
+            
+            if (matches.length === 0) {
+                container.innerHTML = `<div style="font-size:0.75rem; color:#666;">No former employee matching "${val}" found.</div>`;
+                return;
             }
-            setupDropdownSearch();
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr("#salary-effective-from", {
-            dateFormat: "d M Y",
-            allowInput: true
-        });
+
+            matches.forEach(e => {
+                const item = document.createElement('div');
+                item.style.cssText = "display:flex; justify-content:space-between; align-items:center; border:1px solid var(--color-border); border-radius:4px; padding:10px 14px; margin-bottom:8px; font-size:0.75rem; background: var(--color-bg-light);";
+                item.innerHTML = `
+                    <div style="display: flex; flex-direction: column; gap: 3px;">
+                        <div><strong style="font-size: 0.8125rem;">${e.name}</strong> <span style="color:#666;">(${e.id})</span> &bull; <span style="font-weight: 500;">Mobile: ${e.mobile}</span></div>
+                        <div style="font-size: 0.7rem; color: #555;">
+                            <span><strong>Previous Exit:</strong> ${e.exitDetails}</span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-primary" style="height:28px; padding: 0 16px; font-size: 0.75rem;" onclick="selectFormerEmployee('${e.id}')">Select</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function selectFormerEmployee(id) {
+            const emp = formerEmployeesMock.find(e => e.id === id);
+            if (!emp) return;
+
+            rehiredEmployeeHistorical = emp;
+
+            // Clear search panel results
+            document.getElementById('rehire-search-results').innerHTML = "";
+
+            // Pre-fill Step 1: Basic & Personal Details in the 7-Step Wizard
+            document.getElementById('new-emp-id').value = emp.id;
+            document.getElementById('new-emp-name').value = emp.name;
+            document.getElementById('new-emp-mobile').value = emp.mobile.replace('+91 ', '').replace('+91', '').trim();
+            document.getElementById('new-emp-email').value = emp.email;
+            document.getElementById('new-emp-dept').value = emp.department || 'Operations';
+            document.getElementById('new-emp-branch').value = emp.branch || 'HQ';
+            document.getElementById('new-emp-role').value = emp.role || 'Driver';
+            document.getElementById('new-emp-type').value = 'Full-Time';
+            document.getElementById('new-emp-shift').value = 'General Shift';
+            
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('new-emp-joining-date').value = today;
+            document.getElementById('new-emp-dob').value = emp.dob || '1994-05-12';
+            document.getElementById('new-emp-gender').value = emp.gender || 'Male';
+            document.getElementById('new-emp-marital').value = emp.marital || 'Married';
+            document.getElementById('new-emp-blood').value = 'O+';
+            document.getElementById('new-emp-pan').value = emp.pan || '';
+            document.getElementById('new-emp-aadhaar').value = emp.aadhaar || '';
+            document.getElementById('new-emp-emerg-name').value = emp.emergName || 'Ramesh Sharma';
+            document.getElementById('new-emp-emerg-rel').value = 'Sibling';
+            document.getElementById('new-emp-emerg-mobile').value = '9876543210';
+
+            // Pre-fill Step 2: Compensation
+            const rawSalary = parseInt(emp.prevSalary.replace(/[^0-9]/g, '') || 25000);
+            document.getElementById('new-emp-gross').value = rawSalary;
+            calcCompensation();
+            document.getElementById('new-emp-salary-effective').value = today;
+
+            // Pre-fill Step 3: Bank Details
+            document.getElementById('new-emp-bank-name').value = 'HDFC Bank';
+            document.getElementById('new-emp-bank-branch').value = 'Fort Branch, Mumbai';
+            document.getElementById('new-emp-bank-acc').value = '987654321001';
+            document.getElementById('new-emp-bank-acc-confirm').value = '987654321001';
+            document.getElementById('new-emp-bank-ifsc').value = 'HDFC0000123';
+
+            // Pre-fill Step 4: Statutory
+            if (emp.pfUan) {
+                document.getElementById('new-emp-pf').checked = true;
+                togglePFDetails();
+                document.getElementById('new-emp-uan').value = emp.pfUan; // Lifetime permanent UAN
+                document.getElementById('new-emp-pf-num').value = 'MH/BAN/0012345/000/' + String(Math.floor(1000000 + Math.random() * 9000000)); // New PF Member ID for new tenure
+                const helper = document.getElementById('pf-member-helper');
+                if (helper) helper.innerHTML = `<strong style="color:var(--color-black);">✓ Existing UAN retained.</strong> New Member ID generated for rehire tenure.`;
+            }
+
+            // Set flow type to Rehire
+            currentFlowType = 'rehire';
+
+            // Update headers dynamically for Rehire flow
+            document.getElementById('wizard-main-title').textContent = 'Rehire Employee Onboarding';
+            document.getElementById('wizard-main-subtitle').textContent = 'Verify and update former employee details across the 7-step onboarding wizard.';
+            document.getElementById('step-7-title').textContent = 'Review & Complete Rehire';
+            document.getElementById('step-7-subtitle').textContent = 'Please verify all rehiring details below before finalizing employee reactivation.';
+            document.getElementById('btn-wizard-submit').textContent = 'Complete Rehire';
+
+            // Hide Rehire Search Screen and Open the Exact 7-Step Wizard
+            document.getElementById('flow-rehire-employee').style.display = 'none';
+            document.getElementById('flow-new-employee').style.display = 'block';
+            
+            // Start at Step 1 of the Wizard
+            currentStep = 1;
+            showStep(1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     </script>
 </body>
 </html>

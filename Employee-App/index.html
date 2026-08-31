@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Employee App - Logistics ERP HRMS</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="employee-app-body">
+
+    <!-- Mobile Frame (Compact 375px - 390px) -->
+    <div class="ea-app-container">
+        
+        <!-- Top Sticky Header -->
+        <header class="ea-header">
+            <div class="ea-header-left">
+                <div class="ea-header-avatar" id="hdr-avatar">RS</div>
+                <div class="ea-header-user">
+                    <span class="ea-header-greeting" id="hdr-greeting">Good morning,</span>
+                    <span class="ea-header-name" id="hdr-name">Rahul Sharma</span>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="ea-header-badge" id="hdr-branch">MUMBAI HUB</div>
+                <a href="../Login/welcome.html" title="Exit / Logout to Portal" style="color: #6b7280; display: flex; align-items: center; justify-content: center; text-decoration: none; padding: 4px; border-radius: 6px; transition: color 0.15s ease;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- Notification Toast -->
+        <div id="ea-toast" class="ea-toast">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span id="ea-toast-msg">Action successful</span>
+        </div>
+
+        <!-- Main Scrollable Viewport -->
+        <main class="ea-viewport">
+
+            <!-- ============================================================ -->
+            <!-- 1. HOME SCREEN                                               -->
+            <!-- ============================================================ -->
+            <section id="screen-home" class="ea-screen active">
+                
+                <!-- 2 Core HRMS KPI Summary Cards (Compact) -->
+                <div class="ea-kpi-grid">
+                    <!-- Card 1: Leave Balance -->
+                    <div class="ea-kpi-box" onclick="switchNav('leave')">
+                        <div class="ea-kpi-top-row">
+                            <span class="ea-kpi-label">Leave Balance</span>
+                            <div class="ea-kpi-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="ea-kpi-num" id="kpi-leave-bal">12 <small style="font-size:0.625rem; font-weight:600; color:#666;">Days</small></span>
+                            <span style="font-size: 0.5625rem; color: #64748b; display: block;">Available</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Payslip Status -->
+                    <div class="ea-kpi-box" onclick="switchNav('payslips')">
+                        <div class="ea-kpi-top-row">
+                            <span class="ea-kpi-label">Latest Payslip</span>
+                            <div class="ea-kpi-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="ea-badge ea-badge-approved" style="font-size: 0.625rem; padding: 1px 5px; font-weight: 700;">Generated</span>
+                            <span style="font-size: 0.5625rem; color: #64748b; display: block; margin-top: 1px;">August 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shift & Branch Card -->
+                <div class="ea-card">
+                    <div class="ea-card-header">
+                        <h4 class="ea-card-title">Assigned Shift &amp; Branch</h4>
+                        <span class="ea-badge ea-badge-present">Active</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.75rem;">
+                        <div>
+                            <span style="color: #666; font-size: 0.6875rem; display: block;">Current Shift</span>
+                            <strong>General (09:00 - 18:00)</strong>
+                        </div>
+                        <div>
+                            <span style="color: #666; font-size: 0.6875rem; display: block;">Assigned Branch</span>
+                            <strong>Mumbai Hub</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Card -->
+                <div class="ea-card">
+                    <div class="ea-card-header">
+                        <h4 class="ea-card-title">Recent Activity</h4>
+                        <span style="font-size: 0.6875rem; color: #666;">Last 3 days</span>
+                    </div>
+                    <div class="ea-list-stack" id="home-recent-list">
+                        <div class="ea-list-item" style="padding: 8px 10px;">
+                            <div class="ea-list-item-left">
+                                <span class="ea-list-item-title">Attendance Recorded</span>
+                                <span class="ea-list-item-sub">Yesterday • 09:15 AM to 06:00 PM</span>
+                            </div>
+                            <span class="ea-badge ea-badge-present">Present</span>
+                        </div>
+                        <div class="ea-list-item" style="padding: 8px 10px;">
+                            <div class="ea-list-item-left">
+                                <span class="ea-list-item-title">Casual Leave Request</span>
+                                <span class="ea-list-item-sub">Applied for 10 Sep – 12 Sep</span>
+                            </div>
+                            <span class="ea-badge ea-badge-pending">Pending</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Check In / Check Out Action Button (Home Page Bottom Right) -->
+                <div class="ea-home-fab-wrapper">
+                    <button type="button" class="ea-home-fab-btn" id="home-checkin-fab" onclick="handleFabAttendanceClick()">
+                        <div class="ea-home-fab-icon" id="home-fab-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18" id="home-fab-svg"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                        </div>
+                        <span id="home-fab-label">Check In</span>
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- 2. ATTENDANCE SCREEN                                         -->
+            <!-- ============================================================ -->
+            <section id="screen-attendance" class="ea-screen">
+                
+                <!-- History Date Filter -->
+                <div class="ea-card" style="padding: 10px 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h4 class="ea-card-title">Attendance History</h4>
+                        <span style="font-size: 0.6875rem; color: #666;" id="att-filter-label">Showing This Month</span>
+                    </div>
+                    <div class="ea-filter-bar">
+                        <button type="button" class="ea-filter-pill" onclick="filterAttendance('today', this)">Today</button>
+                        <button type="button" class="ea-filter-pill" onclick="filterAttendance('week', this)">This Week</button>
+                        <button type="button" class="ea-filter-pill active" onclick="filterAttendance('month', this)">This Month</button>
+                        <button type="button" class="ea-filter-pill" onclick="openCustomDateModal('attendance')">Custom Range</button>
+                    </div>
+                </div>
+
+                <!-- History List -->
+                <div class="ea-list-stack" id="att-history-list">
+                    <!-- Dynamic Rows -->
+                </div>
+
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- 3. PAYSLIPS SCREEN                                           -->
+            <!-- ============================================================ -->
+            <section id="screen-payslips" class="ea-screen">
+                
+                <div class="ea-card" style="padding: 10px 14px;">
+                    <div class="ea-card-header" style="margin-bottom: 8px;">
+                        <h4 class="ea-card-title">Employee Payslips</h4>
+                        <div style="display: flex; gap: 6px;">
+                            <select id="payslip-year-filter" class="ea-filter-pill" style="border: 1px solid var(--ea-border); background: #fff;" onchange="filterPayslips()">
+                                <option value="2026" selected>2026</option>
+                                <option value="2025">2025</option>
+                            </select>
+                            <select id="payslip-month-filter" class="ea-filter-pill" style="border: 1px solid var(--ea-border); background: #fff;" onchange="filterPayslips()">
+                                <option value="all" selected>All Months</option>
+                                <option value="August">August</option>
+                                <option value="July">July</option>
+                                <option value="June">June</option>
+                                <option value="May">May</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.6875rem; color: #666; margin: 0;">Tap View to inspect salary structure or download official PDF pay receipts.</p>
+                </div>
+
+                <!-- Payslip List -->
+                <div class="ea-list-stack" id="payslip-list">
+                    <!-- Dynamically populated -->
+                </div>
+
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- 4. LEAVE & WFH SCREEN                                         -->
+            <!-- ============================================================ -->
+            <section id="screen-leave" class="ea-screen">
+                
+                <!-- Leave & WFH Balances Top Card -->
+                <div class="ea-card" style="padding: 10px 12px; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.6875rem; font-weight: 700; color: #111827; text-transform: uppercase; letter-spacing: 0.04em;">Available Balances</span>
+                        <button type="button" class="ea-btn-primary" id="btn-dynamic-apply" style="height: 26px; padding: 0 12px; font-size: 0.6875rem; border-radius: 4px; font-weight: 700;" onclick="handleDynamicApplyClick()">
+                            + Apply Leave
+                        </button>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                        <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 6px; padding: 6px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;">
+                            <span style="font-size: 0.9375rem; font-weight: 800; color: #111827;" id="bal-casual">5</span>
+                            <span style="font-size: 0.5625rem; font-weight: 600; color: #64748b; text-transform: uppercase;">Casual</span>
+                        </div>
+                        <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 6px; padding: 6px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;">
+                            <span style="font-size: 0.9375rem; font-weight: 800; color: #111827;" id="bal-annual">12</span>
+                            <span style="font-size: 0.5625rem; font-weight: 600; color: #64748b; text-transform: uppercase;">Annual</span>
+                        </div>
+                        <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 6px; padding: 6px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;">
+                            <span style="font-size: 0.9375rem; font-weight: 800; color: #111827;" id="bal-sick">8</span>
+                            <span style="font-size: 0.5625rem; font-weight: 600; color: #64748b; text-transform: uppercase;">Sick</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Segment: Leave Requests vs Work From Home (WFH) -->
+                <div class="ea-card" style="padding: 10px 12px; gap: 10px;">
+                    <!-- Segmented Switcher -->
+                    <div class="ea-segmented-tabs">
+                        <button type="button" class="ea-segment-btn active" id="type-tab-leave" onclick="switchLeaveWfhType('leave', this)">
+                            Leave Requests
+                        </button>
+                        <button type="button" class="ea-segment-btn" id="type-tab-wfh" onclick="switchLeaveWfhType('wfh', this)">
+                            Work From Home (WFH)
+                        </button>
+                    </div>
+
+                    <!-- Status Filter Chips (All, Pending, Approved, Rejected) -->
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.6875rem; font-weight: 700; color: #111827; text-transform: uppercase; letter-spacing: 0.04em;">Filter Status</span>
+                    </div>
+                    <div class="ea-filter-bar">
+                        <button type="button" class="ea-filter-pill active" id="tab-status-all" onclick="filterLeaveStatus('all', this)">All</button>
+                        <button type="button" class="ea-filter-pill" id="tab-status-pending" onclick="filterLeaveStatus('Pending', this)">Pending</button>
+                        <button type="button" class="ea-filter-pill" id="tab-status-approved" onclick="filterLeaveStatus('Approved', this)">Approved</button>
+                        <button type="button" class="ea-filter-pill" id="tab-status-rejected" onclick="filterLeaveStatus('Rejected', this)">Rejected</button>
+                    </div>
+                </div>
+
+                <!-- Leave / WFH List -->
+                <div class="ea-list-stack" id="leave-history-list">
+                    <!-- Dynamically populated -->
+                </div>
+
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- 5. PROFILE SCREEN                                            -->
+            <!-- ============================================================ -->
+            <section id="screen-profile" class="ea-screen">
+                
+                <div class="ea-card" style="text-align: center; align-items: center; padding: 18px 14px;">
+                    <div style="width: 56px; height: 56px; border-radius: 50%; background: #111827; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;">
+                        RS
+                    </div>
+                    <h3 style="font-size: 1.0625rem; font-weight: 700; margin: 0;">Rahul Sharma</h3>
+                    <span style="font-size: 0.75rem; color: #666;">EMP-1024 • Sales Executive</span>
+                    <span class="ea-badge ea-badge-present" style="margin-top: 6px;">Active Employee</span>
+                </div>
+
+                <!-- Employment Details (Essential) -->
+                <div class="ea-card">
+                    <h4 class="ea-card-title">Employment Details</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.75rem;">
+                        <div>
+                            <span style="color:#666; display:block; font-size:0.6875rem;">Department</span>
+                            <strong>Sales</strong>
+                        </div>
+                        <div>
+                            <span style="color:#666; display:block; font-size:0.6875rem;">Branch</span>
+                            <strong>Mumbai Hub</strong>
+                        </div>
+                        <div>
+                            <span style="color:#666; display:block; font-size:0.6875rem;">Shift</span>
+                            <strong>General Shift (09:00 - 18:00)</strong>
+                        </div>
+                        <div>
+                            <span style="color:#666; display:block; font-size:0.6875rem;">Date of Joining</span>
+                            <strong>01 Aug 2024</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact & Personal Details (Essential) -->
+                <div class="ea-card">
+                    <h4 class="ea-card-title">Contact &amp; Account</h4>
+                    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.75rem;">
+                        <div>
+                            <span style="color:#666; display:block; font-size:0.6875rem;">Mobile Number</span>
+                            <strong>+91 98765 43210</strong>
+                        </div>
+                        <div>
+                            <span style="color:#666; display:block; font-size:0.6875rem;">Email Address</span>
+                            <strong>rahul.sharma@logisticserp.com</strong>
+                        </div>
+                        <div>
+                            <span style="color:#666; display:block; font-size:0.6875rem;">Bank Account</span>
+                            <strong>HDFC Bank (•••• 1001)</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resignation / Offboarding Status & Action -->
+                <div class="ea-card" id="profile-resignation-card">
+                    <div class="ea-card-header" style="margin-bottom: 6px;">
+                        <h4 class="ea-card-title">Resignation &amp; Exit</h4>
+                        <span id="emp-resig-badge" class="ea-badge ea-badge-present">Active</span>
+                    </div>
+                    <div id="emp-resig-content">
+                        <p style="font-size: 0.75rem; color: #666; margin: 0 0 10px 0; line-height: 1.3;">
+                            Submit formal resignation notice and track your offboarding clearance progress.
+                        </p>
+                        <button type="button" class="ea-btn-large ea-btn-secondary" style="height: 34px; font-size: 0.75rem; font-weight: 600; border: 1px solid #111827; color: #111827; gap: 6px;" onclick="openResignationModal()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            Submit Resignation
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Compact Bottom Actions Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 2px;">
+                    <a href="../Login/welcome.html" class="ea-btn-large ea-btn-secondary" style="text-decoration: none; height: 34px; font-size: 0.75rem; font-weight: 600; border: 1px solid var(--ea-border); color: #111827; gap: 6px; display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                        Welcome Page
+                    </a>
+                    <a href="../Login/welcome.html" class="ea-btn-large ea-btn-secondary" style="text-decoration: none; height: 34px; font-size: 0.75rem; font-weight: 600; border: 1px solid var(--ea-border); color: #111827; gap: 6px; display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Log Out
+                    </a>
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- Clean 5-Tab Fixed Mobile Bottom Navigation Bar -->
+        <nav class="ea-bottom-nav">
+            <button type="button" class="ea-nav-item active" id="nav-home" onclick="switchNav('home')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+            </button>
+            <button type="button" class="ea-nav-item" id="nav-attendance" onclick="switchNav('attendance')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <span>Attendance</span>
+            </button>
+            <button type="button" class="ea-nav-item" id="nav-leave" onclick="switchNav('leave')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span>Leave</span>
+            </button>
+            <button type="button" class="ea-nav-item" id="nav-payslips" onclick="switchNav('payslips')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                <span>Payslips</span>
+            </button>
+            <button type="button" class="ea-nav-item" id="nav-profile" onclick="switchNav('profile')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span>Profile</span>
+            </button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 1: APPLY LEAVE BOTTOM SHEET                            -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-apply-leave">
+            <div class="ea-modal-sheet">
+                <div class="ea-modal-header">
+                    <h3 class="ea-modal-title">Apply for Leave</h3>
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeApplyLeaveModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                
+                <form id="form-apply-leave" onsubmit="handleLeaveSubmit(event)">
+                    <div class="ea-form-group">
+                        <label class="ea-form-label">Leave Type *</label>
+                        <select class="ea-form-select" id="leave-type-select" required onchange="calculateDuration()">
+                            <option value="Casual Leave">Casual Leave (5 Days Available)</option>
+                            <option value="Annual Leave">Annual Leave (12 Days Available)</option>
+                            <option value="Sick Leave">Sick Leave (8 Days Available)</option>
+                        </select>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                        <div class="ea-form-group">
+                            <label class="ea-form-label">Start Date *</label>
+                            <input type="date" class="ea-form-input" id="leave-start-date" required onchange="calculateDuration()" onclick="if(this.showPicker) this.showPicker()">
+                        </div>
+                        <div class="ea-form-group">
+                            <label class="ea-form-label">End Date *</label>
+                            <input type="date" class="ea-form-input" id="leave-end-date" required onchange="calculateDuration()" onclick="if(this.showPicker) this.showPicker()">
+                        </div>
+                    </div>
+
+                    <div style="background: var(--ea-surface-subtle); padding: 8px 10px; border-radius: 6px; margin: 8px 0; font-size: 0.75rem; display: flex; justify-content: space-between;">
+                        <span style="color:#666;">Calculated Duration:</span>
+                        <strong id="leave-calc-duration">1 Day</strong>
+                    </div>
+
+                    <div class="ea-form-group">
+                        <label class="ea-form-label">Reason *</label>
+                        <input type="text" class="ea-form-input" id="leave-reason-input" placeholder="e.g. Personal family function" required>
+                    </div>
+
+                    <div class="ea-form-group" style="margin-top: 6px;">
+                        <label class="ea-form-label">Comments (Optional)</label>
+                        <textarea class="ea-form-textarea" id="leave-comments-input" placeholder="Additional handover notes..."></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1;" onclick="closeApplyLeaveModal()">Cancel</button>
+                        <button type="submit" class="ea-btn-large ea-btn-primary" style="flex:1;">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 1B: APPLY WORK FROM HOME (WFH) BOTTOM SHEET            -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-apply-wfh">
+            <div class="ea-modal-sheet">
+                <div class="ea-modal-header">
+                    <div>
+                        <h3 class="ea-modal-title">Apply for Work From Home (WFH)</h3>
+                        <span style="font-size: 0.6875rem; color: #666;">Submit your requested period and work deliverables</span>
+                    </div>
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeApplyWfhModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                
+                <form id="form-apply-wfh" onsubmit="handleWfhSubmit(event)">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div class="ea-form-group">
+                            <label class="ea-form-label">Start Date *</label>
+                            <input type="date" class="ea-form-input" id="wfh-start-date" required onchange="calculateWfhDuration()" onclick="if(this.showPicker) this.showPicker()">
+                        </div>
+                        <div class="ea-form-group">
+                            <label class="ea-form-label">End Date *</label>
+                            <input type="date" class="ea-form-input" id="wfh-end-date" required onchange="calculateWfhDuration()" onclick="if(this.showPicker) this.showPicker()">
+                        </div>
+                    </div>
+
+                    <div style="background: var(--ea-surface-subtle); padding: 8px 10px; border-radius: 6px; margin: 8px 0; font-size: 0.75rem; display: flex; justify-content: space-between;">
+                        <span style="color:#666;">WFH Days Requested:</span>
+                        <strong id="wfh-calc-duration">1 Day</strong>
+                    </div>
+
+                    <div class="ea-form-group">
+                        <label class="ea-form-label">Reason / Work Deliverables *</label>
+                        <input type="text" class="ea-form-input" id="wfh-reason-input" placeholder="e.g. Enterprise Client Proposal Drafting & Documentation" required>
+                    </div>
+
+                    <div class="ea-form-group" style="margin-top: 6px;">
+                        <label class="ea-form-label">Contact Number &amp; Availability</label>
+                        <input type="text" class="ea-form-input" id="wfh-contact-input" value="+91 98765 43210 (Available on Teams &amp; Phone)">
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1;" onclick="closeApplyWfhModal()">Cancel</button>
+                        <button type="submit" class="ea-btn-large ea-btn-primary" style="flex:1;">Submit WFH Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 2: PAYSLIP VIEW BOTTOM SHEET                           -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-view-payslip">
+            <div class="ea-modal-sheet">
+                <div class="ea-modal-header">
+                    <div>
+                        <h3 class="ea-modal-title" id="ps-modal-title">Payslip - August 2026</h3>
+                        <span style="font-size: 0.6875rem; color: #666;">Logistics ERP • HQ HR Payroll</span>
+                    </div>
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closePayslipModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 8px; padding: 12px; font-size: 0.75rem; display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#666;">Employee:</span> <strong>Rajesh Kumar (EMP001)</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#666;">Designation:</span> <strong>HR Manager</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#666;">Bank Account:</span> <strong>HDFC •••• 1001</strong>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.75rem;">
+                    <!-- Earnings -->
+                    <div style="border: 1px solid var(--ea-border); padding: 8px 10px; border-radius: 6px;">
+                        <strong style="display:block; margin-bottom:4px; font-size:0.6875rem; text-transform:uppercase;">Earnings</strong>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Basic:</span> <span>₹25,000</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>HRA:</span> <span>₹12,500</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>Special:</span> <span>₹7,500</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>OT:</span> <span>₹1,500</span></div>
+                        <div style="border-top:1px solid var(--ea-border); padding-top:4px; font-weight:700; display:flex; justify-content:space-between;"><span>Gross:</span> <span>₹46,500</span></div>
+                    </div>
+                    <!-- Deductions -->
+                    <div style="border: 1px solid var(--ea-border); padding: 8px 10px; border-radius: 6px;">
+                        <strong style="display:block; margin-bottom:4px; font-size:0.6875rem; text-transform:uppercase;">Deductions</strong>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>PF:</span> <span>₹3,600</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>PT:</span> <span>₹200</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:2px;"><span>TDS:</span> <span>₹200</span></div>
+                        <div style="border-top:1px solid var(--ea-border); padding-top:4px; font-weight:700; display:flex; justify-content:space-between;"><span>Total:</span> <span>₹4,000</span></div>
+                    </div>
+                </div>
+
+                <div style="background: #111827; color: #fff; padding: 10px 14px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.75rem; font-weight: 600;">Net Salary Payable:</span>
+                    <strong style="font-size: 1.125rem;" id="ps-modal-net">₹42,500.00</strong>
+                </div>
+
+                <button type="button" class="ea-btn-large ea-btn-primary" onclick="downloadCurrentModalPayslip()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Official Payslip PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 3: SUBMIT RESIGNATION MODAL                             -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-submit-resignation">
+            <div class="ea-modal-sheet">
+                <div class="ea-modal-header">
+                    <div>
+                        <h3 class="ea-modal-title">Initiate Resignation</h3>
+                        <span style="font-size: 0.6875rem; color: #666;">Submit formal exit notice to HR &amp; Management</span>
+                    </div>
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeResignationModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <!-- Readonly Employee Info Banner -->
+                <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 6px; padding: 8px 10px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; font-size: 0.6875rem;">
+                    <div>
+                        <span style="color:#666; display:block;">Employee ID</span>
+                        <strong>EMP-1024</strong>
+                    </div>
+                    <div>
+                        <span style="color:#666; display:block;">Department</span>
+                        <strong>Sales</strong>
+                    </div>
+                    <div>
+                        <span style="color:#666; display:block;">Designation</span>
+                        <strong>Sales Exec</strong>
+                    </div>
+                </div>
+
+                <form id="form-submit-resignation" onsubmit="handleResignationSubmit(event)">
+                    <!-- Exit Type -->
+                    <div class="ea-form-group">
+                        <label class="ea-form-label">Exit Type *</label>
+                        <select class="ea-form-select" id="emp-exit-type" required>
+                            <option value="Resignation" selected>Resignation</option>
+                            <option value="Retirement">Retirement</option>
+                        </select>
+                    </div>
+
+                    <!-- Resignation Date & Notice Period Row -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div class="ea-form-group">
+                            <label class="ea-form-label">Resignation Date *</label>
+                            <input type="date" class="ea-form-input" id="emp-resig-date" required onchange="calculateLastWorkingDay()" onclick="if(this.showPicker) this.showPicker()">
+                        </div>
+                        <div class="ea-form-group">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <label class="ea-form-label">Notice Period</label>
+                                <span style="font-size: 0.625rem; color: #888; font-weight: 500;">System Defined</span>
+                            </div>
+                            <input type="text" class="ea-form-input" id="emp-notice-period" value="30 Days" readonly style="background: var(--ea-surface-subtle); color: #374151; font-weight: 600; cursor: not-allowed;">
+                        </div>
+                    </div>
+
+                    <!-- Last Working Day (System Calculated) -->
+                    <div class="ea-form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                            <label class="ea-form-label">Last Working Day</label>
+                            <span style="font-size: 0.625rem; color: #888; font-weight: 500;">System Calculated</span>
+                        </div>
+                        <input type="text" class="ea-form-input" id="emp-lwd-display" readonly style="background: var(--ea-surface-subtle); color: #111827; font-weight: 700; cursor: not-allowed;">
+                    </div>
+
+                    <!-- Reason -->
+                    <div class="ea-form-group">
+                        <label class="ea-form-label">Reason *</label>
+                        <textarea class="ea-form-textarea" id="emp-resig-reason" placeholder="Enter reason for exit / handover details..." required></textarea>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1;" onclick="closeResignationModal()">Cancel</button>
+                        <button type="submit" class="ea-btn-large ea-btn-primary" style="flex:1;">Submit Resignation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 4: RESIGNATION SUBMISSION CONFIRMATION                 -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-resignation-confirmation">
+            <div class="ea-modal-sheet" style="text-align: center; position: relative;">
+                <!-- Top Right Close Icon -->
+                <button type="button" onclick="closeConfirmationModal()" style="position: absolute; top: 12px; right: 12px; background: none; border: none; cursor: pointer; color: #111827; padding: 4px; display: flex; align-items: center; justify-content: center;" title="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #111827; color: #ffffff; display: flex; align-items: center; justify-content: center; margin: 4px auto 8px auto;">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h3 class="ea-modal-title" style="margin-bottom: 2px;">Resignation Submitted</h3>
+                <p style="font-size: 0.75rem; color: #666; margin: 0 0 12px 0;">Your resignation request has been submitted successfully.</p>
+
+                <!-- Compact Summary Card -->
+                <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 8px; padding: 12px; font-size: 0.75rem; text-align: left; display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#666;">Exit Type:</span>
+                        <strong id="conf-exit-type">Resignation</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#666;">Resignation Date:</span>
+                        <strong id="conf-resig-date">31 Aug 2026</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#666;">Notice Period:</span>
+                        <strong id="conf-notice-period">30 Days</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="color:#666;">Last Working Day:</span>
+                        <strong id="conf-lwd">30 Sep 2026</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px dashed var(--ea-border); padding-top:6px; margin-top:2px;">
+                        <span style="color:#666;">Status:</span>
+                        <span class="ea-badge ea-badge-pending" id="conf-status-badge">Pending Approval</span>
+                    </div>
+                </div>
+
+                <!-- Next Step info -->
+                <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 6px; padding: 8px 10px; font-size: 0.6875rem; text-align: left; color: #111827; margin-bottom: 4px;">
+                    <strong>Next Step:</strong> Awaiting HR approval.
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 5: RESIGNATION DETAILS PAGE / SHEET                    -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-resignation-details">
+            <div class="ea-modal-sheet">
+                <div class="ea-modal-header">
+                    <div>
+                        <h3 class="ea-modal-title">Resignation Details</h3>
+                        <span style="font-size: 0.6875rem; color: #666;">Official employee exit request record</span>
+                    </div>
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeResignationDetailsModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <!-- Status Banner at Top -->
+                <div style="display:flex; justify-content:space-between; align-items:center; background: var(--ea-surface-subtle); border:1px solid var(--ea-border); border-radius:8px; padding:10px 12px; margin-bottom:10px;">
+                    <span style="font-size:0.75rem; font-weight:600; color:#4b5563;">Current Status</span>
+                    <span class="ea-badge" id="det-status-badge">Pending Approval</span>
+                </div>
+
+                <!-- Status Explanatory Alert -->
+                <div id="det-status-message-box" style="font-size:0.75rem; border-radius:6px; padding:8px 10px; margin-bottom:10px; line-height:1.35; display:none;"></div>
+
+                <!-- Detailed Record Grid -->
+                <div style="background:#fff; border:1px solid var(--ea-border); border-radius:8px; padding:12px; font-size:0.75rem; display:flex; flex-direction:column; gap:6px; margin-bottom:12px;">
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Employee Name:</span> <strong>Rahul Sharma</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Employee ID:</span> <strong>EMP-1024</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Department:</span> <strong>Sales</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Designation:</span> <strong>Sales Executive</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Exit Type:</span> <strong id="det-exit-type">Resignation</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Resignation Date:</span> <strong id="det-resig-date">31 Aug 2026</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Notice Period:</span> <strong id="det-notice-period">30 Days</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;" id="det-lwd-label">Last Working Day:</span> <strong id="det-lwd" style="color:var(--ea-primary);">30 Sep 2026</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Submitted Date:</span> <span id="det-submitted-time" style="color:#555;">Today</span></div>
+                    
+                    <!-- Reason Box -->
+                    <div style="border-top:1px dashed var(--ea-border); padding-top:6px; margin-top:2px;">
+                        <span style="color:#666; display:block; margin-bottom:2px;">Reason:</span>
+                        <div id="det-reason" style="color:#111827; background:var(--ea-surface-subtle); padding:6px 8px; border-radius:4px; font-size:0.75rem; line-height:1.3;"></div>
+                    </div>
+                </div>
+
+                <!-- Simulation & Actions Container -->
+                <div id="det-actions-container" style="display:flex; flex-direction:column; gap:8px;">
+                    <!-- Populated dynamically: [Revert Resignation] or simulation controls -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 6: REVERT RESIGNATION CONFIRMATION DIALOG              -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-revert-confirmation">
+            <div class="ea-modal-sheet">
+                <div class="ea-modal-header">
+                    <h3 class="ea-modal-title">Revert Resignation?</h3>
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeRevertConfirmationModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <p style="font-size: 0.75rem; color: #4b5563; margin: 10px 0 12px 0; line-height: 1.4;">
+                    Are you sure you want to withdraw your resignation request? Your employment status will remain active.
+                </p>
+
+                <!-- Compact Summary -->
+                <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 6px; padding: 10px; font-size: 0.75rem; display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px;">
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Resignation Date:</span> <strong id="revert-dlg-resig-date">31 Aug 2026</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Last Working Day:</span> <strong id="revert-dlg-lwd">30 Sep 2026</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Current Status:</span> <span class="ea-badge ea-badge-pending">Pending Approval</span></div>
+                </div>
+
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1; height:36px; font-size:0.75rem;" onclick="closeRevertConfirmationModal()">Cancel</button>
+                    <button type="button" class="ea-btn-large ea-btn-primary" style="flex:1; height:36px; font-size:0.75rem;" onclick="executeConfirmRevert()">Confirm Revert</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 7: CANCEL LEAVE CONFIRMATION DIALOG                    -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-cancel-leave-confirmation">
+            <div class="ea-modal-sheet">
+                <div class="ea-modal-header">
+                    <h3 class="ea-modal-title">Cancel Leave Request?</h3>
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeCancelLeaveModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <p style="font-size: 0.75rem; color: #4b5563; margin: 10px 0 12px 0; line-height: 1.4;">
+                    Are you sure you want to cancel this pending leave application? Your leave balance will remain restored.
+                </p>
+
+                <!-- Compact Summary -->
+                <div style="background: var(--ea-surface-subtle); border: 1px solid var(--ea-border); border-radius: 6px; padding: 10px; font-size: 0.75rem; display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px;">
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Leave Type:</span> <strong id="cancel-leave-type">Casual Leave (2 Days)</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Duration:</span> <strong id="cancel-leave-dates">05 Sep – 06 Sep 2026</strong></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Current Status:</span> <span class="ea-badge ea-badge-pending">Pending</span></div>
+                </div>
+
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1; height:36px; font-size:0.75rem;" onclick="closeCancelLeaveModal()">Keep Leave</button>
+                    <button type="button" class="ea-btn-large ea-btn-primary" style="flex:1; height:36px; font-size:0.75rem;" onclick="executeConfirmCancelLeave()">Cancel Leave</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- MODAL 8: CUSTOM DATE RANGE CALENDAR PICKER                   -->
+        <!-- ============================================================ -->
+        <div class="ea-modal-overlay" id="modal-custom-date-range">
+            <div class="ea-modal-sheet">
+                <div class="ea-modal-header">
+                    <h3 class="ea-modal-title">Select Custom Date Range</h3>
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeCustomDateModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <p style="font-size: 0.75rem; color: #4b5563; margin: 8px 0 12px 0; line-height: 1.4;">
+                    Choose a start date and end date to filter your attendance history records.
+                </p>
+
+                <!-- Dual Date Calendar Inputs -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                    <div class="ea-form-group">
+                        <label class="ea-form-label">From Date *</label>
+                        <input type="date" class="ea-form-input" id="custom-range-start" value="2026-08-01" onclick="if(this.showPicker) this.showPicker()">
+                    </div>
+                    <div class="ea-form-group">
+                        <label class="ea-form-label">To Date *</label>
+                        <input type="date" class="ea-form-input" id="custom-range-end" value="2026-08-31" onclick="if(this.showPicker) this.showPicker()">
+                    </div>
+                </div>
+
+                <!-- Quick Presets -->
+                <div style="display: flex; gap: 6px; margin-bottom: 14px;">
+                    <button type="button" class="ea-filter-pill" style="flex:1; text-align:center; padding:4px;" onclick="setCustomRangePreset(7)">Last 7 Days</button>
+                    <button type="button" class="ea-filter-pill" style="flex:1; text-align:center; padding:4px;" onclick="setCustomRangePreset(15)">Last 15 Days</button>
+                    <button type="button" class="ea-filter-pill" style="flex:1; text-align:center; padding:4px;" onclick="setCustomRangePreset(30)">Last 30 Days</button>
+                </div>
+
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1; height:36px; font-size:0.75rem;" onclick="closeCustomDateModal()">Cancel</button>
+                    <button type="button" class="ea-btn-large ea-btn-primary" style="flex:1; height:36px; font-size:0.75rem;" onclick="applyCustomDateRange()">Apply Range</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // State
+        let currentScreen = 'home';
+        let attendanceState = {
+            status: 'not_checked_in', // not_checked_in | checked_in | completed
+            checkInTime: null,
+            checkOutTime: null,
+            date: '31 Aug 2026'
+        };
+
+        let leaveBalances = {
+            casual: 5,
+            annual: 12,
+            sick: 8,
+            wfh: 4
+        };
+
+        let currentLeaveWfhType = 'leave'; // 'leave' | 'wfh'
+
+        let leaveRequests = [
+            { id: 'LR-101', type: 'Casual Leave', start: '10 Sep 2026', end: '12 Sep 2026', days: 3, status: 'Pending', reason: 'Personal Family Work' },
+            { id: 'LR-100', type: 'Sick Leave', start: '02 Aug 2026', end: '03 Aug 2026', days: 2, status: 'Approved', reason: 'Viral Fever recovery' },
+            { id: 'LR-099', type: 'Annual Leave', start: '15 Jul 2026', end: '18 Jul 2026', days: 4, status: 'Approved', reason: 'Summer vacation' },
+            { id: 'LR-098', type: 'Casual Leave', start: '20 Jun 2026', end: '21 Jun 2026', days: 2, status: 'Rejected', reason: 'Emergency personal work', rejectionReason: 'High dispatch load on assigned shift. Minimum staffing requirement not met.' }
+        ];
+
+        let wfhRequests = [
+            { id: 'WFH-104', type: 'Work From Home', start: '04 Sep 2026', end: '04 Sep 2026', days: 1, status: 'Pending', reason: 'Enterprise Client Proposal Drafting & Documentation' },
+            { id: 'WFH-101', type: 'Work From Home', start: '18 Aug 2026', end: '18 Aug 2026', days: 1, status: 'Approved', reason: 'Sales Account Reconciliation' },
+            { id: 'WFH-095', type: 'Work From Home', start: '05 Jul 2026', end: '05 Jul 2026', days: 1, status: 'Rejected', reason: 'Client audit scheduled in office', rejectionReason: 'In-person presence required for ISO compliance inspection.' }
+        ];
+
+        let attendanceHistory = [
+            { date: '30 Aug 2026', in: '09:15 AM', out: '06:00 PM', dur: '8h 45m', status: 'Present' },
+            { date: '29 Aug 2026', in: '09:00 AM', out: '06:15 PM', dur: '9h 15m', status: 'Present' },
+            { date: '28 Aug 2026', in: '09:05 AM', out: '05:55 PM', dur: '8h 50m', status: 'Present' },
+            { date: '27 Aug 2026', in: '—', out: '—', dur: '—', status: 'Leave' },
+            { date: '26 Aug 2026', in: '09:10 AM', out: '06:10 PM', dur: '9h 00m', status: 'Present' },
+            { date: '25 Aug 2026', in: '08:55 AM', out: '06:00 PM', dur: '9h 05m', status: 'Present' }
+        ];
+
+        let payslips = [
+            { month: 'August', year: '2026', net: '₹42,500', date: '31 Aug 2026' },
+            { month: 'July', year: '2026', net: '₹42,500', date: '31 Jul 2026' },
+            { month: 'June', year: '2026', net: '₹41,800', date: '30 Jun 2026' },
+            { month: 'May', year: '2026', net: '₹42,500', date: '31 May 2026' },
+            { month: 'April', year: '2026', net: '₹40,200', date: '30 Apr 2026' }
+        ];
+
+        let activeModalPayslip = null;
+
+        // Navigation
+        function switchNav(screenName) {
+            currentScreen = screenName;
+            document.querySelectorAll('.ea-screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.ea-nav-item').forEach(b => b.classList.remove('active'));
+
+            const targetScreen = document.getElementById(`screen-${screenName}`);
+            const targetNav = document.getElementById(`nav-${screenName}`);
+            if (targetScreen) targetScreen.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+
+            if (screenName === 'attendance') renderAttendanceHistory('month');
+            if (screenName === 'payslips') renderPayslips();
+            if (screenName === 'leave') renderLeaveList();
+        }
+
+        // Toast Feedback
+        function showToast(msg) {
+            const toast = document.getElementById('ea-toast');
+            document.getElementById('ea-toast-msg').textContent = msg;
+            toast.style.display = 'flex';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        // Check In with GPS validation
+        function handleCheckIn() {
+            if (attendanceState.status !== 'not_checked_in') {
+                showToast('Already checked in today!');
+                return;
+            }
+
+            // Simulate GPS Geofence Check (Mumbai Hub 200m)
+            const withinGeofence = true; 
+            if (!withinGeofence) {
+                alert('GPS Location Warning: You are outside the permitted attendance location (Mumbai Hub 200m radius).');
+                return;
+            }
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            
+            attendanceState.status = 'checked_in';
+            attendanceState.checkInTime = timeStr;
+
+            updateAttendanceVisuals();
+            showToast(`Checked in successfully at ${timeStr} (GPS Verified)`);
+        }
+
+        // Check Out
+        function handleCheckOut() {
+            if (attendanceState.status !== 'checked_in') {
+                showToast('Please check in first!');
+                return;
+            }
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            
+            attendanceState.status = 'completed';
+            attendanceState.checkOutTime = timeStr;
+
+            // Add to history
+            attendanceHistory.unshift({
+                date: 'Today (31 Aug)',
+                in: attendanceState.checkInTime,
+                out: timeStr,
+                dur: '8h 58m',
+                status: 'Present'
+            });
+
+            updateAttendanceVisuals();
+            showToast(`Checked out successfully at ${timeStr}. Work shift completed.`);
+        }
+
+        function updateAttendanceVisuals() {
+            // Home updates
+            const homeStatus = document.getElementById('home-att-status');
+            const homeBadge = document.getElementById('home-att-badge');
+            const homeTimeBox = document.getElementById('home-time-details');
+            const homeTimeText = document.getElementById('home-time-text');
+            const btnIn = document.getElementById('home-btn-checkin');
+            const btnOut = document.getElementById('home-btn-checkout');
+
+            // Attendance Screen updates
+            const attStatus = document.getElementById('att-status-text');
+            const attSummary = document.getElementById('att-times-summary');
+            const attBtnIn = document.getElementById('att-btn-in');
+            const attBtnOut = document.getElementById('att-btn-out');
+            const attInVal = document.getElementById('att-in-val');
+            // Home Floating Action Button updates
+            const homeFab = document.getElementById('home-checkin-fab');
+            const homeFabLabel = document.getElementById('home-fab-label');
+            const homeFabIcon = document.getElementById('home-fab-icon');
+
+            if (attendanceState.status === 'not_checked_in') {
+                if (homeFab) {
+                    homeFab.style.background = '#111827';
+                    homeFab.style.color = '#ffffff';
+                    homeFab.style.opacity = '1';
+                    homeFab.style.cursor = 'pointer';
+                    homeFab.disabled = false;
+                }
+                if (homeFabIcon) {
+                    homeFabIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>`;
+                }
+                if (homeFabLabel) homeFabLabel.textContent = 'Check In';
+            } else if (attendanceState.status === 'checked_in') {
+                if (homeFab) {
+                    homeFab.style.background = '#111827';
+                    homeFab.style.color = '#ffffff';
+                    homeFab.style.opacity = '1';
+                    homeFab.style.cursor = 'pointer';
+                    homeFab.disabled = false;
+                }
+                if (homeFabIcon) {
+                    homeFabIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="14 17 9 12 14 7"></polyline><line x1="9" y1="12" x2="21" y2="12"></line></svg>`;
+                }
+                if (homeFabLabel) homeFabLabel.textContent = 'Check Out';
+            } else if (attendanceState.status === 'completed') {
+                if (homeFab) {
+                    homeFab.style.background = '#111827';
+                    homeFab.style.color = '#ffffff';
+                    homeFab.style.opacity = '0.45';
+                    homeFab.style.cursor = 'not-allowed';
+                    homeFab.disabled = true;
+                }
+                if (homeFabIcon) {
+                    homeFabIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="14 17 9 12 14 7"></polyline><line x1="9" y1="12" x2="21" y2="12"></line></svg>`;
+                }
+                if (homeFabLabel) homeFabLabel.textContent = 'Check Out';
+            }
+        }
+
+        // Floating Action Button Click Handler
+        function handleFabAttendanceClick() {
+            if (attendanceState.status === 'not_checked_in') {
+                handleCheckIn();
+            } else if (attendanceState.status === 'checked_in') {
+                handleCheckOut();
+            }
+        }
+
+        // Custom Date Range Modal Handlers
+        function openCustomDateModal(context) {
+            document.getElementById('modal-custom-date-range').style.display = 'flex';
+        }
+
+        function closeCustomDateModal() {
+            document.getElementById('modal-custom-date-range').style.display = 'none';
+        }
+
+        function setCustomRangePreset(days) {
+            const end = new Date(2026, 7, 31); // 31 Aug 2026
+            const start = new Date(end);
+            start.setDate(end.getDate() - days + 1);
+
+            document.getElementById('custom-range-start').value = start.toISOString().split('T')[0];
+            document.getElementById('custom-range-end').value = end.toISOString().split('T')[0];
+        }
+
+        function applyCustomDateRange() {
+            const startVal = document.getElementById('custom-range-start').value;
+            const endVal = document.getElementById('custom-range-end').value;
+
+            if (!startVal || !endVal) {
+                alert('Please select both Start and End dates.');
+                return;
+            }
+
+            const sDate = new Date(startVal);
+            const eDate = new Date(endVal);
+
+            if (sDate > eDate) {
+                alert('From Date cannot be after To Date.');
+                return;
+            }
+
+            const formattedStart = sDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+            const formattedEnd = eDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+
+            document.getElementById('att-filter-label').textContent = `${formattedStart} – ${formattedEnd}`;
+
+            // Highlight Custom Range pill
+            document.querySelectorAll('#screen-attendance .ea-filter-pill').forEach(p => p.classList.remove('active'));
+            const customPill = document.querySelector('#screen-attendance .ea-filter-pill:last-child');
+            if (customPill) customPill.classList.add('active');
+
+            closeCustomDateModal();
+            renderAttendanceHistory('custom');
+            showToast(`Filtered attendance: ${formattedStart} to ${formattedEnd}`);
+        }
+
+        // Attendance History Rendering
+        function filterAttendance(type, btn) {
+            if (btn) {
+                document.querySelectorAll('#screen-attendance .ea-filter-pill').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            if (type === 'today') document.getElementById('att-filter-label').textContent = 'Showing Today';
+            else if (type === 'week') document.getElementById('att-filter-label').textContent = 'Showing This Week';
+            else if (type === 'month') document.getElementById('att-filter-label').textContent = 'Showing This Month';
+
+            renderAttendanceHistory(type);
+        }
+
+        function renderAttendanceHistory(type) {
+            const container = document.getElementById('att-history-list');
+            container.innerHTML = '';
+            
+            let data = attendanceHistory;
+            if (type === 'today') data = attendanceHistory.slice(0, 1);
+            else if (type === 'week') data = attendanceHistory.slice(0, 4);
+            else if (type === 'custom') data = attendanceHistory.slice(0, 5);
+
+            data.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'ea-list-item';
+                const badgeClass = item.status === 'Present' ? 'ea-badge-present' : (item.status === 'Leave' ? 'ea-badge-leave' : 'ea-badge-absent');
+                row.innerHTML = `
+                    <div class="ea-list-item-left">
+                        <span class="ea-list-item-title">${item.date}</span>
+                        <span class="ea-list-item-sub">In: ${item.in} • Out: ${item.out} (${item.dur})</span>
+                    </div>
+                    <span class="ea-badge ${badgeClass}">${item.status}</span>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Payslips
+        function filterPayslips() {
+            renderPayslips();
+        }
+
+        function renderPayslips() {
+            const container = document.getElementById('payslip-list');
+            const monthFilter = document.getElementById('payslip-month-filter').value;
+            container.innerHTML = '';
+
+            let list = payslips;
+            if (monthFilter !== 'all') {
+                list = payslips.filter(p => p.month === monthFilter);
+            }
+
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'ea-list-item';
+                card.innerHTML = `
+                    <div class="ea-list-item-left">
+                        <span class="ea-list-item-title">${item.month} ${item.year}</span>
+                        <span class="ea-list-item-sub">Net Pay: <strong>${item.net}</strong> • ${item.date}</span>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button type="button" class="ea-filter-pill" onclick="openPayslipModal('${item.month} ${item.year}', '${item.net}')">View</button>
+                        <button type="button" class="ea-filter-pill active" onclick="downloadPayslipDirect('${item.month} ${item.year}', '${item.net}')">Download</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openPayslipModal(title, net) {
+            activeModalPayslip = { title, net };
+            document.getElementById('ps-modal-title').textContent = `Payslip - ${title}`;
+            document.getElementById('ps-modal-net').textContent = `${net}.00`;
+            document.getElementById('modal-view-payslip').classList.add('active');
+        }
+
+        function closePayslipModal() {
+            document.getElementById('modal-view-payslip').classList.remove('active');
+        }
+
+        function downloadCurrentModalPayslip() {
+            if (activeModalPayslip) {
+                downloadPayslipDirect(activeModalPayslip.title, activeModalPayslip.net);
+                closePayslipModal();
+            }
+        }
+
+        function downloadPayslipDirect(period, net) {
+            showToast(`Generating official PDF payslip for ${period}...`);
+            // Trigger browser download simulation
+            setTimeout(() => {
+                const element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(`LOGISTICS ERP - PAYSLIP\nPeriod: ${period}\nEmployee: Rahul Sharma (EMP-1024)\nNet Salary: ${net}\nStatus: Paid\nBank: HDFC •••• 1001`));
+                element.setAttribute('download', `Payslip_${period.replace(' ', '_')}.txt`);
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+                showToast(`Payslip ${period} downloaded successfully!`);
+            }, 600);
+        }
+
+        // Leave Management
+        function openApplyLeaveModal() {
+            // Set default date range to tomorrow
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const startInput = document.getElementById('leave-start-date');
+            const endInput = document.getElementById('leave-end-date');
+            
+            const dateStr = tomorrow.toISOString().split('T')[0];
+            startInput.value = dateStr;
+            endInput.value = dateStr;
+            calculateDuration();
+
+            document.getElementById('modal-apply-leave').classList.add('active');
+        }
+
+        function closeApplyLeaveModal() {
+            document.getElementById('modal-apply-leave').classList.remove('active');
+        }
+
+        function calculateDuration() {
+            const startVal = document.getElementById('leave-start-date').value;
+            const endVal = document.getElementById('leave-end-date').value;
+            if (!startVal || !endVal) return;
+
+            const start = new Date(startVal);
+            const end = new Date(endVal);
+
+            if (end < start) {
+                document.getElementById('leave-calc-duration').textContent = 'Invalid (End date before start)';
+                return;
+            }
+
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            document.getElementById('leave-calc-duration').textContent = `${diffDays} Day${diffDays > 1 ? 's' : ''}`;
+        }
+
+        function handleLeaveSubmit(e) {
+            e.preventDefault();
+            const type = document.getElementById('leave-type-select').value;
+            const startVal = document.getElementById('leave-start-date').value;
+            const endVal = document.getElementById('leave-end-date').value;
+            const reason = document.getElementById('leave-reason-input').value;
+
+            const start = new Date(startVal);
+            const end = new Date(endVal);
+            if (end < start) {
+                alert('Start date cannot be after end date.');
+                return;
+            }
+
+            const diffTime = Math.abs(end - start);
+            const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+            // Balance check
+            let currentBal = leaveBalances.casual;
+            if (type === 'Annual Leave') currentBal = leaveBalances.annual;
+            if (type === 'Sick Leave') currentBal = leaveBalances.sick;
+
+            if (days > currentBal) {
+                alert(`Insufficient leave balance! You requested ${days} days but only have ${currentBal} days available.`);
+                return;
+            }
+
+            const startStr = start.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+            const endStr = end.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            // Add request
+            leaveRequests.unshift({
+                id: `LR-${Math.floor(100 + Math.random() * 900)}`,
+                type: type,
+                start: startStr,
+                end: endStr,
+                days: days,
+                status: 'Pending',
+                reason: reason
+            });
+
+            closeApplyLeaveModal();
+            renderLeaveList();
+            showToast(`Leave request submitted for ${days} days!`);
+        }
+
+        // WFH Modal Handlers
+        function openApplyWfhModal() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const startInput = document.getElementById('wfh-start-date');
+            const endInput = document.getElementById('wfh-end-date');
+            const dateStr = tomorrow.toISOString().split('T')[0];
+            
+            startInput.value = dateStr;
+            endInput.value = dateStr;
+            calculateWfhDuration();
+
+            document.getElementById('modal-apply-wfh').classList.add('active');
+        }
+
+        function closeApplyWfhModal() {
+            document.getElementById('modal-apply-wfh').classList.remove('active');
+        }
+
+        function calculateWfhDuration() {
+            const startVal = document.getElementById('wfh-start-date').value;
+            const endVal = document.getElementById('wfh-end-date').value;
+            if (!startVal || !endVal) return;
+
+            const start = new Date(startVal);
+            const end = new Date(endVal);
+
+            if (end < start) {
+                document.getElementById('wfh-calc-duration').textContent = 'Invalid date range';
+                return;
+            }
+
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            document.getElementById('wfh-calc-duration').textContent = `${diffDays} Day${diffDays > 1 ? 's' : ''}`;
+        }
+
+        function handleWfhSubmit(e) {
+            e.preventDefault();
+            const startVal = document.getElementById('wfh-start-date').value;
+            const endVal = document.getElementById('wfh-end-date').value;
+            const reason = document.getElementById('wfh-reason-input').value;
+
+            const start = new Date(startVal);
+            const end = new Date(endVal);
+            if (end < start) {
+                alert('Start date cannot be after end date.');
+                return;
+            }
+
+            const diffTime = Math.abs(end - start);
+            const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+            const startStr = start.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+            const endStr = end.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            wfhRequests.unshift({
+                id: `WFH-${Math.floor(100 + Math.random() * 900)}`,
+                type: 'Work From Home',
+                start: startStr,
+                end: endStr,
+                days: days,
+                status: 'Pending',
+                reason: reason
+            });
+
+            closeApplyWfhModal();
+            currentLeaveWfhType = 'wfh';
+            document.querySelectorAll('#screen-leave .ea-filter-bar:first-of-type .ea-filter-pill').forEach(p => p.classList.remove('active'));
+            const wfhBtn = document.getElementById('type-tab-wfh');
+            if (wfhBtn) wfhBtn.classList.add('active');
+
+            renderLeaveList();
+            showToast(`WFH request submitted for ${days} days!`);
+        }
+
+        function handleDynamicApplyClick() {
+            if (currentLeaveWfhType === 'wfh') {
+                openApplyWfhModal();
+            } else {
+                openApplyLeaveModal();
+            }
+        }
+
+        function switchLeaveWfhType(type, btn) {
+            currentLeaveWfhType = type;
+            document.querySelectorAll('.ea-segmented-tabs .ea-segment-btn').forEach(p => p.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const applyBtn = document.getElementById('btn-dynamic-apply');
+            if (applyBtn) {
+                applyBtn.textContent = type === 'wfh' ? '+ Apply WFH' : '+ Apply Leave';
+            }
+
+            renderLeaveList();
+        }
+
+        // Leave Filter & Cancellation State
+        let currentLeaveStatusFilter = 'all';
+        let pendingCancelLeaveId = null;
+
+        function filterLeaveStatus(status, btn) {
+            currentLeaveStatusFilter = status;
+            document.querySelectorAll('#screen-leave .ea-filter-bar .ea-filter-pill').forEach(p => p.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderLeaveList();
+        }
+
+        function openCancelLeaveModal(id) {
+            const list = currentLeaveWfhType === 'leave' ? leaveRequests : wfhRequests;
+            const req = list.find(r => r.id === id);
+            if (!req) return;
+
+            pendingCancelLeaveId = id;
+            document.getElementById('cancel-leave-type').textContent = `${req.type} (${req.days} Day${req.days > 1 ? 's' : ''})`;
+            document.getElementById('cancel-leave-dates').textContent = `${req.start} – ${req.end}`;
+            document.getElementById('modal-cancel-leave-confirmation').style.display = 'flex';
+        }
+
+        function closeCancelLeaveModal() {
+            pendingCancelLeaveId = null;
+            document.getElementById('modal-cancel-leave-confirmation').style.display = 'none';
+        }
+
+        function executeConfirmCancelLeave() {
+            if (!pendingCancelLeaveId) return;
+            const list = currentLeaveWfhType === 'leave' ? leaveRequests : wfhRequests;
+            const req = list.find(r => r.id === pendingCancelLeaveId);
+            if (req) {
+                req.status = 'Cancelled';
+                closeCancelLeaveModal();
+                renderLeaveList();
+                showToast(`${req.type} request cancelled successfully.`);
+            }
+        }
+
+        function renderLeaveList() {
+            const container = document.getElementById('leave-history-list');
+            container.innerHTML = '';
+
+            let list = currentLeaveWfhType === 'leave' ? leaveRequests : wfhRequests;
+            if (currentLeaveStatusFilter !== 'all') {
+                list = list.filter(r => r.status === currentLeaveStatusFilter);
+            }
+
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 24px 12px; color: #666; font-size: 0.75rem;">
+                        No ${currentLeaveWfhType === 'leave' ? 'leave' : 'WFH'} requests found for this filter.
+                    </div>
+                `;
+                return;
+            }
+
+            list.forEach(req => {
+                const card = document.createElement('div');
+                card.className = 'ea-list-item';
+                card.style.flexDirection = 'column';
+                card.style.alignItems = 'stretch';
+                card.style.padding = '10px 12px';
+                card.style.gap = '8px';
+
+                let badgeClass = 'ea-badge-pending';
+                if (req.status === 'Approved') badgeClass = 'ea-badge-approved';
+                else if (req.status === 'Rejected') badgeClass = 'ea-badge-rejected';
+                else if (req.status === 'Cancelled') badgeClass = 'ea-badge-absent';
+
+                let bottomBarHtml = '';
+                if (req.status === 'Pending') {
+                    bottomBarHtml = `
+                        <div style="display: flex; justify-content: flex-end; align-items: center; border-top: 1px solid var(--ea-border); padding-top: 8px; margin-top: 4px;">
+                            <button type="button" class="ea-btn-large" style="width: auto; height: 28px; padding: 0 14px; font-size: 0.6875rem; font-weight: 700; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; background-color: #111827; color: #ffffff; border: none; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.12);" onclick="openCancelLeaveModal('${req.id}')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                Cancel Request
+                            </button>
+                        </div>
+                    `;
+                }
+
+                let rejectionHtml = '';
+                if (req.status === 'Rejected' && req.rejectionReason) {
+                    rejectionHtml = `
+                        <div style="background: #f9fafb; border-left: 3px solid #111827; padding: 6px 10px; border-radius: 0 4px 4px 0; font-size: 0.6875rem; color: #374151;">
+                            <strong style="color:#111827;">Reason for Rejection:</strong> ${req.rejectionReason}
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                        <div class="ea-list-item-left">
+                            <span class="ea-list-item-title">${req.type} (${req.days} Day${req.days > 1 ? 's' : ''})</span>
+                            <span class="ea-list-item-sub">${req.start} – ${req.end} • ${req.reason}</span>
+                        </div>
+                        <span class="ea-badge ${badgeClass}" style="margin-left: 8px; flex-shrink: 0;">${req.status}</span>
+                    </div>
+                    ${rejectionHtml}
+                    ${bottomBarHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Custom Date Modal simulation
+        function openCustomDateModal(type) {
+            const from = prompt('Enter start date (YYYY-MM-DD):', '2026-08-01');
+            const to = prompt('Enter end date (YYYY-MM-DD):', '2026-08-31');
+            if (from && to) {
+                showToast(`Filtered ${type} from ${from} to ${to}`);
+            }
+        }
+
+        // Resignation Flow State
+        let resignationState = {
+            hasResigned: false,
+            exitType: 'Resignation',
+            resigDate: '',
+            noticePeriodDays: 30,
+            lwd: '',
+            approvedLwd: '', // If modified by HR/Admin
+            reason: '',
+            status: 'Active', // 'Active' | 'Pending Approval' | 'Manager Approved' | 'HR Approved' | 'Completed' | 'Rejected' | 'Reverted'
+            submittedTime: '',
+            revertedDate: '',
+            rejectionRemarks: ''
+        };
+
+        function calculateLastWorkingDay() {
+            const resigInput = document.getElementById('emp-resig-date').value;
+            const lwdDisplay = document.getElementById('emp-lwd-display');
+
+            if (!resigInput) {
+                lwdDisplay.value = '';
+                return;
+            }
+
+            const resigDate = new Date(resigInput);
+            if (!isNaN(resigDate.getTime())) {
+                const lwdDate = new Date(resigDate);
+                lwdDate.setDate(lwdDate.getDate() + resignationState.noticePeriodDays);
+
+                // Format as DD Mon YYYY
+                const formatted = lwdDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                lwdDisplay.value = formatted;
+            }
+        }
+
+        function openResignationModal() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('emp-resig-date').value = today;
+            document.getElementById('emp-notice-period').value = `${resignationState.noticePeriodDays} Days`;
+            document.getElementById('emp-resig-reason').value = '';
+
+            calculateLastWorkingDay();
+            document.getElementById('modal-submit-resignation').style.display = 'flex';
+        }
+
+        function closeResignationModal() {
+            document.getElementById('modal-submit-resignation').style.display = 'none';
+        }
+
+        function handleResignationSubmit(e) {
+            e.preventDefault();
+            const exitType = document.getElementById('emp-exit-type').value;
+            const resigDateVal = document.getElementById('emp-resig-date').value;
+            const lwdVal = document.getElementById('emp-lwd-display').value;
+            const reason = document.getElementById('emp-resig-reason').value.trim();
+
+            if (!resigDateVal) {
+                alert('Please select a valid resignation date.');
+                return;
+            }
+
+            if (!lwdVal) {
+                alert('Last Working Day could not be calculated.');
+                return;
+            }
+
+            if (!reason) {
+                alert('Please enter reason for resignation.');
+                return;
+            }
+
+            // Format resignation date as DD Mon YYYY
+            const rDateObj = new Date(resigDateVal);
+            const formattedResigDate = rDateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            const now = new Date();
+            const timeFormatted = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            resignationState = {
+                hasResigned: true,
+                exitType: exitType,
+                resigDate: formattedResigDate,
+                noticePeriodDays: 30,
+                lwd: lwdVal,
+                approvedLwd: '',
+                reason: reason,
+                status: 'Pending Approval',
+                submittedTime: timeFormatted,
+                revertedDate: '',
+                rejectionRemarks: ''
+            };
+
+            closeResignationModal();
+            renderResignationState();
+            openConfirmationModal();
+        }
+
+        // Confirmation Modal
+        function openConfirmationModal() {
+            document.getElementById('conf-exit-type').textContent = resignationState.exitType;
+            document.getElementById('conf-resig-date').textContent = resignationState.resigDate;
+            document.getElementById('conf-notice-period').textContent = `${resignationState.noticePeriodDays} Days`;
+            document.getElementById('conf-lwd').textContent = resignationState.lwd;
+            document.getElementById('conf-status-badge').textContent = 'Pending Approval';
+            document.getElementById('modal-resignation-confirmation').style.display = 'flex';
+        }
+
+        function closeConfirmationModal() {
+            document.getElementById('modal-resignation-confirmation').style.display = 'none';
+        }
+
+        function openResignationDetailsFromConf() {
+            closeConfirmationModal();
+            openResignationDetailsModal();
+        }
+
+        // Resignation Details Modal
+        function openResignationDetailsModal() {
+            const badge = document.getElementById('det-status-badge');
+            const msgBox = document.getElementById('det-status-message-box');
+            const lwdLabel = document.getElementById('det-lwd-label');
+            const lwdVal = document.getElementById('det-lwd');
+            const actionsContainer = document.getElementById('det-actions-container');
+
+            document.getElementById('det-exit-type').textContent = resignationState.exitType;
+            document.getElementById('det-resig-date').textContent = resignationState.resigDate;
+            document.getElementById('det-notice-period').textContent = `${resignationState.noticePeriodDays} Days`;
+            document.getElementById('det-submitted-time').textContent = resignationState.submittedTime || 'Today';
+            document.getElementById('det-reason').textContent = resignationState.reason;
+
+            // Handle approved LWD vs calculated
+            if (resignationState.approvedLwd) {
+                lwdLabel.textContent = 'Approved Last Working Day:';
+                lwdVal.textContent = resignationState.approvedLwd;
+            } else {
+                lwdLabel.textContent = 'Last Working Day:';
+                lwdVal.textContent = resignationState.lwd;
+            }
+
+            // Status Badge & Messages
+            if (resignationState.status === 'Pending Approval') {
+                badge.className = 'ea-badge ea-badge-pending';
+                badge.textContent = 'Pending Approval';
+                msgBox.style.display = 'block';
+                msgBox.style.background = 'var(--ea-surface-subtle)';
+                msgBox.style.border = '1px solid var(--ea-border)';
+                msgBox.style.color = '#111827';
+                msgBox.innerHTML = '<strong>Next Step:</strong> Your resignation request is currently awaiting HR review &amp; approval.';
+
+                // Show [Revert Resignation] button only in Pending Approval
+                actionsContainer.innerHTML = `
+                    <button type="button" class="ea-btn-large ea-btn-secondary" style="height:36px; font-size:0.75rem; border-color:#111827; color:#111827; font-weight:600; gap:6px;" onclick="openRevertConfirmationModal()">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg>
+                        Revert Resignation
+                    </button>
+                `;
+            } else if (resignationState.status === 'HR Approved') {
+                badge.className = 'ea-badge ea-badge-approved';
+                badge.textContent = 'HR Approved';
+                msgBox.style.display = 'block';
+                msgBox.style.background = 'var(--ea-surface-subtle)';
+                msgBox.style.border = '1px solid var(--ea-border)';
+                msgBox.style.color = '#111827';
+                msgBox.innerHTML = 'Your resignation has been approved by HR. Offboarding formalities are in progress.';
+                actionsContainer.innerHTML = '';
+            } else if (resignationState.status === 'Completed') {
+                badge.className = 'ea-badge ea-badge-present';
+                badge.textContent = 'Completed';
+                msgBox.style.display = 'block';
+                msgBox.style.background = 'var(--ea-surface-subtle)';
+                msgBox.style.border = '1px solid var(--ea-border)';
+                msgBox.style.color = '#111827';
+                msgBox.innerHTML = 'All exit formalities and document releases have been completed.';
+                actionsContainer.innerHTML = '';
+            } else if (resignationState.status === 'Rejected') {
+                badge.className = 'ea-badge ea-badge-rejected';
+                badge.textContent = 'Rejected';
+                msgBox.style.display = 'block';
+                msgBox.style.background = 'var(--ea-surface-subtle)';
+                msgBox.style.border = '1px solid var(--ea-border)';
+                msgBox.style.color = '#111827';
+                msgBox.innerHTML = `<strong>Rejection Remarks:</strong> "${resignationState.rejectionRemarks || 'Handover pending.'}"`;
+                actionsContainer.innerHTML = '';
+            } else if (resignationState.status === 'Reverted') {
+                badge.className = 'ea-badge ea-badge-absent';
+                badge.textContent = 'Reverted';
+                msgBox.style.display = 'block';
+                msgBox.style.background = 'var(--ea-surface-subtle)';
+                msgBox.style.border = '1px solid var(--ea-border)';
+                msgBox.style.color = '#111827';
+                msgBox.innerHTML = `Your resignation request was withdrawn on <strong>${resignationState.revertedDate}</strong>.`;
+                actionsContainer.innerHTML = '';
+            }
+
+            document.getElementById('modal-resignation-details').style.display = 'flex';
+        }
+
+        function closeResignationDetailsModal() {
+            document.getElementById('modal-resignation-details').style.display = 'none';
+        }
+
+        // Revert Dialog
+        function openRevertConfirmationModal() {
+            // Close the resignation details sheet first so popups do not overlap
+            closeResignationDetailsModal();
+            document.getElementById('revert-dlg-resig-date').textContent = resignationState.resigDate;
+            document.getElementById('revert-dlg-lwd').textContent = resignationState.lwd;
+            document.getElementById('modal-revert-confirmation').style.display = 'flex';
+        }
+
+        function closeRevertConfirmationModal() {
+            document.getElementById('modal-revert-confirmation').style.display = 'none';
+        }
+
+        function executeConfirmRevert() {
+            const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            resignationState.status = 'Reverted';
+            resignationState.revertedDate = today;
+
+            closeRevertConfirmationModal();
+            closeResignationDetailsModal();
+            renderResignationState();
+            showToast('Resignation request withdrawn successfully. Employment remains Active.');
+        }
+
+        // Render Card on Profile Screen
+        function renderResignationState() {
+            const badge = document.getElementById('emp-resig-badge');
+            const content = document.getElementById('emp-resig-content');
+
+            if (!resignationState.hasResigned) {
+                badge.className = 'ea-badge ea-badge-present';
+                badge.textContent = 'Active';
+                content.innerHTML = `
+                    <p style="font-size: 0.75rem; color: #666; margin: 0 0 10px 0; line-height: 1.3;">
+                        Submit formal resignation notice and track your offboarding clearance progress.
+                    </p>
+                    <button type="button" class="ea-btn-large ea-btn-secondary" style="border: 1px solid #111827; color: #111827; font-weight: 600;" onclick="openResignationModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Submit Resignation
+                    </button>
+                `;
+                return;
+            }
+
+            if (resignationState.status === 'Pending Approval') {
+                badge.className = 'ea-badge ea-badge-pending';
+                badge.textContent = 'Pending Approval';
+                content.innerHTML = `
+                    <div style="background:var(--ea-surface-subtle); border:1px solid var(--ea-border); border-radius:6px; padding:10px; font-size:0.75rem; display:flex; flex-direction:column; gap:4px; margin-bottom:8px;">
+                        <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Exit Type:</span> <strong>${resignationState.exitType}</strong></div>
+                        <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Resignation Date:</span> <strong>${resignationState.resigDate}</strong></div>
+                        <div style="display:flex; justify-content:space-between;"><span style="color:#666;">Last Working Day:</span> <strong>${resignationState.lwd}</strong></div>
+                        <div style="margin-top:4px; padding-top:4px; border-top:1px dashed var(--ea-border); font-size:0.6875rem; color:#111827;">
+                            Awaiting HR approval
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button type="button" class="ea-btn-large ea-btn-primary" style="flex:1.2;" onclick="openResignationDetailsModal()">View Details</button>
+                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1; border-color:#111827; color:#111827;" onclick="openRevertConfirmationModal()">Revert</button>
+                    </div>
+                `;
+            } else if (resignationState.status === 'HR Approved') {
+                badge.className = 'ea-badge ea-badge-approved';
+                badge.textContent = 'HR Approved';
+                const dispLwd = resignationState.approvedLwd || resignationState.lwd;
+                content.innerHTML = `
+                    <div style="background:var(--ea-surface-subtle); border:1px solid var(--ea-border); border-radius:6px; padding:10px; font-size:0.75rem; display:flex; flex-direction:column; gap:4px; margin-bottom:8px;">
+                        <div style="color:#111827; font-weight:700;">Approved by HR</div>
+                        <div style="color:#666; font-size:0.6875rem;">Approved Last Working Day: <strong>${dispLwd}</strong></div>
+                    </div>
+                    <button type="button" class="ea-btn-large ea-btn-primary" onclick="openResignationDetailsModal()">View Details</button>
+                `;
+            } else if (resignationState.status === 'Completed') {
+                badge.className = 'ea-badge ea-badge-present';
+                badge.textContent = 'Completed';
+                content.innerHTML = `
+                    <div style="background:var(--ea-surface-subtle); border:1px solid var(--ea-border); border-radius:6px; padding:10px; font-size:0.75rem; margin-bottom:8px;">
+                        <div style="color:#111827; font-weight:700;">Exit Formalities Completed</div>
+                        <div style="color:#666; font-size:0.6875rem; margin-top:2px;">All clearances finished.</div>
+                    </div>
+                    <button type="button" class="ea-btn-large ea-btn-secondary" onclick="openResignationDetailsModal()">View History</button>
+                `;
+            } else if (resignationState.status === 'Rejected') {
+                badge.className = 'ea-badge ea-badge-rejected';
+                badge.textContent = 'Rejected';
+                content.innerHTML = `
+                    <div style="background:var(--ea-surface-subtle); border:1px solid var(--ea-border); border-radius:6px; padding:10px; font-size:0.75rem; margin-bottom:8px;">
+                        <div style="color:#111827; font-weight:700; margin-bottom:2px;">Resignation Rejected</div>
+                        <div style="color:#4b5563; font-size:0.75rem;"><strong>Remarks:</strong> "${resignationState.rejectionRemarks || 'Handover incomplete.'}"</div>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1;" onclick="openResignationDetailsModal()">View Details</button>
+                        <button type="button" class="ea-btn-large ea-btn-primary" style="flex:1.2;" onclick="openResignationModal()">Re-Submit</button>
+                    </div>
+                `;
+            } else if (resignationState.status === 'Reverted') {
+                badge.className = 'ea-badge ea-badge-absent';
+                badge.textContent = 'Reverted';
+                content.innerHTML = `
+                    <div style="background:var(--ea-surface-subtle); border:1px solid var(--ea-border); border-radius:6px; padding:10px; font-size:0.75rem; margin-bottom:8px;">
+                        <div style="color:#111827; font-weight:700;">Resignation Reverted</div>
+                        <div style="color:#666; font-size:0.6875rem;">Withdrawn on ${resignationState.revertedDate}. Employment is Active.</div>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1;" onclick="openResignationDetailsModal()">View History</button>
+                        <button type="button" class="ea-btn-large ea-btn-primary" style="flex:1.2;" onclick="openResignationModal()">New Resignation</button>
+                    </div>
+                `;
+            }
+        }
+
+        function simulateHRApproval() {
+            resignationState.status = 'HR Approved';
+            renderResignationState();
+            openResignationDetailsModal();
+            showToast('HR approved the resignation request.');
+        }
+
+        function simulateModifyLWD() {
+            resignationState.approvedLwd = '25 Sep 2026';
+            renderResignationState();
+            openResignationDetailsModal();
+            showToast('HR modified Approved Last Working Day to 25 Sep 2026.');
+        }
+
+        function simulateCompleted() {
+            resignationState.status = 'Completed';
+            renderResignationState();
+            openResignationDetailsModal();
+            showToast('Offboarding formalities marked Completed.');
+        }
+
+        function simulateReject() {
+            resignationState.status = 'Rejected';
+            resignationState.rejectionRemarks = 'Handover pending for Enterprise Client Accounts.';
+            renderResignationState();
+            openResignationDetailsModal();
+            showToast('Resignation rejected with remarks.');
+        }
+
+        function handleLogout() {
+            window.location.href = '../Login/welcome.html';
+        }
+
+        // Initialize
+        window.onload = function() {
+            renderAttendanceHistory('month');
+            renderPayslips();
+            renderLeaveList();
+            renderResignationState();
+            updateAttendanceVisuals();
+        };
+    </script>
+</body>
+</html>

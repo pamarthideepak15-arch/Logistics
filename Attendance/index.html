@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../Design System/components.css">
     <link rel="stylesheet" href="../Sidebar/sidebar.css">
     <link rel="stylesheet" href="attendance.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     
@@ -55,7 +56,19 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
                         Staff Master
                     </a>
-                    <a href="#" class="active">
+                    <a href="../Staff-Management/department-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Department Master
+                    </a>
+                    <a href="../Staff-Management/role-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Role Master
+                    </a>
+                    <a href="../Staff-Management/branch-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Master
+                    </a>
+                    <a href="index.html" class="active">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                         Attendance
                     </a>
@@ -64,10 +77,17 @@
                         Shift Management
                     </a>
                     <a href="../Leave-Management/leave-management.html">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
-                        Leave Management
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Leave &amp; WFH
                     </a>
-
+                    <a href="../Payroll-Management/payroll.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                        Payroll
+                    </a>
+                    <a href="../Offboarding/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Offboarding
+                    </a>
                 </nav>
             </div>
         </aside>
@@ -102,6 +122,13 @@
                     <div class="page-title-group">
                         <h1 class="page-title">Attendance</h1>
                         <p class="page-subtitle">Track employee attendance, check-in, check-out, and working hours.</p>
+                    </div>
+                    <div class="header-actions" style="display: flex; gap: 10px; align-items: center;">
+                        <div id="date-range-picker-wrap" style="display: flex; align-items: center; gap: 6px; background: var(--color-white); border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 8px; height: 30px; box-sizing: border-box; cursor: pointer; max-width: 190px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="color: #555; flex-shrink: 0;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            <input type="text" id="att-date-range" placeholder="Select dates" value="01 Aug - 31 Aug 2026" readonly style="border: none; outline: none; font-size: 0.75rem; width: 140px; font-weight: 600; font-family: inherit; background: transparent; cursor: pointer; color: var(--color-black); padding: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" style="color: #666; flex-shrink: 0;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
                     </div>
                 </div>
 
@@ -230,7 +257,7 @@
                                  <td>Hyderabad</td>
                                  <td>26 Aug 2026</td>
                                  <td>Morning Shift</td>
-                                 <td><span class="att-status-chip att-status-present">Present</span></td>
+                                 <td><span class="att-status-chip att-status-present">Present</span><span class="att-status-chip att-status-wfh" title="Work From Home">WFH</span></td>
                                  <td>08:54 AM <span class="att-status-chip att-status-late" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Late Entry</span></td>
                                  <td>06:21 PM <span class="att-status-chip att-status-early" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Early Exit</span></td>
                                  <td>9h 27m</td>
@@ -348,7 +375,7 @@
                             </div>
                             <div>
                                 <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Attendance Status</span>
-                                <span class="att-status-chip att-status-present">Present</span>
+                                <span class="att-status-chip att-status-present">Present</span><span class="att-status-chip att-status-wfh" title="Work From Home">WFH</span>
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
@@ -605,116 +632,7 @@
             <h3 class="modal-title" style="margin-top: 0; margin-bottom: 20px; font-size: 1.0625rem; font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; text-align: left;">Advanced Attendance Filters</h3>
             
             <div style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
-                <!-- Row 1: Start Date & End Date -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                    <!-- Start Date -->
-                    <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Start Date</label>
-                        <details class="date-select-wrapper" style="width: 100%;">
-                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
-                                <span>01 Aug 2026</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-left: auto; color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            </summary>
-                            <div class="custom-select-options calendar-popup" style="width: 216px; padding: 10px; box-sizing: border-box;">
-                                <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 600; font-size: 0.75rem;">
-                                    <span>August 2026</span>
-                                </div>
-                                <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6875rem; color: #666; margin-bottom: 4px; font-weight: 500;">
-                                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
-                                </div>
-                                <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;">
-                                    <div></div><div></div><div></div><div></div><div></div><div></div>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" checked style="display:none;">1</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">2</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">3</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">4</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">5</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">6</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">7</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">8</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">9</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">10</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">11</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">12</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">13</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">14</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">15</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">16</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">17</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">18</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">19</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">20</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">21</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">22</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">23</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">24</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">25</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">26</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">27</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">28</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">29</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">30</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="start-date-val" style="display:none;">31</label>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
-                    
-                    <!-- End Date -->
-                    <div style="display: flex; flex-direction: column; gap: 6px;">
-                        <label style="font-size: 0.75rem; font-weight: 600; color: #666;">End Date</label>
-                        <details class="date-select-wrapper" style="width: 100%;">
-                            <summary class="custom-select-trigger" style="height: 32px; box-sizing: border-box;">
-                                <span>31 Aug 2026</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="margin-left: auto; color: #666;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            </summary>
-                            <div class="custom-select-options calendar-popup" style="width: 216px; padding: 10px; box-sizing: border-box;">
-                                <div class="calendar-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 600; font-size: 0.75rem;">
-                                    <span>August 2026</span>
-                                </div>
-                                <div class="calendar-weekdays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 0.6875rem; color: #666; margin-bottom: 4px; font-weight: 500;">
-                                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
-                                </div>
-                                <div class="calendar-days" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;">
-                                    <div></div><div></div><div></div><div></div><div></div><div></div>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">1</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">2</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">3</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">4</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">5</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">6</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">7</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">8</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">9</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">10</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">11</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">12</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">13</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">14</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">15</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">16</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">17</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">18</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">19</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">20</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">21</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">22</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">23</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">24</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">25</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">26</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">27</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">28</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">29</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" style="display:none;">30</label>
-                                    <label class="cal-day" style="font-size: 0.6875rem; padding: 2px;"><input type="radio" name="end-date-val" checked style="display:none;">31</label>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
-                </div>
-
-                <!-- Row 2: Branch & Department (Multi-Select Checkboxes) -->
+                <!-- Row: Branch & Department (Multi-Select Checkboxes) -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div style="display: flex; flex-direction: column; gap: 6px;">
                         <label style="font-size: 0.75rem; font-weight: 600; color: #666;">Branch</label>
@@ -906,6 +824,7 @@
     </div>
 
     <script src="../Design System/dropdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // SPA Routing to prevent white flashes and lag on page transitions
@@ -985,6 +904,7 @@
                     date: '2026-08-26',
                     shift: 'Morning Shift',
                     status: 'Present',
+                    isWFH: true,
                     checkIn: '08:54 AM',
                     checkOut: '06:21 PM',
                     duration: '9h 27m',
@@ -1192,6 +1112,7 @@
                             checkOutHTML = `${rec.checkOut} <span class="att-status-chip att-status-early" style="font-size: 0.6875rem; padding: 1px 4px; margin-left: 4px; vertical-align: middle;">Early Exit</span>`;
                         }
 
+                        const wfhBadge = rec.isWFH ? '<span class="att-status-chip att-status-wfh" title="Work From Home">WFH</span>' : '';
                         tbodyHTML += `
                             <tr>
                                 <td data-label="Employee ID">${rec.code}</td>
@@ -1200,7 +1121,7 @@
                                 <td data-label="Branch">${rec.branch}</td>
                                 <td data-label="Date">${formatDateDisplay(rec.date)}</td>
                                 <td data-label="Shift">${rec.shift}</td>
-                                <td data-label="Status"><span class="att-status-chip ${statusClass}">${rec.status}</span></td>
+                                <td data-label="Status"><span class="att-status-chip ${statusClass}">${rec.status}</span>${wfhBadge}</td>
                                 <td data-label="Check In">${checkInHTML}</td>
                                 <td data-label="Check Out">${checkOutHTML}</td>
                                 <td data-label="Duration">${rec.duration}</td>
@@ -1609,6 +1530,36 @@
             renderAttendanceTable();
             setupMultiSelects();
             setupDropdownSearch();
+
+            // Setup Interactive Date Range Calendar Picker
+            if (typeof flatpickr !== 'undefined') {
+                const fp = flatpickr("#att-date-range", {
+                    mode: "range",
+                    dateFormat: "d M Y",
+                    defaultDate: ["2026-08-01", "2026-08-31"],
+                    allowInput: false,
+                    onChange: function(selectedDates, dateStr, instance) {
+                        if (selectedDates.length === 2) {
+                            const d1 = selectedDates[0];
+                            const d2 = selectedDates[1];
+                            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            const str1 = `${String(d1.getDate()).padStart(2, '0')} ${months[d1.getMonth()]}`;
+                            const str2 = `${String(d2.getDate()).padStart(2, '0')} ${months[d2.getMonth()]} ${d2.getFullYear()}`;
+                            instance.input.value = `${str1} - ${str2}`;
+                            
+                            currentPage = 1;
+                            renderAttendanceTable();
+                        }
+                    }
+                });
+
+                const wrap = document.getElementById('date-range-picker-wrap');
+                if (wrap) {
+                    wrap.addEventListener('click', () => {
+                        fp.open();
+                    });
+                }
+            }
         });
     </script>
 </body>

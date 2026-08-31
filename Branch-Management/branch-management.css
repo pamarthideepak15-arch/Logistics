@@ -2,18 +2,20 @@
 .data-table th, .data-table td {
     text-align: left !important;
     white-space: nowrap;
-    padding-right: 16px !important;
+    padding-right: 14px !important;
 }
-.data-table th:nth-child(1), .data-table td:nth-child(1) { width: 10%; }
-.data-table th:nth-child(2), .data-table td:nth-child(2) { width: 15%; }
+.data-table th:nth-child(1), .data-table td:nth-child(1) { width: 8%; }
+.data-table th:nth-child(2), .data-table td:nth-child(2) { width: 14%; }
 .data-table th:nth-child(3), .data-table td:nth-child(3) { width: 10%; }
-.data-table th:nth-child(4), .data-table td:nth-child(4) { width: 15%; }
-.data-table th:nth-child(5), .data-table td:nth-child(5) { width: 15%; }
-.data-table th:nth-child(6), .data-table td:nth-child(6) { width: 15%; }
-.data-table th:nth-child(7), .data-table td:nth-child(7) { width: 10%; }
+.data-table th:nth-child(4), .data-table td:nth-child(4) { width: 13%; }
+.data-table th:nth-child(5), .data-table td:nth-child(5) { width: 13%; }
+.data-table th:nth-child(6), .data-table td:nth-child(6) { width: 14%; }
+.data-table th:nth-child(7), .data-table td:nth-child(7) { width: 15%; }
+.data-table th:nth-child(8), .data-table td:nth-child(8) { width: 7%; text-align: center !important; }
 .data-table th:last-child, .data-table td:last-child {
     text-align: center !important;
     padding-right: 10px !important;
+    width: 6%;
 }
 
 /* Badges */
@@ -64,3 +66,17 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Ensure Branch Type dropdown items and radio options are left-aligned */
+.custom-option {
+    text-align: left !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+.radio-group label {
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+

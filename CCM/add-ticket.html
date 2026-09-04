@@ -1,0 +1,995 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Ticket — CCM | Logistics Management Platform</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- CCM & Agents Unified Stylesheet -->
+    <link rel="stylesheet" href="agents.css">
+    <style>
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px 20px;
+            margin-bottom: 24px;
+        }
+        .full-width-field {
+            grid-column: 1 / -1;
+        }
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .radio-card {
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            background-color: var(--color-white);
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+        .radio-card:hover {
+            background-color: var(--color-bg-light);
+        }
+        .radio-card input[type="radio"]:checked + span {
+            font-weight: 700;
+            color: var(--color-black);
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            width: 100%;
+        }
+        .custom-select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            height: 32px;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            font-size: 0.8125rem;
+            cursor: pointer;
+            list-style: none;
+            box-sizing: border-box;
+            color: var(--color-black);
+            font-weight: 500;
+        }
+        .custom-select-trigger::-webkit-details-marker {
+            display: none;
+        }
+        .custom-select-trigger .placeholder {
+            color: #888;
+        }
+        .custom-select-options {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 4px;
+        }
+        .custom-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 8px;
+            font-size: 0.8125rem;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--color-black);
+        }
+        .custom-option:hover {
+            background-color: var(--color-bg-light);
+        }
+        .custom-select-search {
+            padding: 4px;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 4px;
+        }
+        .custom-select-search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .custom-select-search-wrapper svg {
+            position: absolute;
+            left: 8px;
+            width: 12px;
+            height: 12px;
+            color: #888;
+            pointer-events: none;
+        }
+        .custom-select-search-input {
+            width: 100%;
+            height: 28px;
+            padding: 0 8px 0 26px;
+            font-size: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .custom-select-search-input:focus {
+            border-color: var(--color-black);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads -->
+                    <a href="leads.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Leads
+                    </a>
+                    <!-- Module 9: Tickets (Active) -->
+                    <a href="tickets.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring -->
+                    <a href="live-monitoring.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND -->
+                    <a href="blacklist-dnd.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                                    <!-- Module 14: Settings -->
+                    <a href="settings.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header Breadcrumb -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="tickets.html" style="color: inherit; text-decoration: none;">Tickets</a>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Add Ticket</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Back to Welcome">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                
+                <!-- Call-Triggered Ticket Capture Banner (Shown when arriving from an active call) -->
+                <div id="call-context-banner" style="display: none; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 16px; font-size: 0.8125rem; color: #1e40af; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span><strong>Call-Triggered Ticket Capture Active:</strong> Associating live customer call with unified ticket record.</span>
+                    </div>
+                </div>
+
+                <form id="ticket-full-form" onsubmit="saveTicket(event)">
+                    <!-- Page Header following standard CCM / HRMS pattern -->
+                    <div class="page-header">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <a href="tickets.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;" title="Back to Tickets">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Add Ticket</h1>
+                                <p class="page-subtitle">Log customer support issue, assign branch and agent, and set SLA resolution target.</p>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a href="tickets.html" class="btn-secondary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; text-decoration: none;">Cancel</a>
+                            <button type="submit" class="btn-primary" id="save-ticket-btn" style="height: 32px; padding: 0 18px; font-size: 0.8125rem;">Save Ticket</button>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="ticket-form-call-id" value="">
+                    
+                    <div id="ticket-form-error" style="display: none; color: #dc2626; font-size: 0.8125rem; font-weight: 500; background: #fee2e2; border: 1px solid #fecaca; border-radius: var(--border-radius-base); padding: 8px 12px; margin-bottom: 16px;"></div>
+
+                    <!-- Full-page Form Layout (HRMS Pattern) -->
+                    <div class="form-grid">
+                        
+                        <!-- 1. Customer Selection Mode (Existing Customer vs New Customer) -->
+                        <div class="form-group full-width-field">
+                            <label style="font-weight: 600;">Customer Type *</label>
+                            <div class="radio-group" style="margin-top: 4px; margin-bottom: 8px; display: flex; gap: 12px;">
+                                <label class="radio-card" style="flex: 1;">
+                                    <input type="radio" name="customer-mode" id="cust-mode-existing" value="existing" checked onchange="switchCustomerMode('existing')">
+                                    <span>Existing Customer</span>
+                                </label>
+                                <label class="radio-card" style="flex: 1;">
+                                    <input type="radio" name="customer-mode" id="cust-mode-new" value="new" onchange="switchCustomerMode('new')">
+                                    <span>New Customer</span>
+                                </label>
+                            </div>
+
+                            <!-- Existing Customer Section -->
+                            <div id="section-existing-customer" style="display: flex; flex-direction: column; gap: 8px;">
+                                <details class="custom-select-wrapper" id="ticket-customer-details">
+                                    <summary class="custom-select-trigger" id="ticket-customer-trigger">
+                                        <span class="trigger-label placeholder">Select Customer</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options">
+                                        <div class="custom-select-search">
+                                            <div class="custom-select-search-wrapper">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                <input type="text" class="custom-select-search-input" placeholder="Search by customer name or mobile number..." oninput="filterCustomerDropdown(this.value)">
+                                            </div>
+                                        </div>
+                                        <div id="ticket-customer-options-list">
+                                            <!-- Populated dynamically via JS -->
+                                        </div>
+                                    </div>
+                                </details>
+
+                                <!-- Selected Customer Info Card -->
+                                <div id="selected-customer-info-card" style="display: none; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 10px 14px; font-size: 0.8125rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span id="info-card-name" style="font-weight: 700; color: var(--color-black);"></span>
+                                        <span id="info-card-type" style="padding: 2px 7px; background: #fff; border: 1px solid var(--color-border); border-radius: 3px; font-weight: 600; color: #475569; font-size: 0.75rem;">Existing Customer</span>
+                                    </div>
+                                    <div style="display: flex; gap: 16px; color: #64748b; margin-top: 4px; font-family: monospace;">
+                                        <span id="info-card-phone"></span>
+                                        <span id="info-card-branch"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- New Customer Section -->
+                            <div id="section-new-customer" style="display: none; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 16px; margin-top: 4px;">
+                                <div class="form-row-2">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="new-cust-name" style="font-weight: 600;">Customer Name *</label>
+                                        <input type="text" id="new-cust-name" class="form-control" placeholder="e.g. Rajesh Kumar" style="background-color: #fff;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="new-cust-phone" style="font-weight: 600;">Mobile Number *</label>
+                                        <input type="text" id="new-cust-phone" class="form-control" placeholder="e.g. +91 98765 43210" style="background-color: #fff;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="ticket-form-customer-id">
+                            <input type="hidden" id="ticket-form-customer-name">
+                            <input type="hidden" id="ticket-form-customer-phone" value="">
+                        </div>
+
+                        <!-- 2. Mobile Number (Visible in Existing Customer mode, auto-populated) -->
+                        <div class="form-group" id="group-mobile-number">
+                            <label for="ticket-form-mobile-input" style="font-weight: 600;">Mobile Number</label>
+                            <input type="text" id="ticket-form-mobile-input" class="form-control" placeholder="Auto-populated upon customer selection" style="background-color: var(--color-bg-light);" readonly>
+                        </div>
+
+                        <!-- 3. Issue / Subject -->
+                        <div class="form-group" id="group-subject">
+                            <label for="ticket-form-subject" style="font-weight: 600;">Issue / Subject *</label>
+                            <input type="text" id="ticket-form-subject" class="form-control" placeholder="e.g. Shipment Delay & Milestone Tracking Mismatch" required>
+                        </div>
+
+                        <!-- 4. Branch (With Search in Dropdown) -->
+                        <div class="form-group">
+                            <label style="font-weight: 600;">Branch *</label>
+                            <details class="custom-select-wrapper" id="ticket-branch-details">
+                                <summary class="custom-select-trigger" id="ticket-branch-trigger">
+                                    <span class="trigger-label placeholder">Select Branch</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options" id="ticket-branch-options">
+                                    <div class="custom-select-search">
+                                        <div class="custom-select-search-wrapper">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                            <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterBranchDropdown(this.value)">
+                                        </div>
+                                    </div>
+                                    <div id="ticket-branch-options-list">
+                                        <label class="custom-option" onclick="selectTicketBranch('Bengaluru')">Bengaluru</label>
+                                        <label class="custom-option" onclick="selectTicketBranch('Mumbai')">Mumbai</label>
+                                        <label class="custom-option" onclick="selectTicketBranch('Hyderabad')">Hyderabad</label>
+                                        <label class="custom-option" onclick="selectTicketBranch('Delhi')">Delhi</label>
+                                        <label class="custom-option" onclick="selectTicketBranch('Chennai')">Chennai</label>
+                                        <label class="custom-option" onclick="selectTicketBranch('Pune')">Pune</label>
+                                    </div>
+                                </div>
+                            </details>
+                            <input type="hidden" id="ticket-form-branch" required>
+                        </div>
+
+                        <!-- 5. Assigned Agent (With Search & Filtered by Branch from existing CCM Agents) -->
+                        <div class="form-group">
+                            <label style="font-weight: 600;">Assigned Agent *</label>
+                            <details class="custom-select-wrapper" id="ticket-agent-details">
+                                <summary class="custom-select-trigger" id="ticket-agent-trigger">
+                                    <span class="trigger-label placeholder">Select Assigned Agent</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <div class="custom-select-search">
+                                        <div class="custom-select-search-wrapper">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                            <input type="text" class="custom-select-search-input" placeholder="Search agent..." oninput="filterAgentDropdown(this.value)">
+                                        </div>
+                                    </div>
+                                    <div id="ticket-agent-options-container">
+                                        <!-- Populated dynamically via JS based on Branch & Search -->
+                                    </div>
+                                </div>
+                            </details>
+                            <input type="hidden" id="ticket-form-agent-id" required>
+                            <input type="hidden" id="ticket-form-agent-name" required>
+                        </div>
+
+                        <!-- 6. Priority (Low, Medium, High) -->
+                        <div class="form-group">
+                            <label style="font-weight: 600;">Priority *</label>
+                            <details class="custom-select-wrapper" id="ticket-priority-details">
+                                <summary class="custom-select-trigger" id="ticket-priority-trigger">
+                                    <span class="trigger-label">Medium</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options" id="ticket-priority-options-container">
+                                    <!-- Populated dynamically via renderPriorityOptions() based on configured SLA defaults -->
+                                </div>
+                            </details>
+                            <input type="hidden" id="ticket-form-priority" value="Medium">
+                        </div>
+
+                        <!-- 7. Ticket Status (Open, In Progress, Resolved, Closed) -->
+                        <div class="form-group">
+                            <label style="font-weight: 600;">Ticket Status *</label>
+                            <details class="custom-select-wrapper" id="ticket-status-details">
+                                <summary class="custom-select-trigger" id="ticket-status-trigger">
+                                    <span class="trigger-label">Open</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options" id="ticket-status-options-container">
+                                    <!-- Populated dynamically via renderStatusOptions() based on configured workflow -->
+                                </div>
+                            </details>
+                            <input type="hidden" id="ticket-form-status" value="Open">
+                        </div>
+
+                        <!-- 8. SLA Display (Automatically derived from configured SLA default for selected Priority) -->
+                        <div class="form-group full-width-field">
+                            <label for="ticket-form-sla" style="font-weight: 600;">Applicable SLA</label>
+                            <input type="text" id="ticket-form-sla" class="form-control" value="24 Hours" style="background-color: var(--color-bg-light); font-family: monospace; font-weight: 600;" readonly>
+                        </div>
+
+                        <!-- 9. Description / Details -->
+                        <div class="form-group full-width-field">
+                            <label for="ticket-form-details" style="font-weight: 600;">Description / Details</label>
+                            <textarea id="ticket-form-details" class="form-control" rows="3" placeholder="Provide complete context, affected shipment IDs, or customer statements..." style="height: auto; padding: 10px 12px; font-family: inherit;"></textarea>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Page Logic -->
+    <script>
+        // Unified Customer Master Data from Existing Platform
+        const customersDB = {
+            'CUST-1001': { name: 'Rajesh Kumar', phone: '+91 98765 43210', branch: 'Bengaluru', type: 'Business Customer', email: 'rajesh.kumar@acme.com' },
+            'CUST-1002': { name: 'Priya Sharma', phone: '+91 99887 65432', branch: 'Mumbai', type: 'Business Customer', email: 'priya.sharma@horizon.in' },
+            'CUST-1003': { name: 'Suresh Reddy', phone: '+91 98480 12345', branch: 'Hyderabad', type: 'Individual', email: 'suresh.reddy@gmail.com' },
+            'CUST-1004': { name: 'Anil Verma', phone: '+91 98100 56789', branch: 'Delhi', type: 'Business Customer', email: 'anil.verma@delhicorp.com' },
+            'CUST-1005': { name: 'Kavya Nair', phone: '+91 98950 24680', branch: 'Chennai', type: 'Individual', email: 'kavya.nair@outlook.com' }
+        };
+
+        const allBranchesList = ["Bengaluru", "Mumbai", "Hyderabad", "Delhi", "Chennai", "Pune"];
+
+        // Existing Agents Data from Agents Configuration
+        const agentsMasterData = [
+            { id: "agt-1", name: "Deepak Kumar", branch: "Bengaluru", role: "Customer Care Executive" },
+            { id: "agt-2", name: "Priya Sharma", branch: "Mumbai", role: "Operations Coordinator" },
+            { id: "agt-3", name: "Rahul Varma", branch: "Hyderabad", role: "Customer Care Executive" },
+            { id: "agt-4", name: "Ananya Iyer", branch: "Delhi", role: "Customer Care Executive" },
+            { id: "agt-5", name: "Venkatesh Rao", branch: "Chennai", role: "Dispatch Executive" },
+            { id: "agt-6", name: "Sneha Patil", branch: "Pune", role: "Billing Executive" }
+        ];
+
+        function getAgentsList() {
+            try {
+                const stored = localStorage.getItem('ccm_agents_master_v2');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                }
+            } catch(e) {}
+            return agentsMasterData;
+        }
+
+        const defaultTicketConfig = {
+            statuses: ["Open", "In Progress", "Resolved", "Closed"],
+            slaDefaults: {
+                "Low": "48 Hours",
+                "Medium": "24 Hours",
+                "High": "8 Hours"
+            },
+            escalation: {
+                enabled: true,
+                target: "Branch Manager",
+                action: "Flag & Reassign to Branch Manager"
+            }
+        };
+
+        function getTicketConfig() {
+            try {
+                const stored = localStorage.getItem('ccm_ticket_config_v1');
+                if (stored) return JSON.parse(stored);
+            } catch(e) {}
+            return defaultTicketConfig;
+        }
+
+        let currentTicketConfig = getTicketConfig();
+
+        function renderPriorityOptions() {
+            const container = document.getElementById('ticket-priority-options-container');
+            if (!container) return;
+
+            const priorities = Object.keys(currentTicketConfig.slaDefaults || { "Low": "48 Hours", "Medium": "24 Hours", "High": "8 Hours" });
+            container.innerHTML = priorities.map(p => {
+                const sla = currentTicketConfig.slaDefaults[p] || '24 Hours';
+                return `<label class="custom-option" onclick="selectTicketPriority('${escapeHtml(p)}', '${escapeHtml(sla)}')">${escapeHtml(p)} (${escapeHtml(sla)} SLA)</label>`;
+            }).join('');
+
+            // Set initial priority & derived SLA
+            const defaultPriority = priorities.includes("Medium") ? "Medium" : priorities[0];
+            const defaultSla = currentTicketConfig.slaDefaults[defaultPriority] || '24 Hours';
+            selectTicketPriority(defaultPriority, defaultSla);
+        }
+
+        function renderStatusOptions() {
+            const container = document.getElementById('ticket-status-options-container');
+            if (!container) return;
+
+            const statuses = currentTicketConfig.statuses || ["Open", "In Progress", "Resolved", "Closed"];
+            container.innerHTML = statuses.map(s => {
+                return `<label class="custom-option" onclick="selectTicketStatus('${escapeHtml(s)}')">${escapeHtml(s)}</label>`;
+            }).join('');
+
+            // Set initial status
+            const initialStatus = statuses[0] || 'Open';
+            selectTicketStatus(initialStatus);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render configurable Priority and Status options
+            renderPriorityOptions();
+            renderStatusOptions();
+
+            // Populate customer options
+            renderModalCustomerOptions();
+
+            // Populate agents list
+            populateAgentOptions();
+
+            // Wire up real-time sync between new customer phone and mobile display
+            const newPhoneInput = document.getElementById('new-cust-phone');
+            if (newPhoneInput) {
+                newPhoneInput.addEventListener('input', function() {
+                    if (document.getElementById('cust-mode-new').checked) {
+                        document.getElementById('ticket-form-customer-phone').value = this.value;
+                    }
+                });
+            }
+
+            // Check URL parameters for Call-Triggered Ticket creation (e.g. add-ticket.html?source=call&callId=CALL-9821&custId=CUST-1001)
+            const params = new URLSearchParams(window.location.search);
+            const callId = params.get('callId');
+            const custId = params.get('custId');
+            const source = params.get('source');
+
+            if (callId || source === 'call') {
+                const banner = document.getElementById('call-context-banner');
+                if (banner) banner.style.display = 'flex';
+                document.getElementById('ticket-form-call-id').value = callId || 'CALL-9821';
+                
+                if (custId && customersDB[custId]) {
+                    selectCustomerFromModal(custId);
+                }
+            }
+        });
+
+        function switchCustomerMode(mode) {
+            const secExisting = document.getElementById('section-existing-customer');
+            const secNew = document.getElementById('section-new-customer');
+            const grpMobile = document.getElementById('group-mobile-number');
+
+            if (mode === 'existing') {
+                secExisting.style.display = 'flex';
+                secNew.style.display = 'none';
+                grpMobile.style.display = 'block';
+                document.getElementById('new-cust-name').removeAttribute('required');
+                document.getElementById('new-cust-phone').removeAttribute('required');
+            } else {
+                secExisting.style.display = 'none';
+                secNew.style.display = 'block';
+                grpMobile.style.display = 'none';
+                document.getElementById('new-cust-name').setAttribute('required', 'required');
+                document.getElementById('new-cust-phone').setAttribute('required', 'required');
+                // Clear existing selection
+                document.getElementById('ticket-form-customer-id').value = '';
+                document.getElementById('ticket-form-customer-name').value = '';
+                document.getElementById('ticket-form-customer-phone').value = '';
+                document.getElementById('ticket-form-mobile-input').value = '';
+                document.getElementById('selected-customer-info-card').style.display = 'none';
+                const trigger = document.getElementById('ticket-customer-trigger');
+                if (trigger) {
+                    const label = trigger.querySelector('.trigger-label');
+                    if (label) {
+                        label.textContent = 'Select Customer';
+                        label.classList.add('placeholder');
+                    }
+                }
+            }
+        }
+
+        function renderModalCustomerOptions(filterText = '') {
+            const container = document.getElementById('ticket-customer-options-list');
+            if (!container) return;
+
+            const q = filterText.toLowerCase().trim();
+            const keys = Object.keys(customersDB);
+            
+            const filtered = keys.filter(k => {
+                const c = customersDB[k];
+                return !q || c.name.toLowerCase().includes(q) || c.phone.includes(q) || k.toLowerCase().includes(q);
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 8px; font-size: 0.8125rem; color: #888; text-align: center;">No matching customers found.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(k => {
+                const c = customersDB[k];
+                return `
+                    <div class="custom-option" onclick="selectCustomerFromModal('${k}')">
+                        <div>
+                            <strong>${escapeHtml(c.name)}</strong>
+                            <span style="font-size: 0.75rem; color: #64748b; margin-left: 6px; font-family: monospace;">${escapeHtml(c.phone)}</span>
+                        </div>
+                        <span style="font-size: 0.6875rem; background: #f1f5f9; padding: 2px 6px; border-radius: 3px; color: #475569;">${escapeHtml(c.branch)}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterCustomerDropdown(val) {
+            renderModalCustomerOptions(val);
+        }
+
+        function selectCustomerFromModal(custId) {
+            const c = customersDB[custId];
+            if (!c) return;
+
+            document.getElementById('ticket-form-customer-id').value = custId;
+            document.getElementById('ticket-form-customer-name').value = c.name;
+            document.getElementById('ticket-form-customer-phone').value = c.phone;
+            document.getElementById('ticket-form-mobile-input').value = c.phone;
+
+            const trigger = document.getElementById('ticket-customer-trigger');
+            if (trigger) {
+                const label = trigger.querySelector('.trigger-label');
+                if (label) {
+                    label.textContent = `${c.name} (${c.phone})`;
+                    label.classList.remove('placeholder');
+                }
+            }
+
+            // Auto-select branch if not yet selected
+            const currentBranch = document.getElementById('ticket-form-branch').value;
+            if (!currentBranch && c.branch) {
+                selectTicketBranch(c.branch);
+            }
+
+            // Show selected customer card
+            const card = document.getElementById('selected-customer-info-card');
+            if (card) {
+                document.getElementById('info-card-name').textContent = c.name;
+                document.getElementById('info-card-phone').textContent = c.phone;
+                document.getElementById('info-card-branch').textContent = `Branch: ${c.branch}`;
+                card.style.display = 'block';
+            }
+
+            document.getElementById('ticket-customer-details')?.removeAttribute('open');
+        }
+
+        function selectTicketBranch(branchName) {
+            document.getElementById('ticket-form-branch').value = branchName;
+            const trigger = document.getElementById('ticket-branch-trigger');
+            if (trigger) {
+                const label = trigger.querySelector('.trigger-label');
+                if (label) {
+                    label.textContent = branchName;
+                    label.classList.remove('placeholder');
+                }
+            }
+            document.getElementById('ticket-branch-details')?.removeAttribute('open');
+            populateAgentOptions();
+        }
+
+        function filterBranchDropdown(val) {
+            const list = document.getElementById('ticket-branch-options-list');
+            if (!list) return;
+            const q = val.toLowerCase().trim();
+            const opts = list.querySelectorAll('.custom-option');
+            opts.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(q) ? 'flex' : 'none';
+            });
+        }
+
+        function populateAgentOptions(filterText = '') {
+            const container = document.getElementById('ticket-agent-options-container');
+            if (!container) return;
+
+            const selectedBranch = document.getElementById('ticket-form-branch').value;
+            const agents = getAgentsList();
+            const q = filterText.toLowerCase().trim();
+
+            const filtered = agents.filter(a => {
+                const matchesBranch = !selectedBranch || a.branch === selectedBranch;
+                const matchesSearch = !q || a.name.toLowerCase().includes(q) || a.role.toLowerCase().includes(q) || a.branch.toLowerCase().includes(q);
+                return matchesBranch && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 8px; font-size: 0.8125rem; color: #888; text-align: center;">No agents available for selected branch.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(a => `
+                <div class="custom-option" onclick="selectTicketAgent('${escapeHtml(a.id)}', '${escapeHtml(a.name)}')">
+                    <div>
+                        <strong>${escapeHtml(a.name)}</strong>
+                        <span style="font-size: 0.75rem; color: #64748b; margin-left: 6px;">${escapeHtml(a.role)}</span>
+                    </div>
+                    <span style="font-size: 0.6875rem; background: #f1f5f9; padding: 2px 6px; border-radius: 3px; color: #475569;">${escapeHtml(a.branch)}</span>
+                </div>
+            `).join('');
+        }
+
+        function filterAgentDropdown(val) {
+            populateAgentOptions(val);
+        }
+
+        function selectTicketAgent(id, name) {
+            document.getElementById('ticket-form-agent-id').value = id;
+            document.getElementById('ticket-form-agent-name').value = name;
+
+            const trigger = document.getElementById('ticket-agent-trigger');
+            if (trigger) {
+                const label = trigger.querySelector('.trigger-label');
+                if (label) {
+                    label.textContent = name;
+                    label.classList.remove('placeholder');
+                }
+            }
+            document.getElementById('ticket-agent-details')?.removeAttribute('open');
+        }
+
+        function selectTicketPriority(priority, slaText) {
+            document.getElementById('ticket-form-priority').value = priority;
+            document.getElementById('ticket-form-sla').value = slaText;
+            const trigger = document.getElementById('ticket-priority-trigger');
+            if (trigger) {
+                const label = trigger.querySelector('.trigger-label');
+                if (label) label.textContent = priority;
+            }
+            document.getElementById('ticket-priority-details')?.removeAttribute('open');
+        }
+
+        function selectTicketStatus(status) {
+            document.getElementById('ticket-form-status').value = status;
+            const trigger = document.getElementById('ticket-status-trigger');
+            if (trigger) {
+                const label = trigger.querySelector('.trigger-label');
+                if (label) label.textContent = status;
+            }
+            document.getElementById('ticket-status-details')?.removeAttribute('open');
+        }
+
+        function saveTicket(e) {
+            e.preventDefault();
+            const err = document.getElementById('ticket-form-error');
+            err.style.display = 'none';
+
+            const isNewCustomer = document.getElementById('cust-mode-new').checked;
+            let customerId = document.getElementById('ticket-form-customer-id').value;
+            let customerName = document.getElementById('ticket-form-customer-name').value;
+            let customerPhone = document.getElementById('ticket-form-customer-phone').value;
+
+            const subject = document.getElementById('ticket-form-subject').value.trim();
+            const details = document.getElementById('ticket-form-details').value.trim();
+            const branch = document.getElementById('ticket-form-branch').value;
+            const agentId = document.getElementById('ticket-form-agent-id').value;
+            const agentName = document.getElementById('ticket-form-agent-name').value;
+            const priority = document.getElementById('ticket-form-priority').value;
+            const status = document.getElementById('ticket-form-status').value;
+            const sla = document.getElementById('ticket-form-sla').value;
+            const callId = document.getElementById('ticket-form-call-id').value;
+
+            if (isNewCustomer) {
+                const newName = document.getElementById('new-cust-name').value.trim();
+                const newPhone = document.getElementById('new-cust-phone').value.trim();
+                if (!newName || !newPhone) {
+                    err.textContent = 'Please enter both Customer Name and Mobile Number for the new customer.';
+                    err.style.display = 'block';
+                    return;
+                }
+                const newCustId = `CUST-${1000 + Object.keys(customersDB).length + 1}`;
+                customerId = newCustId;
+                customerName = newName;
+                customerPhone = newPhone;
+                // Save customer to local master DB
+                customersDB[newCustId] = {
+                    name: newName,
+                    phone: newPhone,
+                    type: 'Business Customer',
+                    email: '',
+                    branch: branch || 'Bengaluru'
+                };
+            } else {
+                if (!customerId || !customerName) {
+                    err.textContent = 'Please select an existing customer.';
+                    err.style.display = 'block';
+                    return;
+                }
+                if (!customerPhone && customersDB[customerId]) {
+                    customerPhone = customersDB[customerId].phone;
+                }
+            }
+
+            if (!subject) {
+                err.textContent = 'Please enter an issue / subject for the ticket.';
+                err.style.display = 'block';
+                return;
+            }
+            if (!branch) {
+                err.textContent = 'Please select a branch.';
+                err.style.display = 'block';
+                return;
+            }
+            if (!agentId || !agentName) {
+                err.textContent = 'Please assign an agent.';
+                err.style.display = 'block';
+                return;
+            }
+
+            // Retrieve existing tickets
+            let storedTickets = [];
+            try {
+                const raw = localStorage.getItem('ccm_tickets_data_v1');
+                if (raw) storedTickets = JSON.parse(raw);
+            } catch(e) {}
+
+            const newIdNum = 7100 + storedTickets.length + 1;
+            const newTicket = {
+                id: `TCK-${newIdNum}`,
+                customerId,
+                customerName,
+                phone: customerPhone,
+                customerType: isNewCustomer ? 'New' : 'Existing',
+                subject,
+                details,
+                branch,
+                agentId,
+                agentName,
+                priority,
+                status,
+                sla,
+                source: callId ? "Call" : "Manual",
+                callId: callId || null,
+                callDateTime: callId ? new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : null,
+                allowEdit: true,
+                allowDelete: true
+            };
+            storedTickets.unshift(newTicket);
+            localStorage.setItem('ccm_tickets_data_v1', JSON.stringify(storedTickets));
+
+            // Redirect back to tickets list
+            window.location.href = 'tickets.html';
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>

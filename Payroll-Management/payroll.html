@@ -49,7 +49,7 @@
                 <nav class="sidebar-nav">
                     <a href="../Staff-Management/index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                        Staff Master
+                        Employee Master
                     </a>
                     <a href="../Staff-Management/department-master.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -113,43 +113,47 @@
             </header>
 
             <div class="main-scroll-area">
-                <div class="page-header">
+                <div class="page-header payroll-page-header">
                     <div class="page-title-group">
                         <h1 class="page-title">Payroll</h1>
                         <p class="page-subtitle">Manage and generate employee salaries and payslips.</p>
                     </div>
-                    <div class="header-actions" style="display: flex; gap: 8px; align-items: center;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-right: 8px;">
-                            <span style="font-size: 0.8125rem; font-weight: 500; color: #555;">Pay Period</span>
-                            <select id="payroll-month" style="height: 30px; font-size: 0.8125rem; border-radius: var(--border-radius-base); border: 1px solid #8c8c8c; padding: 0 28px 0 12px; outline: none; font-family: inherit; cursor: pointer; background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><polyline points=\'6 9 12 15 18 9\'></polyline></svg>') no-repeat right 8px center / 14px 14px var(--color-white); appearance: none; -webkit-appearance: none;">
-                                <option value="January">January</option>
-                                <option value="February">February</option>
-                                <option value="March">March</option>
-                                <option value="April">April</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="August" selected>August</option>
-                                <option value="September">September</option>
-                                <option value="October">October</option>
-                                <option value="November">November</option>
-                                <option value="December">December</option>
-                            </select>
-                            <select id="payroll-year" style="height: 30px; font-size: 0.8125rem; border-radius: var(--border-radius-base); border: 1px solid #8c8c8c; padding: 0 28px 0 12px; outline: none; font-family: inherit; cursor: pointer; background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><polyline points=\'6 9 12 15 18 9\'></polyline></svg>') no-repeat right 8px center / 14px 14px var(--color-white); appearance: none; -webkit-appearance: none;">
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026" selected>2026</option>
-                            </select>
+                    <div class="header-actions payroll-header-actions">
+                        <div class="payroll-period-picker">
+                            <span class="period-label">Pay Period</span>
+                            <div class="payroll-period-dropdowns">
+                                <select id="payroll-month">
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August" selected>August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                                <select id="payroll-year">
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026" selected>2026</option>
+                                </select>
+                            </div>
                         </div>
-                        <button type="button" class="btn-secondary" id="btn-send-payslips" disabled title="Payslips will be sent to employees via email." style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); border: 1px solid var(--color-border); background: var(--color-white); font-weight: 500; outline: none; user-select: none;">
-                            Send Payslips
-                        </button>
-                        <button type="button" class="btn-primary" id="btn-generate-payroll" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); background: var(--color-black); color: var(--color-white); font-weight: 500; outline: none; user-select: none; border: 1px solid var(--color-black);">
-                            Generate Payroll
-                        </button>
-                        <a href="payroll-settings.html" class="btn-secondary" title="Payroll Settings" style="height: 30px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--border-radius-base); border: 1px solid var(--color-border); background: var(--color-white); text-decoration: none; color: inherit;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                        </a>
+                        <div class="payroll-actions-row">
+                            <button type="button" class="btn-secondary btn-send-payslips" id="btn-send-payslips" disabled title="Payslips will be sent to employees via email.">
+                                Send Payslips
+                            </button>
+                            <button type="button" class="btn-primary btn-generate-payroll" id="btn-generate-payroll">
+                                Generate Payroll
+                            </button>
+                            <a href="payroll-settings.html" class="btn-secondary btn-settings-icon" title="Payroll Settings">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -186,26 +190,28 @@
                 </div>
 
                 <!-- Filters -->
-                <div class="filters-bar" style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 12px; margin-bottom: 16px;">
+                <div class="filters-bar" style="border-bottom: 1px solid var(--color-border); padding-bottom: 12px; margin-bottom: 16px;">
                     <div class="search-input-wrapper" style="flex: 1; min-width: 200px; position: relative;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #888; z-index: 2;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        <input type="text" class="search-input" placeholder="Search ID or Name..." style="height: 30px; font-size: 0.8125rem; box-sizing: border-box; padding-left: 30px; width: 100%; border: 1px solid #8c8c8c; outline: none; border-radius: var(--border-radius-base);">
+                        <input type="text" id="payroll-search" class="search-input" placeholder="Search ID or Name..." style="height: 30px; font-size: 0.8125rem; box-sizing: border-box; padding-left: 30px; width: 100%; border: 1px solid #8c8c8c; outline: none; border-radius: var(--border-radius-base);">
                     </div>
                     
-                    <select style="height: 30px; font-size: 0.8125rem; border-radius: var(--border-radius-base); border: 1px solid #8c8c8c; padding: 0 28px 0 12px; outline: none; font-family: inherit; cursor: pointer; background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><polyline points=\'6 9 12 15 18 9\'></polyline></svg>') no-repeat right 8px center / 14px 14px var(--color-white); appearance: none; -webkit-appearance: none;">
-                        <option value="">All Departments</option>
-                        <option value="HR">HR</option>
-                        <option value="Fleet">Fleet</option>
-                        <option value="Operations">Operations</option>
-                        <option value="Finance">Finance</option>
-                    </select>
+                    <div class="filters-dropdowns-row">
+                        <select id="payroll-dept-filter" style="height: 30px; font-size: 0.8125rem; border-radius: var(--border-radius-base); border: 1px solid #8c8c8c; padding: 0 28px 0 12px; outline: none; font-family: inherit; cursor: pointer; background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><polyline points=\'6 9 12 15 18 9\'></polyline></svg>') no-repeat right 8px center / 14px 14px var(--color-white); appearance: none; -webkit-appearance: none;">
+                            <option value="">All Departments</option>
+                            <option value="HR">HR</option>
+                            <option value="Fleet">Fleet</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Finance">Finance</option>
+                        </select>
 
-                    <select style="height: 30px; font-size: 0.8125rem; border-radius: var(--border-radius-base); border: 1px solid #8c8c8c; padding: 0 28px 0 12px; outline: none; font-family: inherit; cursor: pointer; background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><polyline points=\'6 9 12 15 18 9\'></polyline></svg>') no-repeat right 8px center / 14px 14px var(--color-white); appearance: none; -webkit-appearance: none;">
-                        <option value="">All Status</option>
-                        <option value="Ready">Ready</option>
-                        <option value="Sent">Sent</option>
-                        <option value="Failed">Failed</option>
-                    </select>
+                        <select id="payroll-status-filter" style="height: 30px; font-size: 0.8125rem; border-radius: var(--border-radius-base); border: 1px solid #8c8c8c; padding: 0 28px 0 12px; outline: none; font-family: inherit; cursor: pointer; background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><polyline points=\'6 9 12 15 18 9\'></polyline></svg>') no-repeat right 8px center / 14px 14px var(--color-white); appearance: none; -webkit-appearance: none;">
+                            <option value="">All Status</option>
+                            <option value="Ready">Ready</option>
+                            <option value="Sent">Sent</option>
+                            <option value="Failed">Failed</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Empty State -->
@@ -215,7 +221,7 @@
                     <p style="margin: 0; font-size: 0.8125rem; color: #666;">August 2026 payroll has not been generated yet.</p>
                 </div>
 
-                <!-- Table Container (Hidden Initially) -->
+                <!-- Desktop Table Container (Hidden Initially) -->
                 <div class="table-container" id="payroll-table-container" style="display: none;">
                     <table class="data-table" id="payroll-table">
                         <thead>
@@ -275,6 +281,11 @@
                             <!-- Populated by JS -->
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Structured Mobile Payroll Cards -->
+                <div class="mobile-payroll-cards" id="mobile-payroll-cards-list">
+                    <!-- Populated dynamically via JS -->
                 </div>
 
             </div>
@@ -527,25 +538,48 @@
         ];
 
         let currentActiveRecord = payrollData[0];
+        let isPayrollGenerated = false;
 
         // Auto-generate sample table on page load or on button click
-        document.getElementById('btn-generate-payroll').addEventListener('click', generatePayrollTable);
+        document.getElementById('btn-generate-payroll').addEventListener('click', () => {
+            isPayrollGenerated = true;
+            generatePayrollTable();
+        });
 
-        function generatePayrollTable() {
-            // Update KPIs
-            document.getElementById('kpi-emp').textContent = '4';
-            document.getElementById('kpi-gross').textContent = '₹199,000';
-            document.getElementById('kpi-net').textContent = '₹179,240';
-            document.getElementById('kpi-payslips').textContent = '4';
+        function filterAndRenderPayroll() {
+            if (!isPayrollGenerated) return;
+            
+            const searchTerm = (document.getElementById('payroll-search')?.value || '').toLowerCase().trim();
+            const deptFilter = document.getElementById('payroll-dept-filter')?.value || '';
+            const statusFilter = document.getElementById('payroll-status-filter')?.value || '';
 
-            // Hide empty state & show table
-            document.getElementById('payroll-empty-state').style.display = 'none';
-            document.getElementById('payroll-table-container').style.display = 'block';
+            const filteredData = payrollData.filter(row => {
+                const matchSearch = !searchTerm || row.name.toLowerCase().includes(searchTerm) || row.eid.toLowerCase().includes(searchTerm) || row.pid.toLowerCase().includes(searchTerm);
+                const matchDept = !deptFilter || row.dept === deptFilter;
+                const matchStatus = !statusFilter || statusFilter === 'Ready'; // default sample is Ready
+                return matchSearch && matchDept && matchStatus;
+            });
 
-            // Populate table
+            renderPayrollRecords(filteredData);
+        }
+
+        function renderPayrollRecords(data) {
             const tbody = document.getElementById('payroll-tbody');
+            const mobileContainer = document.getElementById('mobile-payroll-cards-list');
+            
+            if (!tbody || !mobileContainer) return;
+
             tbody.innerHTML = '';
-            payrollData.forEach(row => {
+            mobileContainer.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 20px; color: #888;">No matching payroll records found</td></tr>';
+                mobileContainer.innerHTML = '<div style="text-align: center; padding: 24px; color: #888; background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); font-size: 0.8125rem;">No matching payroll records found</div>';
+                return;
+            }
+
+            data.forEach(row => {
+                // Desktop Row
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td data-label="Payroll ID" style="text-align: left; font-weight: 600;">${row.pid}</td>
@@ -571,11 +605,82 @@
                     </td>
                 `;
                 tbody.appendChild(tr);
+
+                // Mobile Card
+                const card = document.createElement('div');
+                card.className = 'mobile-payroll-card';
+                card.innerHTML = `
+                    <div class="mobile-payroll-header">
+                        <div class="mobile-payroll-identity">
+                            <div class="mobile-payroll-name">${row.name}</div>
+                            <div class="mobile-payroll-subhead">${row.eid} &bull; ${row.dept}</div>
+                        </div>
+                        <span class="status-badge" style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:600;background:#f3f4f6;color:#374151;border:1px solid #d1d5db;">Ready</span>
+                    </div>
+
+                    <div class="mobile-payroll-grid">
+                        <div class="mobile-payroll-item">
+                            <span class="mobile-payroll-label">Payroll ID</span>
+                            <span class="mobile-payroll-val">${row.pid}</span>
+                        </div>
+                        <div class="mobile-payroll-item">
+                            <span class="mobile-payroll-label">Designation</span>
+                            <span class="mobile-payroll-val">${row.desig || 'Executive'}</span>
+                        </div>
+                    </div>
+
+                    <div class="mobile-payroll-salary-box">
+                        <div class="mobile-salary-item">
+                            <span class="mobile-salary-label">Gross</span>
+                            <span class="mobile-salary-val">${row.gross}</span>
+                        </div>
+                        <div class="mobile-salary-item">
+                            <span class="mobile-salary-label">Deductions</span>
+                            <span class="mobile-salary-val" style="color: #666;">${row.ded}</span>
+                        </div>
+                        <div class="mobile-salary-item net-salary">
+                            <span class="mobile-salary-label">Net Salary</span>
+                            <span class="mobile-salary-val">${row.net}</span>
+                        </div>
+                    </div>
+
+                    <div class="mobile-payroll-actions">
+                        <button type="button" class="action-icon" onclick="viewPayslip('${row.eid}')" title="View Official Payslip" aria-label="View Official Payslip">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                        <button type="button" class="action-icon" onclick="sendIndividualEmail('${row.name}', '${row.eid}')" title="Email Payslip" aria-label="Email Payslip">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </button>
+                        <button type="button" class="action-icon" onclick="downloadPayslipDirect('${row.eid}')" title="Download Payslip PDF" aria-label="Download Payslip PDF">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        </button>
+                    </div>
+                `;
+                mobileContainer.appendChild(card);
             });
+        }
+
+        function generatePayrollTable() {
+            // Update KPIs
+            document.getElementById('kpi-emp').textContent = '4';
+            document.getElementById('kpi-gross').textContent = '₹199,000';
+            document.getElementById('kpi-net').textContent = '₹179,240';
+            document.getElementById('kpi-payslips').textContent = '4';
+
+            // Hide empty state & show records
+            document.getElementById('payroll-empty-state').style.display = 'none';
+            document.getElementById('payroll-table-container').style.display = 'block';
+
+            renderPayrollRecords(payrollData);
 
             // Enable Send Payslips
             document.getElementById('btn-send-payslips').disabled = false;
         }
+
+        // Search & Filter event listeners
+        document.getElementById('payroll-search')?.addEventListener('input', filterAndRenderPayroll);
+        document.getElementById('payroll-dept-filter')?.addEventListener('change', filterAndRenderPayroll);
+        document.getElementById('payroll-status-filter')?.addEventListener('change', filterAndRenderPayroll);
 
         // View Payslip Modal Pop Up
         function viewPayslip(eid) {

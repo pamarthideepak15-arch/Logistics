@@ -52,10 +52,10 @@
 
                 <div class="sidebar-nav-section">HUMAN RESOURCES</div>
                 <nav class="sidebar-nav">
-                    <!-- Active Staff Master Link -->
+                    <!-- Active Employee Master Link -->
                     <a href="index.html" class="active">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                        Staff Master
+                        Employee Master
                     </a>
                     <a href="department-master.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -104,7 +104,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     <span>HRMS</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    <span class="current">Staff Master</span>
+                    <span class="current">Employee Master</span>
                 </div>
                 <div class="top-profile-block">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -121,7 +121,7 @@
             <div class="main-scroll-area">
                 <div class="page-header">
                     <div class="page-title-group">
-                        <h1 class="page-title">Staff Master</h1>
+                        <h1 class="page-title">Employee Master</h1>
                         <p class="page-subtitle">Manage Employee Records, Assignments, and Employment Details.</p>
                     </div>
                     <div class="header-actions">
@@ -165,24 +165,29 @@
                 </div>
 
                 <!-- Filters -->
-                <div class="filters-bar" style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 12px; margin-bottom: 16px;">
-                    <div class="search-input-wrapper" style="flex: 1; min-width: 200px; position: relative;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #888; z-index: 2;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        <input type="text" class="search-input" placeholder="Search staff..." style="height: 30px; font-size: 0.8125rem; box-sizing: border-box; padding-left: 30px; width: 100%;">
+                <div class="filters-bar" style="display: flex; gap: 8px; align-items: center; width: 100%; margin-bottom: 16px; padding-bottom: 0; border-bottom: none;">
+                    <div class="search-input-wrapper" style="flex: 1; position: relative; display: flex; align-items: center;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #888; z-index: 2; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="search-input" placeholder="Search staff..." style="height: 32px; font-size: 0.8125rem; box-sizing: border-box; padding-left: 32px; width: 100%; border-radius: var(--border-radius-base); margin: 0; line-height: 32px;">
                     </div>
                     
-                    <label for="staff-filters-popup-toggle" class="btn-secondary" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); border: 1px solid var(--color-border); background: var(--color-white); font-weight: 500; outline: none; user-select: none;">
-                        <div style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="color: #666;"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-                            <span id="filters-active-dot" style="display: none; position: absolute; top: -3px; right: -3px; width: 6px; height: 6px; background-color: var(--color-black); border-radius: 50%;"></span>
-                        </div>
-                        <span>Filters</span>
-                    </label>
-                    
-                    <button type="button" class="btn-secondary reset-filters-btn" style="height: 30px; padding: 0 12px; font-size: 0.8125rem; font-weight: 500;">Reset</button>
+                    <div class="filters-bar-buttons" style="display: flex; gap: 8px; align-items: center; flex-shrink: 0;">
+                        <label for="staff-filters-popup-toggle" class="btn-secondary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); background: var(--color-white); font-weight: 500; outline: none; user-select: none; margin: 0; box-sizing: border-box; line-height: 1;">
+                            <div style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="color: #666;"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                                <span id="filters-active-dot" style="display: none; position: absolute; top: -3px; right: -3px; width: 6px; height: 6px; background-color: var(--color-black); border-radius: 50%;"></span>
+                            </div>
+                            <span>Filters</span>
+                        </label>
+                        
+                        <button type="button" class="btn-secondary reset-filters-btn" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border-radius: var(--border-radius-base); margin: 0; box-sizing: border-box; line-height: 1;">Reset</button>
+                    </div>
                 </div>
 
-                <!-- Table -->
+                <!-- Mobile Employee Cards List (Rendered on mobile <= 768px) -->
+                <div class="mobile-staff-cards" id="mobile-staff-cards-list"></div>
+
+                <!-- Table (Desktop View) -->
                 <div class="table-container">
                     <table class="data-table staff-table">
                         <thead>
@@ -1085,6 +1090,83 @@
                     });
                 }
                 table.querySelector('tbody').innerHTML = tbodyHTML;
+
+                const mobileContainer = document.getElementById('mobile-staff-cards-list');
+                if (mobileContainer) {
+                    if (paginatedData.length === 0) {
+                        mobileContainer.innerHTML = '<div style="text-align: center; padding: 24px; color: #999; font-size: 0.8125rem; background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base);">No records found</div>';
+                    } else {
+                        let cardsHTML = '';
+                        paginatedData.forEach(emp => {
+                            const isCompleted = (emp.onboardingStatus || '').toLowerCase() === 'completed';
+                            
+                            cardsHTML += `
+                                <div class="mobile-staff-card" onclick="if(!event.target.closest('.mobile-card-actions') && !event.target.closest('input') && !event.target.closest('label')) window.location.href='view-employee.html?id=${emp.id}'">
+                                    <div class="mobile-card-top">
+                                        <div class="mobile-card-identity">
+                                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                                                <span class="mobile-card-name">${emp.name}</span>
+                                                <span style="font-size: 0.6875rem; font-weight: 700; color: #555;">${emp.id}</span>
+                                            </div>
+                                            <div class="mobile-card-subhead">${emp.dept || 'General'} &bull; ${emp.branch || 'HQ'}</div>
+                                            <div class="mobile-card-role">${emp.role || 'Staff Member'}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mobile-card-details">
+                                        <div class="mobile-detail-row">
+                                            <span class="mobile-detail-label">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                                Mobile
+                                            </span>
+                                            <span class="mobile-detail-val">${emp.mobile || '—'}</span>
+                                        </div>
+                                        <div class="mobile-detail-row">
+                                            <span class="mobile-detail-label">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                                Email
+                                            </span>
+                                            <span class="mobile-detail-val" style="font-size: 0.7rem;">${emp.email || '—'}</span>
+                                        </div>
+                                        <div class="mobile-detail-row">
+                                            <span class="mobile-detail-label">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                                Joining Date
+                                            </span>
+                                            <span class="mobile-detail-val">${emp.joiningDate || '—'}</span>
+                                        </div>
+                                        <div class="mobile-detail-row">
+                                            <span class="mobile-detail-label">Onboarding</span>
+                                            <span class="status-badge ${isCompleted ? 'status-active' : ''}" style="font-size: 0.6875rem; ${isCompleted ? '' : 'border-style: dashed;'}">${emp.onboardingStatus || 'In Progress'}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mobile-card-actions">
+                                        <div class="mobile-card-actions-left">
+                                            <span style="font-size: 0.75rem; font-weight: 600; color: #555;">Status:</span>
+                                            <label class="status-toggle" style="margin: 0;">
+                                                <input type="checkbox" ${emp.status ? 'checked' : ''} onchange="toggleEmployeeStatus('${emp.id}')">
+                                                <div class="toggle-switch"></div>
+                                            </label>
+                                        </div>
+                                        <div class="mobile-card-actions-right">
+                                            <a href="view-employee.html?id=${emp.id}" class="action-icon" title="View Details" style="text-decoration: none;">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            </a>
+                                            <a href="edit-employee.html?id=${emp.id}" class="action-icon" title="Edit" style="text-decoration: none;">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                            </a>
+                                            <label for="delete-employee-toggle" class="action-icon" style="cursor: pointer; margin: 0;" title="Delete" onclick="window.employeeToDelete='${emp.id}'">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        mobileContainer.innerHTML = cardsHTML;
+                    }
+                }
 
                 // Update pagination count
                 const countSpan = document.querySelector('.pagination-bar > span');

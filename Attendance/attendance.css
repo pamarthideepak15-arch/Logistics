@@ -67,7 +67,8 @@
     color: #666;
     border: 1px dashed var(--color-border);
 }
-.att-status-wfh {
+.att-status-wfh,
+.att-status-halfday {
     background-color: var(--color-bg-light);
     color: var(--color-black);
     border: 1px solid var(--color-border);
@@ -76,6 +77,7 @@
     padding: 1px 5px;
     margin-left: 6px;
     vertical-align: middle;
+    border-radius: 2px;
 }
 
 /* Neutral Admin Adjusted Tag */

@@ -54,7 +54,7 @@
                 <nav class="sidebar-nav">
                     <a href="../Staff-Management/index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                        Staff Master
+                        Employee Master
                     </a>
                     <a href="../Staff-Management/department-master.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -281,7 +281,7 @@
                                  <td>Vijayawada</td>
                                  <td>26 Aug 2026</td>
                                  <td>Night Shift</td>
-                                 <td><span class="att-status-chip att-status-present">Present</span></td>
+                                 <td><span class="att-status-chip att-status-present">Present</span><span class="att-status-chip att-status-halfday" title="Half Day Leave">Half Day</span></td>
                                  <td>12:08 AM</td>
                                  <td>
                                      <!-- Dynamic CSS check-out state cell displays -->
@@ -455,7 +455,7 @@
                             </div>
                             <div>
                                 <span style="font-size: 0.6875rem; font-weight: 700; color: #666; text-transform: uppercase; display: block; margin-bottom: 4px;">Attendance Status</span>
-                                <span class="att-status-chip att-status-present">Present</span>
+                                <span class="att-status-chip att-status-present">Present</span><span class="att-status-chip att-status-halfday" title="Half Day Leave">Half Day</span>
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8125rem;">
@@ -931,6 +931,7 @@
                     date: '2026-08-26',
                     shift: 'Night Shift',
                     status: 'Present',
+                    isHalfDay: true,
                     checkIn: '12:08 AM',
                     checkOut: 'Not Checked Out',
                     duration: '—',
@@ -1083,7 +1084,7 @@
                     paginatedData.forEach(rec => {
                         let statusClass = 'att-status-present';
                         if (rec.status.toLowerCase() === 'absent') statusClass = 'att-status-absent';
-                        else if (rec.status.toLowerCase() === 'leave') statusClass = 'att-status-leave';
+                        if (rec.status.toLowerCase() === 'leave') statusClass = 'att-status-leave';
 
                         let checkInHTML = rec.checkIn;
                         if (rec.checkInLate && rec.checkIn !== '—') {
@@ -1113,6 +1114,7 @@
                         }
 
                         const wfhBadge = rec.isWFH ? '<span class="att-status-chip att-status-wfh" title="Work From Home">WFH</span>' : '';
+                        const halfDayBadge = rec.isHalfDay ? '<span class="att-status-chip att-status-halfday" title="Half Day Leave">Half Day</span>' : '';
                         tbodyHTML += `
                             <tr>
                                 <td data-label="Employee ID">${rec.code}</td>
@@ -1121,7 +1123,7 @@
                                 <td data-label="Branch">${rec.branch}</td>
                                 <td data-label="Date">${formatDateDisplay(rec.date)}</td>
                                 <td data-label="Shift">${rec.shift}</td>
-                                <td data-label="Status"><span class="att-status-chip ${statusClass}">${rec.status}</span>${wfhBadge}</td>
+                                <td data-label="Status"><span class="att-status-chip ${statusClass}">${rec.status}</span>${wfhBadge}${halfDayBadge}</td>
                                 <td data-label="Check In">${checkInHTML}</td>
                                 <td data-label="Check Out">${checkOutHTML}</td>
                                 <td data-label="Duration">${rec.duration}</td>

@@ -328,26 +328,33 @@
   .mobile-menu-btn {
     display: flex;
     position: fixed;
-    top: 10px;
-    left: 10px;
+    top: 8px;
+    left: 12px;
     bottom: auto;
     right: auto;
     background-color: transparent;
     color: var(--color-black);
     border: none;
-    border-radius: 0;
-    width: 28px;
-    height: 28px;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
     box-shadow: none;
     z-index: 1000;
     cursor: pointer;
     padding: 0;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.15s ease;
+  }
+  .mobile-menu-btn:hover {
+    background-color: var(--color-bg-light);
+  
   }
   .mobile-menu-btn svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
+    stroke: var(--color-black);
+     margin-top: 24px;
   }
   #mobile-menu-toggle:checked ~ .mobile-menu-btn::before {
     content: '';

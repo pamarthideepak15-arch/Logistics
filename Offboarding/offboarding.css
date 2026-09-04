@@ -339,3 +339,68 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     outline: none !important;
     box-shadow: none !important;
 }
+
+/* KPI Cards Grid - Standard HRMS */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 992px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+}
+
+.kpi-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.kpi-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.kpi-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+}
+
+.kpi-card-icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.kpi-card-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.kpi-card-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-black);
+    line-height: 1.2;
+    margin-top: 2px;
+}

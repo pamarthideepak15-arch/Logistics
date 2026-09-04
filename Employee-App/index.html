@@ -101,15 +101,21 @@
                     <div class="ea-list-stack" id="home-recent-list">
                         <div class="ea-list-item" style="padding: 8px 10px;">
                             <div class="ea-list-item-left">
-                                <span class="ea-list-item-title">Attendance Recorded</span>
-                                <span class="ea-list-item-sub">Yesterday • 09:15 AM to 06:00 PM</span>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="ea-type-chip ea-type-chip-wfh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> WFH</span>
+                                    <span class="ea-list-item-title">Work From Home (WFH-104)</span>
+                                </div>
+                                <span class="ea-list-item-sub">Applied for 04 Sep 2026 • Proposal Drafting</span>
                             </div>
-                            <span class="ea-badge ea-badge-present">Present</span>
+                            <span class="ea-badge ea-badge-pending">Pending</span>
                         </div>
                         <div class="ea-list-item" style="padding: 8px 10px;">
                             <div class="ea-list-item-left">
-                                <span class="ea-list-item-title">Casual Leave Request</span>
-                                <span class="ea-list-item-sub">Applied for 10 Sep – 12 Sep</span>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="ea-type-chip ea-type-chip-leave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg> LEAVE</span>
+                                    <span class="ea-list-item-title">Casual Leave (Full Day)</span>
+                                </div>
+                                <span class="ea-list-item-sub">Applied for 10 Sep – 12 Sep (3 Days)</span>
                             </div>
                             <span class="ea-badge ea-badge-pending">Pending</span>
                         </div>
@@ -228,8 +234,20 @@
                         </button>
                     </div>
 
-                    <!-- Status Filter Chips (All, Pending, Approved, Rejected) -->
+                    <!-- Date Range Filter Chips -->
                     <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.6875rem; font-weight: 700; color: #111827; text-transform: uppercase; letter-spacing: 0.04em;">Filter Date</span>
+                        <span style="font-size: 0.6875rem; color: #64748b; font-weight: 600;" id="leave-date-filter-label">All Dates</span>
+                    </div>
+                    <div class="ea-filter-bar" id="leave-date-filter-bar">
+                        <button type="button" class="ea-filter-pill active" id="leave-date-all" onclick="filterLeaveDate('all', this)">All</button>
+                        <button type="button" class="ea-filter-pill" id="leave-date-month" onclick="filterLeaveDate('month', this)">This Month</button>
+                        <button type="button" class="ea-filter-pill" id="leave-date-upcoming" onclick="filterLeaveDate('upcoming', this)">Upcoming</button>
+                        <button type="button" class="ea-filter-pill" id="leave-date-custom" onclick="openCustomDateModal('leave')">Custom Range</button>
+                    </div>
+
+                    <!-- Status Filter Chips (All, Pending, Approved, Rejected) -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--ea-border); padding-top: 8px;">
                         <span style="font-size: 0.6875rem; font-weight: 700; color: #111827; text-transform: uppercase; letter-spacing: 0.04em;">Filter Status</span>
                     </div>
                     <div class="ea-filter-bar">
@@ -361,106 +379,143 @@
         </nav>
 
         <!-- ============================================================ -->
-        <!-- MODAL 1: APPLY LEAVE BOTTOM SHEET                            -->
+        <!-- UNIFIED MODAL: APPLY LEAVE / WORK FROM HOME (WFH) BOTTOM SHEET -->
         <!-- ============================================================ -->
-        <div class="ea-modal-overlay" id="modal-apply-leave">
-            <div class="ea-modal-sheet">
-                <div class="ea-modal-header">
-                    <h3 class="ea-modal-title">Apply for Leave</h3>
-                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeApplyLeaveModal()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                </div>
-                
-                <form id="form-apply-leave" onsubmit="handleLeaveSubmit(event)">
-                    <div class="ea-form-group">
-                        <label class="ea-form-label">Leave Type *</label>
-                        <select class="ea-form-select" id="leave-type-select" required onchange="calculateDuration()">
-                            <option value="Casual Leave">Casual Leave (5 Days Available)</option>
-                            <option value="Annual Leave">Annual Leave (12 Days Available)</option>
-                            <option value="Sick Leave">Sick Leave (8 Days Available)</option>
-                        </select>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
-                        <div class="ea-form-group">
-                            <label class="ea-form-label">Start Date *</label>
-                            <input type="date" class="ea-form-input" id="leave-start-date" required onchange="calculateDuration()" onclick="if(this.showPicker) this.showPicker()">
-                        </div>
-                        <div class="ea-form-group">
-                            <label class="ea-form-label">End Date *</label>
-                            <input type="date" class="ea-form-input" id="leave-end-date" required onchange="calculateDuration()" onclick="if(this.showPicker) this.showPicker()">
-                        </div>
-                    </div>
-
-                    <div style="background: var(--ea-surface-subtle); padding: 8px 10px; border-radius: 6px; margin: 8px 0; font-size: 0.75rem; display: flex; justify-content: space-between;">
-                        <span style="color:#666;">Calculated Duration:</span>
-                        <strong id="leave-calc-duration">1 Day</strong>
-                    </div>
-
-                    <div class="ea-form-group">
-                        <label class="ea-form-label">Reason *</label>
-                        <input type="text" class="ea-form-input" id="leave-reason-input" placeholder="e.g. Personal family function" required>
-                    </div>
-
-                    <div class="ea-form-group" style="margin-top: 6px;">
-                        <label class="ea-form-label">Comments (Optional)</label>
-                        <textarea class="ea-form-textarea" id="leave-comments-input" placeholder="Additional handover notes..."></textarea>
-                    </div>
-
-                    <div style="display: flex; gap: 8px; margin-top: 12px;">
-                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1;" onclick="closeApplyLeaveModal()">Cancel</button>
-                        <button type="submit" class="ea-btn-large ea-btn-primary" style="flex:1;">Submit Request</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- ============================================================ -->
-        <!-- MODAL 1B: APPLY WORK FROM HOME (WFH) BOTTOM SHEET            -->
-        <!-- ============================================================ -->
-        <div class="ea-modal-overlay" id="modal-apply-wfh">
+        <div class="ea-modal-overlay" id="modal-apply-unified">
             <div class="ea-modal-sheet">
                 <div class="ea-modal-header">
                     <div>
-                        <h3 class="ea-modal-title">Apply for Work From Home (WFH)</h3>
-                        <span style="font-size: 0.6875rem; color: #666;">Submit your requested period and work deliverables</span>
+                        <h3 class="ea-modal-title" id="unified-modal-title">Apply Request</h3>
+                        <span style="font-size: 0.6875rem; color: #666;" id="unified-modal-subtitle">Submit Leave or Work From Home request</span>
                     </div>
-                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeApplyWfhModal()">
+                    <button type="button" style="background:none; border:none; cursor:pointer;" onclick="closeUnifiedModal()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
                 
-                <form id="form-apply-wfh" onsubmit="handleWfhSubmit(event)">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                        <div class="ea-form-group">
-                            <label class="ea-form-label">Start Date *</label>
-                            <input type="date" class="ea-form-input" id="wfh-start-date" required onchange="calculateWfhDuration()" onclick="if(this.showPicker) this.showPicker()">
-                        </div>
-                        <div class="ea-form-group">
-                            <label class="ea-form-label">End Date *</label>
-                            <input type="date" class="ea-form-input" id="wfh-end-date" required onchange="calculateWfhDuration()" onclick="if(this.showPicker) this.showPicker()">
-                        </div>
-                    </div>
-
-                    <div style="background: var(--ea-surface-subtle); padding: 8px 10px; border-radius: 6px; margin: 8px 0; font-size: 0.75rem; display: flex; justify-content: space-between;">
-                        <span style="color:#666;">WFH Days Requested:</span>
-                        <strong id="wfh-calc-duration">1 Day</strong>
-                    </div>
-
+                <form id="form-apply-unified" onsubmit="handleUnifiedSubmit(event)">
+                    <!-- Request Category Selector: Leave vs Work From Home (WFH) -->
                     <div class="ea-form-group">
-                        <label class="ea-form-label">Reason / Work Deliverables *</label>
-                        <input type="text" class="ea-form-input" id="wfh-reason-input" placeholder="e.g. Enterprise Client Proposal Drafting & Documentation" required>
+                        <label class="ea-form-label">Application Category *</label>
+                        <div class="ea-segmented-tabs" style="margin-top: 2px;">
+                            <button type="button" class="ea-segment-btn active" id="btn-cat-leave" onclick="setUnifiedCategory('leave')">Leave</button>
+                            <button type="button" class="ea-segment-btn" id="btn-cat-wfh" onclick="setUnifiedCategory('wfh')">Work From Home (WFH)</button>
+                        </div>
                     </div>
 
-                    <div class="ea-form-group" style="margin-top: 6px;">
-                        <label class="ea-form-label">Contact Number &amp; Availability</label>
-                        <input type="text" class="ea-form-input" id="wfh-contact-input" value="+91 98765 43210 (Available on Teams &amp; Phone)">
+                    <!-- Leave Specific: Leave Type Selectable Radio Chips -->
+                    <div class="ea-form-group" id="unified-leave-type-group" style="margin-top: 8px;">
+                        <label class="ea-form-label">Select Leave Type *</label>
+                        <div class="ea-chip-group ea-chip-grid-3" style="margin-top: 4px;">
+                            <label class="ea-chip-radio-label">
+                                <input type="radio" name="unified-leave-type" value="Casual Leave" class="ea-chip-radio-input" checked onchange="calculateUnifiedDuration()">
+                                <div class="ea-chip-card">
+                                    <span class="ea-chip-card-title">Casual</span>
+                                    <span class="ea-chip-card-sub" id="chip-bal-casual">5 Avail</span>
+                                </div>
+                            </label>
+                            <label class="ea-chip-radio-label">
+                                <input type="radio" name="unified-leave-type" value="Annual Leave" class="ea-chip-radio-input" onchange="calculateUnifiedDuration()">
+                                <div class="ea-chip-card">
+                                    <span class="ea-chip-card-title">Annual</span>
+                                    <span class="ea-chip-card-sub" id="chip-bal-annual">12 Avail</span>
+                                </div>
+                            </label>
+                            <label class="ea-chip-radio-label">
+                                <input type="radio" name="unified-leave-type" value="Sick Leave" class="ea-chip-radio-input" onchange="calculateUnifiedDuration()">
+                                <div class="ea-chip-card">
+                                    <span class="ea-chip-card-title">Sick</span>
+                                    <span class="ea-chip-card-sub" id="chip-bal-sick">8 Avail</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
-                    <div style="display: flex; gap: 8px; margin-top: 12px;">
-                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1;" onclick="closeApplyWfhModal()">Cancel</button>
-                        <button type="submit" class="ea-btn-large ea-btn-primary" style="flex:1;">Submit WFH Request</button>
+                    <!-- Duration Type: Selectable Radio Chips (Full Day vs Half Day) -->
+                    <div class="ea-form-group" style="margin-top: 8px;">
+                        <label class="ea-form-label">Duration Type *</label>
+                        <div class="ea-chip-group ea-chip-grid-2" style="margin-top: 4px;">
+                            <label class="ea-chip-radio-label">
+                                <input type="radio" name="unified-duration-type" value="full" class="ea-chip-radio-input" checked onchange="setUnifiedDurationType('full')">
+                                <div class="ea-chip-card" style="padding: 10px 8px;">
+                                    <span class="ea-chip-card-title">Full Day</span>
+                                    <span class="ea-chip-card-sub">1.0 Day / Multi-day</span>
+                                </div>
+                            </label>
+                            <label class="ea-chip-radio-label">
+                                <input type="radio" name="unified-duration-type" value="half" class="ea-chip-radio-input" onchange="setUnifiedDurationType('half')">
+                                <div class="ea-chip-card" style="padding: 10px 8px;">
+                                    <span class="ea-chip-card-title">Half Day</span>
+                                    <span class="ea-chip-card-sub">0.5 Day (Specific Slot)</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Half Day Session Slot Selectable Radio Cards (Visible only when Half Day selected) -->
+                    <div class="ea-form-group" id="unified-halfday-session-wrapper" style="display: none; margin-top: 8px;">
+                        <label class="ea-form-label">Select Session Slot *</label>
+                        <div class="ea-chip-group ea-chip-grid-2" style="margin-top: 4px;">
+                            <label class="ea-chip-radio-label">
+                                <input type="radio" name="unified-session-slot" value="First Half (09:00 AM - 01:30 PM)" class="ea-chip-radio-input" checked onchange="calculateUnifiedDuration()">
+                                <div class="ea-session-card">
+                                    <div class="ea-session-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line></svg>
+                                    </div>
+                                    <div class="ea-session-info">
+                                        <span class="ea-session-title">First Half</span>
+                                        <span class="ea-session-time">09:00 – 01:30</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="ea-chip-radio-label">
+                                <input type="radio" name="unified-session-slot" value="Second Half (01:30 PM - 06:00 PM)" class="ea-chip-radio-input" onchange="calculateUnifiedDuration()">
+                                <div class="ea-session-card">
+                                    <div class="ea-session-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                                    </div>
+                                    <div class="ea-session-info">
+                                        <span class="ea-session-title">Second Half</span>
+                                        <span class="ea-session-time">01:30 – 06:00</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Date Selection Grid with Proper Width & Alignment -->
+                    <div class="ea-date-grid" id="unified-date-grid" style="margin-top: 8px;">
+                        <div class="ea-form-group">
+                            <label class="ea-form-label" id="unified-start-label">Start Date *</label>
+                            <input type="date" class="ea-form-input" id="unified-start-date" required onchange="calculateUnifiedDuration()" onclick="if(this.showPicker) this.showPicker()">
+                        </div>
+                        <div class="ea-form-group" id="unified-end-date-wrapper">
+                            <label class="ea-form-label">End Date *</label>
+                            <input type="date" class="ea-form-input" id="unified-end-date" required onchange="calculateUnifiedDuration()" onclick="if(this.showPicker) this.showPicker()">
+                        </div>
+                    </div>
+
+                    <!-- Calculated Duration Chip Display -->
+                    <div style="background: var(--ea-surface-subtle); padding: 8px 10px; border-radius: 6px; margin: 8px 0; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--ea-border);">
+                        <span style="color:#666;" id="unified-calc-label">Calculated Duration:</span>
+                        <strong id="unified-calc-duration" style="color: var(--ea-text-primary);">1 Day</strong>
+                    </div>
+
+                    <!-- Reason / Deliverables -->
+                    <div class="ea-form-group">
+                        <label class="ea-form-label" id="unified-reason-label">Reason *</label>
+                        <input type="text" class="ea-form-input" id="unified-reason-input" placeholder="e.g. Personal family function or client deliverables" required>
+                    </div>
+
+                    <!-- Contact & Availability (WFH only) -->
+                    <div class="ea-form-group" id="unified-wfh-contact-group" style="display: none; margin-top: 6px;">
+                        <label class="ea-form-label">Contact Availability</label>
+                        <input type="text" class="ea-form-input" id="unified-contact-input" value="+91 98765 43210 (Available on Teams &amp; Phone)">
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-top: 14px;">
+                        <button type="button" class="ea-btn-large ea-btn-secondary" style="flex:1;" onclick="closeUnifiedModal()">Cancel</button>
+                        <button type="submit" class="ea-btn-large ea-btn-primary" style="flex:1;" id="unified-submit-btn">Submit Request</button>
                     </div>
                 </form>
             </div>
@@ -842,9 +897,9 @@
         let attendanceHistory = [
             { date: '30 Aug 2026', in: '09:15 AM', out: '06:00 PM', dur: '8h 45m', status: 'Present' },
             { date: '29 Aug 2026', in: '09:00 AM', out: '06:15 PM', dur: '9h 15m', status: 'Present' },
-            { date: '28 Aug 2026', in: '09:05 AM', out: '05:55 PM', dur: '8h 50m', status: 'Present' },
-            { date: '27 Aug 2026', in: '—', out: '—', dur: '—', status: 'Leave' },
-            { date: '26 Aug 2026', in: '09:10 AM', out: '06:10 PM', dur: '9h 00m', status: 'Present' },
+            { date: '28 Aug 2026', in: '09:00 AM', out: '06:00 PM', dur: '9h 00m', status: 'Work From Home', isWfh: true },
+            { date: '27 Aug 2026', in: '—', out: '—', dur: 'Full Day', status: 'Leave', isLeave: true },
+            { date: '26 Aug 2026', in: '09:10 AM', out: '01:30 PM', dur: '4h 20m', status: 'Half Day', isHalfDay: true },
             { date: '25 Aug 2026', in: '08:55 AM', out: '06:00 PM', dur: '9h 05m', status: 'Present' }
         ];
 
@@ -902,6 +957,17 @@
             attendanceState.status = 'checked_in';
             attendanceState.checkInTime = timeStr;
 
+            // Remove any existing today entry and add current active checkin
+            attendanceHistory = attendanceHistory.filter(item => !item.date.includes('Today') && !item.date.includes('31 Aug 2026'));
+            attendanceHistory.unshift({
+                date: 'Today (31 Aug 2026)',
+                in: timeStr,
+                out: '—',
+                dur: 'In Progress',
+                status: 'Checked In',
+                isLive: true
+            });
+
             updateAttendanceVisuals();
             showToast(`Checked in successfully at ${timeStr} (GPS Verified)`);
         }
@@ -919,13 +985,15 @@
             attendanceState.status = 'completed';
             attendanceState.checkOutTime = timeStr;
 
-            // Add to history
+            // Update today's record in history
+            attendanceHistory = attendanceHistory.filter(item => !item.date.includes('Today') && !item.date.includes('31 Aug 2026'));
             attendanceHistory.unshift({
-                date: 'Today (31 Aug)',
-                in: attendanceState.checkInTime,
+                date: 'Today (31 Aug 2026)',
+                in: attendanceState.checkInTime || '09:00 AM',
                 out: timeStr,
-                dur: '8h 58m',
-                status: 'Present'
+                dur: '8h 45m',
+                status: 'Present',
+                isLive: false
             });
 
             updateAttendanceVisuals();
@@ -989,6 +1057,17 @@
                 }
                 if (homeFabLabel) homeFabLabel.textContent = 'Check Out';
             }
+
+            // Also keep Attendance History list synchronized in real-time
+            const activeAttPill = document.querySelector('#screen-attendance .ea-filter-pill.active');
+            let currentFilter = 'month';
+            if (activeAttPill) {
+                const text = activeAttPill.textContent.toLowerCase();
+                if (text.includes('today')) currentFilter = 'today';
+                else if (text.includes('week')) currentFilter = 'week';
+                else if (text.includes('custom')) currentFilter = 'custom';
+            }
+            renderAttendanceHistory(currentFilter);
         }
 
         // Floating Action Button Click Handler
@@ -1001,7 +1080,16 @@
         }
 
         // Custom Date Range Modal Handlers
-        function openCustomDateModal(context) {
+        let activeCustomDateContext = 'attendance'; // 'attendance' | 'leave'
+
+        function openCustomDateModal(context = 'attendance') {
+            activeCustomDateContext = context;
+            const subtitle = document.querySelector('#modal-custom-date-range p');
+            if (subtitle) {
+                subtitle.textContent = context === 'leave'
+                    ? 'Choose a start date and end date to filter your leave & WFH application records.'
+                    : 'Choose a start date and end date to filter your attendance history records.';
+            }
             document.getElementById('modal-custom-date-range').style.display = 'flex';
         }
 
@@ -1038,16 +1126,32 @@
             const formattedStart = sDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
             const formattedEnd = eDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
 
-            document.getElementById('att-filter-label').textContent = `${formattedStart} – ${formattedEnd}`;
+            if (activeCustomDateContext === 'leave') {
+                currentLeaveDateFilter = 'custom';
+                customLeaveStartDate = sDate;
+                customLeaveEndDate = eDate;
+                const label = document.getElementById('leave-date-filter-label');
+                if (label) label.textContent = `${formattedStart} – ${formattedEnd}`;
 
-            // Highlight Custom Range pill
-            document.querySelectorAll('#screen-attendance .ea-filter-pill').forEach(p => p.classList.remove('active'));
-            const customPill = document.querySelector('#screen-attendance .ea-filter-pill:last-child');
-            if (customPill) customPill.classList.add('active');
+                document.querySelectorAll('#leave-date-filter-bar .ea-filter-pill').forEach(p => p.classList.remove('active'));
+                const customPill = document.getElementById('leave-date-custom');
+                if (customPill) customPill.classList.add('active');
 
-            closeCustomDateModal();
-            renderAttendanceHistory('custom');
-            showToast(`Filtered attendance: ${formattedStart} to ${formattedEnd}`);
+                closeCustomDateModal();
+                renderLeaveList();
+                showToast(`Filtered leaves: ${formattedStart} to ${formattedEnd}`);
+            } else {
+                document.getElementById('att-filter-label').textContent = `${formattedStart} – ${formattedEnd}`;
+
+                // Highlight Custom Range pill
+                document.querySelectorAll('#screen-attendance .ea-filter-pill').forEach(p => p.classList.remove('active'));
+                const customPill = document.querySelector('#screen-attendance .ea-filter-pill:last-child');
+                if (customPill) customPill.classList.add('active');
+
+                closeCustomDateModal();
+                renderAttendanceHistory('custom');
+                showToast(`Filtered attendance: ${formattedStart} to ${formattedEnd}`);
+            }
         }
 
         // Attendance History Rendering
@@ -1056,6 +1160,7 @@
                 document.querySelectorAll('#screen-attendance .ea-filter-pill').forEach(p => p.classList.remove('active'));
                 btn.classList.add('active');
             }
+
             if (type === 'today') document.getElementById('att-filter-label').textContent = 'Showing Today';
             else if (type === 'week') document.getElementById('att-filter-label').textContent = 'Showing This Week';
             else if (type === 'month') document.getElementById('att-filter-label').textContent = 'Showing This Month';
@@ -1075,11 +1180,32 @@
             data.forEach(item => {
                 const row = document.createElement('div');
                 row.className = 'ea-list-item';
-                const badgeClass = item.status === 'Present' ? 'ea-badge-present' : (item.status === 'Leave' ? 'ea-badge-leave' : 'ea-badge-absent');
+                
+                let badgeClass = 'ea-badge-absent';
+                let outText = item.out;
+                let durText = item.dur;
+
+                if (item.status === 'Checked In' || (item.isLive && item.out === '—')) {
+                    badgeClass = 'ea-badge-checkedin';
+                    outText = '<span style="color:#6b7280; font-weight:500;">— (Pending Checkout)</span>';
+                    durText = '<span style="color:#111827; font-weight:600;">In Progress</span>';
+                } else if (item.status === 'Work From Home' || item.isWfh) {
+                    badgeClass = 'ea-badge-wfh';
+                } else if (item.status === 'Half Day' || item.isHalfDay) {
+                    badgeClass = 'ea-badge-halfday';
+                } else if (item.status === 'Present') {
+                    badgeClass = 'ea-badge-present';
+                } else if (item.status === 'Leave' || item.isLeave) {
+                    badgeClass = 'ea-badge-leave';
+                }
+
                 row.innerHTML = `
                     <div class="ea-list-item-left">
-                        <span class="ea-list-item-title">${item.date}</span>
-                        <span class="ea-list-item-sub">In: ${item.in} • Out: ${item.out} (${item.dur})</span>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span class="ea-list-item-title">${item.date}</span>
+                            ${item.isLive ? '<span style="font-size: 0.5625rem; font-weight: 700; background: #111827; color: #fff; padding: 1px 5px; border-radius: 3px; letter-spacing: 0.02em;">LIVE SHIFT</span>' : ''}
+                        </div>
+                        <span class="ea-list-item-sub">In: <strong>${item.in}</strong> • Out: ${outText} (${durText})</span>
                     </div>
                     <span class="ea-badge ${badgeClass}">${item.status}</span>
                 `;
@@ -1152,176 +1278,258 @@
             }, 600);
         }
 
-        // Leave Management
-        function openApplyLeaveModal() {
-            // Set default date range to tomorrow
+        // Unified Application Management (Leave & WFH)
+        let unifiedCategory = 'leave'; // 'leave' | 'wfh'
+        let unifiedDurationType = 'full'; // 'full' | 'half'
+
+        function setUnifiedCategory(cat) {
+            unifiedCategory = cat;
+            const btnLeave = document.getElementById('btn-cat-leave');
+            const btnWfh = document.getElementById('btn-cat-wfh');
+            const leaveTypeGroup = document.getElementById('unified-leave-type-group');
+            const wfhContactGroup = document.getElementById('unified-wfh-contact-group');
+            const modalTitle = document.getElementById('unified-modal-title');
+            const modalSubtitle = document.getElementById('unified-modal-subtitle');
+            const reasonLabel = document.getElementById('unified-reason-label');
+            const reasonInput = document.getElementById('unified-reason-input');
+            const submitBtn = document.getElementById('unified-submit-btn');
+
+            if (cat === 'wfh') {
+                if (btnLeave) btnLeave.classList.remove('active');
+                if (btnWfh) btnWfh.classList.add('active');
+                if (leaveTypeGroup) leaveTypeGroup.style.display = 'none';
+                if (wfhContactGroup) wfhContactGroup.style.display = 'block';
+                if (modalTitle) modalTitle.textContent = 'Apply for Work From Home (WFH)';
+                if (modalSubtitle) modalSubtitle.textContent = 'Submit your requested period and work deliverables';
+                if (reasonLabel) reasonLabel.textContent = 'Reason / Work Deliverables *';
+                if (reasonInput) reasonInput.placeholder = 'e.g. Enterprise Client Proposal Drafting & Documentation';
+                if (submitBtn) submitBtn.textContent = 'Submit WFH Request';
+            } else {
+                if (btnWfh) btnWfh.classList.remove('active');
+                if (btnLeave) btnLeave.classList.add('active');
+                if (leaveTypeGroup) leaveTypeGroup.style.display = 'block';
+                if (wfhContactGroup) wfhContactGroup.style.display = 'none';
+                if (modalTitle) modalTitle.textContent = 'Apply for Leave';
+                if (modalSubtitle) modalSubtitle.textContent = 'Submit your requested leave duration & details';
+                if (reasonLabel) reasonLabel.textContent = 'Reason *';
+                if (reasonInput) reasonInput.placeholder = 'e.g. Personal family function or medical appointment';
+                if (submitBtn) submitBtn.textContent = 'Submit Leave Request';
+            }
+            calculateUnifiedDuration();
+        }
+
+        function setUnifiedDurationType(type) {
+            unifiedDurationType = type;
+            const sessionWrap = document.getElementById('unified-halfday-session-wrapper');
+            const endWrap = document.getElementById('unified-end-date-wrapper');
+            const startLabel = document.getElementById('unified-start-label');
+            const dateGrid = document.getElementById('unified-date-grid');
+            
+            // Check the matching radio input
+            const targetRadio = document.querySelector(`input[name="unified-duration-type"][value="${type}"]`);
+            if (targetRadio) targetRadio.checked = true;
+
+            if (type === 'half') {
+                if (sessionWrap) sessionWrap.style.display = 'block';
+                if (endWrap) endWrap.style.display = 'none';
+                if (dateGrid) dateGrid.classList.add('single-col');
+                if (startLabel) startLabel.textContent = 'Date *';
+            } else {
+                if (sessionWrap) sessionWrap.style.display = 'none';
+                if (endWrap) endWrap.style.display = 'block';
+                if (dateGrid) dateGrid.classList.remove('single-col');
+                if (startLabel) startLabel.textContent = 'Start Date *';
+            }
+            calculateUnifiedDuration();
+        }
+
+        function openUnifiedModal(initialCategory = 'leave') {
             const today = new Date();
             const tomorrow = new Date(today);
             tomorrow.setDate(tomorrow.getDate() + 1);
             
-            const startInput = document.getElementById('leave-start-date');
-            const endInput = document.getElementById('leave-end-date');
-            
+            const startInput = document.getElementById('unified-start-date');
+            const endInput = document.getElementById('unified-end-date');
             const dateStr = tomorrow.toISOString().split('T')[0];
-            startInput.value = dateStr;
-            endInput.value = dateStr;
-            calculateDuration();
+            
+            if (startInput) startInput.value = dateStr;
+            if (endInput) endInput.value = dateStr;
+            
+            setUnifiedCategory(initialCategory);
+            setUnifiedDurationType('full');
 
-            document.getElementById('modal-apply-leave').classList.add('active');
+            document.getElementById('modal-apply-unified').classList.add('active');
         }
 
-        function closeApplyLeaveModal() {
-            document.getElementById('modal-apply-leave').classList.remove('active');
+        function closeUnifiedModal() {
+            document.getElementById('modal-apply-unified').classList.remove('active');
         }
 
-        function calculateDuration() {
-            const startVal = document.getElementById('leave-start-date').value;
-            const endVal = document.getElementById('leave-end-date').value;
-            if (!startVal || !endVal) return;
+        // Backward compatibility wrappers for open/close
+        function openApplyLeaveModal() { openUnifiedModal('leave'); }
+        function closeApplyLeaveModal() { closeUnifiedModal(); }
+        function openApplyWfhModal() { openUnifiedModal('wfh'); }
+        function closeApplyWfhModal() { closeUnifiedModal(); }
+
+        function calculateUnifiedDuration() {
+            const startVal = document.getElementById('unified-start-date').value;
+            const calcLabel = document.getElementById('unified-calc-label');
+            const calcEl = document.getElementById('unified-calc-duration');
+            if (!startVal) return;
+
+            if (calcLabel) {
+                calcLabel.textContent = unifiedCategory === 'wfh' ? 'WFH Duration:' : 'Leave Duration:';
+            }
+
+            if (unifiedDurationType === 'half') {
+                const checkedSlot = document.querySelector('input[name="unified-session-slot"]:checked');
+                const slotVal = checkedSlot ? checkedSlot.value : 'First Half';
+                const sessionShort = slotVal.startsWith('First') ? 'First Half' : 'Second Half';
+                if (calcEl) calcEl.textContent = `0.5 Day (${sessionShort})`;
+                return;
+            }
+
+            const endVal = document.getElementById('unified-end-date').value;
+            if (!endVal) return;
 
             const start = new Date(startVal);
             const end = new Date(endVal);
 
             if (end < start) {
-                document.getElementById('leave-calc-duration').textContent = 'Invalid (End date before start)';
+                if (calcEl) calcEl.textContent = 'Invalid (End date before start)';
                 return;
             }
 
             const diffTime = Math.abs(end - start);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-            document.getElementById('leave-calc-duration').textContent = `${diffDays} Day${diffDays > 1 ? 's' : ''}`;
+            if (calcEl) calcEl.textContent = `${diffDays} Day${diffDays > 1 ? 's' : ''}`;
         }
 
-        function handleLeaveSubmit(e) {
+        function handleUnifiedSubmit(e) {
             e.preventDefault();
-            const type = document.getElementById('leave-type-select').value;
-            const startVal = document.getElementById('leave-start-date').value;
-            const endVal = document.getElementById('leave-end-date').value;
-            const reason = document.getElementById('leave-reason-input').value;
+            const startVal = document.getElementById('unified-start-date').value;
+            const reason = document.getElementById('unified-reason-input').value;
+
+            if (!startVal) {
+                alert('Please select a date.');
+                return;
+            }
 
             const start = new Date(startVal);
-            const end = new Date(endVal);
-            if (end < start) {
-                alert('Start date cannot be after end date.');
-                return;
+            let days = 1;
+            let startStr = start.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+            let endStr = start.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            if (unifiedDurationType === 'half') {
+                days = 0.5;
+                const checkedSlot = document.querySelector('input[name="unified-session-slot"]:checked');
+                const sessionVal = checkedSlot ? checkedSlot.value : 'First Half (09:00 AM - 01:30 PM)';
+                const sessionName = sessionVal.startsWith('First') ? 'First Half' : 'Second Half';
+
+                if (unifiedCategory === 'wfh') {
+                    // WFH Half Day
+                    wfhRequests.unshift({
+                        id: `WFH-${Math.floor(100 + Math.random() * 900)}`,
+                        type: `Work From Home (Half Day - ${sessionName})`,
+                        start: startStr,
+                        end: startStr,
+                        days: 0.5,
+                        status: 'Pending',
+                        reason: reason
+                    });
+                    currentLeaveWfhType = 'wfh';
+                } else {
+                    // Leave Half Day
+                    const checkedLeaveType = document.querySelector('input[name="unified-leave-type"]:checked');
+                    const leaveType = checkedLeaveType ? checkedLeaveType.value : 'Casual Leave';
+                    let currentBal = leaveBalances.casual;
+                    if (leaveType.includes('Annual')) currentBal = leaveBalances.annual;
+                    if (leaveType.includes('Sick')) currentBal = leaveBalances.sick;
+
+                    if (0.5 > currentBal) {
+                        alert(`Insufficient leave balance! You requested 0.5 day but have ${currentBal} available.`);
+                        return;
+                    }
+
+                    leaveRequests.unshift({
+                        id: `LR-${Math.floor(100 + Math.random() * 900)}`,
+                        type: `${leaveType} (Half Day - ${sessionName})`,
+                        start: startStr,
+                        end: startStr,
+                        days: 0.5,
+                        status: 'Pending',
+                        reason: reason
+                    });
+                    currentLeaveWfhType = 'leave';
+                }
+            } else {
+                // Full Day
+                const endVal = document.getElementById('unified-end-date').value;
+                const end = new Date(endVal);
+                if (end < start) {
+                    alert('Start date cannot be after end date.');
+                    return;
+                }
+                const diffTime = Math.abs(end - start);
+                days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                endStr = end.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+                if (unifiedCategory === 'wfh') {
+                    // WFH Full Day(s)
+                    wfhRequests.unshift({
+                        id: `WFH-${Math.floor(100 + Math.random() * 900)}`,
+                        type: 'Work From Home',
+                        start: startStr,
+                        end: endStr,
+                        days: days,
+                        status: 'Pending',
+                        reason: reason
+                    });
+                    currentLeaveWfhType = 'wfh';
+                } else {
+                    // Leave Full Day(s)
+                    const checkedLeaveType = document.querySelector('input[name="unified-leave-type"]:checked');
+                    const leaveType = checkedLeaveType ? checkedLeaveType.value : 'Casual Leave';
+                    let currentBal = leaveBalances.casual;
+                    if (leaveType.includes('Annual')) currentBal = leaveBalances.annual;
+                    if (leaveType.includes('Sick')) currentBal = leaveBalances.sick;
+
+                    if (days > currentBal) {
+                        alert(`Insufficient leave balance! You requested ${days} days but only have ${currentBal} days available.`);
+                        return;
+                    }
+
+                    leaveRequests.unshift({
+                        id: `LR-${Math.floor(100 + Math.random() * 900)}`,
+                        type: leaveType,
+                        start: startStr,
+                        end: endStr,
+                        days: days,
+                        status: 'Pending',
+                        reason: reason
+                    });
+                    currentLeaveWfhType = 'leave';
+                }
             }
 
-            const diffTime = Math.abs(end - start);
-            const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            closeUnifiedModal();
 
-            // Balance check
-            let currentBal = leaveBalances.casual;
-            if (type === 'Annual Leave') currentBal = leaveBalances.annual;
-            if (type === 'Sick Leave') currentBal = leaveBalances.sick;
+            // Synchronize segmented tab view to newly submitted category
+            document.querySelectorAll('#screen-leave .ea-segmented-tabs .ea-segment-btn').forEach(p => p.classList.remove('active'));
+            const activeTabBtn = document.getElementById(unifiedCategory === 'wfh' ? 'type-tab-wfh' : 'type-tab-leave');
+            if (activeTabBtn) activeTabBtn.classList.add('active');
 
-            if (days > currentBal) {
-                alert(`Insufficient leave balance! You requested ${days} days but only have ${currentBal} days available.`);
-                return;
+            const dynamicApplyBtn = document.getElementById('btn-dynamic-apply');
+            if (dynamicApplyBtn) {
+                dynamicApplyBtn.textContent = unifiedCategory === 'wfh' ? '+ Apply WFH' : '+ Apply Leave';
             }
 
-            const startStr = start.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-            const endStr = end.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-
-            // Add request
-            leaveRequests.unshift({
-                id: `LR-${Math.floor(100 + Math.random() * 900)}`,
-                type: type,
-                start: startStr,
-                end: endStr,
-                days: days,
-                status: 'Pending',
-                reason: reason
-            });
-
-            closeApplyLeaveModal();
             renderLeaveList();
-            showToast(`Leave request submitted for ${days} days!`);
-        }
-
-        // WFH Modal Handlers
-        function openApplyWfhModal() {
-            const today = new Date();
-            const tomorrow = new Date(today);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            
-            const startInput = document.getElementById('wfh-start-date');
-            const endInput = document.getElementById('wfh-end-date');
-            const dateStr = tomorrow.toISOString().split('T')[0];
-            
-            startInput.value = dateStr;
-            endInput.value = dateStr;
-            calculateWfhDuration();
-
-            document.getElementById('modal-apply-wfh').classList.add('active');
-        }
-
-        function closeApplyWfhModal() {
-            document.getElementById('modal-apply-wfh').classList.remove('active');
-        }
-
-        function calculateWfhDuration() {
-            const startVal = document.getElementById('wfh-start-date').value;
-            const endVal = document.getElementById('wfh-end-date').value;
-            if (!startVal || !endVal) return;
-
-            const start = new Date(startVal);
-            const end = new Date(endVal);
-
-            if (end < start) {
-                document.getElementById('wfh-calc-duration').textContent = 'Invalid date range';
-                return;
-            }
-
-            const diffTime = Math.abs(end - start);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-            document.getElementById('wfh-calc-duration').textContent = `${diffDays} Day${diffDays > 1 ? 's' : ''}`;
-        }
-
-        function handleWfhSubmit(e) {
-            e.preventDefault();
-            const startVal = document.getElementById('wfh-start-date').value;
-            const endVal = document.getElementById('wfh-end-date').value;
-            const reason = document.getElementById('wfh-reason-input').value;
-
-            const start = new Date(startVal);
-            const end = new Date(endVal);
-            if (end < start) {
-                alert('Start date cannot be after end date.');
-                return;
-            }
-
-            const diffTime = Math.abs(end - start);
-            const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-
-            const startStr = start.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-            const endStr = end.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-
-            wfhRequests.unshift({
-                id: `WFH-${Math.floor(100 + Math.random() * 900)}`,
-                type: 'Work From Home',
-                start: startStr,
-                end: endStr,
-                days: days,
-                status: 'Pending',
-                reason: reason
-            });
-
-            closeApplyWfhModal();
-            currentLeaveWfhType = 'wfh';
-            document.querySelectorAll('#screen-leave .ea-filter-bar:first-of-type .ea-filter-pill').forEach(p => p.classList.remove('active'));
-            const wfhBtn = document.getElementById('type-tab-wfh');
-            if (wfhBtn) wfhBtn.classList.add('active');
-
-            renderLeaveList();
-            showToast(`WFH request submitted for ${days} days!`);
+            showToast(`${unifiedCategory === 'wfh' ? 'WFH' : 'Leave'} request submitted for ${days} day${days > 1 ? 's' : ''}!`);
         }
 
         function handleDynamicApplyClick() {
-            if (currentLeaveWfhType === 'wfh') {
-                openApplyWfhModal();
-            } else {
-                openApplyLeaveModal();
-            }
+            openUnifiedModal(currentLeaveWfhType || 'leave');
         }
 
         function switchLeaveWfhType(type, btn) {
@@ -1339,11 +1547,31 @@
 
         // Leave Filter & Cancellation State
         let currentLeaveStatusFilter = 'all';
+        let currentLeaveDateFilter = 'all';
+        let customLeaveStartDate = null;
+        let customLeaveEndDate = null;
         let pendingCancelLeaveId = null;
+
+        function filterLeaveDate(type, btn) {
+            currentLeaveDateFilter = type;
+            document.querySelectorAll('#leave-date-filter-bar .ea-filter-pill').forEach(p => p.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const label = document.getElementById('leave-date-filter-label');
+            if (label) {
+                if (type === 'all') label.textContent = 'All Dates';
+                else if (type === 'month') label.textContent = 'Aug 2026';
+                else if (type === 'upcoming') label.textContent = 'Sep 2026+';
+            }
+
+            renderLeaveList();
+        }
 
         function filterLeaveStatus(status, btn) {
             currentLeaveStatusFilter = status;
-            document.querySelectorAll('#screen-leave .ea-filter-bar .ea-filter-pill').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('#screen-leave .ea-filter-bar .ea-filter-pill').forEach(p => {
+                if (p.id && p.id.startsWith('tab-status-')) p.classList.remove('active');
+            });
             if (btn) btn.classList.add('active');
             renderLeaveList();
         }
@@ -1376,13 +1604,39 @@
             }
         }
 
+        function parseRequestStartDate(dateStr) {
+            // e.g. '10 Sep 2026' or '10 Sep'
+            if (!dateStr) return new Date();
+            const parts = dateStr.trim().split(' ');
+            const day = parseInt(parts[0], 10) || 1;
+            const monthStr = parts[1] || 'Aug';
+            const year = parts[2] ? parseInt(parts[2], 10) : 2026;
+            const months = { 'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5, 'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11 };
+            const m = months[monthStr] !== undefined ? months[monthStr] : 7;
+            return new Date(year, m, day);
+        }
+
         function renderLeaveList() {
             const container = document.getElementById('leave-history-list');
             container.innerHTML = '';
 
             let list = currentLeaveWfhType === 'leave' ? leaveRequests : wfhRequests;
+            
+            // Status Filtering
             if (currentLeaveStatusFilter !== 'all') {
                 list = list.filter(r => r.status === currentLeaveStatusFilter);
+            }
+
+            // Date Filtering
+            if (currentLeaveDateFilter === 'month') {
+                list = list.filter(r => (r.start && r.start.includes('Aug')) || (r.end && r.end.includes('Aug')));
+            } else if (currentLeaveDateFilter === 'upcoming') {
+                list = list.filter(r => (r.start && (r.start.includes('Sep') || r.start.includes('Oct'))) || (r.end && (r.end.includes('Sep') || r.end.includes('Oct'))));
+            } else if (currentLeaveDateFilter === 'custom' && customLeaveStartDate && customLeaveEndDate) {
+                list = list.filter(r => {
+                    const reqDate = parseRequestStartDate(r.start);
+                    return reqDate >= customLeaveStartDate && reqDate <= customLeaveEndDate;
+                });
             }
 
             if (list.length === 0) {
@@ -1406,6 +1660,11 @@
                 if (req.status === 'Approved') badgeClass = 'ea-badge-approved';
                 else if (req.status === 'Rejected') badgeClass = 'ea-badge-rejected';
                 else if (req.status === 'Cancelled') badgeClass = 'ea-badge-absent';
+
+                const isWfhReq = req.type.includes('Work From Home') || (req.id && req.id.startsWith('WFH'));
+                const typeChipHtml = isWfhReq
+                    ? `<span class="ea-type-chip ea-type-chip-wfh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> WFH</span>`
+                    : `<span class="ea-type-chip ea-type-chip-leave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg> LEAVE</span>`;
 
                 let bottomBarHtml = '';
                 if (req.status === 'Pending') {
@@ -1431,8 +1690,12 @@
                 card.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
                         <div class="ea-list-item-left">
-                            <span class="ea-list-item-title">${req.type} (${req.days} Day${req.days > 1 ? 's' : ''})</span>
-                            <span class="ea-list-item-sub">${req.start} – ${req.end} • ${req.reason}</span>
+                            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                                ${typeChipHtml}
+                                <span class="ea-list-item-title">${req.type}</span>
+                                <span style="font-size: 0.75rem; font-weight: 700; color: #111827;">(${req.days} Day${req.days > 1 ? 's' : ''})</span>
+                            </div>
+                            <span class="ea-list-item-sub" style="margin-top: 3px;">${req.start} – ${req.end} • ${req.reason}</span>
                         </div>
                         <span class="ea-badge ${badgeClass}" style="margin-left: 8px; flex-shrink: 0;">${req.status}</span>
                     </div>

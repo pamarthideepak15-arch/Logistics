@@ -1,0 +1,1685 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads — CCM | Logistics Management Platform</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- CCM & Agents Unified Stylesheet -->
+    <link rel="stylesheet" href="agents.css">
+    <style>
+        .ccm-modal-body::-webkit-scrollbar {
+            width: 5px;
+        }
+        .ccm-modal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .ccm-modal-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .ccm-modal-body::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .action-link-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #1e40af;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .action-link-btn:hover {
+            text-decoration: underline;
+        }
+        .action-link-btn.view-btn {
+            color: #475569;
+        }
+        .action-link-btn.view-btn:hover {
+            color: #0f172a;
+        }
+        .action-separator {
+    color: #cbd5e1;
+    margin: 0 4px;
+    font-size: 0.75rem;
+    user-select: none;
+}
+
+/* Align action icons vertically and add spacing */
+.ccm-action-icons {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+        /* CCM Leads Table UI Consistency Overrides */
+        .main-leads-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            min-width: 1100px !important;
+            table-layout: auto !important;
+        }
+        .main-leads-table th {
+            background-color: var(--color-table-header, #111) !important;
+            color: var(--color-white, #fff) !important;
+            font-size: 0.8125rem !important;
+            font-weight: 600 !important;
+            padding: 8px 10px !important;
+            white-space: nowrap !important;
+            border-bottom: none !important;
+        }
+        .main-leads-table td {
+            padding: 8px 10px !important;
+            font-size: 0.8125rem !important;
+            color: var(--color-black) !important;
+            border-bottom: 1px solid var(--color-border) !important;
+            vertical-align: middle !important;
+        }
+        .main-leads-table tbody tr:hover td {
+            background-color: var(--color-bg-light, #f8fafc) !important;
+        }
+        .main-leads-table th:first-child, .main-leads-table td:first-child { width: 8% !important; }
+        .main-leads-table th:nth-child(2), .main-leads-table td:nth-child(2) { width: 11% !important; }
+        .main-leads-table th:nth-child(3), .main-leads-table td:nth-child(3) { width: 10% !important; }
+        .main-leads-table th:nth-child(4), .main-leads-table td:nth-child(4) { width: 8% !important; }
+        .main-leads-table th:nth-child(5), .main-leads-table td:nth-child(5) { width: 8% !important; }
+        .main-leads-table th:nth-child(6), .main-leads-table td:nth-child(6) { width: 20% !important; }
+        .main-leads-table th:nth-child(7), .main-leads-table td:nth-child(7) { width: 8% !important; }
+        .main-leads-table th:nth-child(8), .main-leads-table td:nth-child(8) { width: 11% !important; }
+        .main-leads-table th:nth-child(9), .main-leads-table td:nth-child(9) { width: 8% !important; }
+        .main-leads-table th:nth-child(10), .main-leads-table td:nth-child(10) { width: 8% !important; }
+        .main-leads-table th:nth-child(11), .main-leads-table td:nth-child(11) { width: 80px !important; text-align: right !important; }
+
+        /* Admin chip badge */
+        .admin-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1px 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            border-radius: 4px;
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            margin-left: 6px;
+            vertical-align: middle;
+            user-select: none;
+        }
+
+        /* Section Card for Dedicated Configuration Tab */
+        .section-card {
+            padding: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background: var(--color-white);
+            margin-bottom: 20px;
+        }
+        .section-header {
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--color-black);
+            margin: 0;
+        }
+        .section-helper {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 2px;
+            margin-bottom: 0;
+        }
+        .config-input-hint {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        .ccm-tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .ccm-tab-btn.active {
+            color: var(--color-black);
+            border-bottom-color: var(--color-black);
+        }
+
+        /* Config Structured Management Tables aligned with CCM Standard Tables */
+        .config-mgmt-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            font-size: 0.8125rem !important;
+            background: var(--color-white) !important;
+            table-layout: fixed !important;
+        }
+        .config-mgmt-table th {
+            background-color: var(--color-table-header, #111) !important;
+            color: var(--color-white, #fff) !important;
+            font-size: 0.8125rem !important;
+            font-weight: 600 !important;
+            padding: 8px 10px !important;
+            text-align: left !important;
+            white-space: nowrap !important;
+            border-bottom: none !important;
+            border-right: none !important;
+        }
+        .config-mgmt-table td {
+            padding: 8px 10px !important;
+            border-bottom: 1px solid var(--color-border) !important;
+            border-right: none !important;
+            vertical-align: middle !important;
+            color: var(--color-black) !important;
+            background: var(--color-white);
+            font-size: 0.8125rem !important;
+        }
+        .config-mgmt-table tbody tr:last-child td {
+            border-bottom: none !important;
+        }
+        .config-mgmt-table tbody tr:hover td {
+            background-color: var(--color-bg-light, #f8fafc) !important;
+        }
+        
+        /* Column Width Overrides for Pipeline Table (Order, Status, Actions) */
+        #table-config-pipeline th:first-child,
+        #table-config-pipeline td:first-child {
+            width: 70px !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+        }
+        #table-config-pipeline th:nth-child(2),
+        #table-config-pipeline td:nth-child(2) {
+            width: auto !important;
+            text-align: left !important;
+        }
+        #table-config-pipeline th:nth-child(3),
+        #table-config-pipeline td:nth-child(3) {
+            width: 110px !important;
+            text-align: right !important;
+            white-space: nowrap !important;
+        }
+
+        .config-inline-input {
+            width: 100%;
+            height: 32px;
+            padding: 0 10px;
+            font-size: 0.8125rem;
+            font-family: inherit;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background: var(--color-white);
+            color: var(--color-black);
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+        .config-inline-input:hover {
+            border-color: #cbd5e1;
+        }
+        .config-inline-input:focus {
+            border-color: var(--color-black);
+        }
+        .config-order-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: var(--border-radius-base);
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            color: #334155;
+            font-weight: 700;
+            font-size: 0.75rem;
+            font-family: monospace;
+        }
+
+        /* Drag-and-Drop Reordering Styles */
+        .drag-handle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            cursor: grab;
+            padding: 2px;
+            border-radius: 4px;
+            transition: color 0.15s ease, background-color 0.15s ease;
+            user-select: none;
+            margin-right: 4px;
+        }
+        .drag-handle:hover {
+            color: var(--color-black);
+            background-color: #f1f5f9;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+        .config-mgmt-table tbody tr.is-dragging {
+            opacity: 0.45;
+            background-color: #f1f5f9 !important;
+        }
+        .config-mgmt-table tbody tr.drag-over-top td {
+            border-top: 2px solid var(--color-black) !important;
+        }
+        .config-mgmt-table tbody tr.drag-over-bottom td {
+            border-bottom: 2px solid var(--color-black) !important;
+        }
+
+        /* Modal Dialog Border Radius & Overflow Fix */
+        #overlay-view-lead .modal-content {
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.25) !important;
+        }
+        #overlay-view-lead .modal-content > div:first-child {
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        #overlay-view-lead .modal-content > div:last-child {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- Lead Details Modal (for View action) -->
+    <div class="modal-overlay" id="overlay-view-lead" style="display: none; padding: 24px 16px; box-sizing: border-box; align-items: center; justify-content: center;">
+        <div class="modal-content" style="position: relative; width: 500px; max-width: 95vw; max-height: calc(100vh - 48px); display: flex; flex-direction: column; padding: 0; text-align: left; box-sizing: border-box; overflow: hidden; border-radius: 12px; background-color: var(--color-white); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.25);">
+            <!-- Modal Header -->
+            <div style="padding: 16px 20px; border-bottom: 1px solid var(--color-border); position: relative; flex-shrink: 0; background: var(--color-white); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <h3 class="modal-title" id="view-lead-title" style="font-size: 1.0625rem; font-weight: 700; color: var(--color-black); margin: 0;">Lead Details</h3>
+                        <span id="view-lead-status-badge" style="display: inline-block;"></span>
+                    </div>
+                    <p class="modal-desc" id="view-lead-id-subtitle" style="font-size: 0.75rem; color: #64748b; margin-top: 3px; margin-bottom: 0; font-family: monospace; font-weight: 600;"></p>
+                </div>
+                <button type="button" class="modal-close-label" title="Close" onclick="closeViewLeadModal()" style="position: static; padding: 4px; border-radius: 4px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Modal Scrollable Body -->
+            <div class="modal-scroll-body ccm-modal-body" style="flex: 1; overflow-y: auto; padding: 18px 20px; display: flex; flex-direction: column; gap: 16px;">
+                <!-- 1. Customer Summary Card -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <span style="font-size: 0.9375rem; font-weight: 700; color: #0f172a;" id="view-lead-cust-name"></span>
+                        <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: #475569; font-family: monospace;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span id="view-lead-cust-phone"></span>
+                        </div>
+                    </div>
+                    <span id="view-lead-cust-type-badge" style="padding: 3px 9px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #334155; box-shadow: 0 1px 2px rgba(0,0,0,0.04);"></span>
+                </div>
+
+                <!-- 2. Details Grid (Branch, Agent, Lead Source, Originating Call, Requirement, Follow-up) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px;">
+                    <div>
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Branch</div>
+                        <div id="view-lead-branch" style="font-size: 0.875rem; font-weight: 600; color: #0f172a;"></div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Assigned Agent</div>
+                        <div id="view-lead-agent" style="font-size: 0.875rem; font-weight: 600; color: #0f172a; display: flex; align-items: center; gap: 4px;"></div>
+                    </div>
+                    <div style="border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Lead Source</div>
+                        <div id="view-lead-source" style="font-size: 0.875rem; font-weight: 600; color: #0f172a; display: flex; align-items: center; gap: 6px;"></div>
+                    </div>
+                    <div style="border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Originating Call</div>
+                        <div id="view-lead-origin-call" style="font-size: 0.875rem; color: #0f172a;"></div>
+                    </div>
+                    <div style="grid-column: 1 / -1; border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Requirement / Service</div>
+                        <div id="view-lead-req" style="font-size: 0.875rem; color: #1e293b; line-height: 1.5; font-weight: 500;"></div>
+                    </div>
+                    <div style="grid-column: 1 / -1; border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Next Follow-up</div>
+                        <div id="view-lead-followup" style="font-size: 0.875rem; font-weight: 600; color: #334155;"></div>
+                    </div>
+                </div>
+
+                <!-- 3. Follow-up Notes -->
+                <div id="view-lead-notes-container">
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 6px;">Follow-up Notes</div>
+                    <div id="view-lead-notes" style="font-size: 0.8125rem; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; line-height: 1.5; white-space: pre-wrap;"></div>
+                </div>
+            </div>
+
+            <!-- Modal Actions Footer -->
+            <div class="modal-actions" style="margin: 0; padding: 14px 20px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; align-items: center; gap: 8px; background: var(--color-white); flex-shrink: 0;">
+                <button type="button" class="btn-secondary" style="height: 32px; padding: 0 16px; border-radius: 6px;" onclick="closeViewLeadModal()">Close</button>
+                <button type="button" class="btn-primary" style="height: 32px; padding: 0 16px; border-radius: 6px;" id="view-lead-edit-btn">Edit Lead</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Lead Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-delete-lead" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeleteLeadModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Lead</h3>
+            <p class="modal-desc">Are you sure you want to delete lead <strong id="modal-delete-lead-id" style="color: var(--color-black); font-family: monospace;"></strong> (<span id="modal-delete-lead-customer"></span>)?</p>
+            <input type="hidden" id="delete-lead-target-id" value="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeleteLeadModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeleteLead()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Lead Status Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-delete-lead-status" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeleteLeadStatusModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Pipeline Status</h3>
+            <p class="modal-desc">Are you sure you want to remove status <strong id="modal-delete-status-name" style="color: var(--color-black);"></strong> from the pipeline? Leads currently in this status may need to be updated.</p>
+            <input type="hidden" id="delete-lead-status-index" value="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeleteLeadStatusModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeleteLeadStatus()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads (Active) -->
+                    <a href="leads.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Leads
+                    </a>
+                
+                    <!-- Module 9: Tickets -->
+                    <a href="tickets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring -->
+                    <a href="live-monitoring.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND -->
+                    <a href="blacklist-dnd.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                                    <!-- Module 14: Settings -->
+                    <a href="settings.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header Breadcrumb -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Leads</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong id="header-user-name">Super Admin</strong>
+                        <span id="header-user-node">HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Back to Welcome">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title" id="leads-page-title">Leads</h1>
+                        <p class="page-subtitle" id="leads-page-subtitle">Manage leads, follow-ups, and customer opportunities.</p>
+                    </div>
+                    <div class="header-actions" style="display: flex; gap: 8px; align-items: center;">
+                        <!-- Actions for Tab 1 (Leads Management) -->
+                        <div id="leads-mgmt-header-actions" style="display: flex; gap: 8px;">
+                            <a href="add-lead.html" class="btn-primary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; height: 32px; padding: 0 16px; font-size: 0.8125rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Lead
+                            </a>
+                        </div>
+
+                        <!-- Actions for Tab 2 (Configuration) -->
+                        <div id="leads-config-header-actions" style="display: none; gap: 8px; align-items: center;">
+                            <button type="button" class="btn-secondary" style="height: 32px; padding: 0 14px; font-size: 0.8125rem;" onclick="resetLeadConfigForm()">Cancel</button>
+                            <button type="button" class="btn-primary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem;" onclick="saveLeadConfig()">Save Configuration</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation: Leads & Configuration -->
+                <div class="ccm-tab-bar" style="display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid var(--color-border);">
+                    <button type="button" class="ccm-tab-btn active" id="tab-btn-leads" onclick="switchLeadsTab('leads')">
+                        Leads
+                    </button>
+                    <button type="button" class="ccm-tab-btn" id="tab-btn-config" onclick="switchLeadsTab('config')">
+                        Configuration
+                    </button>
+                </div>
+
+                <!-- TAB 1 PANEL: Leads Management -->
+                <div id="tab-panel-leads" class="ccm-page-section" style="display: block;">
+
+                    <!-- Filters & Search Bar -->
+                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%; flex-wrap: wrap;">
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 240px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="lead-search-input" class="search-input" placeholder="Search by lead ID, customer name, or mobile number..." oninput="filterLeadTable()">
+                        </div>
+
+                        <!-- Branch Filter (Multi-Select with Search & Select All) -->
+                        <details class="custom-select-wrapper" id="filter-branch-details" style="min-width: 170px;">
+                            <summary class="custom-select-trigger" id="filter-branch-trigger" style="height: 32px;">
+                                <span class="trigger-label">All Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="filter-branch-options">
+                                <div class="custom-select-search">
+                                    <div class="custom-select-search-wrapper">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterBranchDropdownOptions(this)">
+                                    </div>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                    <input type="checkbox" id="cb-branch-select-all" onchange="toggleAllBranchFilters(this.checked)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                    <span style="font-weight: 600; color: var(--color-black);">Select All</span>
+                                </label>
+                                <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
+                                <div id="filter-branch-list-items">
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Bengaluru" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Bengaluru</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Mumbai" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Mumbai</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Hyderabad" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Hyderabad</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Delhi" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Delhi</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Chennai" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Chennai</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Pune" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Pune</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- All Lead Statuses Filter -->
+                        <details class="custom-select-wrapper" id="filter-status-details" style="min-width: 170px;">
+                            <summary class="custom-select-trigger" id="filter-status-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-status-label">All Lead Statuses</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="filter-status-options-container">
+                                <label class="custom-option" onclick="selectStatusFilter('all', 'All Lead Statuses')"><input type="radio" name="status-filter" value="all" checked> All Lead Statuses</label>
+                                <label class="custom-option" onclick="selectStatusFilter('New', 'New')"><input type="radio" name="status-filter" value="New"> New</label>
+                                <label class="custom-option" onclick="selectStatusFilter('Contacted', 'Contacted')"><input type="radio" name="status-filter" value="Contacted"> Contacted</label>
+                                <label class="custom-option" onclick="selectStatusFilter('Qualified', 'Qualified')"><input type="radio" name="status-filter" value="Qualified"> Qualified</label>
+                                <label class="custom-option" onclick="selectStatusFilter('Converted', 'Converted')"><input type="radio" name="status-filter" value="Converted"> Converted</label>
+                                <label class="custom-option" onclick="selectStatusFilter('Lost', 'Lost')"><input type="radio" name="status-filter" value="Lost"> Lost</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Lead Table Container (10 Columns strictly in exact order) -->
+                    <div class="table-container ccm-desktop-table-container">
+                        <table class="ccm-branches-table main-leads-table" id="lead-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="sortLeadsTable('id')">
+                                        <div class="sort-header-content">
+                                            Lead ID
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('customer')">
+                                        <div class="sort-header-content">
+                                            Customer
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('phone')">
+                                        <div class="sort-header-content">
+                                            Mobile Number
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('customerType')">
+                                        <div class="sort-header-content">
+                                            Customer Type
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('source')">
+                                        <div class="sort-header-content">
+                                            Lead Source
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('requirement')">
+                                        <div class="sort-header-content">
+                                            Requirement / Service
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('branch')">
+                                        <div class="sort-header-content">
+                                            Branch
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('agent')">
+                                        <div class="sort-header-content">
+                                            Assigned Agent
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('status')">
+                                        <div class="sort-header-content">
+                                            Lead Status
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortLeadsTable('followup')">
+                                        <div class="sort-header-content">
+                                            Next Follow-up
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th style="width: 80px; text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lead-table-body">
+                                <!-- Populated dynamically by renderLeads() -->
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination -->
+                        <div class="pagination-bar">
+                            <span id="lead-pagination-info">Showing 1-4 of 4</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <button type="button" class="page-btn" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TAB 2 PANEL: Configuration (Dedicated Lead Configuration Area) -->
+                <div id="tab-panel-config" class="ccm-page-section" style="display: none; width: 100%;">
+
+                    <!-- 1. LEAD STATUS PIPELINE CONFIGURATION CARD -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">Lead Status Pipeline</h3>
+                                <p class="section-helper">Configure the status flow used to manage leads.</p>
+                            </div>
+                            <button type="button" class="btn-primary" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px;" onclick="addPipelineStatusRow()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Status
+                            </button>
+                        </div>
+                        
+                        <div class="table-container ccm-desktop-table-container">
+                            <table class="ccm-branches-table config-mgmt-table" id="table-config-pipeline">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 70px; text-align: center;">Order</th>
+                                        <th>Status</th>
+                                        <th style="width: 110px; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="config-pipeline-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="config-input-hint" style="margin-top: 10px;">
+                            Default pipeline flow: <strong>New &rarr; Contacted &rarr; Qualified &rarr; Converted &rarr; Lost</strong>. New leads will start with: <strong>New</strong>.
+                        </div>
+                    </div>
+
+                    <!-- 2. FOLLOW-UP REMINDERS CONFIGURATION CARD -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">Follow-up Reminders</h3>
+                                <p class="section-helper">Configure reminders for scheduled lead follow-ups.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+                            <!-- Clean Toggle Card with Toggle at the Right End -->
+                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 14px 16px;">
+                                <div>
+                                    <strong style="color: var(--color-black); font-size: 0.875rem;">Enable Follow-up Reminders</strong>
+                                    <div style="font-size: 0.75rem; color: #64748b; margin-top: 3px;">Alert the assigned agent when a scheduled lead follow-up is due.</div>
+                                </div>
+                                <label class="status-toggle" title="Enable / Disable Follow-up Reminders" style="display: inline-flex; align-items: center; margin: 0;">
+                                    <input type="checkbox" id="cfg-reminder-enabled" checked onchange="handleReminderToggle(this.checked)">
+                                    <div class="toggle-switch"></div>
+                                </label>
+                            </div>
+
+                            <!-- Reminder Behavior Configuration Area -->
+                            <div id="cfg-reminder-behavior-panel" style="display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 14px 16px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 6px; font-size: 0.8125rem;">Reminder Behavior</label>
+                                    <input type="text" id="cfg-reminder-behavior" class="form-control" placeholder="e.g. Notify assigned agent on scheduled follow-up date and time" value="Notify assigned agent on scheduled follow-up date and time" style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 10px; box-sizing: border-box;">
+                                </div>
+                                <div class="config-input-hint" style="margin: 0; font-size: 0.75rem; color: #64748b;">
+                                    When enabled, follow-up reminders are triggered based on the scheduled follow-up date and time.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Interactive Script for Leads Management -->
+    <script>
+        // Unified Customer Master Data from Existing Platform
+        const customersDB = {
+            'CUST-1001': { name: 'Rajesh Kumar', phone: '+91 98765 43210', branch: 'Bengaluru', type: 'Business Customer', email: 'rajesh.kumar@acme.com' },
+            'CUST-1002': { name: 'Priya Sharma', phone: '+91 99887 65432', branch: 'Mumbai', type: 'Business Customer', email: 'priya.sharma@horizon.in' },
+            'CUST-1003': { name: 'Suresh Reddy', phone: '+91 98480 12345', branch: 'Hyderabad', type: 'Individual', email: 'suresh.reddy@gmail.com' },
+            'CUST-1004': { name: 'Anil Verma', phone: '+91 98100 56789', branch: 'Delhi', type: 'Business Customer', email: 'anil.verma@delhicorp.com' },
+            'CUST-1005': { name: 'Kavya Nair', phone: '+91 98950 24680', branch: 'Chennai', type: 'Individual', email: 'kavya.nair@outlook.com' }
+        };
+
+        // Exact Required Seeded Leads strictly ordered by pipeline sequence: New -> Contacted -> Qualified -> Converted -> Lost
+        const defaultLeads = [
+            {
+                id: "LEAD-8401",
+                customerId: "CUST-1001",
+                customerName: "Rajesh Kumar",
+                phone: "+91 98765 43210",
+                customerType: "New",
+                requirement: "Corporate Shipping Inquiry (FTL - South Region)",
+                branch: "Bengaluru",
+                agentId: "agt-1",
+                agentName: "Deepak Kumar",
+                status: "New",
+                followupDate: "2026-09-04",
+                followupDisplay: "Sep 4, 2026",
+                notes: "Interested in daily scheduled routes between Bengaluru and Hyderabad. Requested rate sheet.",
+                source: "Manual",
+                callId: null,
+                callDateTime: null,
+                createdByAdmin: true,
+                allowEdit: true,
+                allowDelete: true
+            },
+            {
+                id: "LEAD-8210",
+                customerId: "CUST-1003",
+                customerName: "Suresh Reddy",
+                phone: "+91 98480 12345",
+                customerType: "Existing",
+                requirement: "Express Parcel & Logistics Handling",
+                branch: "Hyderabad",
+                agentId: "agt-3",
+                agentName: "Rahul Varma",
+                status: "Contacted",
+                followupDate: "2026-09-05",
+                followupDisplay: "Sep 5, 2026",
+                notes: "Call follow-up regarding door-to-door transit timelines.",
+                source: "Call",
+                callId: "CALL-9440",
+                callDateTime: "Sep 2, 2026 &bull; 11:24 AM",
+                createdByAdmin: false,
+                allowEdit: false,
+                allowDelete: false
+            },
+            {
+                id: "LEAD-8322",
+                customerId: "CUST-1002",
+                customerName: "Priya Sharma",
+                phone: "+91 99887 65432",
+                customerType: "Existing",
+                requirement: "Bulk Contract Shipment (500 MT/month)",
+                branch: "Mumbai",
+                agentId: "agt-2",
+                agentName: "Priya Sharma",
+                status: "Qualified",
+                followupDate: "2026-09-08",
+                followupDisplay: "Sep 8, 2026",
+                notes: "Reviewed volume projections. Meeting scheduled with Hub Dispatch Manager.",
+                source: "Manual",
+                callId: null,
+                callDateTime: null,
+                createdByAdmin: false,
+                allowEdit: false,
+                allowDelete: false
+            },
+            {
+                id: "LEAD-8105",
+                customerId: "CUST-1004",
+                customerName: "Anil Verma",
+                phone: "+91 98100 56789",
+                customerType: "Existing",
+                requirement: "Warehouse Storage & Regional Distribution",
+                branch: "Delhi",
+                agentId: "agt-4",
+                agentName: "Ananya Iyer",
+                status: "Converted",
+                followupDate: "",
+                followupDisplay: "No Follow-up",
+                notes: "Agreement signed for 2,000 sq ft space at Okhla warehouse.",
+                source: "Manual",
+                callId: null,
+                callDateTime: null,
+                createdByAdmin: true,
+                allowEdit: true,
+                allowDelete: true
+            }
+        ];
+
+        let leadsData = [];
+        try {
+            const stored = localStorage.getItem('ccm_leads_data_v11');
+            leadsData = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(defaultLeads));
+        } catch(e) {
+            leadsData = JSON.parse(JSON.stringify(defaultLeads));
+        }
+
+        const allAvailableBranchesList = ["Bengaluru", "Mumbai", "Hyderabad", "Delhi", "Chennai", "Pune"];
+        let selectedBranches = [];
+        let selectedStatusFilter = 'all';
+        let sortConfig = { key: 'statusPipeline', asc: true };
+
+        function getPipelineSequenceMap() {
+            const seqMap = {};
+            const cfg = getLeadConfig();
+            const statuses = Array.isArray(cfg.statuses) ? cfg.statuses : ["New", "Contacted", "Qualified", "Converted", "Lost"];
+            statuses.forEach((st, idx) => {
+                seqMap[st] = idx + 1;
+            });
+            return seqMap;
+        }
+
+        // Default Configurable Lead Workflow and Follow-up Reminders (CCM-17 BRD)
+        const defaultLeadConfig = {
+            statuses: ["New", "Contacted", "Qualified", "Converted", "Lost"],
+            followupReminders: {
+                enabled: true,
+                behavior: "Notify assigned agent on scheduled follow-up date and time"
+            }
+        };
+
+        function getLeadConfig() {
+            try {
+                const stored = localStorage.getItem('ccm_lead_config_v1');
+                if (stored) return JSON.parse(stored);
+            } catch(e) {}
+            return defaultLeadConfig;
+        }
+
+        let currentLeadConfig = getLeadConfig();
+        let configPipelineStatuses = [...currentLeadConfig.statuses];
+        let activeLeadsTab = 'leads';
+
+        // Tab Switching Logic (Leads Management vs Configuration)
+        function switchLeadsTab(tab) {
+            activeLeadsTab = tab;
+            const btnLeads = document.getElementById('tab-btn-leads');
+            const btnConfig = document.getElementById('tab-btn-config');
+            const panelLeads = document.getElementById('tab-panel-leads');
+            const panelConfig = document.getElementById('tab-panel-config');
+            const mgmtActions = document.getElementById('leads-mgmt-header-actions');
+            const configActions = document.getElementById('leads-config-header-actions');
+            const title = document.getElementById('leads-page-title');
+            const subtitle = document.getElementById('leads-page-subtitle');
+
+            if (tab === 'leads') {
+                btnLeads.classList.add('active');
+                btnConfig.classList.remove('active');
+                panelLeads.style.display = 'block';
+                panelConfig.style.display = 'none';
+                mgmtActions.style.display = 'flex';
+                configActions.style.display = 'none';
+                if (title) title.textContent = 'Leads';
+                if (subtitle) subtitle.textContent = 'Manage leads, follow-ups, and customer opportunities.';
+            } else if (tab === 'config') {
+                btnConfig.classList.add('active');
+                btnLeads.classList.remove('active');
+                panelLeads.style.display = 'none';
+                panelConfig.style.display = 'block';
+                mgmtActions.style.display = 'none';
+                configActions.style.display = 'flex';
+                if (title) title.textContent = 'Lead Configuration';
+                if (subtitle) subtitle.textContent = 'Configure lead status workflow and follow-up reminders.';
+                populateLeadConfigForm();
+            }
+        }
+
+        function handleReminderToggle(checked) {
+            const panel = document.getElementById('cfg-reminder-behavior-panel');
+            if (panel) {
+                panel.style.opacity = checked ? '1' : '0.5';
+                panel.style.pointerEvents = checked ? 'auto' : 'none';
+            }
+        }
+
+        function populateLeadConfigForm() {
+            const cfg = getLeadConfig();
+            configPipelineStatuses = Array.isArray(cfg.statuses) && cfg.statuses.length > 0 
+                ? [...cfg.statuses] 
+                : ["New", "Contacted", "Qualified", "Converted", "Lost"];
+
+            renderConfigPipelineTable();
+
+            const reminderEnabled = document.getElementById('cfg-reminder-enabled');
+            const behaviorInput = document.getElementById('cfg-reminder-behavior');
+            const isEnabled = (cfg.followupReminders?.enabled !== false);
+
+            if (reminderEnabled) {
+                reminderEnabled.checked = isEnabled;
+            }
+            if (behaviorInput) {
+                behaviorInput.value = cfg.followupReminders?.behavior || "Notify assigned agent on scheduled follow-up date and time";
+            }
+            handleReminderToggle(isEnabled);
+        }
+
+        let draggedPipelineIndex = null;
+
+        function renderConfigPipelineTable() {
+            const tbody = document.getElementById('config-pipeline-tbody');
+            if (!tbody) return;
+
+            if (configPipelineStatuses.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#888; padding: 16px;">No statuses configured. Click "+ Add Status" above.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = configPipelineStatuses.map((st, index) => {
+                const isFirst = index === 0;
+                const isLast = index === configPipelineStatuses.length - 1;
+                return `
+                    <tr draggable="true" class="config-pipeline-row" data-index="${index}" ondragstart="handlePipelineDragStart(event, ${index})" ondragover="handlePipelineDragOver(event, ${index})" ondragleave="handlePipelineDragLeave(event, ${index})" ondrop="handlePipelineDrop(event, ${index})" ondragend="handlePipelineDragEnd(event)">
+                        <td style="text-align: center;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                <span class="drag-handle" title="Drag to reorder">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="9" cy="5" r="1"></circle><circle cx="9" cy="12" r="1"></circle><circle cx="9" cy="19" r="1"></circle><circle cx="15" cy="5" r="1"></circle><circle cx="15" cy="12" r="1"></circle><circle cx="15" cy="19" r="1"></circle></svg>
+                                </span>
+                                <span class="config-order-pill">${index + 1}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="config-inline-input cfg-status-input" data-index="${index}" value="${escapeHtml(st)}" placeholder="Status name (e.g. In Discussion)" onchange="updatePipelineStatusName(${index}, this.value)">
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="ccm-action-icons" style="justify-content: flex-end;">
+                                <button type="button" class="ccm-icon-btn" title="Move Up" ${isFirst ? 'disabled style="opacity: 0.35; cursor: not-allowed;"' : ''} onclick="movePipelineStatus(${index}, -1)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                </button>
+                                <button type="button" class="ccm-icon-btn" title="Move Down" ${isLast ? 'disabled style="opacity: 0.35; cursor: not-allowed;"' : ''} onclick="movePipelineStatus(${index}, 1)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <button type="button" class="ccm-icon-btn btn-delete" title="Remove Status" onclick="openDeleteLeadStatusModal(${index})" ${configPipelineStatuses.length <= 1 ? 'disabled style="opacity: 0.35; cursor: not-allowed;"' : ''}>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function handlePipelineDragStart(e, index) {
+            syncPipelineInputsFromDom();
+            draggedPipelineIndex = index;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', index);
+            const tr = e.currentTarget;
+            setTimeout(() => {
+                if (tr) tr.classList.add('is-dragging');
+            }, 0);
+        }
+
+        function handlePipelineDragOver(e, index) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            if (draggedPipelineIndex === null || draggedPipelineIndex === index) return;
+            const tr = e.currentTarget;
+            const rect = tr.getBoundingClientRect();
+            const relY = e.clientY - rect.top;
+            if (relY < rect.height / 2) {
+                tr.classList.add('drag-over-top');
+                tr.classList.remove('drag-over-bottom');
+            } else {
+                tr.classList.add('drag-over-bottom');
+                tr.classList.remove('drag-over-top');
+            }
+        }
+
+        function handlePipelineDragLeave(e, index) {
+            const tr = e.currentTarget;
+            tr.classList.remove('drag-over-top', 'drag-over-bottom');
+        }
+
+        function handlePipelineDrop(e, targetIndex) {
+            e.preventDefault();
+            const tr = e.currentTarget;
+            tr.classList.remove('drag-over-top', 'drag-over-bottom');
+            if (draggedPipelineIndex === null || draggedPipelineIndex === targetIndex) return;
+
+            syncPipelineInputsFromDom();
+
+            const rect = tr.getBoundingClientRect();
+            const relY = e.clientY - rect.top;
+            let insertIndex = relY < rect.height / 2 ? targetIndex : targetIndex + 1;
+            if (insertIndex > draggedPipelineIndex) {
+                insertIndex--;
+            }
+
+            const movedItem = configPipelineStatuses.splice(draggedPipelineIndex, 1)[0];
+            configPipelineStatuses.splice(insertIndex, 0, movedItem);
+
+            draggedPipelineIndex = null;
+            renderConfigPipelineTable();
+        }
+
+        function handlePipelineDragEnd(e) {
+            draggedPipelineIndex = null;
+            document.querySelectorAll('#config-pipeline-tbody tr').forEach(tr => {
+                tr.classList.remove('is-dragging', 'drag-over-top', 'drag-over-bottom');
+            });
+        }
+
+        function updatePipelineStatusName(index, val) {
+            if (index >= 0 && index < configPipelineStatuses.length) {
+                configPipelineStatuses[index] = val.trim();
+            }
+        }
+
+        function addPipelineStatusRow() {
+            syncPipelineInputsFromDom();
+            configPipelineStatuses.push(`New Stage ${configPipelineStatuses.length + 1}`);
+            renderConfigPipelineTable();
+            setTimeout(() => {
+                const inputs = document.querySelectorAll('.cfg-status-input');
+                if (inputs.length > 0) {
+                    inputs[inputs.length - 1].focus();
+                    inputs[inputs.length - 1].select();
+                }
+            }, 50);
+        }
+
+        function openDeleteLeadStatusModal(index) {
+            syncPipelineInputsFromDom();
+            if (index < 0 || index >= configPipelineStatuses.length || configPipelineStatuses.length <= 1) return;
+            const statusName = configPipelineStatuses[index];
+            document.getElementById('delete-lead-status-index').value = index;
+            document.getElementById('modal-delete-status-name').textContent = `"${statusName || 'Stage ' + (index + 1)}"`;
+            document.getElementById('overlay-delete-lead-status').style.display = 'flex';
+        }
+
+        function closeDeleteLeadStatusModal() {
+            document.getElementById('overlay-delete-lead-status').style.display = 'none';
+        }
+
+        function confirmDeleteLeadStatus() {
+            syncPipelineInputsFromDom();
+            const indexStr = document.getElementById('delete-lead-status-index').value;
+            const index = parseInt(indexStr, 10);
+            if (!isNaN(index) && index >= 0 && index < configPipelineStatuses.length && configPipelineStatuses.length > 1) {
+                configPipelineStatuses.splice(index, 1);
+                renderConfigPipelineTable();
+            }
+            closeDeleteLeadStatusModal();
+        }
+
+        function movePipelineStatus(index, direction) {
+            syncPipelineInputsFromDom();
+            const targetIndex = index + direction;
+            if (targetIndex >= 0 && targetIndex < configPipelineStatuses.length) {
+                const temp = configPipelineStatuses[index];
+                configPipelineStatuses[index] = configPipelineStatuses[targetIndex];
+                configPipelineStatuses[targetIndex] = temp;
+                renderConfigPipelineTable();
+            }
+        }
+
+        function syncPipelineInputsFromDom() {
+            const inputs = document.querySelectorAll('.cfg-status-input');
+            inputs.forEach(inp => {
+                const idx = parseInt(inp.getAttribute('data-index'), 10);
+                if (!isNaN(idx) && idx >= 0 && idx < configPipelineStatuses.length) {
+                    configPipelineStatuses[idx] = inp.value.trim() || configPipelineStatuses[idx];
+                }
+            });
+        }
+
+        function resetLeadConfigForm() {
+            populateLeadConfigForm();
+            switchLeadsTab('leads');
+        }
+
+        function saveLeadConfig() {
+            syncPipelineInputsFromDom();
+
+            const cleanStatuses = configPipelineStatuses.map(s => s.trim()).filter(s => s.length > 0);
+            if (cleanStatuses.length === 0) {
+                cleanStatuses.push("New");
+            }
+
+            const reminderEnabled = document.getElementById('cfg-reminder-enabled')?.checked !== false;
+            const reminderBehavior = document.getElementById('cfg-reminder-behavior')?.value.trim() || "Notify assigned agent on scheduled follow-up date and time";
+
+            const newConfig = {
+                statuses: cleanStatuses,
+                followupReminders: {
+                    enabled: reminderEnabled,
+                    behavior: reminderBehavior
+                }
+            };
+
+            currentLeadConfig = newConfig;
+            try {
+                localStorage.setItem('ccm_lead_config_v1', JSON.stringify(newConfig));
+            } catch(e) {
+                console.error("Failed to save Lead Configuration to localStorage", e);
+            }
+
+            // Sync status filters & sequence map dynamically
+            updateStatusFilterDropdownOptions(cleanStatuses);
+
+            // Re-render leads table & switch back to Leads tab
+            renderLeads();
+            switchLeadsTab('leads');
+        }
+
+        function updateStatusFilterDropdownOptions(statusesList) {
+            const container = document.getElementById('filter-status-options-container');
+            if (!container) return;
+
+            let html = `<label class="custom-option" onclick="selectStatusFilter('all', 'All Lead Statuses')"><input type="radio" name="status-filter" value="all" ${selectedStatusFilter === 'all' ? 'checked' : ''}> All Lead Statuses</label>`;
+            statusesList.forEach(st => {
+                html += `<label class="custom-option" onclick="selectStatusFilter('${escapeHtml(st)}', '${escapeHtml(st)}')"><input type="radio" name="status-filter" value="${escapeHtml(st)}" ${selectedStatusFilter === st ? 'checked' : ''}> ${escapeHtml(st)}</label>`;
+            });
+            container.innerHTML = html;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateLeadConfigForm();
+            renderLeads();
+        });
+
+        function renderLeads() {
+            const tbody = document.getElementById('lead-table-body');
+            if (!tbody) return;
+
+            const query = (document.getElementById('lead-search-input')?.value || '').toLowerCase().trim();
+
+            const filtered = leadsData.filter(l => {
+                const matchesSearch = !query ||
+                    l.id.toLowerCase().includes(query) ||
+                    l.customerName.toLowerCase().includes(query) ||
+                    (l.phone && l.phone.includes(query)) ||
+                    (l.agentName && l.agentName.toLowerCase().includes(query)) ||
+                    l.requirement.toLowerCase().includes(query);
+
+                const matchesBranch = selectedBranches.length === 0 || 
+                    selectedBranches.length === allAvailableBranchesList.length || 
+                    selectedBranches.includes(l.branch);
+                    
+                const matchesStatus = selectedStatusFilter === 'all' || l.status === selectedStatusFilter;
+
+                return matchesSearch && matchesBranch && matchesStatus;
+            });
+
+            // Sorting - with status pipeline order support (New -> Contacted -> Qualified -> Converted -> Lost)
+            const pipelineSequenceMap = getPipelineSequenceMap();
+            filtered.sort((a, b) => {
+                if (sortConfig.key === 'status' || sortConfig.key === 'statusPipeline') {
+                    const rankA = pipelineSequenceMap[a.status] || 99;
+                    const rankB = pipelineSequenceMap[b.status] || 99;
+                    if (rankA !== rankB) {
+                        return sortConfig.asc ? rankA - rankB : rankB - rankA;
+                    }
+                }
+                let valA = a[sortConfig.key] || '';
+                let valB = b[sortConfig.key] || '';
+                if (typeof valA === 'string') valA = valA.toLowerCase();
+                if (typeof valB === 'string') valB = valB.toLowerCase();
+                if (valA < valB) return sortConfig.asc ? -1 : 1;
+                if (valA > valB) return sortConfig.asc ? 1 : -1;
+                return 0;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: #888; padding: 28px;">No matching leads found.</td></tr>`;
+                document.getElementById('lead-pagination-info').textContent = `Showing 0 of ${leadsData.length}`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(l => {
+                // Customer Type Badge: Existing vs New
+                let custTypeBadge = '';
+                if (l.customerType === 'New') {
+                    custTypeBadge = '<span style="padding: 2px 7px; background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">New</span>';
+                } else {
+                    custTypeBadge = '<span style="padding: 2px 7px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Existing</span>';
+                }
+
+                // Lead Pipeline Status Badge
+                let statusBadge = '';
+                switch (l.status) {
+                    case 'New':
+                        statusBadge = '<span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-weight: 600; font-size: 0.75rem;">New</span>';
+                        break;
+                    case 'Contacted':
+                        statusBadge = '<span style="padding: 2px 7px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Contacted</span>';
+                        break;
+                    case 'Qualified':
+                        statusBadge = '<span style="padding: 2px 7px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Qualified</span>';
+                        break;
+                    case 'Converted':
+                        statusBadge = '<span style="padding: 2px 7px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Converted</span>';
+                        break;
+                    case 'Lost':
+                        statusBadge = '<span style="padding: 2px 7px; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Lost</span>';
+                        break;
+                    default:
+                        statusBadge = `<span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-weight: 600; font-size: 0.75rem;">${escapeHtml(l.status)}</span>`;
+                }
+
+                // Standard CCM Actions column rendering using icon buttons (View, Edit, Delete)
+                const isDisallowedPerson = (l.customerName === 'Priya Sharma' || l.agentName === 'Rahul Varma' || l.customerName === 'Rahul Varma');
+                const canEdit = (l.allowEdit !== false && !isDisallowedPerson);
+                const canDelete = (l.allowDelete !== false && !isDisallowedPerson);
+                let actionsHtml = `
+                    <div class="ccm-action-icons">
+                        <button type="button" class="ccm-icon-btn" title="View Lead Details" onclick="openViewLeadModal('${escapeHtml(l.id)}')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                        ${canEdit ? `
+                        <a href="edit-lead.html?id=${encodeURIComponent(l.id)}" class="ccm-icon-btn" title="Edit Lead">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </a>
+                        ` : ''}
+                        ${canDelete ? `
+                        <button type="button" class="ccm-icon-btn" title="Delete Lead" onclick="openDeleteLeadModal('${escapeHtml(l.id)}', '${escapeHtml(l.customerName)}')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                        ` : ''}
+                    </div>
+                `;
+
+                // Lead Source Badge: Manual vs Call
+                let sourceBadge = '';
+                if (l.source === 'Call' || (l.source && l.source.toLowerCase().includes('call'))) {
+                    sourceBadge = '<span style="padding: 2px 7px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call</span>';
+                } else {
+                    sourceBadge = '<span style="padding: 2px 7px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Manual</span>';
+                }
+
+                // Assigned Agent
+                const assignedAgentHtml = escapeHtml(l.agentName || 'Unassigned');
+
+                return `
+                    <tr data-id="${escapeHtml(l.id)}">
+                        <td style="font-family: monospace; font-weight: 700; color: #1e40af;">
+                            ${escapeHtml(l.id)}
+                        </td>
+                        <td style="font-weight: 600;">
+                            <a href="customer-360.html?id=${escapeHtml(l.customerId || 'CUST-1001')}" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                ${escapeHtml(l.customerName || '—')}
+                            </a>
+                        </td>
+                        <td style="font-family: monospace;">
+                            ${escapeHtml(l.phone || '')}
+                        </td>
+                        <td>
+                            ${custTypeBadge}
+                        </td>
+                        <td>
+                            ${sourceBadge}
+                        </td>
+                        <td>
+                            ${escapeHtml(l.requirement)}
+                        </td>
+                        <td>
+                            ${escapeHtml(l.branch)}
+                        </td>
+                        <td>
+                            ${assignedAgentHtml}
+                        </td>
+                        <td>
+                            ${statusBadge}
+                        </td>
+                        <td>
+                            <span style="font-weight: 600; color: #475569;">${escapeHtml(l.followupDisplay || l.followupDate || 'No Follow-up')}</span>
+                        </td>
+                        <td class="action-cell" style="text-align: right; white-space: nowrap;">
+                            ${actionsHtml}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('lead-pagination-info').textContent = `Showing 1-${filtered.length} of ${filtered.length}`;
+        }
+
+        function filterLeadTable() {
+            renderLeads();
+        }
+
+        function filterBranchDropdownOptions(input) {
+            const query = input.value.toLowerCase().trim();
+            const container = document.getElementById('filter-branch-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    opt.style.display = 'flex';
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleAllBranchFilters(isChecked) {
+            const itemCheckboxes = document.querySelectorAll('.cb-branch-filter-item');
+            itemCheckboxes.forEach(cb => {
+                cb.checked = isChecked;
+            });
+            if (isChecked) {
+                selectedBranches = [...allAvailableBranchesList];
+            } else {
+                selectedBranches = [];
+            }
+            updateBranchFilterTriggerLabel();
+            renderLeads();
+        }
+
+        function handleBranchItemCheckboxChange() {
+            const itemCheckboxes = document.querySelectorAll('.cb-branch-filter-item');
+            const selectAllCb = document.getElementById('cb-branch-select-all');
+            
+            selectedBranches = [];
+            let allChecked = true;
+            let noneChecked = true;
+
+            itemCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedBranches.push(cb.value);
+                    noneChecked = false;
+                } else {
+                    allChecked = false;
+                }
+            });
+
+            if (selectAllCb) {
+                selectAllCb.checked = allChecked;
+                selectAllCb.indeterminate = !allChecked && !noneChecked;
+            }
+
+            updateBranchFilterTriggerLabel();
+            renderLeads();
+        }
+
+        function updateBranchFilterTriggerLabel() {
+            const trigger = document.querySelector('#filter-branch-trigger .trigger-label');
+            if (!trigger) return;
+
+            if (selectedBranches.length === 0 || selectedBranches.length === allAvailableBranchesList.length) {
+                trigger.textContent = 'All Branches';
+            } else if (selectedBranches.length === 1) {
+                trigger.textContent = selectedBranches[0];
+            } else {
+                trigger.textContent = `${selectedBranches.length} Branches`;
+            }
+        }
+
+        function selectStatusFilter(val, label) {
+            selectedStatusFilter = val;
+            document.getElementById('filter-status-label').textContent = label;
+            document.getElementById('filter-status-details')?.removeAttribute('open');
+            renderLeads();
+        }
+
+        function sortLeadsTable(key) {
+            if (sortConfig.key === key) {
+                sortConfig.asc = !sortConfig.asc;
+            } else {
+                sortConfig.key = key;
+                sortConfig.asc = true;
+            }
+            renderLeads();
+        }
+
+        function openViewLeadModal(leadId) {
+            const l = leadsData.find(x => x.id === leadId);
+            if (!l) return;
+
+            // Admin Chip next to Assigned Agent strictly when manually created by Admin (BRD Rule 4)
+            const showAdminChipOnAgent = (l.createdByAdmin === true && (l.source === 'Manual' || !l.callId));
+
+            document.getElementById('view-lead-id-subtitle').textContent = l.id;
+            document.getElementById('view-lead-cust-name').textContent = l.customerName || '—';
+            document.getElementById('view-lead-cust-phone').textContent = l.phone || '—';
+            document.getElementById('view-lead-cust-type-badge').textContent = (l.customerType || 'Existing') + ' Customer';
+
+            document.getElementById('view-lead-branch').textContent = l.branch;
+            document.getElementById('view-lead-agent').textContent = l.agentName || 'Unassigned';
+            
+            // Lead Source
+            const isCallLead = (l.source === 'Call' || (l.source && l.source.toLowerCase().includes('call')));
+            if (isCallLead) {
+                document.getElementById('view-lead-source').innerHTML = '<span style="padding: 2px 8px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call</span>';
+                const callIdDisplay = l.callId || 'CALL-9440';
+                const callTimeDisplay = l.callDateTime ? ` &bull; <span style="font-size: 0.75rem; color: #64748b; font-family: sans-serif;">${l.callDateTime}</span>` : '';
+                document.getElementById('view-lead-origin-call').innerHTML = `<span style="font-family: monospace; font-weight: 700; color: #1e40af;">${escapeHtml(callIdDisplay)}</span>${callTimeDisplay}`;
+            } else {
+                document.getElementById('view-lead-source').innerHTML = '<span style="padding: 2px 8px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Manual</span>';
+                document.getElementById('view-lead-origin-call').innerHTML = '<span style="color: #64748b; font-style: italic;">Not Applicable</span>';
+            }
+
+            document.getElementById('view-lead-req').textContent = l.requirement;
+            document.getElementById('view-lead-followup').textContent = l.followupDisplay || l.followupDate || 'No Follow-up';
+
+            let statusBadge = '';
+            switch (l.status) {
+                case 'New':
+                    statusBadge = '<span style="padding: 2px 8px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 6px; font-weight: 600; font-size: 0.75rem;">New</span>';
+                    break;
+                case 'Contacted':
+                    statusBadge = '<span style="padding: 2px 8px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 6px; font-weight: 600; font-size: 0.75rem;">Contacted</span>';
+                    break;
+                case 'Qualified':
+                    statusBadge = '<span style="padding: 2px 8px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 6px; font-weight: 600; font-size: 0.75rem;">Qualified</span>';
+                    break;
+                case 'Converted':
+                    statusBadge = '<span style="padding: 2px 8px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 6px; font-weight: 600; font-size: 0.75rem;">Converted</span>';
+                    break;
+                case 'Lost':
+                    statusBadge = '<span style="padding: 2px 8px; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 6px; font-weight: 600; font-size: 0.75rem;">Lost</span>';
+                    break;
+                default:
+                    statusBadge = `<span style="padding: 2px 8px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 6px; font-weight: 600; font-size: 0.75rem;">${escapeHtml(l.status)}</span>`;
+            }
+            document.getElementById('view-lead-status-badge').innerHTML = statusBadge;
+
+            const notesContainer = document.getElementById('view-lead-notes-container');
+            if (l.notes) {
+                document.getElementById('view-lead-notes').textContent = l.notes;
+                notesContainer.style.display = 'block';
+            } else {
+                notesContainer.style.display = 'none';
+            }
+
+            const editBtn = document.getElementById('view-lead-edit-btn');
+            if (l.allowEdit !== false) {
+                editBtn.style.display = 'inline-flex';
+                editBtn.onclick = () => {
+                    window.location.href = `edit-lead.html?id=${encodeURIComponent(l.id)}`;
+                };
+            } else {
+                editBtn.style.display = 'none';
+            }
+
+            document.getElementById('overlay-view-lead').style.display = 'flex';
+        }
+
+        function closeViewLeadModal() {
+            document.getElementById('overlay-view-lead').style.display = 'none';
+        }
+
+        // Delete Lead Modal Handlers
+        function openDeleteLeadModal(id, customerName) {
+            document.getElementById('delete-lead-target-id').value = id;
+            document.getElementById('modal-delete-lead-id').textContent = id;
+            document.getElementById('modal-delete-lead-customer').textContent = customerName || 'Customer';
+            document.getElementById('overlay-delete-lead').style.display = 'flex';
+        }
+
+        function closeDeleteLeadModal() {
+            document.getElementById('overlay-delete-lead').style.display = 'none';
+        }
+
+        function confirmDeleteLead() {
+            const id = document.getElementById('delete-lead-target-id').value;
+            if (id) {
+                leadsData = leadsData.filter(x => x.id !== id);
+                try {
+                    localStorage.setItem('ccm_leads_data_v10', JSON.stringify(leadsData));
+                } catch(e) {}
+                renderLeads();
+            }
+            closeDeleteLeadModal();
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>

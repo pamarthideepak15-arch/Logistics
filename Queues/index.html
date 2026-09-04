@@ -1,0 +1,2757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queues — Exelon Logistics ERP</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="queues.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .section-card {
+            padding: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background: var(--color-white);
+            margin-bottom: 20px;
+        }
+        .section-header {
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--color-black);
+            margin: 0;
+        }
+        .section-helper {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 2px;
+            margin-bottom: 0;
+        }
+        .after-hours-split-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        @media (max-width: 900px) {
+            .after-hours-split-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        .after-hours-radio-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .after-hours-radio-option {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background-color: var(--color-white);
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+        }
+        .after-hours-radio-option:hover {
+            border-color: var(--color-black);
+            background-color: var(--color-bg-light);
+        }
+        .after-hours-radio-option.selected {
+            border-color: var(--color-black);
+            background-color: #f8fafc;
+        }
+        .after-hours-radio-option input[type="radio"] {
+            margin: 0;
+            flex-shrink: 0;
+            width: 15px;
+            height: 15px;
+            accent-color: var(--color-black);
+            cursor: pointer;
+        }
+        .after-hours-radio-label {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
+        .after-hours-radio-label strong {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--color-black);
+            line-height: 1.25;
+        }
+        .after-hours-radio-label span {
+            font-size: 0.75rem;
+            color: #666;
+            line-height: 1.35;
+        }
+        .after-hours-config-box {
+            background-color: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 100%;
+        }
+        .audio-empty-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--color-white);
+            border: 1.5px dashed #8c8c8c;
+            border-radius: var(--border-radius-base);
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .audio-empty-box:hover {
+            border-color: var(--color-black);
+            background-color: #f8fafc;
+        }
+        .audio-empty-box.drag-over {
+            border-color: var(--color-black);
+            background-color: #f1f5f9;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger (Pure CSS) -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- Delete Queue Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-delete-queue" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeleteModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Queue</h3>
+            <p class="modal-desc">Are you sure you want to delete this queue? Incoming calls will be redirected to the configured fallback destination.</p>
+            <input type="hidden" id="delete-queue-id" value="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeleteQueue()">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="overlay-holiday-modal" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 380px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeHolidayModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h3 class="modal-title" id="holiday-modal-title">Add Holiday</h3>
+            <p class="modal-desc">Configure a holiday date when incoming calls will be treated as outside operating hours.</p>
+            <form id="holiday-form" onsubmit="event.preventDefault(); saveHoliday();">
+                <input type="hidden" id="holiday-edit-id" value="">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 4px;">Holiday Name *</label>
+                    <input type="text" id="holiday-input-name" class="form-control" placeholder="e.g., Republic Day" required style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 10px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 4px;">Date *</label>
+                    <input type="text" id="holiday-input-date" class="form-control" placeholder="Select holiday date" required style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 10px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 4px;">Status</label>
+                    <input type="text" class="form-control" value="Closed" readonly style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 0 10px; background-color: #f1f5f9; color: #475569; font-weight: 600;">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeHolidayModal()">Cancel</button>
+                    <button type="submit" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" id="btn-save-holiday">Save Holiday</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Holiday Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-delete-holiday" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeleteHolidayModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Holiday</h3>
+            <p class="modal-desc">Are you sure you want to delete this holiday? Operating hours schedule will apply on this date instead.</p>
+            <input type="hidden" id="delete-holiday-id" value="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeleteHolidayModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeleteHoliday()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Admin Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="../Company-Branches/index.html" class="rail-icon active" data-tooltip="CCM">
+                        <!-- Headset / Telephony Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="../Company-Branches/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="../Telephony/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="../IVR/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="../Call-Routing/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="../Queues/index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="../Agents/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="../CCM/customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Queues</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="main-scroll-area">
+                
+                <!-- 1. Page Header (Standard HRMS: Left Title/Subtitle + Right Header Actions CTA) -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Queues</h1>
+                        <p class="page-subtitle">Manage call queues, branches, and assigned agents.</p>
+                    </div>
+                    <div class="header-actions" id="queue-header-actions" style="display: flex; gap: 10px; align-items: center;">
+                        <a href="add-queue.html" class="btn-primary" id="btn-add-queue-header" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add Queue
+                        </a>
+
+                        <!-- Date Range Calendar Picker (HRMS Attendance Standard - positioned at top right left of Export) -->
+                        <div id="cb-date-range-picker-wrap" style="display: none; align-items: center; gap: 6px; background: var(--color-white); border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 8px; height: 32px; box-sizing: border-box; cursor: pointer; max-width: 200px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="color: #555; flex-shrink: 0;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            <input type="text" id="cb-date-range-input" placeholder="Select dates" value="All Dates" readonly style="border: none; outline: none; font-size: 0.75rem; width: 145px; font-weight: 600; font-family: inherit; background: transparent; cursor: pointer; color: var(--color-black); padding: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11" style="color: #666; flex-shrink: 0;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+
+                        <button type="button" class="btn-export-excel" id="btn-export-callbacks-header" onclick="exportCallbacksToExcel()" title="Export filtered records to Excel (.xlsx)" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Export</span>
+                        </button>
+
+                        <!-- Configuration Tab Top-Right Actions (HRMS Standard) -->
+                        <div id="cfg-header-actions" style="display: none; gap: 8px; align-items: center;">
+                            <button type="button" class="btn-secondary" style="height: 32px; padding: 0 14px; font-size: 0.8125rem;" onclick="switchQueueTab('queues')">Cancel</button>
+                            <button type="button" class="btn-primary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem;" onclick="saveQueueConfiguration()">Save Configuration</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation: Queue Management, Callback Requests & Configuration -->
+                <div class="ccm-tab-bar">
+                    <button type="button" class="ccm-tab-btn active" id="tab-btn-queues" onclick="switchQueueTab('queues')">
+                        Queue Management
+                    </button>
+                    <button type="button" class="ccm-tab-btn" id="tab-btn-callbacks" onclick="switchQueueTab('callbacks')">
+                        Callback Requests
+                        <span class="ccm-tab-badge" id="callback-pending-badge">7</span>
+                    </button>
+                    <button type="button" class="ccm-tab-btn" id="tab-btn-config" onclick="switchQueueTab('config')">
+                        Configuration
+                    </button>
+                </div>
+
+                <!-- Tab Panel 1: Queue Management -->
+                <div id="tab-panel-queues" class="ccm-page-section">
+
+                    <!-- Full-Width Search, Branch Filter & Status Filter Bar -->
+                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%;">
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 220px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="queue-search-input" class="search-input" placeholder="Search Queues..." oninput="filterQueues()">
+                        </div>
+
+                        <!-- Branch Filter Dropdown (Multi-Select with Search & Select All) -->
+                        <details class="custom-select-wrapper" id="filter-branch-details" style="min-width: 170px;">
+                            <summary class="custom-select-trigger" id="filter-branch-trigger" style="height: 32px;">
+                                <span class="trigger-label">All Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="filter-branch-options">
+                                <div class="custom-select-search">
+                                    <div class="custom-select-search-wrapper">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterBranchDropdownOptions(this)">
+                                    </div>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                    <input type="checkbox" id="cb-branch-select-all" onchange="toggleAllBranchFilters(this.checked)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                    <span style="font-weight: 600; color: var(--color-black);">Select All</span>
+                                </label>
+                                <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
+                                <div id="filter-branch-list-items">
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Bengaluru" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Bengaluru</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Mumbai" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Mumbai</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Hyderabad" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Hyderabad</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Delhi" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Delhi</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Chennai" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Chennai</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Pune" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Pune</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Mangalore" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Mangalore</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- Status Filter Dropdown -->
+                        <details class="custom-select-wrapper" id="filter-status-details" style="min-width: 140px;">
+                            <summary class="custom-select-trigger" id="filter-status-trigger" style="height: 32px;">
+                                <span class="trigger-label">All Statuses</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option" onclick="filterByStatus('All')">All Statuses</label>
+                                <label class="custom-option" onclick="filterByStatus('Active')">Active</label>
+                                <label class="custom-option" onclick="filterByStatus('Inactive')">Inactive</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Initial Empty State View -->
+                    <div id="queue-empty-view" style="display: none;">
+                        <div class="ccm-central-box" style="padding: 24px; text-align: center;">
+                            <div class="ccm-central-empty-content" style="flex-direction: column; gap: 12px; align-items: center; justify-content: center; text-align: center;">
+                                <div class="ccm-central-empty-text" style="align-items: center;">
+                                    <span class="ccm-central-empty-primary" style="font-size: 0.9375rem;">No queues configured</span>
+                                    <span class="ccm-central-empty-secondary" style="font-size: 0.8125rem;">Create call queues to distribute incoming customer calls among team agents.</span>
+                                </div>
+                                <a href="add-queue.html" class="btn-primary" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    Add Queue
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configured State View (Desktop Table & Mobile Cards with HRMS Pagination) -->
+                    <div id="queue-configured-view">
+                        <!-- Desktop Table (Screens > 768px) -->
+                        <div class="table-container ccm-desktop-table-container">
+                            <table class="ccm-branches-table queues-table">
+                                <thead>
+                                    <tr>
+                                        <th class="sortable" onclick="sortQueues('name')">
+                                            <div class="sort-header-content">
+                                                Queue Name
+                                                <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                            </div>
+                                        </th>
+                                        <th class="sortable" onclick="sortQueues('branch')">
+                                            <div class="sort-header-content">
+                                                Branch
+                                                <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                            </div>
+                                        </th>
+                                        <th class="sortable" onclick="sortQueues('agents')">
+                                            <div class="sort-header-content">
+                                                Assigned Agents
+                                                <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                            </div>
+                                        </th>
+                                        <th style="text-align: center; width: 100px;">Status</th>
+                                        <th style="text-align: right; width: 90px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="queue-rules-body">
+                                    <!-- Dynamic rows injected via JS -->
+                                </tbody>
+                            </table>
+
+                            <!-- Pagination (Matching HRMS Standard) -->
+                            <div class="pagination-bar">
+                                <span id="pagination-info">Showing 1-6 of 6</span>
+                                <div class="pagination-controls">
+                                    <button type="button" class="page-btn" disabled>Prev</button>
+                                    <span class="page-number">1</span>
+                                    <button type="button" class="page-btn" disabled>Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Cards Container (Screens <= 768px) -->
+                        <div class="ccm-mobile-cards-container" id="queue-cards-body">
+                            <!-- Injected dynamically via JS -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Tab Panel 2: Callback Requests (CCM-13) -->
+                <div id="tab-panel-callbacks" class="ccm-page-section" style="display: none;">
+
+                    <!-- Search & Filter Bar for Callbacks: [Search] [All Branches] [All Statuses] -->
+                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%;">
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 220px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="callback-search-input" class="search-input" placeholder="Search customer, phone, or queue..." oninput="filterCallbacks()">
+                        </div>
+
+                        <!-- 1. Branch Multi-Select Filter Dropdown -->
+                        <details class="custom-select-wrapper" id="filter-cb-branch-details" style="min-width: 150px;">
+                            <summary class="custom-select-trigger" id="filter-cb-branch-trigger" style="height: 32px;">
+                                <span class="trigger-label">All Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" style="padding: 6px 8px; max-height: 240px; overflow-y: auto;">
+                                <div class="custom-select-search" style="padding: 0 0 6px 0; border-bottom: 1px solid var(--color-border); margin-bottom: 4px;">
+                                    <div class="custom-select-search-wrapper" style="position: relative; width: 100%;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterCbBranchDropdownOptions(this)" style="width: 100%; height: 28px; padding-left: 28px; font-size: 0.75rem; border: 1px solid var(--color-border); border-radius: 4px; background: var(--color-bg-light); color: var(--color-black); outline: none;">
+                                    </div>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                    <input type="checkbox" id="cb-callback-branch-select-all" onchange="toggleAllCbBranchFilters(this.checked)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                    <span style="font-weight: 600; color: var(--color-black);">Select All</span>
+                                </label>
+                                <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
+                                <div id="filter-cb-branch-list-items">
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-callback-branch-filter-item" value="Bengaluru" onchange="handleCbBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Bengaluru</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-callback-branch-filter-item" value="Mumbai" onchange="handleCbBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Mumbai</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-callback-branch-filter-item" value="Hyderabad" onchange="handleCbBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Hyderabad</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-callback-branch-filter-item" value="Delhi" onchange="handleCbBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Delhi</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-callback-branch-filter-item" value="Chennai" onchange="handleCbBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Chennai</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-callback-branch-filter-item" value="Pune" onchange="handleCbBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Pune</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-callback-branch-filter-item" value="Mangalore" onchange="handleCbBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Mangalore</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- 2. Callback Status Filter Dropdown -->
+                        <details class="custom-select-wrapper" id="filter-cb-status-details" style="min-width: 140px;">
+                            <summary class="custom-select-trigger" id="filter-cb-status-trigger" style="height: 32px;">
+                                <span class="trigger-label">All Statuses</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option" onclick="filterCallbackByStatus('All')">All Statuses</label>
+                                <label class="custom-option" onclick="filterCallbackByStatus('Pending')">Pending</label>
+                                <label class="custom-option" onclick="filterCallbackByStatus('Completed')">Completed</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Callback Requests Table (Customer | Phone Number | Branch | Queue | Requested Date & Time | Status) -->
+                    <div class="table-container ccm-desktop-table-container">
+                        <table class="ccm-branches-table callback-requests-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="sortCallbacks('customer')">
+                                        <div class="sort-header-content">
+                                            Customer
+                                            <span class="sort-icon" id="sort-icon-customer">
+                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th>Phone Number</th>
+                                    <th class="sortable" onclick="sortCallbacks('branch')">
+                                        <div class="sort-header-content">
+                                            Branch
+                                            <span class="sort-icon" id="sort-icon-branch">
+                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortCallbacks('queue')">
+                                        <div class="sort-header-content">
+                                            Queue
+                                            <span class="sort-icon" id="sort-icon-queue">
+                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortCallbacks('requestedAt')">
+                                        <div class="sort-header-content">
+                                            Requested Date &amp; Time
+                                            <span class="sort-icon" id="sort-icon-requestedAt">
+                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" style="text-align: center; width: 120px;" onclick="sortCallbacks('status')">
+                                        <div class="sort-header-content" style="justify-content: center;">
+                                            Status
+                                            <span class="sort-icon" id="sort-icon-status">
+                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg>
+                                            </span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="callback-table-body">
+                                <!-- Injected dynamically via JS -->
+                            </tbody>
+                        </table>
+
+                        <!-- Callback Pagination -->
+                        <div class="pagination-bar">
+                            <span id="callback-pagination-info">Showing 1-7 of 7</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <button type="button" class="page-btn" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Panel 3: Queue Configuration (CCM-14) -->
+                <div id="tab-panel-config" class="ccm-page-section" style="display: none; width: 100%;">
+
+                    <!-- 1. OPERATING HOURS CARD -->
+                    <div class="section-card" style="margin-bottom: 24px;">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">Operating Hours</h3>
+                                <p class="section-helper">Define the hours during which incoming calls are handled by the support team.</p>
+                            </div>
+                        </div>
+
+                        <div class="schedule-table-wrap">
+                            <table class="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 150px;">Day</th>
+                                        <th style="width: 140px;">Status</th>
+                                        <th style="width: 160px;">Start Time</th>
+                                        <th style="width: 160px;">End Time</th>
+                                        <th>Schedule Summary</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="operating-hours-tbody">
+                                    <!-- Injected dynamically via renderOperatingHours() -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 2. HOLIDAY CALENDAR CARD -->
+                    <div class="section-card" style="margin-bottom: 24px;">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">Holiday Calendar</h3>
+                                <p class="section-helper">Define dates when incoming calls should be treated as outside operating hours.</p>
+                            </div>
+                            <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; gap: 6px; height: 30px; font-size: 0.75rem; padding: 0 12px;" onclick="openAddHolidayModal()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Holiday
+                            </button>
+                        </div>
+
+                        <div class="holiday-table-container table-responsive">
+                            <table class="holiday-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40%;">Holiday Name</th>
+                                        <th style="width: 30%;">Date</th>
+                                        <th style="width: 15%;">Status</th>
+                                        <th style="width: 15%; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="holiday-calendar-tbody">
+                                    <!-- Injected dynamically via renderHolidayCalendar() -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 3. AFTER-HOURS HANDLING CARD -->
+                    <div class="section-card" style="margin-bottom: 24px;">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">After-hours Handling</h3>
+                                <p class="section-helper">Configure how calls are handled outside the configured operating hours or on configured holidays.</p>
+                            </div>
+                        </div>
+
+                        <!-- Handling Method Selector (Compact Horizontal Tabs) -->
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="margin-bottom: 2px; font-weight: 600; color: var(--color-black);">Handling Method *</label>
+                            <p style="font-size: 0.75rem; color: #64748b; margin: 0 0 10px 0;">Select a handling method to configure its settings.</p>
+                            
+                            <div class="after-hours-tab-bar">
+                                <button type="button" class="after-hours-tab-btn active" id="cfg-ah-tab-btn-message" onclick="selectConfigHandlingAction('ah', 'message')">
+                                    Configurable Message
+                                </button>
+                                <button type="button" class="after-hours-tab-btn" id="cfg-ah-tab-btn-voicemail" onclick="selectConfigHandlingAction('ah', 'voicemail')">
+                                    Voicemail Capture
+                                </button>
+                                <button type="button" class="after-hours-tab-btn" id="cfg-ah-tab-btn-whatsapp" onclick="selectConfigHandlingAction('ah', 'whatsapp')">
+                                    Automatic WhatsApp Notification
+                                </button>
+                                <button type="button" class="after-hours-tab-btn" id="cfg-ah-tab-btn-sms" onclick="selectConfigHandlingAction('ah', 'sms')">
+                                    Automatic SMS Notification
+                                </button>
+                            </div>
+                            <input type="hidden" id="cfg-ah-action-val" value="message">
+                        </div>
+
+                        <!-- Dynamic Configuration Area -->
+                        <div class="after-hours-config-box" style="margin-top: 14px;">
+                            <input type="file" id="cfg-file-input-ah-message" accept="audio/*,.mp3,.wav" style="display: none;" onchange="handleAudioFileUpload('ah', 'message', this)">
+                            <input type="file" id="cfg-file-input-ah-voicemail" accept="audio/*,.mp3,.wav" style="display: none;" onchange="handleAudioFileUpload('ah', 'voicemail', this)">
+
+                            <!-- Method 1: Configurable Message -->
+                            <div id="cfg-ah-config-block-message">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 6px;">After-hours Audio Message *</label>
+                                    
+                                    <div id="cfg-ah-msg-audio-empty" class="audio-empty-box" style="display: flex;" 
+                                         onclick="triggerAudioUpload('ah', 'message')"
+                                         ondragover="handleAudioDragOver(event, this)"
+                                         ondragleave="handleAudioDragLeave(event, this)"
+                                         ondrop="handleAudioDrop(event, 'ah', 'message', this)">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16" style="color: #64748b;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                            <span style="font-size: 0.8125rem; color: #64748b;">No after-hours audio message configured — Click or drag &amp; drop audio file (.mp3, .wav)</span>
+                                        </div>
+                                        <button type="button" class="btn-audio-upload" onclick="event.stopPropagation(); triggerAudioUpload('ah', 'message')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                            Upload Audio
+                                        </button>
+                                    </div>
+
+                                    <div id="cfg-ah-msg-audio-uploaded" class="audio-uploaded-box" style="display: none;">
+                                        <div class="audio-file-info">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: #475569; flex-shrink: 0;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                                            <span id="cfg-ah-msg-audio-filename"></span>
+                                        </div>
+                                        <div class="audio-actions-group">
+                                            <button type="button" class="btn-audio-preview" id="cfg-btn-preview-ah-message" onclick="toggleAudioPreview('ah', 'message')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                <span>Preview</span>
+                                            </button>
+                                            <button type="button" class="btn-audio-change" onclick="triggerAudioUpload('ah', 'message')" title="Replace audio file">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                Change
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="cfg-ah-audio-val" value="">
+                                </div>
+                            </div>
+
+                            <!-- Method 2: Voicemail Capture -->
+                            <div id="cfg-ah-config-block-voicemail" style="display: none;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 6px;">After-hours Voicemail Greeting *</label>
+                                    
+                                    <div id="cfg-ah-vm-audio-empty" class="audio-empty-box" style="display: flex;"
+                                         onclick="triggerAudioUpload('ah', 'voicemail')"
+                                         ondragover="handleAudioDragOver(event, this)"
+                                         ondragleave="handleAudioDragLeave(event, this)"
+                                         ondrop="handleAudioDrop(event, 'ah', 'voicemail', this)">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16" style="color: #64748b;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                            <span style="font-size: 0.8125rem; color: #64748b;">No after-hours voicemail greeting configured — Click or drag &amp; drop audio file (.mp3, .wav)</span>
+                                        </div>
+                                        <button type="button" class="btn-audio-upload" onclick="event.stopPropagation(); triggerAudioUpload('ah', 'voicemail')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                            Upload Audio
+                                        </button>
+                                    </div>
+
+                                    <div id="cfg-ah-vm-audio-uploaded" class="audio-uploaded-box" style="display: none;">
+                                        <div class="audio-file-info">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: #475569; flex-shrink: 0;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                                            <span id="cfg-ah-vm-audio-filename"></span>
+                                        </div>
+                                        <div class="audio-actions-group">
+                                            <button type="button" class="btn-audio-preview" id="cfg-btn-preview-ah-voicemail" onclick="toggleAudioPreview('ah', 'voicemail')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                <span>Preview</span>
+                                            </button>
+                                            <button type="button" class="btn-audio-change" onclick="triggerAudioUpload('ah', 'voicemail')" title="Replace audio file">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                Change
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="cfg-ah-vm-val" value="">
+                                </div>
+                            </div>
+
+                            <!-- Method 3: Automatic WhatsApp Notification -->
+                            <div id="cfg-ah-config-block-whatsapp" style="display: none;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                                        <label style="font-weight: 600; color: var(--color-black); margin-bottom: 0;">After-hours WhatsApp Message *</label>
+                                        <span class="after-hours-char-count" id="cfg-ah-whatsapp-char-count">0 characters</span>
+                                    </div>
+                                    <div class="msg-composer-container">
+                                        <!-- WhatsApp Formatting Toolbar -->
+                                        <div class="msg-toolbar">
+                                            <button type="button" class="msg-toolbar-btn" title="Undo" onclick="execMsgFormatting('ah', 'whatsapp', 'undo')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Redo" onclick="execMsgFormatting('ah', 'whatsapp', 'redo')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" title="Bold (*text*)" onclick="execMsgFormatting('ah', 'whatsapp', 'bold')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Italic (_text_)" onclick="execMsgFormatting('ah', 'whatsapp', 'italic')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="19" y1="4" x2="10" y2="4"></line><line x1="14" y1="20" x2="5" y2="20"></line><line x1="15" y1="4" x2="9" y2="20"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Strikethrough (~text~)" onclick="execMsgFormatting('ah', 'whatsapp', 'strikethrough')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M17.3 4.9c-2.3-.6-4.7-.2-6.5.9-1.9 1.2-2.5 3.3-1.6 5.1"></path><path d="M14.8 19.1c-1.8.8-3.9.7-5.5-.3-1.6-1-2.3-2.8-2-4.8"></path><line x1="4" y1="12" x2="20" y2="12"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Monospace (```text```)" onclick="execMsgFormatting('ah', 'whatsapp', 'monospace')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" title="Bulleted List (- item)" onclick="execMsgFormatting('ah', 'whatsapp', 'bullet')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Numbered List (1. item)" onclick="execMsgFormatting('ah', 'whatsapp', 'number')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Quote (> text)" onclick="execMsgFormatting('ah', 'whatsapp', 'quote')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" id="wa-emoji-trigger-ah" title="Insert Emoji" onclick="toggleEmojiPopover(event, 'ah', 'whatsapp')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Clear Formatting" onclick="execMsgFormatting('ah', 'whatsapp', 'clear')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M4 7V4h16v3"></path><path d="M9 20h6"></path><line x1="12" y1="4" x2="12" y2="20"></line><line x1="18" y1="18" x2="22" y2="22"></line><line x1="22" y1="18" x2="18" y2="22"></line></svg>
+                                            </button>
+
+                                            <!-- Emoji Popover -->
+                                            <div class="wa-emoji-popover" id="emoji-popover-ah-whatsapp">
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '👋')">👋</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '🙏')">🙏</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '📞')">📞</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '⏰')">⏰</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '💬')">💬</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '✅')">✅</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', 'ℹ️')">ℹ️</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '🤝')">🤝</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '⏳')">⏳</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '🚚')">🚚</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '📦')">📦</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('ah', 'whatsapp', '✨')">✨</button>
+                                            </div>
+                                        </div>
+
+                                        <textarea id="cfg-ah-whatsapp-msg" class="msg-composer-input" placeholder="Our office is currently closed. Please contact us during operating hours." oninput="updateHandlingCharCount('ah', 'whatsapp')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Method 4: Automatic SMS Notification (Rich Composer Toolbar) -->
+                            <div id="cfg-ah-config-block-sms" style="display: none;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                                        <label style="font-weight: 600; color: var(--color-black); margin-bottom: 0;">After-hours SMS Message *</label>
+                                        <span class="after-hours-char-count" id="cfg-ah-sms-char-count">0 characters</span>
+                                    </div>
+                                    <div class="msg-composer-container">
+                                        <!-- SMS Formatting Toolbar -->
+                                        <div class="msg-toolbar">
+                                            <button type="button" class="msg-toolbar-btn" title="Undo" onclick="execMsgFormatting('ah', 'sms', 'undo')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Redo" onclick="execMsgFormatting('ah', 'sms', 'redo')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" title="Bold (*text*)" onclick="execMsgFormatting('ah', 'sms', 'bold')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Italic (_text_)" onclick="execMsgFormatting('ah', 'sms', 'italic')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="19" y1="4" x2="10" y2="4"></line><line x1="14" y1="20" x2="5" y2="20"></line><line x1="15" y1="4" x2="9" y2="20"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Strikethrough (~text~)" onclick="execMsgFormatting('ah', 'sms', 'strikethrough')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M17.3 4.9c-2.3-.6-4.7-.2-6.5.9-1.9 1.2-2.5 3.3-1.6 5.1"></path><path d="M14.8 19.1c-1.8.8-3.9.7-5.5-.3-1.6-1-2.3-2.8-2-4.8"></path><line x1="4" y1="12" x2="20" y2="12"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Monospace (```text```)" onclick="execMsgFormatting('ah', 'sms', 'monospace')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" title="Bulleted List (- item)" onclick="execMsgFormatting('ah', 'sms', 'bullet')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Numbered List (1. item)" onclick="execMsgFormatting('ah', 'sms', 'number')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Quote (> text)" onclick="execMsgFormatting('ah', 'sms', 'quote')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" id="sms-emoji-trigger-ah" title="Insert Emoji" onclick="toggleEmojiPopover(event, 'ah', 'sms')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Clear Formatting" onclick="execMsgFormatting('ah', 'sms', 'clear')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M4 7V4h16v3"></path><path d="M9 20h6"></path><line x1="12" y1="4" x2="12" y2="20"></line><line x1="18" y1="18" x2="22" y2="22"></line><line x1="22" y1="18" x2="18" y2="22"></line></svg>
+                                            </button>
+
+                                            <!-- Emoji Popover -->
+                                            <div class="sms-emoji-popover" id="emoji-popover-ah-sms">
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '👋')">👋</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '🙏')">🙏</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '📞')">📞</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '⏰')">⏰</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '💬')">💬</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '✅')">✅</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', 'ℹ️')">ℹ️</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '🤝')">🤝</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '⏳')">⏳</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '🚚')">🚚</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '📦')">📦</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('ah', 'sms', '✨')">✨</button>
+                                            </div>
+                                        </div>
+
+                                        <textarea id="cfg-ah-sms-msg" class="msg-composer-input" placeholder="Our office is currently closed. Please contact us during operating hours." oninput="updateHandlingCharCount('ah', 'sms')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. NO-AGENT-AVAILABLE HANDLING CARD -->
+                    <div class="section-card" style="margin-bottom: 24px;">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">No-agent-available Handling</h3>
+                                <p class="section-helper">Configure how calls are handled when no available agent can accept the call.</p>
+                            </div>
+                        </div>
+
+                        <!-- Handling Method Selector (Compact Horizontal Tabs) -->
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="margin-bottom: 2px; font-weight: 600; color: var(--color-black);">Handling Method *</label>
+                            <p style="font-size: 0.75rem; color: #64748b; margin: 0 0 10px 0;">Select a handling method to configure its settings.</p>
+                            
+                            <div class="after-hours-tab-bar">
+                                <button type="button" class="after-hours-tab-btn active" id="cfg-na-tab-btn-message" onclick="selectConfigHandlingAction('na', 'message')">
+                                    Configurable Message
+                                </button>
+                                <button type="button" class="after-hours-tab-btn" id="cfg-na-tab-btn-voicemail" onclick="selectConfigHandlingAction('na', 'voicemail')">
+                                    Voicemail Capture
+                                </button>
+                                <button type="button" class="after-hours-tab-btn" id="cfg-na-tab-btn-whatsapp" onclick="selectConfigHandlingAction('na', 'whatsapp')">
+                                    Automatic WhatsApp Notification
+                                </button>
+                                <button type="button" class="after-hours-tab-btn" id="cfg-na-tab-btn-sms" onclick="selectConfigHandlingAction('na', 'sms')">
+                                    Automatic SMS Notification
+                                </button>
+                            </div>
+                            <input type="hidden" id="cfg-na-action-val" value="message">
+                        </div>
+
+                        <!-- Dynamic Configuration Area -->
+                        <div class="after-hours-config-box" style="margin-top: 14px;">
+                            <input type="file" id="cfg-file-input-na-message" accept="audio/*,.mp3,.wav" style="display: none;" onchange="handleAudioFileUpload('na', 'message', this)">
+                            <input type="file" id="cfg-file-input-na-voicemail" accept="audio/*,.mp3,.wav" style="display: none;" onchange="handleAudioFileUpload('na', 'voicemail', this)">
+
+                            <!-- Method 1: Configurable Message -->
+                            <div id="cfg-na-config-block-message">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 6px;">No-agent Audio Message *</label>
+                                    
+                                    <div id="cfg-na-msg-audio-empty" class="audio-empty-box" style="display: flex;" 
+                                         onclick="triggerAudioUpload('na', 'message')"
+                                         ondragover="handleAudioDragOver(event, this)"
+                                         ondragleave="handleAudioDragLeave(event, this)"
+                                         ondrop="handleAudioDrop(event, 'na', 'message', this)">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16" style="color: #64748b;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                            <span style="font-size: 0.8125rem; color: #64748b;">No no-agent audio message configured — Click or drag &amp; drop audio file (.mp3, .wav)</span>
+                                        </div>
+                                        <button type="button" class="btn-audio-upload" onclick="event.stopPropagation(); triggerAudioUpload('na', 'message')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                            Upload Audio
+                                        </button>
+                                    </div>
+
+                                    <div id="cfg-na-msg-audio-uploaded" class="audio-uploaded-box" style="display: none;">
+                                        <div class="audio-file-info">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: #475569; flex-shrink: 0;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                                            <span id="cfg-na-msg-audio-filename"></span>
+                                        </div>
+                                        <div class="audio-actions-group">
+                                            <button type="button" class="btn-audio-preview" id="cfg-btn-preview-na-message" onclick="toggleAudioPreview('na', 'message')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                <span>Preview</span>
+                                            </button>
+                                            <button type="button" class="btn-audio-change" onclick="triggerAudioUpload('na', 'message')" title="Replace audio file">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                Change
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="cfg-na-audio-val" value="">
+                                </div>
+                            </div>
+
+                            <!-- Method 2: Voicemail Capture -->
+                            <div id="cfg-na-config-block-voicemail" style="display: none;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 6px;">No-agent Voicemail Greeting *</label>
+                                    
+                                    <div id="cfg-na-vm-audio-empty" class="audio-empty-box" style="display: flex;"
+                                         onclick="triggerAudioUpload('na', 'voicemail')"
+                                         ondragover="handleAudioDragOver(event, this)"
+                                         ondragleave="handleAudioDragLeave(event, this)"
+                                         ondrop="handleAudioDrop(event, 'na', 'voicemail', this)">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16" style="color: #64748b;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                            <span style="font-size: 0.8125rem; color: #64748b;">No no-agent voicemail greeting configured — Click or drag &amp; drop audio file (.mp3, .wav)</span>
+                                        </div>
+                                        <button type="button" class="btn-audio-upload" onclick="event.stopPropagation(); triggerAudioUpload('na', 'voicemail')">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                            Upload Audio
+                                        </button>
+                                    </div>
+
+                                    <div id="cfg-na-vm-audio-uploaded" class="audio-uploaded-box" style="display: none;">
+                                        <div class="audio-file-info">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: #475569; flex-shrink: 0;"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                                            <span id="cfg-na-vm-audio-filename"></span>
+                                        </div>
+                                        <div class="audio-actions-group">
+                                            <button type="button" class="btn-audio-preview" id="cfg-btn-preview-na-voicemail" onclick="toggleAudioPreview('na', 'voicemail')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                <span>Preview</span>
+                                            </button>
+                                            <button type="button" class="btn-audio-change" onclick="triggerAudioUpload('na', 'voicemail')" title="Replace audio file">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                Change
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="cfg-na-vm-val" value="">
+                                </div>
+                            </div>
+
+                            <!-- Method 3: Automatic WhatsApp Notification -->
+                            <div id="cfg-na-config-block-whatsapp" style="display: none;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                                        <label style="font-weight: 600; color: var(--color-black); margin-bottom: 0;">No-agent WhatsApp Message *</label>
+                                        <span class="after-hours-char-count" id="cfg-na-whatsapp-char-count">0 characters</span>
+                                    </div>
+                                    <div class="msg-composer-container">
+                                        <!-- WhatsApp Formatting Toolbar -->
+                                        <div class="msg-toolbar">
+                                            <button type="button" class="msg-toolbar-btn" title="Undo" onclick="execMsgFormatting('na', 'whatsapp', 'undo')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Redo" onclick="execMsgFormatting('na', 'whatsapp', 'redo')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" title="Bold (*text*)" onclick="execMsgFormatting('na', 'whatsapp', 'bold')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Italic (_text_)" onclick="execMsgFormatting('na', 'whatsapp', 'italic')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="19" y1="4" x2="10" y2="4"></line><line x1="14" y1="20" x2="5" y2="20"></line><line x1="15" y1="4" x2="9" y2="20"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Strikethrough (~text~)" onclick="execMsgFormatting('na', 'whatsapp', 'strikethrough')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M17.3 4.9c-2.3-.6-4.7-.2-6.5.9-1.9 1.2-2.5 3.3-1.6 5.1"></path><path d="M14.8 19.1c-1.8.8-3.9.7-5.5-.3-1.6-1-2.3-2.8-2-4.8"></path><line x1="4" y1="12" x2="20" y2="12"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Monospace (```text```)" onclick="execMsgFormatting('na', 'whatsapp', 'monospace')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" title="Bulleted List (- item)" onclick="execMsgFormatting('na', 'whatsapp', 'bullet')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Numbered List (1. item)" onclick="execMsgFormatting('na', 'whatsapp', 'number')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Quote (> text)" onclick="execMsgFormatting('na', 'whatsapp', 'quote')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" id="wa-emoji-trigger-na" title="Insert Emoji" onclick="toggleEmojiPopover(event, 'na', 'whatsapp')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Clear Formatting" onclick="execMsgFormatting('na', 'whatsapp', 'clear')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M4 7V4h16v3"></path><path d="M9 20h6"></path><line x1="12" y1="4" x2="12" y2="20"></line><line x1="18" y1="18" x2="22" y2="22"></line><line x1="22" y1="18" x2="18" y2="22"></line></svg>
+                                            </button>
+
+                                            <!-- Emoji Popover -->
+                                            <div class="wa-emoji-popover" id="emoji-popover-na-whatsapp">
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '👋')">👋</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '🙏')">🙏</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '📞')">📞</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '⏰')">⏰</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '💬')">💬</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '✅')">✅</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', 'ℹ️')">ℹ️</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '🤝')">🤝</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '⏳')">⏳</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '🚚')">🚚</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '📦')">📦</button>
+                                                <button type="button" class="wa-emoji-item" onclick="insertMsgEmoji('na', 'whatsapp', '✨')">✨</button>
+                                            </div>
+                                        </div>
+
+                                        <textarea id="cfg-na-whatsapp-msg" class="msg-composer-input" placeholder="All our support agents are currently assisting other customers. Please leave a message and we will get back to you." oninput="updateHandlingCharCount('na', 'whatsapp')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Method 4: Automatic SMS Notification (Rich Composer Toolbar) -->
+                            <div id="cfg-na-config-block-sms" style="display: none;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                                        <label style="font-weight: 600; color: var(--color-black); margin-bottom: 0;">No-agent SMS Message *</label>
+                                        <span class="after-hours-char-count" id="cfg-na-sms-char-count">0 characters</span>
+                                    </div>
+                                    <div class="msg-composer-container">
+                                        <!-- SMS Formatting Toolbar -->
+                                        <div class="msg-toolbar">
+                                            <button type="button" class="msg-toolbar-btn" title="Undo" onclick="execMsgFormatting('na', 'sms', 'undo')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Redo" onclick="execMsgFormatting('na', 'sms', 'redo')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" title="Bold (*text*)" onclick="execMsgFormatting('na', 'sms', 'bold')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Italic (_text_)" onclick="execMsgFormatting('na', 'sms', 'italic')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="19" y1="4" x2="10" y2="4"></line><line x1="14" y1="20" x2="5" y2="20"></line><line x1="15" y1="4" x2="9" y2="20"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Strikethrough (~text~)" onclick="execMsgFormatting('na', 'sms', 'strikethrough')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M17.3 4.9c-2.3-.6-4.7-.2-6.5.9-1.9 1.2-2.5 3.3-1.6 5.1"></path><path d="M14.8 19.1c-1.8.8-3.9.7-5.5-.3-1.6-1-2.3-2.8-2-4.8"></path><line x1="4" y1="12" x2="20" y2="12"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Monospace (```text```)" onclick="execMsgFormatting('na', 'sms', 'monospace')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" title="Bulleted List (- item)" onclick="execMsgFormatting('na', 'sms', 'bullet')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Numbered List (1. item)" onclick="execMsgFormatting('na', 'sms', 'number')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Quote (> text)" onclick="execMsgFormatting('na', 'sms', 'quote')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg>
+                                            </button>
+                                            <div class="msg-toolbar-separator"></div>
+                                            <button type="button" class="msg-toolbar-btn" id="sms-emoji-trigger-na" title="Insert Emoji" onclick="toggleEmojiPopover(event, 'na', 'sms')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                                            </button>
+                                            <button type="button" class="msg-toolbar-btn" title="Clear Formatting" onclick="execMsgFormatting('na', 'sms', 'clear')">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M4 7V4h16v3"></path><path d="M9 20h6"></path><line x1="12" y1="4" x2="12" y2="20"></line><line x1="18" y1="18" x2="22" y2="22"></line><line x1="22" y1="18" x2="18" y2="22"></line></svg>
+                                            </button>
+
+                                            <!-- Emoji Popover -->
+                                            <div class="sms-emoji-popover" id="emoji-popover-na-sms">
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '👋')">👋</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '🙏')">🙏</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '📞')">📞</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '⏰')">⏰</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '💬')">💬</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '✅')">✅</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', 'ℹ️')">ℹ️</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '🤝')">🤝</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '⏳')">⏳</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '🚚')">🚚</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '📦')">📦</button>
+                                                <button type="button" class="sms-emoji-item" onclick="insertMsgEmoji('na', 'sms', '✨')">✨</button>
+                                            </div>
+                                        </div>
+
+                                        <textarea id="cfg-na-sms-msg" class="msg-composer-input" placeholder="All our support agents are currently assisting other customers. Please leave a message and we will get back to you." oninput="updateHandlingCharCount('na', 'sms')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Flatpickr JS library -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Interactive Script for Queues Logic -->
+    <script>
+        // Default Seeded Initial Queues with Branch, Department & Role
+        const defaultQueueData = [
+            {
+                id: 1,
+                name: "Bengaluru Customer Support",
+                branch: "Bengaluru",
+                department: "Customer Support",
+                role: "Customer Care Executive",
+                agentCount: 60,
+                agentIds: ["agt-1"],
+                status: "Active",
+                fallback: "Central Support Team"
+            },
+            {
+                id: 2,
+                name: "Mumbai Dispatch Support",
+                branch: "Mumbai",
+                department: "Operations",
+                role: "Operations Coordinator",
+                agentCount: 45,
+                agentIds: ["agt-2"],
+                status: "Active",
+                fallback: "Central-number IVR"
+            },
+            {
+                id: 3,
+                name: "Hyderabad Helpline",
+                branch: "Hyderabad",
+                department: "Customer Support",
+                role: "Customer Care Executive",
+                agentCount: 72,
+                agentIds: ["agt-3"],
+                status: "Active",
+                fallback: "Branch Backup Queue"
+            },
+            {
+                id: 4,
+                name: "Delhi Priority Desk",
+                branch: "Delhi",
+                department: "Customer Support",
+                role: "Customer Care Executive",
+                agentCount: 38,
+                agentIds: ["agt-4"],
+                status: "Active",
+                fallback: "Central Support Team"
+            },
+            {
+                id: 5,
+                name: "Chennai Operations Queue",
+                branch: "Chennai",
+                department: "Operations",
+                role: "Dispatch Executive",
+                agentCount: 55,
+                agentIds: ["agt-5"],
+                status: "Active",
+                fallback: "Central-number IVR"
+            },
+            {
+                id: 6,
+                name: "Pune Billing Queue",
+                branch: "Pune",
+                department: "Accounts",
+                role: "Billing Executive",
+                agentCount: 42,
+                agentIds: ["agt-6"],
+                status: "Active",
+                fallback: "Branch Backup Queue"
+            }
+        ];
+
+        // Retrieve from localStorage or initialize with defaults
+        function getQueuesFromStorage() {
+            const data = localStorage.getItem('ccm_queues_data_v2');
+            if (!data) {
+                localStorage.setItem('ccm_queues_data_v2', JSON.stringify(defaultQueueData));
+                return defaultQueueData;
+            }
+            try {
+                let parsed = JSON.parse(data);
+                if (!Array.isArray(parsed) || parsed.length <= 3 || parsed[0].agentCount !== 60) {
+                    localStorage.setItem('ccm_queues_data_v2', JSON.stringify(defaultQueueData));
+                    return defaultQueueData;
+                }
+                return parsed;
+            } catch (e) {
+                return defaultQueueData;
+            }
+        }
+
+        let queueData = getQueuesFromStorage();
+        const allAvailableBranchesList = ["Bengaluru", "Mumbai", "Hyderabad", "Delhi", "Chennai", "Pune", "Mangalore"];
+        let selectedBranches = [];
+        let selectedStatusFilter = "All";
+        let currentSort = { column: '', asc: true };
+
+        // Render Table
+        function renderQueues(listToRender) {
+            const list = listToRender || getFilteredQueues();
+            const tbody = document.getElementById('queue-rules-body');
+            const emptyView = document.getElementById('queue-empty-view');
+            const configuredView = document.getElementById('queue-configured-view');
+            const paginationInfo = document.getElementById('pagination-info');
+
+            if (!tbody) return;
+
+            if (list.length === 0) {
+                if (queueData.length === 0) {
+                    emptyView.style.display = 'block';
+                    configuredView.style.display = 'none';
+                } else {
+                    emptyView.style.display = 'none';
+                    configuredView.style.display = 'block';
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #888; padding: 24px;">No matching queues found.</td></tr>`;
+                    if (paginationInfo) paginationInfo.textContent = `Showing 0 of ${queueData.length}`;
+                }
+                return;
+            }
+
+            emptyView.style.display = 'none';
+            configuredView.style.display = 'block';
+
+            tbody.innerHTML = list.map(q => {
+                const countNum = (typeof q.agentCount === 'number') ? q.agentCount : ((q.agentIds && q.agentIds.length) || 0);
+                const countDisplay = `${countNum} ${countNum === 1 ? 'Agent' : 'Agents'}`;
+
+                return `
+                    <tr data-id="${q.id}">
+                        <td style="font-weight: 600;">
+                            <a href="queue-details.html?id=${q.id}" style="color: var(--color-black); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                ${escapeHtml(q.name)}
+                            </a>
+                        </td>
+                        <td>${escapeHtml(q.branch)}</td>
+                        <td><span style="font-weight: 600;">${countDisplay}</span></td>
+                        <td style="text-align: center;">
+                            <label class="status-toggle" title="Toggle Status" style="display: inline-flex;">
+                                <input type="checkbox" ${q.status === 'Active' ? 'checked' : ''} onchange="toggleQueueStatus(${q.id}, this.checked)">
+                                <div class="toggle-switch"></div>
+                            </label>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="ccm-action-icons">
+                                <a href="edit-queue.html?id=${q.id}" class="ccm-icon-btn" title="Edit Queue" style="text-decoration: none;">
+                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </a>
+                                <button type="button" class="ccm-icon-btn" title="Delete" onclick="openDeleteModal(${q.id})">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Render Mobile Cards matching HRMS standards
+            const mobileContainer = document.getElementById('queue-mobile-cards');
+            if (mobileContainer) {
+                mobileContainer.innerHTML = list.map(q => {
+                    const countNum = (typeof q.agentCount === 'number') ? q.agentCount : ((q.agentIds && q.agentIds.length) || 0);
+                    const countDisplay = `${countNum} ${countNum === 1 ? 'Agent' : 'Agents'}`;
+
+                    return `
+                        <div class="mobile-data-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <div style="font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">${escapeHtml(q.name)}</div>
+                                    <div style="font-size: 0.75rem; color: #666; font-weight: 500;">${escapeHtml(q.branch)} • ${escapeHtml(q.department || 'Support')} • ${escapeHtml(q.role || 'Executive')}</div>
+                                </div>
+                                <label class="status-toggle" title="Toggle Status">
+                                    <input type="checkbox" ${q.status === 'Active' ? 'checked' : ''} onchange="toggleQueueStatus(${q.id}, this.checked)">
+                                    <div class="toggle-switch"></div>
+                                </label>
+                            </div>
+                            <div style="display: flex; gap: 8px; font-size: 0.75rem; color: #444; background: var(--color-bg-light); padding: 6px 10px; border-radius: var(--border-radius-base);">
+                                <div><strong>${countDisplay}</strong></div>
+                                <div>•</div>
+                                <div>Fallback: <span style="font-weight: 500;">${escapeHtml(q.fallback || 'None')}</span></div>
+                            </div>
+                            <div style="display: flex; gap: 8px; padding-top: 8px; border-top: 1px solid var(--color-border);">
+                                <a href="edit-queue.html?id=${q.id}" class="btn-secondary" style="flex: 1; height: 30px; font-size: 0.75rem; justify-content: center; text-decoration: none; display: inline-flex; align-items: center;">Edit</a>
+                                <button type="button" class="btn-secondary" style="flex: 1; height: 30px; font-size: 0.75rem; justify-content: center; color: #dc2626; border-color: #fee2e2;" onclick="openDeleteModal(${q.id})">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (paginationInfo) {
+                paginationInfo.textContent = `Showing 1-${list.length} of ${list.length}`;
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function getFilteredQueues() {
+            const query = (document.getElementById('queue-search-input')?.value || '').toLowerCase().trim();
+            return queueData.filter(q => {
+                const matchesSearch = !query || 
+                    q.name.toLowerCase().includes(query) ||
+                    q.branch.toLowerCase().includes(query) ||
+                    (q.department && q.department.toLowerCase().includes(query)) ||
+                    (q.role && q.role.toLowerCase().includes(query));
+
+                const matchesStatus = selectedStatusFilter === 'All' || q.status === selectedStatusFilter;
+                const matchesBranch = selectedBranches.length === 0 || selectedBranches.length === allAvailableBranchesList.length || selectedBranches.includes(q.branch);
+                return matchesSearch && matchesStatus && matchesBranch;
+            });
+        }
+
+        function filterQueues() {
+            renderQueues(getFilteredQueues());
+        }
+
+        function filterBranchDropdownOptions(input) {
+            const query = input.value.toLowerCase().trim();
+            const container = document.getElementById('filter-branch-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    opt.style.display = 'flex';
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleAllBranchFilters(isChecked) {
+            const itemCheckboxes = document.querySelectorAll('.cb-branch-filter-item');
+            itemCheckboxes.forEach(cb => {
+                cb.checked = isChecked;
+            });
+            if (isChecked) {
+                selectedBranches = [...allAvailableBranchesList];
+            } else {
+                selectedBranches = [];
+            }
+            updateBranchFilterTriggerLabel();
+            renderQueues(getFilteredQueues());
+        }
+
+        function handleBranchItemCheckboxChange() {
+            const itemCheckboxes = document.querySelectorAll('.cb-branch-filter-item');
+            const selectAllCb = document.getElementById('cb-branch-select-all');
+            
+            selectedBranches = [];
+            let allChecked = true;
+            let noneChecked = true;
+
+            itemCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedBranches.push(cb.value);
+                    noneChecked = false;
+                } else {
+                    allChecked = false;
+                }
+            });
+
+            if (selectAllCb) {
+                selectAllCb.checked = allChecked;
+                selectAllCb.indeterminate = !allChecked && !noneChecked;
+            }
+
+            updateBranchFilterTriggerLabel();
+            renderQueues(getFilteredQueues());
+        }
+
+        function updateBranchFilterTriggerLabel() {
+            const trigger = document.querySelector('#filter-branch-trigger .trigger-label');
+            if (!trigger) return;
+
+            if (selectedBranches.length === 0 || selectedBranches.length === allAvailableBranchesList.length) {
+                trigger.textContent = 'All Branches';
+            } else if (selectedBranches.length === 1) {
+                trigger.textContent = selectedBranches[0];
+            } else {
+                trigger.textContent = `${selectedBranches.length} Branches`;
+            }
+        }
+
+        function filterByStatus(status) {
+            selectedStatusFilter = status;
+            const trigger = document.querySelector('#filter-status-trigger .trigger-label');
+            if (trigger) trigger.textContent = status === 'All' ? 'All Statuses' : status;
+            document.getElementById('filter-status-details')?.removeAttribute('open');
+            renderQueues(getFilteredQueues());
+        }
+
+        function sortQueues(col) {
+            if (currentSort.column === col) {
+                currentSort.asc = !currentSort.asc;
+            } else {
+                currentSort.column = col;
+                currentSort.asc = true;
+            }
+
+            queueData.sort((a, b) => {
+                let valA = '', valB = '';
+                if (col === 'name') { valA = a.name.toLowerCase(); valB = b.name.toLowerCase(); }
+                else if (col === 'branch') { valA = a.branch.toLowerCase(); valB = b.branch.toLowerCase(); }
+                else if (col === 'department') { valA = (a.department || '').toLowerCase(); valB = (b.department || '').toLowerCase(); }
+                else if (col === 'role') { valA = (a.role || '').toLowerCase(); valB = (b.role || '').toLowerCase(); }
+                else if (col === 'agents') { valA = a.agentCount || 0; valB = b.agentCount || 0; }
+
+                if (valA < valB) return currentSort.asc ? -1 : 1;
+                if (valA > valB) return currentSort.asc ? 1 : -1;
+                return 0;
+            });
+
+            renderQueues(getFilteredQueues());
+        }
+
+        function toggleQueueStatus(id, active) {
+            const q = queueData.find(item => item.id === id);
+            if (q) {
+                q.status = active ? 'Active' : 'Inactive';
+                localStorage.setItem('ccm_queues_data', JSON.stringify(queueData));
+            }
+        }
+
+        function openDeleteModal(queueId) {
+            document.getElementById('delete-queue-id').value = queueId;
+            document.getElementById('overlay-delete-queue').style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('overlay-delete-queue').style.display = 'none';
+        }
+
+        function confirmDeleteQueue() {
+            const queueId = parseInt(document.getElementById('delete-queue-id').value, 10);
+            queueData = queueData.filter(q => q.id !== queueId);
+            localStorage.setItem('ccm_queues_data', JSON.stringify(queueData));
+            closeDeleteModal();
+            filterQueues();
+        }
+
+        // Default Seeded Initial Callback Requests with ISO timestamps for accurate sorting and filtering (CCM-13)
+        const defaultCallbackData = [
+            {
+                id: 101,
+                customer: "Rajesh Kumar",
+                phone: "+91 98450 12345",
+                branch: "Bengaluru",
+                queue: "Bengaluru Customer Support",
+                requestedAt: "Today, 11:42 AM",
+                timestamp: new Date().setHours(11, 42, 0, 0),
+                dateCategory: "Today",
+                status: "Pending"
+            },
+            {
+                id: 102,
+                customer: "Ananya Sharma",
+                phone: "+91 97110 56789",
+                branch: "Mumbai",
+                queue: "Mumbai Dispatch Support",
+                requestedAt: "Today, 11:30 AM",
+                timestamp: new Date().setHours(11, 30, 0, 0),
+                dateCategory: "Today",
+                status: "Pending"
+            },
+            {
+                id: 103,
+                customer: "Venkatesh Rao",
+                phone: "+91 94480 98765",
+                branch: "Hyderabad",
+                queue: "Hyderabad Helpline",
+                requestedAt: "Yesterday, 3:25 PM",
+                timestamp: new Date(Date.now() - 86400000).setHours(15, 25, 0, 0),
+                dateCategory: "Yesterday",
+                status: "Pending"
+            },
+            {
+                id: 104,
+                customer: "Pooja Malhotra",
+                phone: "+91 98100 45678",
+                branch: "Delhi",
+                queue: "Delhi Priority Desk",
+                requestedAt: "Yesterday, 10:48 AM",
+                timestamp: new Date(Date.now() - 86400000).setHours(10, 48, 0, 0),
+                dateCategory: "Yesterday",
+                status: "Completed"
+            },
+            {
+                id: 105,
+                customer: "Karthik Subramanian",
+                phone: "+91 98840 23456",
+                branch: "Chennai",
+                queue: "Chennai Operations Queue",
+                requestedAt: "Aug 28, 10:15 AM",
+                timestamp: new Date(new Date().getFullYear(), 7, 28, 10, 15).getTime(),
+                dateCategory: "Last 7 Days",
+                status: "Completed"
+            },
+            {
+                id: 106,
+                customer: "Sunil Deshmukh",
+                phone: "+91 99220 87654",
+                branch: "Pune",
+                queue: "Pune Billing Queue",
+                requestedAt: "Aug 15, 4:40 PM",
+                timestamp: new Date(new Date().getFullYear(), 7, 15, 16, 40).getTime(),
+                dateCategory: "Last 30 Days",
+                status: "Completed"
+            },
+            {
+                id: 107,
+                customer: "Rameshwar Patel",
+                phone: "+91 98250 34567",
+                branch: "Mumbai",
+                queue: "Mumbai Dispatch Support",
+                requestedAt: "Nov 12, 2025, 2:10 PM",
+                timestamp: new Date(2025, 10, 12, 14, 10).getTime(),
+                dateCategory: "Custom Range",
+                status: "Completed"
+            }
+        ];
+
+        let callbackData = defaultCallbackData;
+        let selectedCallbackStatusFilter = "All";
+        let selectedCallbackBranches = [];
+        let selectedCallbackDateFilter = "All";
+        let customDateFrom = null;
+        let customDateTo = null;
+
+        // Table Sorting State (Default: requestedAt descending - newest first)
+        let cbSortColumn = 'requestedAt';
+        let cbSortAsc = false;
+
+        function switchQueueTab(tabKey) {
+            const queuesBtn = document.getElementById('tab-btn-queues');
+            const callbacksBtn = document.getElementById('tab-btn-callbacks');
+            const configBtn = document.getElementById('tab-btn-config');
+
+            const queuesPanel = document.getElementById('tab-panel-queues');
+            const callbacksPanel = document.getElementById('tab-panel-callbacks');
+            const configPanel = document.getElementById('tab-panel-config');
+
+            const addQueueBtn = document.getElementById('btn-add-queue-header');
+            const exportCbBtn = document.getElementById('btn-export-callbacks-header');
+            const dateRangeWrap = document.getElementById('cb-date-range-picker-wrap');
+            const cfgHeaderActions = document.getElementById('cfg-header-actions');
+
+            const pageTitle = document.querySelector('.page-title');
+            const pageSubtitle = document.querySelector('.page-subtitle');
+
+            // Reset all tabs
+            queuesBtn.classList.remove('active');
+            callbacksBtn.classList.remove('active');
+            if (configBtn) configBtn.classList.remove('active');
+
+            queuesPanel.style.display = 'none';
+            callbacksPanel.style.display = 'none';
+            if (configPanel) configPanel.style.display = 'none';
+
+            if (tabKey === 'queues') {
+                queuesBtn.classList.add('active');
+                queuesPanel.style.display = 'block';
+                if (addQueueBtn) addQueueBtn.style.display = 'inline-flex';
+                if (exportCbBtn) exportCbBtn.style.display = 'none';
+                if (dateRangeWrap) dateRangeWrap.style.display = 'none';
+                if (cfgHeaderActions) cfgHeaderActions.style.display = 'none';
+                if (pageTitle) pageTitle.textContent = "Queues";
+                if (pageSubtitle) pageSubtitle.textContent = "Manage call queues, branches, and assigned agents.";
+            } else if (tabKey === 'callbacks') {
+                callbacksBtn.classList.add('active');
+                callbacksPanel.style.display = 'block';
+                if (addQueueBtn) addQueueBtn.style.display = 'none';
+                if (exportCbBtn) exportCbBtn.style.display = 'inline-flex';
+                if (dateRangeWrap) dateRangeWrap.style.display = 'inline-flex';
+                if (cfgHeaderActions) cfgHeaderActions.style.display = 'none';
+                if (pageTitle) pageTitle.textContent = "Queues";
+                if (pageSubtitle) pageSubtitle.textContent = "Manage call queues, branches, and assigned agents.";
+                renderCallbacks();
+            } else if (tabKey === 'config') {
+                if (configBtn) configBtn.classList.add('active');
+                if (configPanel) configPanel.style.display = 'block';
+                if (addQueueBtn) addQueueBtn.style.display = 'none';
+                if (exportCbBtn) exportCbBtn.style.display = 'none';
+                if (dateRangeWrap) dateRangeWrap.style.display = 'none';
+                if (cfgHeaderActions) cfgHeaderActions.style.display = 'inline-flex';
+                if (pageTitle) pageTitle.textContent = "Queue Configuration";
+                if (pageSubtitle) pageSubtitle.textContent = "Configure how queue calls are handled when agents are unavailable.";
+                loadQueueConfig();
+            }
+        }
+
+        // ==========================================
+        // 1. OPERATING HOURS & HOLIDAYS DATA & LOGIC
+        // ==========================================
+        const defaultScheduleData = [
+            { day: "Monday", status: "Open", start: "09:00", end: "18:00" },
+            { day: "Tuesday", status: "Open", start: "09:00", end: "18:00" },
+            { day: "Wednesday", status: "Open", start: "09:00", end: "18:00" },
+            { day: "Thursday", status: "Open", start: "09:00", end: "18:00" },
+            { day: "Friday", status: "Open", start: "09:00", end: "18:00" },
+            { day: "Saturday", status: "Open", start: "09:00", end: "13:00" },
+            { day: "Sunday", status: "Closed", start: "09:00", end: "18:00" }
+        ];
+
+        let operatingHoursSchedule = JSON.parse(JSON.stringify(defaultScheduleData));
+
+        const defaultHolidays = [
+            { id: "hol-1", name: "Republic Day", date: "2027-01-26", formattedDate: "26 Jan 2027", status: "Closed" },
+            { id: "hol-2", name: "Independence Day", date: "2027-08-15", formattedDate: "15 Aug 2027", status: "Closed" },
+            { id: "hol-3", name: "Diwali", date: "2027-10-20", formattedDate: "20 Oct 2027", status: "Closed" }
+        ];
+
+        let holidaysList = JSON.parse(JSON.stringify(defaultHolidays));
+
+        // Format 24hr time string "09:00" to "09:00 AM"
+        function formatTime12(timeStr) {
+            if (!timeStr) return "";
+            const parts = timeStr.split(':');
+            let hour = parseInt(parts[0], 10);
+            const minute = parts[1] || "00";
+            const ampm = hour >= 12 ? "PM" : "AM";
+            hour = hour % 12;
+            hour = hour ? hour : 12;
+            const hourStr = hour < 10 ? "0" + hour : hour;
+            return `${hourStr}:${minute} ${ampm}`;
+        }
+
+        function renderOperatingHours() {
+            const tbody = document.getElementById('operating-hours-tbody');
+            if (!tbody) return;
+
+            const hoursList = Array.from({length: 24}, (_, i) => String(i).padStart(2, '0'));
+            const minsList = ["00", "15", "30", "45"];
+
+            tbody.innerHTML = operatingHoursSchedule.map((item, idx) => {
+                const isOpen = item.status === "Open";
+                const summaryText = isOpen 
+                    ? `${formatTime12(item.start)} - ${formatTime12(item.end)}`
+                    : '<span style="color: #94a3b8; font-style: italic;">Closed all day</span>';
+
+                const startParts = item.start ? item.start.split(':') : ["09", "00"];
+                const startHour = startParts[0] || "09";
+                const startMin = startParts[1] || "00";
+
+                const endParts = item.end ? item.end.split(':') : ["18", "00"];
+                const endHour = endParts[0] || "18";
+                const endMin = endParts[1] || "00";
+
+                return `
+                    <tr>
+                        <td class="schedule-day-label">${item.day}</td>
+                        <td>
+                            <div class="schedule-status-toggle">
+                                <button type="button" class="schedule-status-btn ${isOpen ? 'active-open' : ''}" onclick="setDayStatus(${idx}, 'Open')">Open</button>
+                                <button type="button" class="schedule-status-btn ${!isOpen ? 'active-closed' : ''}" onclick="setDayStatus(${idx}, 'Closed')">Closed</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-time-picker-wrapper" id="time-wrap-${idx}-start">
+                                <button type="button" class="custom-time-trigger" ${!isOpen ? 'disabled' : ''} onclick="toggleCustomTimePopover(event, ${idx}, 'start')">
+                                    <span>${item.start}</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                </button>
+                                <div class="custom-time-popover" id="time-popover-${idx}-start">
+                                    <div class="custom-time-columns">
+                                        <div class="custom-time-col">
+                                            <div class="custom-time-col-header">HH</div>
+                                            ${hoursList.map(h => `<button type="button" class="custom-time-item ${h === startHour ? 'selected' : ''}" onclick="selectCustomTimePart(${idx}, 'start', 'hour', '${h}')">${h}</button>`).join('')}
+                                        </div>
+                                        <div class="custom-time-col">
+                                            <div class="custom-time-col-header">MM</div>
+                                            ${minsList.map(m => `<button type="button" class="custom-time-item ${m === startMin ? 'selected' : ''}" onclick="selectCustomTimePart(${idx}, 'start', 'min', '${m}')">${m}</button>`).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-time-picker-wrapper" id="time-wrap-${idx}-end">
+                                <button type="button" class="custom-time-trigger" ${!isOpen ? 'disabled' : ''} onclick="toggleCustomTimePopover(event, ${idx}, 'end')">
+                                    <span>${item.end}</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                </button>
+                                <div class="custom-time-popover" id="time-popover-${idx}-end">
+                                    <div class="custom-time-columns">
+                                        <div class="custom-time-col">
+                                            <div class="custom-time-col-header">HH</div>
+                                            ${hoursList.map(h => `<button type="button" class="custom-time-item ${h === endHour ? 'selected' : ''}" onclick="selectCustomTimePart(${idx}, 'end', 'hour', '${h}')">${h}</button>`).join('')}
+                                        </div>
+                                        <div class="custom-time-col">
+                                            <div class="custom-time-col-header">MM</div>
+                                            ${minsList.map(m => `<button type="button" class="custom-time-item ${m === endMin ? 'selected' : ''}" onclick="selectCustomTimePart(${idx}, 'end', 'min', '${m}')">${m}</button>`).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="color: #475569; font-size: 0.8125rem;">
+                            ${summaryText}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function toggleCustomTimePopover(e, idx, type) {
+            if (e) e.stopPropagation();
+            const popoverId = `time-popover-${idx}-${type}`;
+            const target = document.getElementById(popoverId);
+            
+            // Close other time popovers
+            document.querySelectorAll('.custom-time-popover').forEach(p => {
+                if (p.id !== popoverId) p.classList.remove('open');
+            });
+            document.querySelectorAll('.custom-time-trigger').forEach(t => t.classList.remove('active'));
+
+            if (target) {
+                target.classList.toggle('open');
+                const trigger = target.previousElementSibling;
+                if (target.classList.contains('open') && trigger) {
+                    trigger.classList.add('active');
+                }
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.custom-time-picker-wrapper')) {
+                document.querySelectorAll('.custom-time-popover').forEach(p => p.classList.remove('open'));
+                document.querySelectorAll('.custom-time-trigger').forEach(t => t.classList.remove('active'));
+            }
+        });
+
+        function selectCustomTimePart(idx, field, part, value) {
+            const current = operatingHoursSchedule[idx][field] || "09:00";
+            const parts = current.split(':');
+            let hour = parts[0] || "09";
+            let min = parts[1] || "00";
+
+            if (part === 'hour') {
+                hour = value;
+            } else if (part === 'min') {
+                min = value;
+            }
+
+            operatingHoursSchedule[idx][field] = `${hour}:${min}`;
+            renderOperatingHours();
+            
+            // Keep current popover open to continue selection or close on min selection
+            if (part === 'hour') {
+                const pop = document.getElementById(`time-popover-${idx}-${field}`);
+                if (pop) {
+                    pop.classList.add('open');
+                    if (pop.previousElementSibling) pop.previousElementSibling.classList.add('active');
+                }
+            }
+        }
+
+        function setDayStatus(idx, status) {
+            operatingHoursSchedule[idx].status = status;
+            renderOperatingHours();
+        }
+
+        function updateDayTime(idx, field, val) {
+            operatingHoursSchedule[idx][field] = val;
+            renderOperatingHours();
+        }
+
+        // Holiday Management
+        let holidayDatePicker = null;
+        function initHolidayDatePicker() {
+            const el = document.getElementById('holiday-input-date');
+            if (el && !holidayDatePicker && window.flatpickr) {
+                holidayDatePicker = flatpickr(el, {
+                    dateFormat: "d M Y",
+                    defaultDate: new Date()
+                });
+            }
+        }
+
+        function renderHolidayCalendar() {
+            const tbody = document.getElementById('holiday-calendar-tbody');
+            if (!tbody) return;
+
+            if (holidaysList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #94a3b8; padding: 20px;">No holidays configured. Click "Add Holiday" to add one.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = holidaysList.map(h => {
+                return `
+                    <tr>
+                        <td style="font-weight: 600; color: var(--color-black);">${h.name}</td>
+                        <td style="color: #475569;">${h.formattedDate}</td>
+                        <td><span class="holiday-status-badge">Closed</span></td>
+                        <td style="text-align: right;">
+                            <div style="display: inline-flex; gap: 4px; justify-content: flex-end;">
+                                <button type="button" class="btn-icon-action" title="Edit Holiday" onclick="openEditHolidayModal('${h.id}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </button>
+                                <button type="button" class="btn-icon-action delete" title="Delete Holiday" onclick="openDeleteHolidayModal('${h.id}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function openAddHolidayModal() {
+            document.getElementById('holiday-modal-title').textContent = "Add Holiday";
+            document.getElementById('holiday-edit-id').value = "";
+            document.getElementById('holiday-input-name').value = "";
+            document.getElementById('overlay-holiday-modal').style.display = 'flex';
+            initHolidayDatePicker();
+            if (holidayDatePicker) holidayDatePicker.setDate(new Date());
+        }
+
+        function openEditHolidayModal(id) {
+            const h = holidaysList.find(x => x.id === id);
+            if (!h) return;
+            document.getElementById('holiday-modal-title').textContent = "Edit Holiday";
+            document.getElementById('holiday-edit-id').value = h.id;
+            document.getElementById('holiday-input-name').value = h.name;
+            document.getElementById('overlay-holiday-modal').style.display = 'flex';
+            initHolidayDatePicker();
+            if (holidayDatePicker) holidayDatePicker.setDate(h.formattedDate);
+        }
+
+        function closeHolidayModal() {
+            document.getElementById('overlay-holiday-modal').style.display = 'none';
+        }
+
+        function saveHoliday() {
+            const id = document.getElementById('holiday-edit-id').value;
+            const name = document.getElementById('holiday-input-name').value.trim();
+            const dateStr = document.getElementById('holiday-input-date').value.trim();
+
+            if (!name || !dateStr) {
+                alert('Please fill in both Holiday Name and Date.');
+                return;
+            }
+
+            if (id) {
+                // Update
+                const h = holidaysList.find(x => x.id === id);
+                if (h) {
+                    h.name = name;
+                    h.formattedDate = dateStr;
+                }
+            } else {
+                // Add
+                const newId = "hol-" + Date.now();
+                holidaysList.push({
+                    id: newId,
+                    name: name,
+                    date: dateStr,
+                    formattedDate: dateStr,
+                    status: "Closed"
+                });
+            }
+
+            closeHolidayModal();
+            renderHolidayCalendar();
+        }
+
+        function openDeleteHolidayModal(id) {
+            document.getElementById('delete-holiday-id').value = id;
+            document.getElementById('overlay-delete-holiday').style.display = 'flex';
+        }
+
+        function closeDeleteHolidayModal() {
+            document.getElementById('overlay-delete-holiday').style.display = 'none';
+        }
+
+        function confirmDeleteHoliday() {
+            const id = document.getElementById('delete-holiday-id').value;
+            holidaysList = holidaysList.filter(x => x.id !== id);
+            closeDeleteHolidayModal();
+            renderHolidayCalendar();
+        }
+
+        // ==========================================
+        // 2. AFTER-HOURS & NO-AGENT HANDLING CONFIG
+        // ==========================================
+        let defaultQueueConfig = {
+            operatingHours: JSON.parse(JSON.stringify(defaultScheduleData)),
+            holidays: JSON.parse(JSON.stringify(defaultHolidays)),
+            afterHours: {
+                method: "message",
+                audio: "",
+                vm: "",
+                whatsappMessage: "Our office is currently closed. Please contact us during operating hours.",
+                smsMessage: "Our office is currently closed. Please contact us during operating hours."
+            },
+            noAgent: {
+                method: "message",
+                audio: "",
+                vm: "",
+                whatsappMessage: "All our support agents are currently assisting other customers. Please leave a message and we will get back to you.",
+                smsMessage: "All our support agents are currently assisting other customers. Please leave a message and we will get back to you."
+            }
+        };
+
+        function updateHandlingCharCount(scope, type) {
+            const inputId = `cfg-${scope}-${type === 'whatsapp' ? 'whatsapp-msg' : 'sms-msg'}`;
+            const badgeId = `cfg-${scope}-${type === 'whatsapp' ? 'whatsapp-char-count' : 'sms-char-count'}`;
+            const el = document.getElementById(inputId);
+            const badge = document.getElementById(badgeId);
+            if (el && badge) {
+                const len = el.value.length;
+                badge.textContent = `${len} character${len === 1 ? '' : 's'}`;
+            }
+        }
+
+        function loadQueueConfig() {
+            try {
+                const stored = localStorage.getItem('ccm_default_queue_config_v2');
+                if (stored) {
+                    defaultQueueConfig = { ...defaultQueueConfig, ...JSON.parse(stored) };
+                }
+            } catch (e) {}
+
+            if (defaultQueueConfig.operatingHours) {
+                operatingHoursSchedule = JSON.parse(JSON.stringify(defaultQueueConfig.operatingHours));
+            }
+            if (defaultQueueConfig.holidays) {
+                holidaysList = JSON.parse(JSON.stringify(defaultQueueConfig.holidays));
+            }
+
+            renderOperatingHours();
+            renderHolidayCalendar();
+
+            // Load After-hours
+            const ah = defaultQueueConfig.afterHours || {};
+            selectConfigHandlingAction('ah', ah.method || 'message');
+            setHandlingAudioState('ah', 'message', ah.audio || '');
+            setHandlingAudioState('ah', 'voicemail', ah.vm || '');
+            const ahWa = document.getElementById('cfg-ah-whatsapp-msg');
+            if (ahWa) {
+                ahWa.value = ah.whatsappMessage || "Our office is currently closed. Please contact us during operating hours.";
+                updateHandlingCharCount('ah', 'whatsapp');
+            }
+            const ahSms = document.getElementById('cfg-ah-sms-msg');
+            if (ahSms) {
+                ahSms.value = ah.smsMessage || "Our office is currently closed. Please contact us during operating hours.";
+                updateHandlingCharCount('ah', 'sms');
+            }
+
+            // Load No-agent
+            const na = defaultQueueConfig.noAgent || {};
+            selectConfigHandlingAction('na', na.method || 'message');
+            setHandlingAudioState('na', 'message', na.audio || '');
+            setHandlingAudioState('na', 'voicemail', na.vm || '');
+            const naWa = document.getElementById('cfg-na-whatsapp-msg');
+            if (naWa) {
+                naWa.value = na.whatsappMessage || "All our support agents are currently assisting other customers. Please leave a message and we will get back to you.";
+                updateHandlingCharCount('na', 'whatsapp');
+            }
+            const naSms = document.getElementById('cfg-na-sms-msg');
+            if (naSms) {
+                naSms.value = na.smsMessage || "All our support agents are currently assisting other customers. Please leave a message and we will get back to you.";
+                updateHandlingCharCount('na', 'sms');
+            }
+        }
+
+        function selectConfigHandlingAction(scope, action) {
+            document.getElementById(`cfg-${scope}-action-val`).value = action;
+
+            ['message', 'voicemail', 'whatsapp', 'sms'].forEach(act => {
+                const btn = document.getElementById(`cfg-${scope}-tab-btn-${act}`);
+                if (btn) {
+                    if (act === action) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                }
+            });
+
+            const msgBlock = document.getElementById(`cfg-${scope}-config-block-message`);
+            const vmBlock = document.getElementById(`cfg-${scope}-config-block-voicemail`);
+            const whatsappBlock = document.getElementById(`cfg-${scope}-config-block-whatsapp`);
+            const smsBlock = document.getElementById(`cfg-${scope}-config-block-sms`);
+
+            if (msgBlock) msgBlock.style.display = action === 'message' ? 'block' : 'none';
+            if (vmBlock) vmBlock.style.display = action === 'voicemail' ? 'block' : 'none';
+            if (whatsappBlock) whatsappBlock.style.display = action === 'whatsapp' ? 'block' : 'none';
+            if (smsBlock) smsBlock.style.display = action === 'sms' ? 'block' : 'none';
+        }
+
+        function setHandlingAudioState(scope, type, filename) {
+            const prefix = type === 'message' ? 'msg' : 'vm';
+            const emptyBox = document.getElementById(`cfg-${scope}-${prefix}-audio-empty`);
+            const uploadedBox = document.getElementById(`cfg-${scope}-${prefix}-audio-uploaded`);
+            const filenameLabel = document.getElementById(`cfg-${scope}-${prefix}-audio-filename`);
+            const valInput = document.getElementById(`cfg-${scope}-${type === 'message' ? 'audio' : 'vm'}-val`);
+
+            if (filename && filename.trim() !== "") {
+                if (emptyBox) emptyBox.style.display = 'none';
+                if (uploadedBox) uploadedBox.style.display = 'flex';
+                if (filenameLabel) filenameLabel.textContent = filename;
+                if (valInput) valInput.value = filename;
+            } else {
+                if (emptyBox) emptyBox.style.display = 'flex';
+                if (uploadedBox) uploadedBox.style.display = 'none';
+                if (valInput) valInput.value = "";
+            }
+        }
+
+        function triggerAudioUpload(scope, type) {
+            const input = document.getElementById(`cfg-file-input-${scope}-${type}`);
+            if (input) input.click();
+        }
+
+        function handleAudioFileUpload(scope, type, inputEl) {
+            if (inputEl.files && inputEl.files[0]) {
+                const file = inputEl.files[0];
+                setHandlingAudioState(scope, type, file.name);
+            }
+        }
+
+        function handleAudioDragOver(e, el) {
+            e.preventDefault();
+            e.stopPropagation();
+            el.classList.add('drag-over');
+        }
+
+        function handleAudioDragLeave(e, el) {
+            e.preventDefault();
+            e.stopPropagation();
+            el.classList.remove('drag-over');
+        }
+
+        function handleAudioDrop(e, scope, type, el) {
+            e.preventDefault();
+            e.stopPropagation();
+            el.classList.remove('drag-over');
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                setHandlingAudioState(scope, type, file.name);
+            }
+        }
+
+        // Message Popovers & Formatting Handlers (WhatsApp & SMS)
+        function toggleEmojiPopover(e, scope, type) {
+            if (e) e.stopPropagation();
+            const popover = document.getElementById(`emoji-popover-${scope}-${type}`);
+            if (popover) {
+                popover.classList.toggle('open');
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            ['ah', 'na'].forEach(scope => {
+                ['whatsapp', 'sms'].forEach(type => {
+                    const popover = document.getElementById(`emoji-popover-${scope}-${type}`);
+                    const trigger = document.getElementById(`${type === 'whatsapp' ? 'wa' : 'sms'}-emoji-trigger-${scope}`);
+                    if (popover && popover.classList.contains('open')) {
+                        if (!popover.contains(e.target) && !trigger?.contains(e.target)) {
+                            popover.classList.remove('open');
+                        }
+                    }
+                });
+            });
+        });
+
+        function insertMsgEmoji(scope, type, emoji) {
+            const input = document.getElementById(`cfg-${scope}-${type}-msg`);
+            if (!input) return;
+            const start = input.selectionStart || input.value.length;
+            const end = input.selectionEnd || input.value.length;
+            const val = input.value;
+            input.value = val.substring(0, start) + emoji + val.substring(end);
+            input.focus();
+            input.setSelectionRange(start + emoji.length, start + emoji.length);
+            updateHandlingCharCount(scope, type);
+            document.getElementById(`emoji-popover-${scope}-${type}`)?.classList.remove('open');
+        }
+
+        function execMsgFormatting(scope, type, cmd) {
+            const input = document.getElementById(`cfg-${scope}-${type}-msg`);
+            if (!input) return;
+            input.focus();
+
+            if (cmd === 'undo') {
+                document.execCommand('undo');
+                updateHandlingCharCount(scope, type);
+                return;
+            }
+            if (cmd === 'redo') {
+                document.execCommand('redo');
+                updateHandlingCharCount(scope, type);
+                return;
+            }
+
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+            const val = input.value;
+            const selected = val.substring(start, end);
+
+            let before = "";
+            let after = "";
+            let replacement = "";
+            let newCursorStart = start;
+            let newCursorEnd = end;
+
+            if (cmd === 'bold') {
+                before = "*";
+                after = "*";
+                replacement = before + (selected || "bold text") + after;
+                newCursorStart = selected ? start : start + 1;
+                newCursorEnd = selected ? end + 2 : start + 1 + "bold text".length;
+            } else if (cmd === 'italic') {
+                before = "_";
+                after = "_";
+                replacement = before + (selected || "italic text") + after;
+                newCursorStart = selected ? start : start + 1;
+                newCursorEnd = selected ? end + 2 : start + 1 + "italic text".length;
+            } else if (cmd === 'strikethrough') {
+                before = "~";
+                after = "~";
+                replacement = before + (selected || "strikethrough text") + after;
+                newCursorStart = selected ? start : start + 1;
+                newCursorEnd = selected ? end + 2 : start + 1 + "strikethrough text".length;
+            } else if (cmd === 'monospace') {
+                before = "```";
+                after = "```";
+                replacement = before + (selected || "monospace text") + after;
+                newCursorStart = selected ? start : start + 3;
+                newCursorEnd = selected ? end + 6 : start + 3 + "monospace text".length;
+            } else if (cmd === 'bullet') {
+                if (selected) {
+                    replacement = selected.split('\n').map(l => l.startsWith('- ') ? l : '- ' + l).join('\n');
+                } else {
+                    replacement = "\n- List item\n";
+                }
+                newCursorStart = start;
+                newCursorEnd = start + replacement.length;
+            } else if (cmd === 'number') {
+                if (selected) {
+                    replacement = selected.split('\n').map((l, i) => `${i + 1}. ` + l.replace(/^\d+\.\s*/, '')).join('\n');
+                } else {
+                    replacement = "\n1. List item\n";
+                }
+                newCursorStart = start;
+                newCursorEnd = start + replacement.length;
+            } else if (cmd === 'quote') {
+                if (selected) {
+                    replacement = selected.split('\n').map(l => l.startsWith('> ') ? l : '> ' + l).join('\n');
+                } else {
+                    replacement = "\n> Quoted text\n";
+                }
+                newCursorStart = start;
+                newCursorEnd = start + replacement.length;
+            } else if (cmd === 'clear') {
+                if (selected) {
+                    replacement = selected
+                        .replace(/\*([^*]+)\*/g, '$1')
+                        .replace(/_([^_]+)_/g, '$1')
+                        .replace(/~([^~]+)~/g, '$1')
+                        .replace(/```([^`]+)```/g, '$1')
+                        .replace(/^[ \t]*[-*]\s+/gm, '')
+                        .replace(/^[ \t]*\d+\.\s+/gm, '')
+                        .replace(/^[ \t]*>\s+/gm, '');
+                } else {
+                    replacement = val
+                        .replace(/\*([^*]+)\*/g, '$1')
+                        .replace(/_([^_]+)_/g, '$1')
+                        .replace(/~([^~]+)~/g, '$1')
+                        .replace(/```([^`]+)```/g, '$1')
+                        .replace(/^[ \t]*[-*]\s+/gm, '')
+                        .replace(/^[ \t]*\d+\.\s+/gm, '')
+                        .replace(/^[ \t]*>\s+/gm, '');
+                    input.value = replacement;
+                    updateHandlingCharCount(scope, type);
+                    return;
+                }
+                newCursorStart = start;
+                newCursorEnd = start + replacement.length;
+            }
+
+            input.value = val.substring(0, start) + replacement + val.substring(end);
+            input.setSelectionRange(newCursorStart, newCursorEnd);
+            updateHandlingCharCount(scope, type);
+        }
+
+        const audioPlayingStates = {};
+        function toggleAudioPreview(scope, type) {
+            const key = `${scope}-${type}`;
+            const btn = document.getElementById(`cfg-btn-preview-${scope}-${type}`);
+            if (!btn) return;
+            
+            audioPlayingStates[key] = !audioPlayingStates[key];
+            if (audioPlayingStates[key]) {
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg><span>Playing...</span>`;
+                btn.style.backgroundColor = "var(--color-bg-light)";
+            } else {
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg><span>Preview</span>`;
+                btn.style.backgroundColor = "var(--color-white)";
+            }
+        }
+
+        function saveQueueConfiguration() {
+            // After-hours fields
+            const ahMethod = document.getElementById('cfg-ah-action-val').value;
+            const ahAudio = document.getElementById('cfg-ah-audio-val').value;
+            const ahVm = document.getElementById('cfg-ah-vm-val').value;
+            const ahWhatsappMessage = document.getElementById('cfg-ah-whatsapp-msg')?.value || "";
+            const ahSmsMessage = document.getElementById('cfg-ah-sms-msg')?.value || "";
+
+            // No-agent fields
+            const naMethod = document.getElementById('cfg-na-action-val').value;
+            const naAudio = document.getElementById('cfg-na-audio-val').value;
+            const naVm = document.getElementById('cfg-na-vm-val').value;
+            const naWhatsappMessage = document.getElementById('cfg-na-whatsapp-msg')?.value || "";
+            const naSmsMessage = document.getElementById('cfg-na-sms-msg')?.value || "";
+
+            // Validations for After-hours
+            if (ahMethod === 'message' && (!ahAudio || ahAudio.trim() === '')) {
+                alert('Please upload an After-hours Audio Message before saving configuration.');
+                return;
+            }
+            if (ahMethod === 'voicemail' && (!ahVm || ahVm.trim() === '')) {
+                alert('Please upload an After-hours Voicemail Greeting before saving configuration.');
+                return;
+            }
+            if (ahMethod === 'whatsapp' && !ahWhatsappMessage.trim()) {
+                alert('Please enter an After-hours WhatsApp Message before saving configuration.');
+                return;
+            }
+            if (ahMethod === 'sms' && !ahSmsMessage.trim()) {
+                alert('Please enter an After-hours SMS Message before saving configuration.');
+                return;
+            }
+
+            // Validations for No-agent
+            if (naMethod === 'message' && (!naAudio || naAudio.trim() === '')) {
+                alert('Please upload a No-agent Audio Message before saving configuration.');
+                return;
+            }
+            if (naMethod === 'voicemail' && (!naVm || naVm.trim() === '')) {
+                alert('Please upload a No-agent Voicemail Greeting before saving configuration.');
+                return;
+            }
+            if (naMethod === 'whatsapp' && !naWhatsappMessage.trim()) {
+                alert('Please enter a No-agent WhatsApp Message before saving configuration.');
+                return;
+            }
+            if (naMethod === 'sms' && !naSmsMessage.trim()) {
+                alert('Please enter a No-agent SMS Message before saving configuration.');
+                return;
+            }
+
+            defaultQueueConfig = {
+                operatingHours: JSON.parse(JSON.stringify(operatingHoursSchedule)),
+                holidays: JSON.parse(JSON.stringify(holidaysList)),
+                afterHours: {
+                    method: ahMethod,
+                    audio: ahAudio,
+                    vm: ahVm,
+                    whatsappMessage: ahWhatsappMessage,
+                    smsMessage: ahSmsMessage
+                },
+                noAgent: {
+                    method: naMethod,
+                    audio: naAudio,
+                    vm: naVm,
+                    whatsappMessage: naWhatsappMessage,
+                    smsMessage: naSmsMessage
+                }
+            };
+
+            localStorage.setItem('ccm_default_queue_config_v2', JSON.stringify(defaultQueueConfig));
+
+            alert('Queue configuration has been saved successfully.');
+            switchQueueTab('queues');
+        }
+
+        function updatePendingCallbackBadge() {
+            const totalCount = callbackData.length;
+            const badge = document.getElementById('callback-pending-badge');
+            if (badge) {
+                badge.textContent = totalCount;
+            }
+        }
+
+        function getFilteredCallbacks() {
+            const query = (document.getElementById('callback-search-input')?.value || '').toLowerCase().trim();
+            let filtered = callbackData.filter(c => {
+                const matchesSearch = !query ||
+                    c.customer.toLowerCase().includes(query) ||
+                    c.phone.toLowerCase().includes(query) ||
+                    (c.branch && c.branch.toLowerCase().includes(query)) ||
+                    c.queue.toLowerCase().includes(query);
+
+                const matchesStatus = selectedCallbackStatusFilter === 'All' || c.status === selectedCallbackStatusFilter;
+                const matchesBranch = selectedCallbackBranches.length === 0 || selectedCallbackBranches.length === allAvailableBranchesList.length || selectedCallbackBranches.includes(c.branch);
+                
+                let matchesDate = true;
+                if (selectedCallbackDateFilter === 'Today') {
+                    matchesDate = c.dateCategory === 'Today';
+                } else if (selectedCallbackDateFilter === 'Yesterday') {
+                    matchesDate = c.dateCategory === 'Yesterday';
+                } else if (selectedCallbackDateFilter === 'Last 7 Days') {
+                    matchesDate = c.dateCategory === 'Today' || c.dateCategory === 'Yesterday' || c.dateCategory === 'Last 7 Days';
+                } else if (selectedCallbackDateFilter === 'Last 30 Days') {
+                    matchesDate = c.dateCategory === 'Today' || c.dateCategory === 'Yesterday' || c.dateCategory === 'Last 7 Days' || c.dateCategory === 'Last 30 Days';
+                } else if (selectedCallbackDateFilter === 'Custom Range') {
+                    if (customDateFrom && customDateTo) {
+                        const fromTime = new Date(customDateFrom).setHours(0, 0, 0, 0);
+                        const toTime = new Date(customDateTo).setHours(23, 59, 59, 999);
+                        matchesDate = c.timestamp >= fromTime && c.timestamp <= toTime;
+                    } else {
+                        matchesDate = true;
+                    }
+                }
+
+                return matchesSearch && matchesStatus && matchesBranch && matchesDate;
+            });
+
+            // Apply Sorting
+            filtered.sort((a, b) => {
+                let valA = a[cbSortColumn];
+                let valB = b[cbSortColumn];
+
+                if (cbSortColumn === 'requestedAt') {
+                    valA = a.timestamp;
+                    valB = b.timestamp;
+                } else if (typeof valA === 'string') {
+                    valA = valA.toLowerCase();
+                    valB = valB.toLowerCase();
+                }
+
+                if (valA < valB) return cbSortAsc ? -1 : 1;
+                if (valA > valB) return cbSortAsc ? 1 : -1;
+                return 0;
+            });
+
+            return filtered;
+        }
+
+        function sortCallbacks(column) {
+            if (cbSortColumn === column) {
+                cbSortAsc = !cbSortAsc;
+            } else {
+                cbSortColumn = column;
+                cbSortAsc = true;
+                if (column === 'requestedAt') {
+                    cbSortAsc = false; // default newest first
+                }
+            }
+
+            renderCallbacks();
+        }
+
+        function filterCallbacks() {
+            renderCallbacks(getFilteredCallbacks());
+        }
+
+        function filterCbBranchDropdownOptions(input) {
+            const query = input.value.toLowerCase().trim();
+            const container = document.getElementById('filter-cb-branch-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    opt.style.display = 'flex';
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleAllCbBranchFilters(isChecked) {
+            const itemCheckboxes = document.querySelectorAll('.cb-callback-branch-filter-item');
+            itemCheckboxes.forEach(cb => {
+                cb.checked = isChecked;
+            });
+            if (isChecked) {
+                selectedCallbackBranches = [...allAvailableBranchesList];
+            } else {
+                selectedCallbackBranches = [];
+            }
+            updateCbBranchFilterTriggerLabel();
+            renderCallbacks(getFilteredCallbacks());
+        }
+
+        function handleCbBranchItemCheckboxChange() {
+            const itemCheckboxes = document.querySelectorAll('.cb-callback-branch-filter-item');
+            const selectAllCb = document.getElementById('cb-callback-branch-select-all');
+            
+            selectedCallbackBranches = [];
+            let allChecked = true;
+            let noneChecked = true;
+
+            itemCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedCallbackBranches.push(cb.value);
+                    noneChecked = false;
+                } else {
+                    allChecked = false;
+                }
+            });
+
+            if (selectAllCb) {
+                selectAllCb.checked = allChecked;
+                selectAllCb.indeterminate = !allChecked && !noneChecked;
+            }
+
+            updateCbBranchFilterTriggerLabel();
+            renderCallbacks(getFilteredCallbacks());
+        }
+
+        function updateCbBranchFilterTriggerLabel() {
+            const trigger = document.querySelector('#filter-cb-branch-trigger .trigger-label');
+            if (!trigger) return;
+
+            if (selectedCallbackBranches.length === 0 || selectedCallbackBranches.length === allAvailableBranchesList.length) {
+                trigger.textContent = 'All Branches';
+            } else if (selectedCallbackBranches.length === 1) {
+                trigger.textContent = selectedCallbackBranches[0];
+            } else {
+                trigger.textContent = `${selectedCallbackBranches.length} Branches`;
+            }
+        }
+
+        function filterCallbackByDate(dateRange) {
+            selectedCallbackDateFilter = dateRange;
+            const trigger = document.querySelector('#filter-cb-date-trigger .trigger-label');
+            
+            if (dateRange === 'Custom Range') {
+                document.getElementById('cb-custom-date-modal').style.display = 'flex';
+                document.getElementById('filter-cb-date-details')?.removeAttribute('open');
+                return;
+            }
+
+            if (trigger) trigger.textContent = dateRange === 'All' ? 'Date Range' : dateRange;
+            document.getElementById('filter-cb-date-details')?.removeAttribute('open');
+            renderCallbacks(getFilteredCallbacks());
+        }
+
+        function closeCustomDateModal() {
+            document.getElementById('cb-custom-date-modal').style.display = 'none';
+        }
+
+        function applyCustomDateRange() {
+            const from = document.getElementById('cb-date-from').value;
+            const to = document.getElementById('cb-date-to').value;
+            if (!from || !to) return;
+
+            customDateFrom = from;
+            customDateTo = to;
+            selectedCallbackDateFilter = 'Custom Range';
+
+            const trigger = document.querySelector('#filter-cb-date-trigger .trigger-label');
+            if (trigger) trigger.textContent = `${from} to ${to}`;
+
+            closeCustomDateModal();
+            renderCallbacks(getFilteredCallbacks());
+        }
+
+        function filterCallbackByStatus(status) {
+            selectedCallbackStatusFilter = status;
+            const trigger = document.querySelector('#filter-cb-status-trigger .trigger-label');
+            if (trigger) trigger.textContent = status === 'All' ? 'All Statuses' : status;
+            document.getElementById('filter-cb-status-details')?.removeAttribute('open');
+            renderCallbacks(getFilteredCallbacks());
+        }
+
+        function exportCallbacksToExcel() {
+            const filteredData = getFilteredCallbacks();
+            
+            // Build CSV/Excel structure with exact visible columns
+            const headers = ["Customer", "Phone Number", "Branch", "Queue", "Requested Date & Time", "Status"];
+            const rows = filteredData.map(c => [
+                `"${c.customer.replace(/"/g, '""')}"`,
+                `"${c.phone}"`,
+                `"${c.branch}"`,
+                `"${c.queue.replace(/"/g, '""')}"`,
+                `"${c.requestedAt}"`,
+                `"${c.status}"`
+            ]);
+
+            const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Callback_Requests_Export.xlsx");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function renderCallbacks(listToRender) {
+            const list = listToRender || getFilteredCallbacks();
+            const tbody = document.getElementById('callback-table-body');
+            const paginationInfo = document.getElementById('callback-pagination-info');
+
+            if (!tbody) return;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #888; padding: 24px;">No callback requests found.</td></tr>`;
+                if (paginationInfo) paginationInfo.textContent = `Showing 0 of ${callbackData.length}`;
+                return;
+            }
+
+            tbody.innerHTML = list.map(c => {
+                const statusClass = c.status === 'Pending' ? 'badge-pending' : 'badge-completed';
+
+                return `
+                    <tr>
+                        <td style="font-weight: 600; color: var(--color-black);">${escapeHtml(c.customer)}</td>
+                        <td>${escapeHtml(c.phone)}</td>
+                        <td>${escapeHtml(c.branch)}</td>
+                        <td>${escapeHtml(c.queue)}</td>
+                        <td>${escapeHtml(c.requestedAt)}</td>
+                        <td style="text-align: center;">
+                            <span class="badge ${statusClass}">${escapeHtml(c.status)}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            if (paginationInfo) {
+                paginationInfo.textContent = `Showing 1-${list.length} of ${list.length}`;
+            }
+        }
+
+        // Filter dropdown options by search text
+        function filterDropdownOptions(input) {
+            const query = input.value.toLowerCase().trim();
+            const container = input.closest('.custom-select-options');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    opt.style.display = 'flex';
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+        }
+
+        // Global click-outside listener to close details dropdowns cleanly
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('details.custom-select-wrapper')) {
+                document.querySelectorAll('details.custom-select-wrapper[open]').forEach(el => {
+                    el.removeAttribute('open');
+                });
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQueues();
+            updatePendingCallbackBadge();
+
+            // Setup Interactive Date Range Calendar Picker (HRMS Attendance Standard)
+            if (typeof flatpickr !== 'undefined') {
+                const fp = flatpickr("#cb-date-range-input", {
+                    mode: "range",
+                    dateFormat: "d M Y",
+                    allowInput: false,
+                    onChange: function(selectedDates, dateStr, instance) {
+                        if (selectedDates.length === 2) {
+                            const d1 = selectedDates[0];
+                            const d2 = selectedDates[1];
+                            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            const str1 = `${String(d1.getDate()).padStart(2, '0')} ${months[d1.getMonth()]}`;
+                            const str2 = `${String(d2.getDate()).padStart(2, '0')} ${months[d2.getMonth()]} ${d2.getFullYear()}`;
+                            instance.input.value = `${str1} - ${str2}`;
+                            
+                            customDateFrom = d1;
+                            customDateTo = d2;
+                            selectedCallbackDateFilter = 'Custom Range';
+                            renderCallbacks(getFilteredCallbacks());
+                        } else if (selectedDates.length === 0) {
+                            instance.input.value = "All Dates";
+                            selectedCallbackDateFilter = 'All';
+                            customDateFrom = null;
+                            customDateTo = null;
+                            renderCallbacks(getFilteredCallbacks());
+                        }
+                    }
+                });
+
+                const wrap = document.getElementById('cb-date-range-picker-wrap');
+                if (wrap) {
+                    wrap.addEventListener('click', () => {
+                        fp.open();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

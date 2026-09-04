@@ -1,0 +1,1013 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Monitoring — CCM | Logistics Management Platform</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- CCM & Agents Unified Stylesheet -->
+    <link rel="stylesheet" href="agents.css">
+    <style>
+        .live-pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .qa-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            background: #ffffff;
+            color: #1e40af;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+        .qa-action-btn:hover {
+            background: #eff6ff;
+            color: #1e3a8a;
+            border-color: #bfdbfe;
+        }
+        .qa-action-btn.active-qa {
+            background: #1e40af;
+            color: #ffffff;
+            border-color: #1e40af;
+        }
+
+        .qa-btn-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Status badges for Availability & Queues */
+        .badge-avail-available {
+            padding: 2px 7px;
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .badge-avail-oncall {
+            padding: 2px 7px;
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .badge-avail-break {
+            padding: 2px 7px;
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .badge-avail-offline {
+            padding: 2px 7px;
+            background: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Live Monitoring Dedicated Table Column Styles */
+        .live-active-calls-table,
+        .live-waiting-queues-table,
+        .live-agent-avail-table {
+            width: 100% !important;
+            table-layout: auto !important;
+            border-collapse: collapse !important;
+        }
+        .live-active-calls-table th, .live-active-calls-table td,
+        .live-waiting-queues-table th, .live-waiting-queues-table td,
+        .live-agent-avail-table th, .live-agent-avail-table td {
+            padding: 8px 12px !important;
+            vertical-align: middle !important;
+        }
+        .live-active-calls-table th:first-child, .live-active-calls-table td:first-child { width: 15% !important; text-align: left !important; }
+        .live-active-calls-table th:nth-child(2), .live-active-calls-table td:nth-child(2) { width: 18% !important; text-align: left !important; }
+        .live-active-calls-table th:nth-child(3), .live-active-calls-table td:nth-child(3) { width: 12% !important; text-align: left !important; }
+        .live-active-calls-table th:nth-child(4), .live-active-calls-table td:nth-child(4) { width: 11% !important; text-align: left !important; }
+        .live-active-calls-table th:nth-child(5), .live-active-calls-table td:nth-child(5) { width: 14% !important; text-align: left !important; }
+        .live-active-calls-table th:nth-child(6), .live-active-calls-table td:nth-child(6) { width: 9% !important; text-align: left !important; }
+        .live-active-calls-table th:nth-child(7), .live-active-calls-table td:nth-child(7) { width: 21% !important; text-align: right !important; white-space: nowrap !important; }
+
+        .live-waiting-queues-table th:first-child, .live-waiting-queues-table td:first-child { width: 34% !important; text-align: left !important; }
+        .live-waiting-queues-table th:nth-child(2), .live-waiting-queues-table td:nth-child(2) { width: 22% !important; text-align: left !important; }
+        .live-waiting-queues-table th:nth-child(3), .live-waiting-queues-table td:nth-child(3) { width: 22% !important; text-align: left !important; }
+        .live-waiting-queues-table th:nth-child(4), .live-waiting-queues-table td:nth-child(4) { width: 22% !important; text-align: left !important; }
+
+        .live-agent-avail-table th:first-child, .live-agent-avail-table td:first-child { width: 26% !important; text-align: left !important; }
+        .live-agent-avail-table th:nth-child(2), .live-agent-avail-table td:nth-child(2) { width: 24% !important; text-align: left !important; }
+        .live-agent-avail-table th:nth-child(3), .live-agent-avail-table td:nth-child(3) { width: 26% !important; text-align: left !important; }
+        .live-agent-avail-table th:nth-child(4), .live-agent-avail-table td:nth-child(4) { width: 24% !important; text-align: left !important; }
+
+        /* Custom Dropdown Filters */
+        .custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            width: 100%;
+        }
+        .custom-select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            height: 32px;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            font-size: 0.8125rem;
+            cursor: pointer;
+            list-style: none;
+            box-sizing: border-box;
+            color: var(--color-black);
+            font-weight: 500;
+        }
+        .custom-select-trigger::-webkit-details-marker {
+            display: none;
+        }
+        .custom-select-options {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 4px;
+        }
+        .custom-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            font-size: 0.8125rem;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--color-black);
+        }
+        .custom-option:hover {
+            background-color: var(--color-bg-light);
+        }
+        .custom-option input[type="radio"],
+        .custom-option input[type="checkbox"] {
+            margin: 0;
+            cursor: pointer;
+        }
+        .custom-select-search {
+            padding: 4px;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 4px;
+        }
+        .custom-select-search-input {
+            width: 100%;
+            height: 28px;
+            padding: 0 8px;
+            font-size: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .custom-select-search-input:focus {
+            border-color: var(--color-black);
+        }
+
+        /* Custom Audio Toast */
+        #qa-session-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            font-size: 0.8125rem;
+            border: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- QA Action Notification Toast -->
+    <div id="qa-session-toast">
+        <div style="width: 8px; height: 8px; background: #38bdf8; border-radius: 50%;" class="live-pulse-dot"></div>
+        <div>
+            <strong id="toast-mode">Listen-in Active</strong> &bull; <span id="toast-target">Rahul Varma (CUST-1003)</span>
+        </div>
+        <button type="button" onclick="endQaSession()" style="background: rgba(255,255,255,0.15); border: none; color: #fff; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: 600;">Disconnect</button>
+    </div>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads -->
+                    <a href="leads.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Leads
+                    </a>
+                    <!-- Module 9: Tickets -->
+                    <a href="tickets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring (Active) -->
+                    <a href="live-monitoring.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND -->
+                    <a href="blacklist-dnd.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                                    <!-- Module 14: Settings -->
+                    <a href="settings.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            
+            <!-- Top Header Breadcrumb -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Live Monitoring</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Back to Welcome">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h1 class="page-title">Live Monitoring</h1>
+                            <span class="live-pulse-dot" title="Live stream connected"></span>
+                        </div>
+                        <p class="page-subtitle">Monitor active calls, queue activity, and agent availability in real time.</p>
+                    </div>
+                    <div class="header-actions">
+                        <span style="font-size: 0.75rem; color: #64748b; font-family: monospace; display: flex; align-items: center; gap: 6px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            Refreshed live
+                        </span>
+                    </div>
+                </div>
+
+                <!-- CCM Live Monitoring Page Section -->
+                <div class="ccm-page-section">
+
+                    <!-- Clean 3-Tab Structure Navigation Bar -->
+                    <div class="ccm-tabs-nav" style="margin-bottom: 16px;">
+                        <button type="button" class="ccm-tab-btn active" id="tab-btn-active-calls" onclick="switchMonitoringTab('active-calls', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            Active Calls
+                            <span class="ccm-tab-badge" id="tab-count-active-calls">3</span>
+                        </button>
+                        <button type="button" class="ccm-tab-btn" id="tab-btn-waiting-calls" onclick="switchMonitoringTab('waiting-calls', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                            Waiting Calls &amp; Queue Activity
+                            <span class="ccm-tab-badge" id="tab-count-waiting-calls">4</span>
+                        </button>
+                        <button type="button" class="ccm-tab-btn" id="tab-btn-agent-avail" onclick="switchMonitoringTab('agent-avail', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Agent Availability
+                            <span class="ccm-tab-badge" id="tab-count-agent-avail">6</span>
+                        </button>
+                    </div>
+
+                    <!-- ================= TAB 1: ACTIVE CALLS ================= -->
+                    <div id="pane-active-calls" class="ccm-tab-pane active">
+                        <!-- Filters Bar for Active Calls -->
+                        <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%; flex-wrap: nowrap;">
+                            <div class="search-input-wrapper" style="flex: 1; min-width: 300px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <input type="text" id="search-active-calls" class="search-input" placeholder="Search by Agent, Customer Name, or Phone Number..." oninput="filterActiveCalls()">
+                            </div>
+
+                            <!-- Queue Filter -->
+                            <details class="custom-select-wrapper" id="filter-active-queue-details" style="min-width: 170px; width: 170px; flex-shrink: 0;">
+                                <summary class="custom-select-trigger" id="filter-active-queue-trigger" style="height: 32px;">
+                                    <span class="trigger-label" id="filter-active-queue-label">All Queues</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <label class="custom-option" onclick="selectActiveQueueFilter('all', 'All Queues')"><input type="radio" name="active-queue-opt" value="all" checked> All Queues</label>
+                                    <label class="custom-option" onclick="selectActiveQueueFilter('Support Queue', 'Support Queue')"><input type="radio" name="active-queue-opt" value="Support Queue"> Support Queue</label>
+                                    <label class="custom-option" onclick="selectActiveQueueFilter('Inquiry Queue', 'Inquiry Queue')"><input type="radio" name="active-queue-opt" value="Inquiry Queue"> Inquiry Queue</label>
+                                    <label class="custom-option" onclick="selectActiveQueueFilter('Billing Queue', 'Billing Queue')"><input type="radio" name="active-queue-opt" value="Billing Queue"> Billing Queue</label>
+                                </div>
+                            </details>
+                        </div>
+
+                        <!-- Active Calls Table Container -->
+                        <div class="table-container ccm-desktop-table-container">
+                            <table class="ccm-branches-table live-active-calls-table">
+                                <thead>
+                                    <tr>
+                                        <th>Agent</th>
+                                        <th>Customer</th>
+                                        <th>Branch</th>
+                                        <th>Call Duration</th>
+                                        <th>Queue</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">QA Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="active-calls-tbody">
+                                    <!-- Populated dynamically via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- ================= TAB 2: WAITING CALLS & QUEUE ACTIVITY ================= -->
+                    <div id="pane-waiting-calls" class="ccm-tab-pane">
+                        <!-- Filters Bar for Queues -->
+                        <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%; flex-wrap: nowrap;">
+                            <div class="search-input-wrapper" style="flex: 1; min-width: 300px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <input type="text" id="search-waiting-queues" class="search-input" placeholder="Search by Queue Name..." oninput="filterWaitingQueues()">
+                            </div>
+
+                            <!-- Waiting Filter (All vs Has Waiting Calls) -->
+                            <details class="custom-select-wrapper" id="filter-queue-load-details" style="min-width: 180px; width: 180px; flex-shrink: 0;">
+                                <summary class="custom-select-trigger" id="filter-queue-load-trigger" style="height: 32px;">
+                                    <span class="trigger-label" id="filter-queue-load-label">All Queue Loads</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <label class="custom-option" onclick="selectQueueLoadFilter('all', 'All Queue Loads')"><input type="radio" name="queue-load-opt" value="all" checked> All Queue Loads</label>
+                                    <label class="custom-option" onclick="selectQueueLoadFilter('waiting', 'Has Waiting Calls')"><input type="radio" name="queue-load-opt" value="waiting"> Has Waiting Calls (&gt;0)</label>
+                                    <label class="custom-option" onclick="selectQueueLoadFilter('idle', 'No Waiting Calls')"><input type="radio" name="queue-load-opt" value="idle"> No Waiting Calls (0)</label>
+                                </div>
+                            </details>
+                        </div>
+
+                        <!-- Waiting Queues Table Container -->
+                        <div class="table-container ccm-desktop-table-container">
+                            <table class="ccm-branches-table live-waiting-queues-table">
+                                <thead>
+                                    <tr>
+                                        <th>Queue</th>
+                                        <th>Waiting Calls</th>
+                                        <th>Agents Available</th>
+                                        <th>Agents On Call</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="waiting-queues-tbody">
+                                    <!-- Populated dynamically via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- ================= TAB 3: AGENT AVAILABILITY ================= -->
+                    <div id="pane-agent-avail" class="ccm-tab-pane">
+                        <!-- Filters Bar for Agent Availability -->
+                        <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%; flex-wrap: nowrap;">
+                            <div class="search-input-wrapper" style="flex: 1; min-width: 300px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <input type="text" id="search-agent-avail" class="search-input" placeholder="Search by Agent Name..." oninput="filterAgentAvail()">
+                            </div>
+
+                            <!-- 1. Branch Multi-Select Filter with Search -->
+                            <details class="custom-select-wrapper" id="filter-avail-branch-details" style="min-width: 160px; width: 160px; flex-shrink: 0;">
+                                <summary class="custom-select-trigger" id="filter-avail-branch-trigger" style="height: 32px;">
+                                    <span class="trigger-label" id="filter-avail-branch-label">All Branches</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <div class="custom-select-search">
+                                        <div class="custom-select-search-wrapper" style="position: relative; display: flex; align-items: center;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                            <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterAvailBranchDropdownOptions(this)" style="padding-left: 26px;">
+                                        </div>
+                                    </div>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" id="avail-branch-all-check" checked onchange="toggleAllAvailBranches(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span style="font-weight: 600; color: var(--color-black);">All Branches</span>
+                                    </label>
+                                    <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
+                                    <div id="filter-avail-branch-list-items">
+                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Bengaluru" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Bengaluru</span></label>
+                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Mumbai" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Mumbai</span></label>
+                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Hyderabad" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Hyderabad</span></label>
+                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Delhi" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Delhi</span></label>
+                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Chennai" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Chennai</span></label>
+                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Pune" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Pune</span></label>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <!-- Availability Status Filter -->
+                            <details class="custom-select-wrapper" id="filter-avail-status-details" style="min-width: 170px; width: 170px; flex-shrink: 0;">
+                                <summary class="custom-select-trigger" id="filter-avail-status-trigger" style="height: 32px;">
+                                    <span class="trigger-label" id="filter-avail-status-label">All Availabilities</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <label class="custom-option" onclick="selectAvailStatusFilter('all', 'All Availabilities')"><input type="radio" name="avail-status-opt" value="all" checked> All Availabilities</label>
+                                    <label class="custom-option" onclick="selectAvailStatusFilter('Available', 'Available')"><input type="radio" name="avail-status-opt" value="Available"> Available</label>
+                                    <label class="custom-option" onclick="selectAvailStatusFilter('On Call', 'On Call')"><input type="radio" name="avail-status-opt" value="On Call"> On Call</label>
+                                    <label class="custom-option" onclick="selectAvailStatusFilter('Break', 'Break')"><input type="radio" name="avail-status-opt" value="Break"> Break</label>
+                                    <label class="custom-option" onclick="selectAvailStatusFilter('Offline', 'Offline')"><input type="radio" name="avail-status-opt" value="Offline"> Offline</label>
+                                </div>
+                            </details>
+                        </div>
+
+                        <!-- Agent Availability Table Container -->
+                        <div class="table-container ccm-desktop-table-container">
+                            <table class="ccm-branches-table live-agent-avail-table">
+                                <thead>
+                                    <tr>
+                                        <th>Agent</th>
+                                        <th>Branch</th>
+                                        <th>Queue</th>
+                                        <th>Availability</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="agent-avail-tbody">
+                                    <!-- Populated dynamically via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Live Monitoring Data & Logic -->
+    <script>
+        // Data Sources
+        const activeCallsData = [
+            { id: 'call-1', agent: 'Rahul Varma', customer: 'Suresh Reddy', phone: '+91 98480 12345', branch: 'Hyderabad', durationSec: 258, queue: 'Support Queue', status: 'On Call' },
+            { id: 'call-2', agent: 'Deepak Kumar', customer: 'Rajesh Kumar', phone: '+91 98765 43210', branch: 'Bengaluru', durationSec: 165, queue: 'Inquiry Queue', status: 'On Call' },
+            { id: 'call-3', agent: 'Ananya Iyer', customer: 'Anil Verma', phone: '+91 98100 56789', branch: 'Delhi', durationSec: 72, queue: 'Support Queue', status: 'On Call' }
+        ];
+
+        const waitingQueuesData = [
+            { queue: 'Support Queue', waitingCalls: 2, agentsAvail: 1, agentsOnCall: 2 },
+            { queue: 'Inquiry Queue', waitingCalls: 0, agentsAvail: 1, agentsOnCall: 1 },
+            { queue: 'Billing Queue', waitingCalls: 0, agentsAvail: 1, agentsOnCall: 0 },
+            { queue: 'Escalation Queue', waitingCalls: 1, agentsAvail: 0, agentsOnCall: 0 }
+        ];
+
+        const agentAvailData = [
+            { agent: 'Deepak Kumar', branch: 'Bengaluru', queue: 'Inquiry Queue', avail: 'On Call' },
+            { agent: 'Priya Sharma', branch: 'Mumbai', queue: 'Support Queue', avail: 'Available' },
+            { agent: 'Rahul Varma', branch: 'Hyderabad', queue: 'Support Queue', avail: 'On Call' },
+            { agent: 'Ananya Iyer', branch: 'Delhi', queue: 'Support Queue', avail: 'On Call' },
+            { agent: 'Venkatesh Rao', branch: 'Chennai', queue: 'Inquiry Queue', avail: 'Break' },
+            { agent: 'Sneha Patil', branch: 'Pune', queue: 'Billing Queue', avail: 'Offline' }
+        ];
+
+        let activeQueueFilter = 'all';
+        let queueLoadFilter = 'all';
+        let availBranchFilter = 'all';
+        let availStatusFilter = 'all';
+
+        let currentQaAction = null;
+        let currentTargetAgent = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderActiveCalls();
+            renderWaitingQueues();
+            renderAgentAvail();
+
+            // Close dropdowns on outside click
+            document.addEventListener('click', (e) => {
+                const wrappers = document.querySelectorAll('.custom-select-wrapper');
+                wrappers.forEach(w => {
+                    if (!w.contains(e.target)) {
+                        w.removeAttribute('open');
+                    }
+                });
+            });
+        });
+
+        // Tab Switching Handler
+        function switchMonitoringTab(tabKey, btn) {
+            document.querySelectorAll('.ccm-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.ccm-tab-pane').forEach(p => p.classList.remove('active'));
+            const targetPane = document.getElementById('pane-' + tabKey);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        }
+
+        // --- TAB 1: ACTIVE CALLS RENDERING & FILTERS ---
+        function renderActiveCalls() {
+            const searchVal = (document.getElementById('search-active-calls')?.value || '').toLowerCase().trim();
+            const tbody = document.getElementById('active-calls-tbody');
+            if (!tbody) return;
+
+            const filtered = activeCallsData.filter(c => {
+                const matchSearch = !searchVal ||
+                    c.agent.toLowerCase().includes(searchVal) ||
+                    c.customer.toLowerCase().includes(searchVal) ||
+                    c.phone.toLowerCase().includes(searchVal) ||
+                    (c.branch && c.branch.toLowerCase().includes(searchVal));
+                const matchQueue = (activeQueueFilter === 'all') || (c.queue === activeQueueFilter);
+                return matchSearch && matchQueue;
+            });
+
+            document.getElementById('tab-count-active-calls').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 28px; color: #64748b;">No active calls match the filter criteria.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(c => {
+                const isListening = (currentQaAction === 'Listen-in' && currentTargetAgent === c.agent);
+                const isWhispering = (currentQaAction === 'Whisper' && currentTargetAgent === c.agent);
+                const isBarging = (currentQaAction === 'Barge' && currentTargetAgent === c.agent);
+
+                const mins = String(Math.floor(c.durationSec / 60)).padStart(2, '0');
+                const secs = String(c.durationSec % 60).padStart(2, '0');
+
+                return `
+                    <tr data-id="${c.id}">
+                        <td style="font-weight: 600; color: #0f172a;">${escapeHtml(c.agent)}</td>
+                        <td>
+                            <div style="font-weight: 600; color: #0f172a;">${escapeHtml(c.customer)}</div>
+                            <div style="font-family: monospace; font-size: 0.75rem; color: #64748b;">${escapeHtml(c.phone)}</div>
+                        </td>
+                        <td>
+                            <span style="font-weight: 500; color: #0f172a;">${escapeHtml(c.branch || '—')}</span>
+                        </td>
+                        <td>
+                            <span style="font-family: monospace; font-weight: 600; color: #0f172a;" id="dur-${c.id}">${mins}:${secs}</span>
+                        </td>
+                        <td>
+                            <span style="font-weight: 500;">${escapeHtml(c.queue)}</span>
+                        </td>
+                        <td>
+                            <span class="badge-avail-oncall"><span class="live-pulse-dot" style="background:#2563eb; width:6px; height:6px;"></span>On Call</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="qa-btn-group" style="justify-content: flex-end;">
+                                <button type="button" class="qa-action-btn ${isListening ? 'active-qa' : ''}" onclick="triggerQaAction('Listen-in', '${escapeHtml(c.agent)}', '${escapeHtml(c.customer)}', this)" title="Listen-in (Silent QA Monitoring)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                                    ${isListening ? 'Listening...' : 'Listen-in'}
+                                </button>
+                                <button type="button" class="qa-action-btn ${isWhispering ? 'active-qa' : ''}" onclick="triggerQaAction('Whisper', '${escapeHtml(c.agent)}', '${escapeHtml(c.customer)}', this)" title="Whisper (Coach Agent Privately)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                                    ${isWhispering ? 'Whispering...' : 'Whisper'}
+                                </button>
+                                <button type="button" class="qa-action-btn ${isBarging ? 'active-qa' : ''}" onclick="triggerQaAction('Barge', '${escapeHtml(c.agent)}', '${escapeHtml(c.customer)}', this)" title="Barge (Join as 3-Way Conference)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    ${isBarging ? 'In Call...' : 'Barge'}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterActiveCalls() {
+            renderActiveCalls();
+        }
+
+        function selectActiveQueueFilter(queue, label) {
+            activeQueueFilter = queue;
+            document.getElementById('filter-active-queue-label').textContent = label;
+            document.getElementById('filter-active-queue-details').removeAttribute('open');
+            renderActiveCalls();
+        }
+
+        // --- TAB 2: WAITING CALLS & QUEUE ACTIVITY RENDERING & FILTERS ---
+        function renderWaitingQueues() {
+            const searchVal = (document.getElementById('search-waiting-queues')?.value || '').toLowerCase().trim();
+            const tbody = document.getElementById('waiting-queues-tbody');
+            if (!tbody) return;
+
+            const filtered = waitingQueuesData.filter(q => {
+                const matchSearch = !searchVal || q.queue.toLowerCase().includes(searchVal);
+                let matchLoad = true;
+                if (queueLoadFilter === 'waiting') matchLoad = q.waitingCalls > 0;
+                else if (queueLoadFilter === 'idle') matchLoad = q.waitingCalls === 0;
+                return matchSearch && matchLoad;
+            });
+
+            document.getElementById('tab-count-waiting-calls').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 28px; color: #64748b;">No queues match the filter criteria.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(q => {
+                const waitBadge = q.waitingCalls > 0 
+                    ? `<span style="display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 4px; background: #fee2e2; color: #991b1b; font-weight: 700; font-family: monospace; font-size: 0.8125rem;">${q.waitingCalls} Calls</span>`
+                    : `<span style="display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 4px; background: #f8fafc; color: #475569; font-weight: 600; font-family: monospace; font-size: 0.8125rem;">0 Calls</span>`;
+
+                return `
+                    <tr>
+                        <td style="font-weight: 600; color: #0f172a;">${escapeHtml(q.queue)}</td>
+                        <td>${waitBadge}</td>
+                        <td style="font-family: monospace; font-weight: 600; color: #065f46;">${q.agentsAvail} Agent${q.agentsAvail === 1 ? '' : 's'}</td>
+                        <td style="font-family: monospace; font-weight: 600; color: #1e40af;">${q.agentsOnCall} Agent${q.agentsOnCall === 1 ? '' : 's'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterWaitingQueues() {
+            renderWaitingQueues();
+        }
+
+        function selectQueueLoadFilter(load, label) {
+            queueLoadFilter = load;
+            document.getElementById('filter-queue-load-label').textContent = label;
+            document.getElementById('filter-queue-load-details').removeAttribute('open');
+            renderWaitingQueues();
+        }
+
+        // --- TAB 3: AGENT AVAILABILITY RENDERING & FILTERS ---
+        function renderAgentAvail() {
+            const searchVal = (document.getElementById('search-agent-avail')?.value || '').toLowerCase().trim();
+            const tbody = document.getElementById('agent-avail-tbody');
+            if (!tbody) return;
+
+            // Selected Branches
+            const checkedBranchNodes = document.querySelectorAll('.avail-branch-filter-cb:checked');
+            const selectedBranches = Array.from(checkedBranchNodes).map(cb => cb.value);
+            const allBranchChecked = document.getElementById('avail-branch-all-check')?.checked;
+
+            const filtered = agentAvailData.filter(a => {
+                const matchSearch = !searchVal || a.agent.toLowerCase().includes(searchVal);
+                const matchBranch = allBranchChecked || selectedBranches.length === 0 || selectedBranches.includes(a.branch);
+                const matchStatus = (availStatusFilter === 'all') || (a.avail === availStatusFilter);
+                return matchSearch && matchBranch && matchStatus;
+            });
+
+            document.getElementById('tab-count-agent-avail').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 28px; color: #64748b;">No agents match the filter criteria.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(a => {
+                let badge = '';
+                if (a.avail === 'Available') badge = '<span class="badge-avail-available">Available</span>';
+                else if (a.avail === 'On Call') badge = '<span class="badge-avail-oncall">On Call</span>';
+                else if (a.avail === 'Break') badge = '<span class="badge-avail-break">Break</span>';
+                else badge = '<span class="badge-avail-offline">Offline</span>';
+
+                return `
+                    <tr>
+                        <td style="font-weight: 600; color: #0f172a;">${escapeHtml(a.agent)}</td>
+                        <td>${escapeHtml(a.branch)}</td>
+                        <td>${escapeHtml(a.queue)}</td>
+                        <td>${badge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterAgentAvail() {
+            renderAgentAvail();
+        }
+
+        function filterAvailBranchDropdownOptions(input) {
+            const query = input.value.toLowerCase().trim();
+            const container = document.getElementById('filter-avail-branch-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function toggleAllAvailBranches(allCheckbox) {
+            const itemCheckboxes = document.querySelectorAll('.avail-branch-filter-cb');
+            itemCheckboxes.forEach(cb => {
+                cb.checked = allCheckbox.checked;
+            });
+            document.getElementById('filter-avail-branch-label').textContent = allCheckbox.checked ? 'All Branches' : 'No Branches';
+            renderAgentAvail();
+        }
+
+        function updateAvailBranchSelection() {
+            const allCheck = document.getElementById('avail-branch-all-check');
+            const itemCheckboxes = document.querySelectorAll('.avail-branch-filter-cb');
+            const checkedItems = document.querySelectorAll('.avail-branch-filter-cb:checked');
+
+            if (checkedItems.length === itemCheckboxes.length) {
+                allCheck.checked = true;
+                document.getElementById('filter-avail-branch-label').textContent = 'All Branches';
+            } else if (checkedItems.length === 0) {
+                allCheck.checked = false;
+                document.getElementById('filter-avail-branch-label').textContent = 'No Branches';
+            } else if (checkedItems.length === 1) {
+                allCheck.checked = false;
+                document.getElementById('filter-avail-branch-label').textContent = checkedItems[0].value;
+            } else {
+                allCheck.checked = false;
+                document.getElementById('filter-avail-branch-label').textContent = `${checkedItems.length} Branches`;
+            }
+            renderAgentAvail();
+        }
+
+        function selectAvailStatusFilter(status, label) {
+            availStatusFilter = status;
+            document.getElementById('filter-avail-status-label').textContent = label;
+            document.getElementById('filter-avail-status-details').removeAttribute('open');
+            renderAgentAvail();
+        }
+
+        // Real-Time Active Call Duration Timer
+        setInterval(() => {
+            activeCallsData.forEach(c => {
+                c.durationSec++;
+                const el = document.getElementById('dur-' + c.id);
+                if (el) {
+                    const mins = String(Math.floor(c.durationSec / 60)).padStart(2, '0');
+                    const secs = String(c.durationSec % 60).padStart(2, '0');
+                    el.textContent = `${mins}:${secs}`;
+                }
+            });
+        }, 1000);
+
+        // QA Listen-in Trigger
+        function triggerQaAction(action, agentName, custName, btn) {
+            const toast = document.getElementById('qa-session-toast');
+            const toastMode = document.getElementById('toast-mode');
+            const toastTarget = document.getElementById('toast-target');
+
+            if (currentQaAction === action && currentTargetAgent === agentName) {
+                endQaSession();
+                return;
+            }
+
+            currentQaAction = action;
+            currentTargetAgent = agentName;
+
+            renderActiveCalls();
+
+            toastMode.textContent = `${action} Active`;
+            toastTarget.textContent = `${agentName} (${custName})`;
+            toast.style.display = 'flex';
+        }
+
+        function endQaSession() {
+            currentQaAction = null;
+            currentTargetAgent = null;
+            renderActiveCalls();
+            const toast = document.getElementById('qa-session-toast');
+            if (toast) toast.style.display = 'none';
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+    </script>
+</body>
+</html>

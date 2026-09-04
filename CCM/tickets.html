@@ -1,0 +1,2260 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickets — CCM | Logistics Management Platform</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- CCM & Agents Unified Stylesheet -->
+    <link rel="stylesheet" href="agents.css">
+    <style>
+        .ccm-modal-body::-webkit-scrollbar {
+            width: 5px;
+        }
+        .ccm-modal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .ccm-modal-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .ccm-modal-body::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .ccm-action-icons {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            width: 100%;
+        }
+        .custom-select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            height: 32px;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            font-size: 0.8125rem;
+            cursor: pointer;
+            list-style: none;
+            box-sizing: border-box;
+            color: var(--color-black);
+            font-weight: 500;
+        }
+        .custom-select-trigger::-webkit-details-marker {
+            display: none;
+        }
+        .custom-select-options {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 4px;
+        }
+        .custom-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            font-size: 0.8125rem;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--color-black);
+        }
+        .custom-option:hover {
+            background-color: var(--color-bg-light);
+        }
+        .custom-option input[type="radio"],
+        .custom-option input[type="checkbox"] {
+            margin: 0;
+            cursor: pointer;
+        }
+        .custom-select-search {
+            padding: 4px;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 4px;
+        }
+        .custom-select-search-input {
+            width: 100%;
+            height: 28px;
+            padding: 0 8px;
+            font-size: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .custom-select-search-input:focus {
+            border-color: var(--color-black);
+        }
+
+        /* Sortable column header styling */
+        th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+        th.sortable:hover {
+            background-color: #222 !important;
+        }
+        .sort-header-content {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sort-icon {
+            display: inline-flex;
+            align-items: center;
+            opacity: 0.7;
+        }
+        th.sortable:hover .sort-icon {
+            opacity: 1;
+        }
+
+        .action-cell {
+            text-align: right;
+            user-select: none;
+        }
+
+        /* CCM Tickets Table UI Consistency Overrides */
+        .main-tickets-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            min-width: 1100px !important;
+            table-layout: auto !important;
+        }
+        .main-tickets-table th {
+            background-color: var(--color-table-header, #111) !important;
+            color: var(--color-white, #fff) !important;
+            font-size: 0.8125rem !important;
+            font-weight: 600 !important;
+            padding: 8px 10px !important;
+            white-space: nowrap !important;
+            border-bottom: none !important;
+        }
+        .main-tickets-table td {
+            padding: 8px 10px !important;
+            font-size: 0.8125rem !important;
+            color: var(--color-black) !important;
+            border-bottom: 1px solid var(--color-border) !important;
+            vertical-align: middle !important;
+        }
+        .main-tickets-table tbody tr:hover td {
+            background-color: var(--color-bg-light, #f8fafc) !important;
+        }
+        .main-tickets-table th:first-child, .main-tickets-table td:first-child { width: 9% !important; white-space: nowrap; }
+        .main-tickets-table th:nth-child(2), .main-tickets-table td:nth-child(2) { width: 12% !important; white-space: nowrap; }
+        .main-tickets-table th:nth-child(3), .main-tickets-table td:nth-child(3) { width: 11% !important; white-space: nowrap; }
+        .main-tickets-table th:nth-child(4), .main-tickets-table td:nth-child(4) { width: 23% !important; }
+        .main-tickets-table th:nth-child(5), .main-tickets-table td:nth-child(5) { width: 8% !important; white-space: nowrap; }
+        .main-tickets-table th:nth-child(6), .main-tickets-table td:nth-child(6) { width: 11% !important; white-space: nowrap; }
+        .main-tickets-table th:nth-child(7), .main-tickets-table td:nth-child(7) { width: 7% !important; white-space: nowrap; }
+        .main-tickets-table th:nth-child(8), .main-tickets-table td:nth-child(8) { width: 9% !important; white-space: nowrap; }
+        .main-tickets-table th:nth-child(9), .main-tickets-table td:nth-child(9) { width: 8% !important; white-space: nowrap; }
+        .main-tickets-table th:nth-child(10), .main-tickets-table td:nth-child(10) { width: 80px !important; text-align: right !important; white-space: nowrap; }
+
+        /* Priority Badges */
+        .badge-priority-low {
+            padding: 3px 10px;
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        .badge-priority-medium {
+            padding: 3px 10px;
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        .badge-priority-high {
+            padding: 3px 10px;
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Status Badges */
+        .badge-status-open {
+            padding: 3px 10px;
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        .badge-status-inprogress {
+            padding: 3px 10px;
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        .badge-status-resolved {
+            padding: 3px 10px;
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        .badge-status-closed {
+            padding: 3px 10px;
+            background: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* SLA Breach / Escalation Badge */
+        .badge-escalated {
+            padding: 3px 8px;
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.6875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            margin-left: 4px;
+        }
+
+        /* Section Card for Dedicated Configuration Tab */
+        .section-card {
+            padding: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background: var(--color-white);
+            margin-bottom: 20px;
+        }
+        .section-header {
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--color-black);
+            margin: 0;
+        }
+        .section-helper {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 2px;
+            margin-bottom: 0;
+        }
+        .config-input-hint {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        .ccm-tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .ccm-tab-btn.active {
+            color: var(--color-black);
+            border-bottom-color: var(--color-black);
+        }
+
+        /* Config Structured Management Tables aligned with CCM Standard Tables */
+        .config-mgmt-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            font-size: 0.8125rem !important;
+            background: var(--color-white) !important;
+            table-layout: fixed !important;
+        }
+        .config-mgmt-table th {
+            background-color: var(--color-table-header, #111) !important;
+            color: var(--color-white, #fff) !important;
+            font-size: 0.8125rem !important;
+            font-weight: 600 !important;
+            padding: 8px 10px !important;
+            text-align: left !important;
+            white-space: nowrap !important;
+            border-bottom: none !important;
+            border-right: none !important;
+        }
+        .config-mgmt-table td {
+            padding: 8px 10px !important;
+            border-bottom: 1px solid var(--color-border) !important;
+            border-right: none !important;
+            vertical-align: middle !important;
+            color: var(--color-black) !important;
+            background: var(--color-white);
+            font-size: 0.8125rem !important;
+        }
+        .config-mgmt-table tbody tr:last-child td {
+            border-bottom: none !important;
+        }
+        .config-mgmt-table tbody tr:hover td {
+            background-color: var(--color-bg-light, #f8fafc) !important;
+        }
+        
+        /* Column Width Overrides for Workflow Table (Order, Status Name, Actions) */
+        #table-config-workflow th:first-child,
+        #table-config-workflow td:first-child {
+            width: 70px !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+        }
+        #table-config-workflow th:nth-child(2),
+        #table-config-workflow td:nth-child(2) {
+            width: auto !important;
+            text-align: left !important;
+        }
+        #table-config-workflow th:nth-child(3),
+        #table-config-workflow td:nth-child(3) {
+            width: 110px !important;
+            text-align: right !important;
+            white-space: nowrap !important;
+        }
+
+        /* Column Width Overrides for Priority & SLA Table (Priority Level, Default Resolution SLA Target, Actions) */
+        #table-config-sla th:first-child,
+        #table-config-sla td:first-child {
+            width: 45% !important;
+            text-align: left !important;
+        }
+        #table-config-sla th:nth-child(2),
+        #table-config-sla td:nth-child(2) {
+            width: 45% !important;
+            text-align: left !important;
+        }
+        #table-config-sla th:nth-child(3),
+        #table-config-sla td:nth-child(3) {
+            width: 10% !important;
+            min-width: 90px !important;
+            text-align: right !important;
+            white-space: nowrap !important;
+        }
+
+        .config-inline-input {
+            width: 100%;
+            height: 32px;
+            padding: 0 10px;
+            font-size: 0.8125rem;
+            font-family: inherit;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background: var(--color-white);
+            color: var(--color-black);
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+        .config-inline-input:hover {
+            border-color: #cbd5e1;
+        }
+        .config-inline-input:focus {
+            border-color: var(--color-black);
+        }
+        .config-order-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: var(--border-radius-base);
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            color: #334155;
+            font-weight: 700;
+            font-size: 0.75rem;
+            font-family: monospace;
+        }
+
+        /* Drag-and-Drop Reordering Styles */
+        .drag-handle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            cursor: grab;
+            padding: 2px;
+            border-radius: 4px;
+            transition: color 0.15s ease, background-color 0.15s ease;
+            user-select: none;
+            margin-right: 4px;
+        }
+        .drag-handle:hover {
+            color: var(--color-black);
+            background-color: #f1f5f9;
+        }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+        .config-mgmt-table tbody tr.is-dragging {
+            opacity: 0.45;
+            background-color: #f1f5f9 !important;
+        }
+        .config-mgmt-table tbody tr.drag-over-top td {
+            border-top: 2px solid var(--color-black) !important;
+        }
+        .config-mgmt-table tbody tr.drag-over-bottom td {
+            border-bottom: 2px solid var(--color-black) !important;
+        }
+
+        /* SLA Duration Picker Component */
+        .sla-picker-wrapper {
+            position: relative;
+            width: 100%;
+            user-select: none;
+        }
+        .sla-picker-trigger {
+            width: 100%;
+            height: 32px;
+            padding: 0 10px 0 12px;
+            font-size: 0.8125rem;
+            font-family: inherit;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background: var(--color-white);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: all 0.15s ease;
+            font-weight: 500;
+        }
+        .sla-picker-trigger:hover {
+            border-color: #94a3b8;
+        }
+        .sla-picker-trigger:focus,
+        .sla-picker-wrapper.open .sla-picker-trigger {
+            border-color: var(--color-black);
+            box-shadow: 0 0 0 1px var(--color-black);
+        }
+        .sla-picker-trigger .sla-val-text {
+            color: var(--color-black);
+            font-weight: 600;
+        }
+        .sla-picker-trigger .sla-clock-icon {
+            color: #64748b;
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+            transition: color 0.15s ease;
+        }
+        .sla-picker-trigger:hover .sla-clock-icon,
+        .sla-picker-wrapper.open .sla-clock-icon {
+            color: var(--color-black);
+        }
+        .sla-picker-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            width: 250px;
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            box-shadow: 0 8px 20px -4px rgba(0,0,0,0.15);
+            z-index: 120;
+            padding: 10px;
+            display: none;
+            box-sizing: border-box;
+        }
+        .sla-picker-wrapper.open .sla-picker-dropdown {
+            display: block;
+        }
+        .sla-picker-section-label {
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #64748b;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+        .sla-presets-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .sla-preset-chip {
+            padding: 5px 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            background: var(--color-bg-light);
+            color: var(--color-black);
+            cursor: pointer;
+            transition: all 0.12s ease;
+            white-space: nowrap;
+        }
+        .sla-preset-chip:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+        .sla-preset-chip.active {
+            background: var(--color-black);
+            color: var(--color-white);
+            border-color: var(--color-black);
+        }
+        .sla-custom-inputs-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sla-unit-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .sla-unit-group label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: #64748b;
+        }
+        .sla-number-input {
+            width: 100%;
+            height: 30px;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 0 6px;
+            font-size: 0.8125rem;
+            font-family: inherit;
+            font-weight: 600;
+            box-sizing: border-box;
+            outline: none;
+            text-align: center;
+        }
+        .sla-number-input:focus {
+            border-color: var(--color-black);
+        }
+        .sla-apply-btn {
+            height: 30px;
+            padding: 0 10px;
+            margin-top: 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--color-black);
+            color: var(--color-white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sla-apply-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- Ticket Details Modal (for View action) -->
+    <div class="modal-overlay" id="overlay-view-ticket" style="display: none; padding: 24px 16px; box-sizing: border-box; align-items: center; justify-content: center;">
+        <div class="modal-content" style="position: relative; width: 540px; max-width: 95vw; max-height: calc(100vh - 48px); display: flex; flex-direction: column; padding: 0; text-align: left; box-sizing: border-box; overflow: hidden; border-radius: 12px; background-color: var(--color-white); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.25);">
+            <!-- Modal Header -->
+            <div style="padding: 16px 20px; border-bottom: 1px solid var(--color-border); position: relative; flex-shrink: 0; background: var(--color-white); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <h3 class="modal-title" id="view-ticket-title" style="font-size: 1.0625rem; font-weight: 700; color: var(--color-black); margin: 0;">Ticket Details</h3>
+                        <span id="view-ticket-status-badge" style="display: inline-block;"></span>
+                        <span id="view-ticket-escalated-badge" style="display: none;"></span>
+                    </div>
+                    <p class="modal-desc" id="view-ticket-id-subtitle" style="font-size: 0.75rem; color: #64748b; margin-top: 3px; margin-bottom: 0; font-family: monospace; font-weight: 600;"></p>
+                </div>
+                <button type="button" class="modal-close-label" title="Close" onclick="closeViewTicketModal()" style="position: static; padding: 4px; border-radius: 6px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Modal Scrollable Body -->
+            <div class="modal-scroll-body ccm-modal-body" style="flex: 1; overflow-y: auto; padding: 18px 20px; display: flex; flex-direction: column; gap: 16px;">
+                <!-- 1. Customer Summary Card -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <span style="font-size: 0.9375rem; font-weight: 700; color: #0f172a;" id="view-ticket-cust-name"></span>
+                        <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: #475569; font-family: monospace;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span id="view-ticket-cust-phone"></span>
+                        </div>
+                    </div>
+                    <span id="view-ticket-cust-type-badge" style="padding: 4px 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #334155; box-shadow: 0 1px 2px rgba(0,0,0,0.04);"></span>
+                </div>
+
+                <!-- 2. Details Grid (Branch, Agent, Priority, SLA, Creation Source, Originating Call) -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px;">
+                    <div>
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Branch</div>
+                        <div id="view-ticket-branch" style="font-size: 0.875rem; font-weight: 600; color: #0f172a;"></div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Assigned Agent</div>
+                        <div id="view-ticket-agent" style="font-size: 0.875rem; font-weight: 600; color: #0f172a;"></div>
+                    </div>
+                    <div style="border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Priority</div>
+                        <div id="view-ticket-priority" style="font-size: 0.875rem; font-weight: 600;"></div>
+                    </div>
+                    <div style="border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">SLA Target</div>
+                        <div id="view-ticket-sla" style="font-size: 0.875rem; font-weight: 600; color: #0f172a;"></div>
+                    </div>
+                    <div style="border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Creation Source</div>
+                        <div id="view-ticket-source" style="font-size: 0.875rem; font-weight: 600; color: #0f172a; display: flex; align-items: center; gap: 6px;"></div>
+                    </div>
+                    <div style="border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Originating Call</div>
+                        <div id="view-ticket-origin-call" style="font-size: 0.875rem; color: #0f172a;"></div>
+                    </div>
+                    <div style="grid-column: 1 / -1; border-top: 1px solid #f1f5f9; padding-top: 10px;">
+                        <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 4px;">Issue / Subject</div>
+                        <div id="view-ticket-subject" style="font-size: 0.875rem; color: #1e293b; line-height: 1.5; font-weight: 600;"></div>
+                    </div>
+                </div>
+
+                <!-- 3. Escalation Details (if breached) -->
+                <div id="view-ticket-escalation-card" style="display: none; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 12px 14px;">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: #991b1b; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>SLA Breach Escalation Triggered</span>
+                    </div>
+                    <div style="font-size: 0.8125rem; color: #7f1d1d;" id="view-ticket-escalation-reason"></div>
+                </div>
+
+                <!-- 4. Description / Details -->
+                <div id="view-ticket-desc-container">
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.04em; margin-bottom: 6px;">Description / Details</div>
+                    <div id="view-ticket-desc" style="font-size: 0.8125rem; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; line-height: 1.5; white-space: pre-wrap;"></div>
+                </div>
+            </div>
+
+            <!-- Modal Actions Footer -->
+            <div class="modal-actions" style="margin: 0; padding: 14px 20px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; align-items: center; gap: 8px; background: var(--color-white); flex-shrink: 0;">
+                <button type="button" class="btn-secondary" style="height: 32px; padding: 0 16px; border-radius: 6px;" onclick="closeViewTicketModal()">Close</button>
+                <button type="button" class="btn-primary" style="height: 32px; padding: 0 16px; border-radius: 6px;" id="view-ticket-edit-btn">Edit Ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Ticket Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-delete-ticket" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeleteTicketModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Ticket</h3>
+            <p class="modal-desc">Are you sure you want to delete ticket <strong id="modal-delete-ticket-id" style="color: var(--color-black); font-family: monospace;"></strong> (<span id="modal-delete-ticket-customer"></span>)?</p>
+            <input type="hidden" id="delete-ticket-target-id" value="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeleteTicketModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeleteTicket()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Workflow Status Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-delete-workflow-status" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeleteWorkflowStatusModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Workflow Status</h3>
+            <p class="modal-desc">Are you sure you want to remove workflow stage <strong id="modal-delete-workflow-name" style="color: var(--color-black);"></strong>? Tickets currently in this stage may need to be updated.</p>
+            <input type="hidden" id="delete-workflow-status-index" value="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeleteWorkflowStatusModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeleteWorkflowStatus()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Priority SLA Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-delete-priority-sla" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeletePrioritySlaModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Priority Level</h3>
+            <p class="modal-desc">Are you sure you want to remove priority level <strong id="modal-delete-priority-name" style="color: var(--color-black);"></strong> and its associated SLA target?</p>
+            <input type="hidden" id="delete-priority-sla-index" value="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeletePrioritySlaModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeletePrioritySla()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads -->
+                    <a href="leads.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Leads
+                    </a>
+                    <!-- Module 9: Tickets (Active) -->
+                    <a href="tickets.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring -->
+                    <a href="live-monitoring.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND -->
+                    <a href="blacklist-dnd.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                                    <!-- Module 14: Settings -->
+                    <a href="settings.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            
+            <!-- Top Header Breadcrumb -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Tickets</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Back to Welcome">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Tickets</h1>
+                        <p class="page-subtitle" id="tickets-page-subtitle">Manage customer support issues, priority SLA targets, and resolution workflow.</p>
+                    </div>
+                    <div class="header-actions" style="display: flex; gap: 8px; align-items: center;">
+                        <!-- Actions for Tab 1 (Ticket Management) -->
+                        <div id="tickets-mgmt-header-actions" style="display: flex; gap: 8px;">
+                            <a href="add-ticket.html" class="btn-primary" id="btn-add-ticket" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; height: 32px; padding: 0 16px; font-size: 0.8125rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Ticket
+                            </a>
+                        </div>
+
+                        <!-- Actions for Tab 2 (Configuration) -->
+                        <div id="tickets-config-header-actions" style="display: none; gap: 8px; align-items: center;">
+                            <button type="button" class="btn-secondary" style="height: 32px; padding: 0 14px; font-size: 0.8125rem;" onclick="resetTicketConfigForm()">Cancel</button>
+                            <button type="button" class="btn-primary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem;" onclick="saveTicketConfig()">Save Configuration</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation: Ticket Management & Configuration -->
+                <div class="ccm-tab-bar" style="display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid var(--color-border);">
+                    <button type="button" class="ccm-tab-btn active" id="tab-btn-tickets" onclick="switchTicketTab('tickets')">
+                        Ticket Management
+                    </button>
+                    <button type="button" class="ccm-tab-btn" id="tab-btn-config" onclick="switchTicketTab('config')">
+                        Configuration
+                    </button>
+                </div>
+
+                <!-- TAB 1 PANEL: Ticket Management -->
+                <div id="tab-panel-tickets" class="ccm-page-section" style="display: block;">
+
+                    <!-- Filters & Search Bar in ONE horizontal row -->
+                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%; flex-wrap: nowrap;">
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 320px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="ticket-search-input" class="search-input" placeholder="Search by Customer Name, Phone Number, or Ticket ID..." oninput="filterTicketTable()">
+                        </div>
+
+                        <!-- Branch Filter Dropdown (Multi-Select) -->
+                        <details class="custom-select-wrapper" id="filter-branch-details" style="min-width: 170px; width: 170px; flex-shrink: 0;">
+                            <summary class="custom-select-trigger" id="filter-branch-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-branch-label">All Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <div class="custom-select-search">
+                                    <div class="custom-select-search-wrapper" style="position: relative; display: flex; align-items: center;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterBranchDropdownOptions(this)" style="padding-left: 26px;">
+                                    </div>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                    <input type="checkbox" id="branch-all-check" checked onchange="toggleAllBranches(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                    <span style="font-weight: 600; color: var(--color-black);">All Branches</span>
+                                </label>
+                                <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
+                                <div id="filter-branch-list-items">
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="branch-filter-cb" value="Bengaluru" onchange="updateBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Bengaluru</span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="branch-filter-cb" value="Mumbai" onchange="updateBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Mumbai</span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="branch-filter-cb" value="Hyderabad" onchange="updateBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Hyderabad</span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="branch-filter-cb" value="Delhi" onchange="updateBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Delhi</span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="branch-filter-cb" value="Chennai" onchange="updateBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Chennai</span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="branch-filter-cb" value="Pune" onchange="updateBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Pune</span></label>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- Ticket Status Filter Dropdown (Dynamically populated from configured workflow statuses) -->
+                        <details class="custom-select-wrapper" id="filter-status-details" style="min-width: 170px; width: 170px; flex-shrink: 0;">
+                            <summary class="custom-select-trigger" id="filter-status-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-status-label">All Ticket Statuses</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="filter-status-options-container">
+                                <!-- Populated dynamically by renderStatusFilterOptions() -->
+                            </div>
+                        </details>
+
+                        <!-- Priority Filter Dropdown (Dynamically populated from configured priorities) -->
+                        <details class="custom-select-wrapper" id="filter-priority-details" style="min-width: 150px; width: 150px; flex-shrink: 0;">
+                            <summary class="custom-select-trigger" id="filter-priority-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-priority-label">All Priorities</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="filter-priority-options-container">
+                                <label class="custom-option" onclick="selectPriorityFilter('all', 'All Priorities')"><input type="radio" name="priority-filter" value="all" checked> All Priorities</label>
+                                <label class="custom-option" onclick="selectPriorityFilter('Low', 'Low')"><input type="radio" name="priority-filter" value="Low"> Low</label>
+                                <label class="custom-option" onclick="selectPriorityFilter('Medium', 'Medium')"><input type="radio" name="priority-filter" value="Medium"> Medium</label>
+                                <label class="custom-option" onclick="selectPriorityFilter('High', 'High')"><input type="radio" name="priority-filter" value="High"> High</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Ticket Table Container (10 Columns strictly in exact order) -->
+                    <div class="table-container ccm-desktop-table-container">
+                        <table class="ccm-branches-table main-tickets-table" id="ticket-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="sortTicketsTable('id')">
+                                        <div class="sort-header-content">
+                                            Ticket ID
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTicketsTable('customer')">
+                                        <div class="sort-header-content">
+                                            Customer
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTicketsTable('phone')">
+                                        <div class="sort-header-content">
+                                            Mobile Number
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTicketsTable('subject')">
+                                        <div class="sort-header-content">
+                                            Issue / Subject
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTicketsTable('branch')">
+                                        <div class="sort-header-content">
+                                            Branch
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTicketsTable('agent')">
+                                        <div class="sort-header-content">
+                                            Assigned Agent
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTicketsTable('priority')">
+                                        <div class="sort-header-content">
+                                            Priority
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTicketsTable('status')">
+                                        <div class="sort-header-content">
+                                            Ticket Status
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortTicketsTable('sla')">
+                                        <div class="sort-header-content">
+                                            SLA
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th style="width: 80px; text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticket-table-body">
+                                <!-- Populated dynamically by renderTickets() -->
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination -->
+                        <div class="pagination-bar">
+                            <span id="ticket-pagination-info">Showing 1-4 of 4</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <button type="button" class="page-btn" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2 PANEL: Configuration (Dedicated Ticket Configuration Area) -->
+                <div id="tab-panel-config" class="ccm-page-section" style="display: none; width: 100%;">
+
+                    <!-- 1. TICKET WORKFLOW CONFIGURATION CARD -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">1. Ticket Workflow</h3>
+                                <p class="section-helper">Configure ticket lifecycle workflow stages. Define sequential order and status titles.</p>
+                            </div>
+                            <button type="button" class="btn-primary" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px;" onclick="addWorkflowStatusRow()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Status
+                            </button>
+                        </div>
+                        
+                        <div class="table-container ccm-desktop-table-container">
+                            <table class="ccm-branches-table config-mgmt-table" id="table-config-workflow">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 70px; text-align: center;">Order</th>
+                                        <th>Status Name</th>
+                                        <th style="width: 110px; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="config-workflow-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="config-input-hint" style="margin-top: 10px;">
+                            Default resolution lifecycle: <strong>Open &rarr; In Progress &rarr; Resolved &rarr; Closed</strong>. Reorder or customize stages as required.
+                        </div>
+                    </div>
+
+                    <!-- 2. PRIORITY & SLA DEFAULTS CONFIGURATION CARD -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">2. Priority &amp; SLA Defaults</h3>
+                                <p class="section-helper">Configure ticket priority levels and define their associated default resolution SLA targets.</p>
+                            </div>
+                            <button type="button" class="btn-primary" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px;" onclick="addPrioritySlaRow()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Priority
+                            </button>
+                        </div>
+
+                        <div class="table-container ccm-desktop-table-container">
+                            <table class="ccm-branches-table config-mgmt-table" id="table-config-sla">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 45%;">Priority Level</th>
+                                        <th style="width: 45%;">Default Resolution SLA Target</th>
+                                        <th style="width: 10%; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="config-sla-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="config-input-hint" style="margin-top: 10px;">
+                            Applicable SLA target is auto-populated upon ticket creation based on chosen priority.
+                        </div>
+                    </div>
+
+                    <!-- 3. SLA ESCALATION CONFIGURATION CARD -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">3. SLA Escalation</h3>
+                                <p class="section-helper">Configure automated escalation behavior when a ticket breaches its configured priority SLA target.</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+                            <!-- Clean Toggle Card with Toggle at the Right End -->
+                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 14px 16px;">
+                                <div>
+                                    <strong style="color: var(--color-black); font-size: 0.875rem;">Enable SLA Breach Escalation</strong>
+                                    <div style="font-size: 0.75rem; color: #64748b; margin-top: 3px;">Automatically flag and trigger escalation workflows when a ticket exceeds its resolution SLA.</div>
+                                </div>
+                                <label class="status-toggle" title="Enable / Disable Escalation" style="display: inline-flex; align-items: center; margin: 0;">
+                                    <input type="checkbox" id="cfg-escalation-enabled" checked onchange="handleEscalationToggle(this.checked)">
+                                    <div class="toggle-switch"></div>
+                                </label>
+                            </div>
+
+                            <!-- Generic Escalation Behavior Configuration Area -->
+                            <div id="cfg-escalation-behavior-panel" style="display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 14px 16px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-weight: 600; color: var(--color-black); margin-bottom: 6px; font-size: 0.8125rem;">SLA Breach Escalation Behavior</label>
+                                    <input type="text" id="cfg-escalation-behavior" class="form-control" placeholder="e.g. Flag ticket on SLA breach and trigger escalation workflow" value="Flag ticket on SLA breach and trigger escalation workflow" style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 10px; box-sizing: border-box;">
+                                </div>
+                                <div class="config-input-hint" style="margin: 0; font-size: 0.75rem; color: #64748b;">
+                                    When enabled, tickets breaching their configured SLA target are automatically escalated.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Page Logic -->
+    <script>
+        // Unified Customer Master Data from Existing Platform
+        const customersDB = {
+            'CUST-1001': { name: 'Rajesh Kumar', phone: '+91 98765 43210', branch: 'Bengaluru', type: 'Business Customer', email: 'rajesh.kumar@acme.com' },
+            'CUST-1002': { name: 'Priya Sharma', phone: '+91 99887 65432', branch: 'Mumbai', type: 'Business Customer', email: 'priya.sharma@horizon.in' },
+            'CUST-1003': { name: 'Suresh Reddy', phone: '+91 98480 12345', branch: 'Hyderabad', type: 'Individual', email: 'suresh.reddy@gmail.com' },
+            'CUST-1004': { name: 'Anil Verma', phone: '+91 98100 56789', branch: 'Delhi', type: 'Business Customer', email: 'anil.verma@delhicorp.com' },
+            'CUST-1005': { name: 'Kavya Nair', phone: '+91 98950 24680', branch: 'Chennai', type: 'Individual', email: 'kavya.nair@outlook.com' }
+        };
+
+        // Default Configurable Workflow, Priority SLA, and Escalation Rules
+        const defaultTicketConfig = {
+            statuses: ["Open", "In Progress", "Resolved", "Closed"],
+            slaDefaults: {
+                "Low": "48 Hours",
+                "Medium": "24 Hours",
+                "High": "8 Hours"
+            },
+            escalation: {
+                enabled: true,
+                behavior: "Flag ticket on SLA breach and trigger escalation workflow"
+            }
+        };
+
+        function getTicketConfig() {
+            try {
+                const stored = localStorage.getItem('ccm_ticket_config_v1');
+                if (stored) return JSON.parse(stored);
+            } catch(e) {}
+            return defaultTicketConfig;
+        }
+
+        let currentTicketConfig = getTicketConfig();
+
+        // Realistic Sample Data for 4 Tickets (including originating call association and SLA tracking)
+        const defaultTickets = [
+            {
+                id: "TCK-7101",
+                customerId: "CUST-1001",
+                customerName: "Rajesh Kumar",
+                phone: "+91 98765 43210",
+                customerType: "Existing",
+                subject: "Shipment Delay & Milestone Tracking Mismatch",
+                details: "Consignment #SHP-8921 delayed beyond ETA by 24 hours at Hub. Customer requesting urgent updated tracking ETA.",
+                branch: "Bengaluru",
+                agentId: "agt-1",
+                agentName: "Deepak Kumar",
+                priority: "High",
+                status: "In Progress",
+                sla: "8 Hours",
+                slaBreached: true,
+                escalated: true,
+                escalationNote: "SLA target of 8 Hours exceeded (14h elapsed). Escalated to Bengaluru Branch Manager.",
+                source: "Call",
+                callId: "CALL-9821",
+                callDateTime: "Sep 3, 2026 • 10:15 AM",
+                allowEdit: true,
+                allowDelete: true
+            },
+            {
+                id: "TCK-7102",
+                customerId: "CUST-1002",
+                customerName: "Priya Sharma",
+                phone: "+91 99887 65432",
+                customerType: "Existing",
+                subject: "Proof of Delivery (POD) Documentation Request",
+                details: "Requesting digital stamped POD copy for invoice reconciliation on Mumbai–Pune corridor delivery.",
+                branch: "Mumbai",
+                agentId: "agt-2",
+                agentName: "Priya Sharma",
+                priority: "Medium",
+                status: "Open",
+                sla: "24 Hours",
+                slaBreached: false,
+                escalated: false,
+                source: "Manual",
+                callId: null,
+                callDateTime: null,
+                allowEdit: true,
+                allowDelete: true
+            },
+            {
+                id: "TCK-7103",
+                customerId: "CUST-1003",
+                customerName: "Suresh Reddy",
+                phone: "+91 98480 12345",
+                customerType: "Existing",
+                subject: "Billing Discrepancy on Fuel Surcharge Rate",
+                details: "Customer reported an excess 2.5% fuel surcharge billing on August monthly statement.",
+                branch: "Hyderabad",
+                agentId: "agt-3",
+                agentName: "Rahul Varma",
+                priority: "High",
+                status: "Open",
+                sla: "8 Hours",
+                slaBreached: false,
+                escalated: false,
+                source: "Call",
+                callId: "CALL-9440",
+                callDateTime: "Sep 2, 2026 • 11:24 AM",
+                allowEdit: true,
+                allowDelete: true
+            },
+            {
+                id: "TCK-7104",
+                customerId: "CUST-1004",
+                customerName: "Anil Verma",
+                phone: "+91 98100 56789",
+                customerType: "Existing",
+                subject: "Warehouse Bay Allocation Schedule Update",
+                details: "Inquiry regarding scheduled docking hours and revised pallet staging area at Okhla warehouse.",
+                branch: "Delhi",
+                agentId: "agt-4",
+                agentName: "Ananya Iyer",
+                priority: "Low",
+                status: "Resolved",
+                sla: "48 Hours",
+                slaBreached: false,
+                escalated: false,
+                source: "Manual",
+                callId: null,
+                callDateTime: null,
+                allowEdit: true,
+                allowDelete: true
+            }
+        ];
+
+        let ticketsData = [];
+        try {
+            const stored = localStorage.getItem('ccm_tickets_data_v1');
+            ticketsData = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(defaultTickets));
+        } catch(e) {
+            ticketsData = JSON.parse(JSON.stringify(defaultTickets));
+        }
+
+        const allAvailableBranchesList = ["Bengaluru", "Mumbai", "Hyderabad", "Delhi", "Chennai", "Pune"];
+        let selectedBranches = [];
+        let selectedStatusFilter = 'all';
+        let selectedPriorityFilter = 'all';
+        let sortConfig = { key: 'id', asc: true };
+        let activeTicketTab = 'tickets';
+
+        // RBAC Context: Super Admin, Branch Manager, or Agent
+        let currentRbac = {
+            role: 'Super Admin',
+            branch: null,
+            agentId: null
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateConfigForm();
+            renderStatusFilterOptions();
+            renderTickets();
+
+            // Close dropdowns and SLA duration pickers on outside click
+            document.addEventListener('click', (e) => {
+                const wrappers = document.querySelectorAll('.custom-select-wrapper');
+                wrappers.forEach(w => {
+                    if (!w.contains(e.target)) {
+                        w.removeAttribute('open');
+                    }
+                });
+
+                const slaPickers = document.querySelectorAll('.sla-picker-wrapper');
+                slaPickers.forEach(p => {
+                    if (!p.contains(e.target)) {
+                        p.classList.remove('open');
+                    }
+                });
+            });
+        });
+
+        // Tab Switching Logic (Ticket Management vs Configuration)
+        function switchTicketTab(tab) {
+            activeTicketTab = tab;
+            const btnTickets = document.getElementById('tab-btn-tickets');
+            const btnConfig = document.getElementById('tab-btn-config');
+            const panelTickets = document.getElementById('tab-panel-tickets');
+            const panelConfig = document.getElementById('tab-panel-config');
+            const mgmtActions = document.getElementById('tickets-mgmt-header-actions');
+            const configActions = document.getElementById('tickets-config-header-actions');
+            const subtitle = document.getElementById('tickets-page-subtitle');
+
+            if (tab === 'tickets') {
+                btnTickets.classList.add('active');
+                btnConfig.classList.remove('active');
+                panelTickets.style.display = 'block';
+                panelConfig.style.display = 'none';
+                mgmtActions.style.display = 'flex';
+                configActions.style.display = 'none';
+                if (subtitle) subtitle.textContent = 'Manage customer support issues, priority SLA targets, and resolution workflow.';
+            } else if (tab === 'config') {
+                btnConfig.classList.add('active');
+                btnTickets.classList.remove('active');
+                panelTickets.style.display = 'none';
+                panelConfig.style.display = 'block';
+                mgmtActions.style.display = 'none';
+                configActions.style.display = 'flex';
+                if (subtitle) subtitle.textContent = 'Configure ticket workflow statuses, priority SLA targets, and SLA breach escalation rules.';
+                populateConfigForm();
+            }
+        }
+
+        // Dynamic Workflow Statuses & Priority SLA State for Table Editing
+        let configWorkflowStatuses = ["Open", "In Progress", "Resolved", "Closed"];
+        let configPriorities = [
+            { name: "Low Priority", sla: "48 Hours" },
+            { name: "Medium Priority", sla: "24 Hours" },
+            { name: "High Priority", sla: "8 Hours" }
+        ];
+
+        function handleEscalationToggle(checked) {
+            const panel = document.getElementById('cfg-escalation-behavior-panel');
+            if (panel) {
+                panel.style.opacity = checked ? '1' : '0.5';
+                panel.style.pointerEvents = checked ? 'auto' : 'none';
+            }
+        }
+
+        function populateConfigForm() {
+            const cfg = getTicketConfig();
+            configWorkflowStatuses = Array.isArray(cfg.statuses) && cfg.statuses.length > 0 
+                ? [...cfg.statuses] 
+                : ["Open", "In Progress", "Resolved", "Closed"];
+
+            if (cfg.slaDefaults && typeof cfg.slaDefaults === 'object') {
+                configPriorities = Object.keys(cfg.slaDefaults).map(p => {
+                    const cleanName = p.toLowerCase().includes('priority') ? p : `${p} Priority`;
+                    return { name: cleanName, sla: cfg.slaDefaults[p] || '24 Hours' };
+                });
+            } else {
+                configPriorities = [
+                    { name: "Low Priority", sla: "48 Hours" },
+                    { name: "Medium Priority", sla: "24 Hours" },
+                    { name: "High Priority", sla: "8 Hours" }
+                ];
+            }
+            
+            renderConfigWorkflowTable();
+            renderConfigSlaTable();
+
+            const escEnabled = document.getElementById('cfg-escalation-enabled');
+            const behaviorInput = document.getElementById('cfg-escalation-behavior');
+            const isEnabled = (cfg.escalation?.enabled !== false);
+
+            if (escEnabled) {
+                escEnabled.checked = isEnabled;
+            }
+            if (behaviorInput) {
+                behaviorInput.value = cfg.escalation?.behavior || "Flag ticket on SLA breach and trigger escalation workflow";
+            }
+            handleEscalationToggle(isEnabled);
+        }
+
+        let draggedWorkflowIndex = null;
+
+        function renderConfigWorkflowTable() {
+            const tbody = document.getElementById('config-workflow-tbody');
+            if (!tbody) return;
+
+            if (configWorkflowStatuses.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#888; padding: 16px;">No statuses configured. Click "+ Add Status" above.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = configWorkflowStatuses.map((st, index) => {
+                const isFirst = index === 0;
+                const isLast = index === configWorkflowStatuses.length - 1;
+                return `
+                    <tr draggable="true" class="config-workflow-row" data-index="${index}" ondragstart="handleWorkflowDragStart(event, ${index})" ondragover="handleWorkflowDragOver(event, ${index})" ondragleave="handleWorkflowDragLeave(event, ${index})" ondrop="handleWorkflowDrop(event, ${index})" ondragend="handleWorkflowDragEnd(event)">
+                        <td style="text-align: center;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                <span class="drag-handle" title="Drag to reorder">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="9" cy="5" r="1"></circle><circle cx="9" cy="12" r="1"></circle><circle cx="9" cy="19" r="1"></circle><circle cx="15" cy="5" r="1"></circle><circle cx="15" cy="12" r="1"></circle><circle cx="15" cy="19" r="1"></circle></svg>
+                                </span>
+                                <span class="config-order-pill">${index + 1}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="config-inline-input cfg-status-input" data-index="${index}" value="${escapeHtml(st)}" placeholder="Status name (e.g. In Review)" onchange="updateWorkflowStatusName(${index}, this.value)">
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="ccm-action-icons" style="justify-content: flex-end;">
+                                <button type="button" class="ccm-icon-btn" title="Move Up" ${isFirst ? 'disabled style="opacity: 0.35; cursor: not-allowed;"' : ''} onclick="moveWorkflowStatus(${index}, -1)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                </button>
+                                <button type="button" class="ccm-icon-btn" title="Move Down" ${isLast ? 'disabled style="opacity: 0.35; cursor: not-allowed;"' : ''} onclick="moveWorkflowStatus(${index}, 1)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <button type="button" class="ccm-icon-btn btn-delete" title="Remove Status" onclick="openDeleteWorkflowStatusModal(${index})" ${configWorkflowStatuses.length <= 1 ? 'disabled style="opacity: 0.35; cursor: not-allowed;"' : ''}>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function handleWorkflowDragStart(e, index) {
+            syncWorkflowInputsFromDom();
+            draggedWorkflowIndex = index;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', index);
+            const tr = e.currentTarget;
+            setTimeout(() => {
+                if (tr) tr.classList.add('is-dragging');
+            }, 0);
+        }
+
+        function handleWorkflowDragOver(e, index) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            if (draggedWorkflowIndex === null || draggedWorkflowIndex === index) return;
+            const tr = e.currentTarget;
+            const rect = tr.getBoundingClientRect();
+            const relY = e.clientY - rect.top;
+            if (relY < rect.height / 2) {
+                tr.classList.add('drag-over-top');
+                tr.classList.remove('drag-over-bottom');
+            } else {
+                tr.classList.add('drag-over-bottom');
+                tr.classList.remove('drag-over-top');
+            }
+        }
+
+        function handleWorkflowDragLeave(e, index) {
+            const tr = e.currentTarget;
+            tr.classList.remove('drag-over-top', 'drag-over-bottom');
+        }
+
+        function handleWorkflowDrop(e, targetIndex) {
+            e.preventDefault();
+            const tr = e.currentTarget;
+            tr.classList.remove('drag-over-top', 'drag-over-bottom');
+            if (draggedWorkflowIndex === null || draggedWorkflowIndex === targetIndex) return;
+
+            syncWorkflowInputsFromDom();
+
+            const rect = tr.getBoundingClientRect();
+            const relY = e.clientY - rect.top;
+            let insertIndex = relY < rect.height / 2 ? targetIndex : targetIndex + 1;
+            if (insertIndex > draggedWorkflowIndex) {
+                insertIndex--;
+            }
+
+            const movedItem = configWorkflowStatuses.splice(draggedWorkflowIndex, 1)[0];
+            configWorkflowStatuses.splice(insertIndex, 0, movedItem);
+
+            draggedWorkflowIndex = null;
+            renderConfigWorkflowTable();
+        }
+
+        function handleWorkflowDragEnd(e) {
+            draggedWorkflowIndex = null;
+            document.querySelectorAll('#config-workflow-tbody tr').forEach(tr => {
+                tr.classList.remove('is-dragging', 'drag-over-top', 'drag-over-bottom');
+            });
+        }
+
+        function renderConfigSlaTable() {
+            const tbody = document.getElementById('config-sla-tbody');
+            if (!tbody) return;
+
+            if (configPriorities.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#888; padding: 16px;">No priorities configured. Click "+ Add Priority" above.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = configPriorities.map((item, index) => {
+                const slaVal = item.sla || "24 Hours";
+                const parsed = parseSlaDuration(slaVal);
+
+                return `
+                    <tr>
+                        <td>
+                            <input type="text" class="config-inline-input cfg-priority-name" data-index="${index}" value="${escapeHtml(item.name)}" placeholder="Priority Name (e.g. Critical Priority)" onchange="updatePriorityItem(${index}, 'name', this.value)">
+                        </td>
+                        <td>
+                            <div class="sla-picker-wrapper" id="sla-picker-wrap-${index}">
+                                <input type="hidden" class="cfg-priority-sla" data-index="${index}" value="${escapeHtml(slaVal)}">
+                                <button type="button" class="sla-picker-trigger" onclick="toggleSlaPicker(${index})">
+                                    <span class="sla-val-text" id="sla-val-text-${index}">${escapeHtml(slaVal)}</span>
+                                    <span class="sla-clock-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    </span>
+                                </button>
+                                <div class="sla-picker-dropdown" id="sla-picker-dropdown-${index}">
+                                    <div class="sla-picker-section-label">Quick Presets</div>
+                                    <div class="sla-presets-grid">
+                                        <div class="sla-preset-chip ${slaVal === '4 Hours' ? 'active' : ''}" onclick="selectSlaPreset(${index}, '4 Hours')">4 Hours</div>
+                                        <div class="sla-preset-chip ${slaVal === '8 Hours' ? 'active' : ''}" onclick="selectSlaPreset(${index}, '8 Hours')">8 Hours</div>
+                                        <div class="sla-preset-chip ${slaVal === '12 Hours' ? 'active' : ''}" onclick="selectSlaPreset(${index}, '12 Hours')">12 Hours</div>
+                                        <div class="sla-preset-chip ${slaVal === '24 Hours' ? 'active' : ''}" onclick="selectSlaPreset(${index}, '24 Hours')">24 Hours</div>
+                                        <div class="sla-preset-chip ${slaVal === '48 Hours' ? 'active' : ''}" onclick="selectSlaPreset(${index}, '48 Hours')">48 Hours</div>
+                                        <div class="sla-preset-chip ${slaVal === '72 Hours' ? 'active' : ''}" onclick="selectSlaPreset(${index}, '72 Hours')">72 Hours</div>
+                                    </div>
+                                    <div class="sla-picker-section-label">Custom Duration</div>
+                                    <div class="sla-custom-inputs-row">
+                                        <div class="sla-unit-group">
+                                            <label>Hours</label>
+                                            <input type="number" min="0" max="168" class="sla-number-input" id="sla-custom-hrs-${index}" value="${parsed.hours}">
+                                        </div>
+                                        <div class="sla-unit-group">
+                                            <label>Minutes</label>
+                                            <input type="number" min="0" max="59" step="5" class="sla-number-input" id="sla-custom-mins-${index}" value="${parsed.minutes}">
+                                        </div>
+                                        <button type="button" class="sla-apply-btn" onclick="applyCustomSlaDuration(${index})">Set</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="ccm-action-icons" style="justify-content: flex-end;">
+                                <button type="button" class="ccm-icon-btn" title="Edit Priority" onclick="focusPriorityRow(${index})">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </button>
+                                <button type="button" class="ccm-icon-btn btn-delete" title="Delete Priority" onclick="openDeletePrioritySlaModal(${index})" ${configPriorities.length <= 1 ? 'disabled style="opacity: 0.35; cursor: not-allowed;"' : ''}>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function parseSlaDuration(str) {
+            if (!str) return { hours: 24, minutes: 0 };
+            const clean = str.trim();
+            let hours = 0;
+            let minutes = 0;
+
+            const hrsMatch = clean.match(/(\d+)\s*(?:hrs?|hours?)/i);
+            const minsMatch = clean.match(/(\d+)\s*(?:mins?|minutes?)/i);
+
+            if (hrsMatch) hours = parseInt(hrsMatch[1], 10);
+            if (minsMatch) minutes = parseInt(minsMatch[1], 10);
+
+            if (!hrsMatch && !minsMatch) {
+                const singleNum = parseInt(clean, 10);
+                if (!isNaN(singleNum)) hours = singleNum;
+                else hours = 24;
+            }
+
+            return { hours: isNaN(hours) ? 0 : hours, minutes: isNaN(minutes) ? 0 : minutes };
+        }
+
+        function toggleSlaPicker(index) {
+            const allPickers = document.querySelectorAll('.sla-picker-wrapper');
+            const targetPicker = document.getElementById(`sla-picker-wrap-${index}`);
+            
+            allPickers.forEach(p => {
+                if (p !== targetPicker) p.classList.remove('open');
+            });
+
+            if (targetPicker) {
+                targetPicker.classList.toggle('open');
+            }
+        }
+
+        function selectSlaPreset(index, presetVal) {
+            if (index >= 0 && index < configPriorities.length) {
+                configPriorities[index].sla = presetVal;
+                renderConfigSlaTable();
+            }
+        }
+
+        function applyCustomSlaDuration(index) {
+            const hrsInput = document.getElementById(`sla-custom-hrs-${index}`);
+            const minsInput = document.getElementById(`sla-custom-mins-${index}`);
+
+            const hrs = hrsInput ? parseInt(hrsInput.value, 10) || 0 : 0;
+            const mins = minsInput ? parseInt(minsInput.value, 10) || 0 : 0;
+
+            let formatted = '';
+            if (hrs > 0 && mins > 0) {
+                formatted = `${hrs} ${hrs === 1 ? 'Hour' : 'Hours'} ${mins} ${mins === 1 ? 'Minute' : 'Minutes'}`;
+            } else if (hrs > 0) {
+                formatted = `${hrs} ${hrs === 1 ? 'Hour' : 'Hours'}`;
+            } else if (mins > 0) {
+                formatted = `${mins} ${mins === 1 ? 'Minute' : 'Minutes'}`;
+            } else {
+                formatted = `24 Hours`;
+            }
+
+            if (index >= 0 && index < configPriorities.length) {
+                configPriorities[index].sla = formatted;
+                renderConfigSlaTable();
+            }
+        }
+
+        function updatePriorityItem(index, field, val) {
+            if (index >= 0 && index < configPriorities.length) {
+                configPriorities[index][field] = val.trim();
+            }
+        }
+
+        function focusPriorityRow(index) {
+            const inputs = document.querySelectorAll('.cfg-priority-name');
+            if (inputs[index]) {
+                inputs[index].focus();
+                inputs[index].select();
+            }
+        }
+
+        function addPrioritySlaRow() {
+            syncPriorityInputsFromDom();
+            configPriorities.push({
+                name: `Priority Level ${configPriorities.length + 1}`,
+                sla: "24 Hours"
+            });
+            renderConfigSlaTable();
+            setTimeout(() => {
+                const inputs = document.querySelectorAll('.cfg-priority-name');
+                if (inputs.length > 0) {
+                    inputs[inputs.length - 1].focus();
+                    inputs[inputs.length - 1].select();
+                }
+            }, 50);
+        }
+
+        function openDeletePrioritySlaModal(index) {
+            syncPriorityInputsFromDom();
+            if (index < 0 || index >= configPriorities.length || configPriorities.length <= 1) return;
+            const priorityObj = configPriorities[index];
+            document.getElementById('delete-priority-sla-index').value = index;
+            document.getElementById('modal-delete-priority-name').textContent = priorityObj.name || `Priority #${index + 1}`;
+            document.getElementById('overlay-delete-priority-sla').style.display = 'flex';
+        }
+
+        function closeDeletePrioritySlaModal() {
+            document.getElementById('overlay-delete-priority-sla').style.display = 'none';
+        }
+
+        function confirmDeletePrioritySla() {
+            syncPriorityInputsFromDom();
+            const indexStr = document.getElementById('delete-priority-sla-index').value;
+            const index = parseInt(indexStr, 10);
+            if (!isNaN(index) && index >= 0 && index < configPriorities.length && configPriorities.length > 1) {
+                configPriorities.splice(index, 1);
+                renderConfigSlaTable();
+            }
+            closeDeletePrioritySlaModal();
+        }
+
+        function syncPriorityInputsFromDom() {
+            const nameInputs = document.querySelectorAll('.cfg-priority-name');
+            const slaInputs = document.querySelectorAll('.cfg-priority-sla');
+            nameInputs.forEach(inp => {
+                const idx = parseInt(inp.getAttribute('data-index'), 10);
+                if (!isNaN(idx) && idx >= 0 && idx < configPriorities.length) {
+                    configPriorities[idx].name = inp.value.trim() || configPriorities[idx].name;
+                }
+            });
+            slaInputs.forEach(inp => {
+                const idx = parseInt(inp.getAttribute('data-index'), 10);
+                if (!isNaN(idx) && idx >= 0 && idx < configPriorities.length) {
+                    configPriorities[idx].sla = inp.value.trim() || configPriorities[idx].sla;
+                }
+            });
+        }
+
+        function updateWorkflowStatusName(index, val) {
+            if (index >= 0 && index < configWorkflowStatuses.length) {
+                configWorkflowStatuses[index] = val.trim();
+            }
+        }
+
+        function addWorkflowStatusRow() {
+            syncWorkflowInputsFromDom();
+            configWorkflowStatuses.push(`Custom Stage ${configWorkflowStatuses.length + 1}`);
+            renderConfigWorkflowTable();
+            setTimeout(() => {
+                const inputs = document.querySelectorAll('.cfg-status-input');
+                if (inputs.length > 0) {
+                    inputs[inputs.length - 1].focus();
+                    inputs[inputs.length - 1].select();
+                }
+            }, 50);
+        }
+
+        function openDeleteWorkflowStatusModal(index) {
+            syncWorkflowInputsFromDom();
+            if (index < 0 || index >= configWorkflowStatuses.length || configWorkflowStatuses.length <= 1) return;
+            const statusName = configWorkflowStatuses[index];
+            document.getElementById('delete-workflow-status-index').value = index;
+            document.getElementById('modal-delete-workflow-name').textContent = `"${statusName || 'Stage ' + (index + 1)}"`;
+            document.getElementById('overlay-delete-workflow-status').style.display = 'flex';
+        }
+
+        function closeDeleteWorkflowStatusModal() {
+            document.getElementById('overlay-delete-workflow-status').style.display = 'none';
+        }
+
+        function confirmDeleteWorkflowStatus() {
+            syncWorkflowInputsFromDom();
+            const indexStr = document.getElementById('delete-workflow-status-index').value;
+            const index = parseInt(indexStr, 10);
+            if (!isNaN(index) && index >= 0 && index < configWorkflowStatuses.length && configWorkflowStatuses.length > 1) {
+                configWorkflowStatuses.splice(index, 1);
+                renderConfigWorkflowTable();
+            }
+            closeDeleteWorkflowStatusModal();
+        }
+
+        function moveWorkflowStatus(index, direction) {
+            syncWorkflowInputsFromDom();
+            const targetIndex = index + direction;
+            if (targetIndex >= 0 && targetIndex < configWorkflowStatuses.length) {
+                const temp = configWorkflowStatuses[index];
+                configWorkflowStatuses[index] = configWorkflowStatuses[targetIndex];
+                configWorkflowStatuses[targetIndex] = temp;
+                renderConfigWorkflowTable();
+            }
+        }
+
+        function syncWorkflowInputsFromDom() {
+            const inputs = document.querySelectorAll('.cfg-status-input');
+            inputs.forEach(inp => {
+                const idx = parseInt(inp.getAttribute('data-index'), 10);
+                if (!isNaN(idx) && idx >= 0 && idx < configWorkflowStatuses.length) {
+                    configWorkflowStatuses[idx] = inp.value.trim() || configWorkflowStatuses[idx];
+                }
+            });
+        }
+
+        function resetTicketConfigForm() {
+            populateConfigForm();
+            switchTicketTab('tickets');
+        }
+
+        function saveTicketConfig() {
+            syncWorkflowInputsFromDom();
+            syncPriorityInputsFromDom();
+
+            const cleanStatuses = configWorkflowStatuses.map(s => s.trim()).filter(s => s.length > 0);
+            
+            // Build dynamic slaDefaults map
+            const newSlaDefaults = {};
+            configPriorities.forEach(p => {
+                const key = p.name.trim();
+                if (key) {
+                    newSlaDefaults[key] = p.sla.trim() || '24 Hours';
+                }
+            });
+
+            const newConfig = {
+                statuses: cleanStatuses.length > 0 ? cleanStatuses : ["Open", "In Progress", "Resolved", "Closed"],
+                slaDefaults: Object.keys(newSlaDefaults).length > 0 ? newSlaDefaults : { "Low Priority": "48 Hours", "Medium Priority": "24 Hours", "High Priority": "8 Hours" },
+                escalation: {
+                    enabled: document.getElementById('cfg-escalation-enabled') ? document.getElementById('cfg-escalation-enabled').checked : true,
+                    behavior: document.getElementById('cfg-escalation-behavior')?.value.trim() || "Flag ticket on SLA breach and trigger escalation workflow"
+                }
+            };
+
+            currentTicketConfig = newConfig;
+            try {
+                localStorage.setItem('ccm_ticket_config_v1', JSON.stringify(newConfig));
+            } catch(e) {}
+
+            renderStatusFilterOptions();
+            renderTickets();
+            
+            // Notification / Feedback alert
+            alert('Ticket configuration saved successfully!');
+            switchTicketTab('tickets');
+        }
+
+        function switchRbacRole(role, branch, agentId) {
+            currentRbac.role = role;
+            currentRbac.branch = branch;
+            currentRbac.agentId = agentId;
+
+            document.getElementById('current-role-label').textContent = role + (branch ? ` (${branch})` : '');
+            document.getElementById('profile-role-name').textContent = role;
+            document.getElementById('profile-branch-scope').textContent = branch ? `${branch.toUpperCase()}-NODE` : 'HQ-NODE-01';
+            document.getElementById('rbac-role-details')?.removeAttribute('open');
+
+            renderTickets();
+        }
+
+        function renderStatusFilterOptions() {
+            const container = document.getElementById('filter-status-options-container');
+            if (!container) return;
+            const statuses = currentTicketConfig.statuses || ["Open", "In Progress", "Resolved", "Closed"];
+            
+            let html = `<label class="custom-option" onclick="selectStatusFilter('all', 'All Ticket Statuses')"><input type="radio" name="status-filter" value="all" ${selectedStatusFilter === 'all' ? 'checked' : ''}> All Ticket Statuses</label>`;
+            statuses.forEach(st => {
+                html += `<label class="custom-option" onclick="selectStatusFilter('${escapeHtml(st)}', '${escapeHtml(st)}')"><input type="radio" name="status-filter" value="${escapeHtml(st)}" ${selectedStatusFilter === st ? 'checked' : ''}> ${escapeHtml(st)}</label>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderTickets() {
+            const tbody = document.getElementById('ticket-table-body');
+            if (!tbody) return;
+
+            const query = (document.getElementById('ticket-search-input')?.value || '').toLowerCase().trim();
+
+            const filtered = ticketsData.filter(t => {
+                if (currentRbac.role === 'Branch Manager' && currentRbac.branch) {
+                    if (t.branch !== currentRbac.branch) return false;
+                } else if (currentRbac.role === 'Agent' && currentRbac.agentId) {
+                    if (t.agentId !== currentRbac.agentId) return false;
+                }
+
+                const matchesSearch = !query ||
+                    t.id.toLowerCase().includes(query) ||
+                    t.customerName.toLowerCase().includes(query) ||
+                    (t.phone && t.phone.includes(query)) ||
+                    (t.agentName && t.agentName.toLowerCase().includes(query)) ||
+                    (t.subject && t.subject.toLowerCase().includes(query));
+
+                const matchesBranch = selectedBranches.length === 0 || 
+                    selectedBranches.length === allAvailableBranchesList.length || 
+                    selectedBranches.includes(t.branch);
+                    
+                const matchesStatus = selectedStatusFilter === 'all' || t.status === selectedStatusFilter;
+                const matchesPriority = selectedPriorityFilter === 'all' || t.priority === selectedPriorityFilter;
+
+                return matchesSearch && matchesBranch && matchesStatus && matchesPriority;
+            });
+
+            filtered.sort((a, b) => {
+                let valA = a[sortConfig.key] || '';
+                let valB = b[sortConfig.key] || '';
+                if (typeof valA === 'string') valA = valA.toLowerCase();
+                if (typeof valB === 'string') valB = valB.toLowerCase();
+                if (valA < valB) return sortConfig.asc ? -1 : 1;
+                if (valA > valB) return sortConfig.asc ? 1 : -1;
+                return 0;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: #888; padding: 28px;">No matching tickets found.</td></tr>`;
+                document.getElementById('ticket-pagination-info').textContent = `Showing 0 of ${ticketsData.length}`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(t => {
+                let priorityBadge = '';
+                switch (t.priority) {
+                    case 'Low': priorityBadge = '<span class="badge-priority-low">Low</span>'; break;
+                    case 'Medium': priorityBadge = '<span class="badge-priority-medium">Medium</span>'; break;
+                    case 'High': priorityBadge = '<span class="badge-priority-high">High</span>'; break;
+                    default:
+                        priorityBadge = `<span class="badge-priority-low">${escapeHtml(t.priority)}</span>`;
+                }
+
+                // Status Badge
+                let statusBadge = '';
+                const lowerStatus = (t.status || '').toLowerCase();
+                if (lowerStatus === 'open') {
+                    statusBadge = '<span class="badge-status-open">Open</span>';
+                } else if (lowerStatus === 'in progress') {
+                    statusBadge = '<span class="badge-status-inprogress">In Progress</span>';
+                } else if (lowerStatus === 'resolved') {
+                    statusBadge = '<span class="badge-status-resolved">Resolved</span>';
+                } else if (lowerStatus === 'closed') {
+                    statusBadge = '<span class="badge-status-closed">Closed</span>';
+                } else {
+                    statusBadge = `<span class="badge-status-open">${escapeHtml(t.status)}</span>`;
+                }
+
+                // SLA Breach / Escalated indicator
+                let escalationBadge = '';
+                if (t.escalated || t.slaBreached) {
+                    escalationBadge = `<span class="badge-escalated" title="SLA Breached - Escalated to ${escapeHtml(currentTicketConfig.escalation?.target || 'Branch Manager')}"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Escalated</span>`;
+                }
+
+                return `
+                    <tr data-id="${t.id}">
+                        <td style="font-weight: 700; font-family: monospace;">
+                            <a href="javascript:void(0)" onclick="openViewTicketModal('${t.id}')" style="color: var(--color-black); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                ${escapeHtml(t.id)}
+                            </a>
+                        </td>
+                        <td style="font-weight: 600;">
+                            <a href="customer-360.html?id=${t.customerId || 'CUST-1001'}" style="color: var(--color-black); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                ${escapeHtml(t.customerName)}
+                            </a>
+                        </td>
+                        <td style="color: #475569; font-family: monospace; font-size: 0.75rem;">${escapeHtml(t.phone || '—')}</td>
+                        <td>
+                            <div style="font-weight: 500; color: var(--color-black); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px;" title="${escapeHtml(t.subject)}">
+                                ${escapeHtml(t.subject)}
+                            </div>
+                        </td>
+                        <td>${escapeHtml(t.branch)}</td>
+                        <td>${escapeHtml(t.agentName || 'Unassigned')}</td>
+                        <td>${priorityBadge}</td>
+                        <td>
+                            <div style="display: inline-flex; align-items: center; flex-wrap: wrap; gap: 2px;">
+                                ${statusBadge}
+                                ${escalationBadge}
+                            </div>
+                        </td>
+                        <td style="font-weight: 600; color: #334155; font-size: 0.75rem;">${escapeHtml(t.sla || '24 Hours')}</td>
+                        <td class="action-cell">
+                            <div class="ccm-action-icons" style="justify-content: flex-end;">
+                                <button type="button" class="ccm-icon-btn" title="View Ticket" onclick="openViewTicketModal('${t.id}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                                <a href="edit-ticket.html?id=${encodeURIComponent(t.id)}" class="ccm-icon-btn" title="Edit Ticket" style="text-decoration: none;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </a>
+                                <button type="button" class="ccm-icon-btn" title="Delete Ticket" onclick="openDeleteTicketModal('${t.id}', '${escapeHtml(t.customerName)}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('ticket-pagination-info').textContent = `Showing 1-${filtered.length} of ${ticketsData.length}`;
+        }
+
+        function filterTicketTable() {
+            renderTickets();
+        }
+
+        function filterBranchDropdownOptions(input) {
+            const filter = input.value.toLowerCase();
+            const labels = document.querySelectorAll('#filter-branch-list-items label.custom-option');
+            labels.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                if (text.includes(filter)) {
+                    opt.style.display = 'flex';
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleAllBranches(allCheckbox) {
+            const checkboxes = document.querySelectorAll('.branch-filter-cb');
+            checkboxes.forEach(cb => cb.checked = allCheckbox.checked);
+            updateBranchSelectionText();
+            filterTicketTable();
+        }
+
+        function updateBranchSelection() {
+            const checkboxes = document.querySelectorAll('.branch-filter-cb');
+            const allCheckbox = document.getElementById('branch-all-check');
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            
+            allCheckbox.checked = (checkedCount === checkboxes.length);
+            allCheckbox.indeterminate = (checkedCount > 0 && checkedCount < checkboxes.length);
+            
+            selectedBranches = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+            updateBranchSelectionText();
+            filterTicketTable();
+        }
+
+        function updateBranchSelectionText() {
+            const trigger = document.getElementById('filter-branch-label');
+            if (selectedBranches.length === 0 || selectedBranches.length === allAvailableBranchesList.length) {
+                trigger.textContent = 'All Branches';
+            } else if (selectedBranches.length === 1) {
+                trigger.textContent = selectedBranches[0];
+            } else {
+                trigger.textContent = `${selectedBranches.length} Branches`;
+            }
+        }
+
+        function selectStatusFilter(val, label) {
+            selectedStatusFilter = val;
+            document.getElementById('filter-status-label').textContent = label;
+            document.getElementById('filter-status-details')?.removeAttribute('open');
+            renderTickets();
+        }
+
+        function selectPriorityFilter(val, label) {
+            selectedPriorityFilter = val;
+            document.getElementById('filter-priority-label').textContent = label;
+            document.getElementById('filter-priority-details')?.removeAttribute('open');
+            renderTickets();
+        }
+
+        function sortTicketsTable(key) {
+            if (sortConfig.key === key) {
+                sortConfig.asc = !sortConfig.asc;
+            } else {
+                sortConfig.key = key;
+                sortConfig.asc = true;
+            }
+            renderTickets();
+        }
+
+        function openViewTicketModal(ticketId) {
+            const t = ticketsData.find(x => x.id === ticketId);
+            if (!t) return;
+
+            document.getElementById('view-ticket-id-subtitle').textContent = t.id;
+            document.getElementById('view-ticket-cust-name').textContent = t.customerName || '—';
+            document.getElementById('view-ticket-cust-phone').textContent = t.phone || '—';
+            document.getElementById('view-ticket-cust-type-badge').textContent = (t.customerType || 'Existing') + ' Customer';
+
+            document.getElementById('view-ticket-branch').textContent = t.branch;
+            document.getElementById('view-ticket-agent').textContent = t.agentName || 'Unassigned';
+            
+            // Priority
+            let priorityBadge = '';
+            switch (t.priority) {
+                case 'Low': priorityBadge = '<span class="badge-priority-low">Low</span>'; break;
+                case 'Medium': priorityBadge = '<span class="badge-priority-medium">Medium</span>'; break;
+                case 'High': priorityBadge = '<span class="badge-priority-high">High</span>'; break;
+                default: priorityBadge = `<span class="badge-priority-low">${escapeHtml(t.priority)}</span>`;
+            }
+            document.getElementById('view-ticket-priority').innerHTML = priorityBadge;
+            document.getElementById('view-ticket-sla').textContent = t.sla || '24 Hours';
+
+            // Creation Source & Originating Call
+            const isCallTicket = (t.source === 'Call' || (t.source && t.source.toLowerCase().includes('call')));
+            if (isCallTicket) {
+                document.getElementById('view-ticket-source').innerHTML = '<span style="padding: 3px 10px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 6px; font-weight: 600; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 5px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call</span>';
+                const callIdDisplay = t.callId || 'CALL-9821';
+                const callTimeDisplay = t.callDateTime ? ` &bull; <span style="font-size: 0.75rem; color: #64748b; font-family: sans-serif;">${t.callDateTime}</span>` : '';
+                document.getElementById('view-ticket-origin-call').innerHTML = `<span style="font-family: monospace; font-weight: 700; color: #1e40af;">${escapeHtml(callIdDisplay)}</span>${callTimeDisplay}`;
+            } else {
+                document.getElementById('view-ticket-source').innerHTML = '<span style="padding: 3px 10px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 5px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Manual</span>';
+                document.getElementById('view-ticket-origin-call').innerHTML = '<span style="color: #64748b; font-style: italic;">Not Applicable</span>';
+            }
+
+            document.getElementById('view-ticket-subject').textContent = t.subject;
+
+            let statusBadge = '';
+            const lowerStatus = (t.status || '').toLowerCase();
+            if (lowerStatus === 'open') {
+                statusBadge = '<span class="badge-status-open">Open</span>';
+            } else if (lowerStatus === 'in progress') {
+                statusBadge = '<span class="badge-status-inprogress">In Progress</span>';
+            } else if (lowerStatus === 'resolved') {
+                statusBadge = '<span class="badge-status-resolved">Resolved</span>';
+            } else if (lowerStatus === 'closed') {
+                statusBadge = '<span class="badge-status-closed">Closed</span>';
+            } else {
+                statusBadge = `<span class="badge-status-open">${escapeHtml(t.status)}</span>`;
+            }
+            document.getElementById('view-ticket-status-badge').innerHTML = statusBadge;
+
+            // Escalation card
+            const escCard = document.getElementById('view-ticket-escalation-card');
+            if (t.escalated || t.slaBreached) {
+                document.getElementById('view-ticket-escalation-reason').textContent = t.escalationNote || `Target SLA of ${t.sla} breached. Ticket flagged for escalation workflow.`;
+                escCard.style.display = 'block';
+            } else {
+                escCard.style.display = 'none';
+            }
+
+            const descContainer = document.getElementById('view-ticket-desc-container');
+            if (t.details) {
+                document.getElementById('view-ticket-desc').textContent = t.details;
+                descContainer.style.display = 'block';
+            } else {
+                descContainer.style.display = 'none';
+            }
+
+            const editBtn = document.getElementById('view-ticket-edit-btn');
+            editBtn.onclick = () => {
+                window.location.href = `edit-ticket.html?id=${encodeURIComponent(t.id)}`;
+            };
+
+            document.getElementById('overlay-view-ticket').style.display = 'flex';
+        }
+
+        function closeViewTicketModal() {
+            document.getElementById('overlay-view-ticket').style.display = 'none';
+        }
+
+        // Delete Ticket Modal Handlers
+        function openDeleteTicketModal(id, customerName) {
+            document.getElementById('delete-ticket-target-id').value = id;
+            document.getElementById('modal-delete-ticket-id').textContent = id;
+            document.getElementById('modal-delete-ticket-customer').textContent = customerName || 'Customer';
+            document.getElementById('overlay-delete-ticket').style.display = 'flex';
+        }
+
+        function closeDeleteTicketModal() {
+            document.getElementById('overlay-delete-ticket').style.display = 'none';
+        }
+
+        function confirmDeleteTicket() {
+            const id = document.getElementById('delete-ticket-target-id').value;
+            if (id) {
+                ticketsData = ticketsData.filter(x => x.id !== id);
+                try {
+                    localStorage.setItem('ccm_tickets_data_v1', JSON.stringify(ticketsData));
+                } catch(e) {}
+                renderTickets();
+            }
+            closeDeleteTicketModal();
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>

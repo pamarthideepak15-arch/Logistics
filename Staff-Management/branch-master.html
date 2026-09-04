@@ -48,7 +48,7 @@
                 <nav class="sidebar-nav">
                     <a href="index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                        Staff Master
+                        Employee Master
                     </a>
                     <a href="department-master.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -121,6 +121,38 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                             Add Branch
                         </a>
+                    </div>
+                </div>
+
+                <!-- KPI Overview Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path><path d="M9 9h1"></path><path d="M9 13h1"></path><path d="M9 17h1"></path></svg></span>
+                            <div class="kpi-card-label">Total Branches</div>
+                        </div>
+                        <div class="kpi-card-value">5</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></span>
+                            <div class="kpi-card-label">Owned Branches</div>
+                        </div>
+                        <div class="kpi-card-value">3</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                            <div class="kpi-card-label">Agency Branches</div>
+                        </div>
+                        <div class="kpi-card-value">2</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
+                            <div class="kpi-card-label">Active Branches</div>
+                        </div>
+                        <div class="kpi-card-value">4</div>
                     </div>
                 </div>
 
@@ -440,13 +472,148 @@
                     </div>
                 </div>
 
+                <!-- Structured Mobile Cards (Responsive Presentation) -->
+                <div class="mobile-staff-cards" id="mobile-branch-cards-list">
+                    <!-- Branch 1 -->
+                    <div class="mobile-staff-card">
+                        <div class="mobile-card-top">
+                            <div class="mobile-card-identity">
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                                    <span class="mobile-card-name">Mumbai Hub</span>
+                                    <span class="badge badge-owned" style="font-size: 0.6875rem;">Owned Branch</span>
+                                </div>
+                                <div class="mobile-card-subhead">Code: BR-001 &bull; Manager: Amit Sharma</div>
+                            </div>
+                        </div>
+                        <div class="mobile-card-details">
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Contact</span>
+                                <span class="mobile-detail-val">+91 98765 43210</span>
+                            </div>
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Email</span>
+                                <span class="mobile-detail-val" style="font-size: 0.7rem;">amit@logco.in</span>
+                            </div>
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Geo-Fencing</span>
+                                <span class="mobile-detail-val">200m Radius (19.11°N, 72.86°E)</span>
+                            </div>
+                        </div>
+                        <div class="mobile-card-actions">
+                            <div class="mobile-card-actions-left">
+                                <span style="font-size: 0.75rem; font-weight: 600; color: #555;">Status:</span>
+                                <label class="status-toggle" style="margin: 0;">
+                                    <input type="checkbox" checked>
+                                    <div class="toggle-switch"></div>
+                                </label>
+                            </div>
+                            <div class="mobile-card-actions-right">
+                                <a href="edit-branch.html" class="action-icon" title="Edit" style="text-decoration: none;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </a>
+                                <button class="action-icon" title="Delete" onclick="document.getElementById('delete-modal').classList.add('active')" style="background:none; border:none; cursor:pointer;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 2 -->
+                    <div class="mobile-staff-card">
+                        <div class="mobile-card-top">
+                            <div class="mobile-card-identity">
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                                    <span class="mobile-card-name">Delhi Agency</span>
+                                    <span class="badge badge-agency" style="font-size: 0.6875rem;">Agency Branch</span>
+                                </div>
+                                <div class="mobile-card-subhead">Code: BR-002 &bull; Manager: Rahul Verma</div>
+                            </div>
+                        </div>
+                        <div class="mobile-card-details">
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Contact</span>
+                                <span class="mobile-detail-val">+91 88990 12345</span>
+                            </div>
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Email</span>
+                                <span class="mobile-detail-val" style="font-size: 0.7rem;">rahul@logco.in</span>
+                            </div>
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Geo-Fencing</span>
+                                <span class="mobile-detail-val">250m Radius (28.61°N, 77.20°E)</span>
+                            </div>
+                        </div>
+                        <div class="mobile-card-actions">
+                            <div class="mobile-card-actions-left">
+                                <span style="font-size: 0.75rem; font-weight: 600; color: #555;">Status:</span>
+                                <label class="status-toggle" style="margin: 0;">
+                                    <input type="checkbox" checked>
+                                    <div class="toggle-switch"></div>
+                                </label>
+                            </div>
+                            <div class="mobile-card-actions-right">
+                                <a href="edit-branch.html" class="action-icon" title="Edit" style="text-decoration: none;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </a>
+                                <button class="action-icon" title="Delete" onclick="document.getElementById('delete-modal').classList.add('active')" style="background:none; border:none; cursor:pointer;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 3 -->
+                    <div class="mobile-staff-card">
+                        <div class="mobile-card-top">
+                            <div class="mobile-card-identity">
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                                    <span class="mobile-card-name">Chennai Hub</span>
+                                    <span class="badge badge-owned" style="font-size: 0.6875rem;">Owned Branch</span>
+                                </div>
+                                <div class="mobile-card-subhead">Code: BR-003 &bull; Manager: Priya Singh</div>
+                            </div>
+                        </div>
+                        <div class="mobile-card-details">
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Contact</span>
+                                <span class="mobile-detail-val">+91 77665 54433</span>
+                            </div>
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Email</span>
+                                <span class="mobile-detail-val" style="font-size: 0.7rem;">priya@logco.in</span>
+                            </div>
+                            <div class="mobile-detail-row">
+                                <span class="mobile-detail-label">Geo-Fencing</span>
+                                <span class="mobile-detail-val">300m Radius (13.08°N, 80.27°E)</span>
+                            </div>
+                        </div>
+                        <div class="mobile-card-actions">
+                            <div class="mobile-card-actions-left">
+                                <span style="font-size: 0.75rem; font-weight: 600; color: #555;">Status:</span>
+                                <label class="status-toggle" style="margin: 0;">
+                                    <input type="checkbox" checked>
+                                    <div class="toggle-switch"></div>
+                                </label>
+                            </div>
+                            <div class="mobile-card-actions-right">
+                                <a href="edit-branch.html" class="action-icon" title="Edit" style="text-decoration: none;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </a>
+                                <button class="action-icon" title="Delete" onclick="document.getElementById('delete-modal').classList.add('active')" style="background:none; border:none; cursor:pointer;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
 
-    <!-- Delete Modal -->
+    <!-- Delete Modal (Matching Staff Master Delete Popup UI) -->
     <div class="modal-overlay" id="delete-modal">
-        <div class="modal-content">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: center;">
             <button class="modal-close" onclick="document.getElementById('delete-modal').classList.remove('active')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
@@ -454,10 +621,10 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             </div>
             <h3 class="modal-title">Delete Branch</h3>
-            <p class="modal-desc">Are you sure you want to delete this branch?</p>
+            <p class="modal-desc">Are you sure you want to delete this branch record?</p>
             <div class="modal-actions">
-                <button class="btn-secondary" onclick="document.getElementById('delete-modal').classList.remove('active')">Cancel</button>
-                <button class="btn-primary">Delete Branch</button>
+                <button class="btn-secondary" onclick="document.getElementById('delete-modal').classList.remove('active')" style="height: 32px; flex: 1;">Cancel</button>
+                <button class="btn-primary" style="height: 32px; flex: 1;">Delete</button>
             </div>
         </div>
     </div>

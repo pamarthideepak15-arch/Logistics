@@ -547,39 +547,237 @@ body.employee-app-body {
   color: var(--ea-text-secondary);
 }
 
-/* Status Badges */
+/* Status Badges & Chips */
 .ea-badge {
   display: inline-flex;
   align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.ea-badge-checkedin {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  font-weight: 700;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.ea-badge-checkedin::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+.ea-badge-present, .ea-badge-approved, .ea-badge-issued, .ea-badge-completed {
+  background: #111827;
+  color: #ffffff;
+  border: 1px solid #111827;
+  border-radius: 12px;
+}
+
+.ea-badge-pending {
+  background: #fefce8;
+  color: #854d0e;
+  border: 1px solid #fef08a;
+  border-radius: 12px;
+}
+
+.ea-badge-absent, .ea-badge-rejected {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+}
+
+.ea-badge-leave {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px dashed #94a3b8;
+  border-radius: 12px;
+}
+
+.ea-badge-wfh {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #86efac;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.ea-badge-halfday {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+/* Category/Type Identifier Chips */
+.ea-type-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 2px 7px;
   border-radius: 4px;
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.ea-type-chip-leave {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.ea-type-chip-wfh {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+/* Selectable Radio Chips & Card Layouts */
+.ea-chip-group {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+.ea-chip-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.ea-chip-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.ea-chip-radio-label {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ea-chip-radio-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ea-chip-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 6px;
+  border-radius: 8px;
+  border: 1.5px solid var(--ea-border);
+  background: var(--ea-surface-subtle);
+  transition: all 0.15s ease;
+  text-align: center;
+  gap: 2px;
+}
+
+.ea-chip-card:hover {
+  border-color: #94a3b8;
+  background: #ffffff;
+}
+
+.ea-chip-radio-input:checked + .ea-chip-card {
+  border-color: #111827;
+  background: #111827;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.ea-chip-card-title {
+  font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.ea-badge-present, .ea-badge-approved, .ea-badge-issued, .ea-badge-completed {
-  background: #000000;
-  color: #ffffff;
-  border: 1px solid #000000;
+.ea-chip-card-sub {
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: #64748b;
 }
 
-.ea-badge-pending {
+.ea-chip-radio-input:checked + .ea-chip-card .ea-chip-card-sub {
+  color: #cbd5e1;
+}
+
+/* Session Slot Cards */
+.ea-session-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--ea-border);
+  background: var(--ea-surface-subtle);
+  transition: all 0.15s ease;
+}
+
+.ea-session-card:hover {
+  border-color: #94a3b8;
   background: #ffffff;
-  color: #000000;
-  border: 1px solid #555555;
 }
 
-.ea-badge-absent, .ea-badge-rejected {
-  background: #f3f4f6;
-  color: #111827;
-  border: 1px solid #9ca3af;
+.ea-chip-radio-input:checked + .ea-session-card {
+  border-color: #111827;
+  background: #111827;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
-.ea-badge-leave {
-  background: #f9fafb;
-  color: #374151;
-  border: 1px dashed #6b7280;
+.ea-session-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ea-chip-radio-input:checked + .ea-session-card .ea-session-icon {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.ea-session-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ea-session-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ea-session-time {
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.ea-chip-radio-input:checked + .ea-session-card .ea-session-time {
+  color: #cbd5e1;
 }
 
 /* Modal Bottom Sheet */
@@ -646,21 +844,23 @@ body.employee-app-body {
 }
 
 .ea-form-input, .ea-form-select, .ea-form-textarea {
-  height: 34px;
-  border: 1px solid #8c8c8c;
-  border-radius: var(--ea-radius-sm);
-  padding: 0 10px;
+  height: 38px;
+  width: 100%;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0 12px;
   font-size: 0.8125rem;
   font-family: inherit;
   outline: none;
   background: #ffffff;
   box-sizing: border-box;
-  color: #111827;
-  transition: border-color 0.15s ease;
+  color: #0f172a;
+  transition: all 0.15s ease;
 }
 
 .ea-form-input:focus, .ea-form-select:focus, .ea-form-textarea:focus {
-  border-color: #111827;
+  border-color: #0f172a;
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
 }
 
 .ea-form-input[type="date"] {
@@ -668,18 +868,36 @@ body.employee-app-body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 38px;
+  line-height: 38px;
+  padding: 0 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #1e293b;
+  width: 100%;
 }
 
 .ea-form-input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
-  opacity: 0.85;
-  filter: invert(0.1);
-  padding: 4px;
+  opacity: 0.75;
+  padding: 2px;
+  margin-right: -2px;
   transition: opacity 0.15s ease;
 }
 
 .ea-form-input[type="date"]::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
+}
+
+.ea-date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.ea-date-grid.single-col {
+  grid-template-columns: 1fr;
 }
 
 .ea-form-select {

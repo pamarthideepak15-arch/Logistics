@@ -228,21 +228,21 @@
 
                         <!-- GPS Geo-Fencing & Attendance Check-In Settings -->
                         <div class="gps-geofence-section" style="grid-column: 1 / -1; margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--color-border);">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <div class="geofence-header-row" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
                                 <div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="color: var(--color-black);"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="color: var(--color-black); flex-shrink: 0;"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                                         <h3 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">GPS Geo-Fencing &amp; Mobile Check-In</h3>
                                     </div>
                                     <p style="margin: 2px 0 0 0; font-size: 0.75rem; color: #666;">Set branch geo-coordinates &amp; radius for employee mobile check-in validation.</p>
                                 </div>
-                                <button type="button" class="btn-secondary" id="btn-detect-gps" style="height: 30px; font-size: 0.75rem; padding: 0 10px; display: inline-flex; align-items: center; gap: 6px;">
+                                <button type="button" class="btn-secondary" id="btn-detect-gps" style="height: 30px; font-size: 0.75rem; padding: 0 10px; display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; white-space: nowrap;">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
                                     <span>Get Current Location</span>
                                 </button>
                             </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 14px;">
+                            <div class="form-row-3 geofence-coords-grid" style="margin-bottom: 14px;">
                                 <div class="form-group">
                                     <label for="branch-lat">Latitude (GPS) *</label>
                                     <input type="text" id="branch-lat" name="branch-lat" placeholder="e.g. 19.1136" required>
@@ -253,17 +253,17 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="geofence-radius">Check-In Allowed Radius *</label>
-                                    <div class="input-with-prefix" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); display: flex; align-items: center; background: var(--color-white);">
+                                    <div class="input-with-prefix" style="border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); display: flex; align-items: center; background: var(--color-white); height: 32px;">
                                         <input type="number" id="geofence-radius" name="geofence-radius" placeholder="e.g. 200" value="200" min="50" max="5000" required style="border: none !important; padding-left: 10px; width: 100%;">
                                         <span style="font-size: 0.75rem; font-weight: 600; color: #666; padding-right: 12px;">Meters</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="form-grid geofence-policy-grid">
                                 <div class="form-group">
                                     <label for="out-of-range-policy">When Checked In Beyond Radius</label>
-                                    <select id="out-of-range-policy" name="out-of-range-policy" style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 0 8px; background: var(--color-white); outline: none;">
+                                    <select id="out-of-range-policy" name="out-of-range-policy" class="custom-select" style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); outline: none; padding: 0 32px 0 10px; background-color: var(--color-white); cursor: pointer;">
                                         <option value="wfh" selected>Auto-Mark as Work From Home (WFH)</option>
                                         <option value="pending">Mark as Pending Admin Approval</option>
                                         <option value="reject">Block Check-In (Strict On-Site Only)</option>
@@ -271,7 +271,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Geo-Fencing Status</label>
-                                    <div style="display: flex; align-items: center; gap: 8px; height: 32px;">
+                                    <div style="display: flex; align-items: center; gap: 8px; min-height: 32px;">
                                         <label class="status-toggle" style="margin-bottom: 0;">
                                             <input type="checkbox" id="geofence-enabled" checked>
                                             <div class="toggle-switch"></div>

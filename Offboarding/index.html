@@ -47,7 +47,7 @@
                 <nav class="sidebar-nav">
                     <a href="../Staff-Management/index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                        Staff Master
+                        Employee Master
                     </a>
                     <a href="../Staff-Management/department-master.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -118,11 +118,46 @@
                         <h1 class="page-title">Offboarding</h1>
                         <p class="page-subtitle">Manage employee exits and completion of exit formalities.</p>
                     </div>
-                    <div class="header-actions">
-                        <button type="button" class="btn-primary" onclick="openInitiateModal()">
+                    <div class="header-actions" style="display: flex; align-items: center; gap: 8px;">
+                        <button type="button" class="btn-primary" onclick="openInitiateModal()" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border-radius: var(--border-radius-base); background: var(--color-black); color: var(--color-white); font-weight: 500; outline: none; user-select: none; border: 1px solid var(--color-black);">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                             <span>Initiate Offboarding</span>
                         </button>
+                        <a href="settings.html" class="btn-secondary" title="Offboarding Settings" style="height: 30px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--border-radius-base); border: 1px solid var(--color-border); background: var(--color-white); text-decoration: none; color: inherit;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                            <div class="kpi-card-label">Total Exits</div>
+                        </div>
+                        <div class="kpi-card-value" id="kpi-total-exits">5</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+                            <div class="kpi-card-label">In Progress</div>
+                        </div>
+                        <div class="kpi-card-value" id="kpi-in-progress">3</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><polyline points="9 15 11 17 15 13"></polyline></svg></span>
+                            <div class="kpi-card-label">Pending Approval</div>
+                        </div>
+                        <div class="kpi-card-value" id="kpi-pending-approvals">1</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-card-header">
+                            <span class="kpi-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
+                            <div class="kpi-card-label">Completed Exits</div>
+                        </div>
+                        <div class="kpi-card-value" id="kpi-completed">1</div>
                     </div>
                 </div>
 
@@ -185,12 +220,6 @@
                                         <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
                                     </div>
                                 </th>
-                                <th class="sortable" onclick="sortTable('offboarding-table', 6)">
-                                    <div class="sort-header-content">
-                                        Remarks
-                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
-                                    </div>
-                                </th>
                                 <th style="text-align: right;">Actions</th>
                             </tr>
                         </thead>
@@ -203,7 +232,6 @@
                                 <td>15 Sep 2026</td>
                                 <td>Resignation</td>
                                 <td><span class="status-badge badge-status-inprogress">In Progress</span></td>
-                                <td style="color: #888;">—</td>
                                 <td>
                                     <div class="action-icons">
                                         <button type="button" class="action-icon" title="View Offboarding" onclick="viewOffboarding('EMP-1024')">
@@ -223,7 +251,6 @@
                                 <td>20 Sep 2026</td>
                                 <td>Resignation</td>
                                 <td><span class="status-badge badge-status-pending-approval">Pending Approval</span></td>
-                                <td style="color: #888;">—</td>
                                 <td>
                                     <div class="action-icons">
                                         <button type="button" class="action-icon" title="View Offboarding" onclick="viewOffboarding('EMP-1031')">
@@ -243,7 +270,6 @@
                                 <td>10 Sep 2026</td>
                                 <td>Termination</td>
                                 <td><span class="status-badge badge-status-docs-pending">Documents Pending</span></td>
-                                <td style="color: #888;">—</td>
                                 <td>
                                     <div class="action-icons">
                                         <button type="button" class="action-icon" title="View Offboarding" onclick="viewOffboarding('EMP-1045')">
@@ -263,7 +289,6 @@
                                 <td>25 Sep 2026</td>
                                 <td>Resignation</td>
                                 <td><span class="status-badge badge-status-settlement-pending">Settlement Pending</span></td>
-                                <td style="color: #888;">—</td>
                                 <td>
                                     <div class="action-icons">
                                         <button type="button" class="action-icon" title="View Offboarding" onclick="viewOffboarding('EMP-1052')">
@@ -283,7 +308,6 @@
                                 <td>05 Sep 2026</td>
                                 <td>Resignation</td>
                                 <td><span class="status-badge badge-status-completed">Completed</span></td>
-                                <td style="font-size: 0.75rem; color: #374151; max-width: 220px; white-space: normal;">Formal exit complete &amp; all certificates issued</td>
                                 <td>
                                     <div class="action-icons">
                                         <button type="button" class="action-icon" title="View Offboarding" onclick="viewOffboarding('EMP-1068')">
@@ -515,7 +539,6 @@
                 <td>${dateStr}</td>
                 <td>${exitType}</td>
                 <td><span class="status-badge badge-status-inprogress">In Progress</span></td>
-                <td style="color: #888;">—</td>
                 <td>
                     <div class="action-icons">
                         <button type="button" class="action-icon" title="View Offboarding" onclick="viewOffboarding('${empId}')">
@@ -612,6 +635,32 @@
             if (document.getElementById('filter-lwd')) document.getElementById('filter-lwd').value = '';
             applyFilters();
         }
+
+        function updateKPICounters() {
+            const rows = document.querySelectorAll('#offboarding-tbody tr');
+            let total = rows.length;
+            let inProgress = 0;
+            let pendingApproval = 0;
+            let completed = 0;
+
+            rows.forEach(r => {
+                const status = (r.getAttribute('data-status') || '').toLowerCase();
+                if (status.includes('completed')) {
+                    completed++;
+                } else if (status.includes('pending approval')) {
+                    pendingApproval++;
+                } else {
+                    inProgress++;
+                }
+            });
+
+            if (document.getElementById('kpi-total-exits')) document.getElementById('kpi-total-exits').textContent = total;
+            if (document.getElementById('kpi-in-progress')) document.getElementById('kpi-in-progress').textContent = inProgress;
+            if (document.getElementById('kpi-pending-approvals')) document.getElementById('kpi-pending-approvals').textContent = pendingApproval;
+            if (document.getElementById('kpi-completed')) document.getElementById('kpi-completed').textContent = completed;
+        }
+
+        document.addEventListener('DOMContentLoaded', updateKPICounters);
     </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /* Leave-Management/leave-management.css */
 
-/* Tab System Styling a */
+/* Tab System Styling */
 .tab-nav {
     display: flex;
     gap: 24px;
@@ -18,50 +18,30 @@
     cursor: pointer;
     user-select: none;
     transition: all 0.15s ease;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
 }
 .tab-link:hover {
     color: var(--color-black);
 }
-
-/* Radio triggers to switch views */
-#tab-requests-radio:checked ~ .app-layout .tab-link-requests {
-    color: var(--color-black);
-    border-color: var(--color-black);
-    font-weight: 700;
-}
-#tab-wfh-radio:checked ~ .app-layout .tab-link-wfh {
-    color: var(--color-black);
-    border-color: var(--color-black);
-    font-weight: 700;
-}
-#tab-settings-radio:checked ~ .app-layout .tab-link-settings {
-    color: var(--color-black);
-    border-color: var(--color-black);
-    font-weight: 700;
+.tab-link.active,
+.tab-link-active {
+    color: var(--color-black) !important;
+    border-bottom-color: var(--color-black) !important;
+    font-weight: 700 !important;
 }
 
-#tab-requests-radio:checked ~ .app-layout .view-requests {
-    display: block !important;
+.view-requests {
+    display: block;
 }
-#tab-requests-radio:checked ~ .app-layout .view-wfh,
-#tab-requests-radio:checked ~ .app-layout .view-settings {
-    display: none !important;
+.view-wfh {
+    display: none;
 }
-
-#tab-wfh-radio:checked ~ .app-layout .view-wfh {
-    display: block !important;
-}
-#tab-wfh-radio:checked ~ .app-layout .view-requests,
-#tab-wfh-radio:checked ~ .app-layout .view-settings {
-    display: none !important;
-}
-
-#tab-settings-radio:checked ~ .app-layout .view-settings {
-    display: block !important;
-}
-#tab-settings-radio:checked ~ .app-layout .view-requests,
-#tab-settings-radio:checked ~ .app-layout .view-wfh {
-    display: none !important;
+.view-settings {
+    display: none;
 }
 
 #tab-requests-radio:checked ~ .app-layout .btn-apply-leave {
@@ -95,6 +75,7 @@
 #review-lv-0001-toggle,
 #review-lv-0002-toggle,
 #review-lv-0003-toggle,
+#review-lv-0004-toggle,
 #review-wfh-0001-toggle,
 #add-leave-type-toggle,
 #delete-el-toggle,
@@ -110,6 +91,7 @@
 #review-lv-0001-toggle:checked ~ #review-lv-0001-modal,
 #review-lv-0002-toggle:checked ~ #review-lv-0002-modal,
 #review-lv-0003-toggle:checked ~ #review-lv-0003-modal,
+#review-lv-0004-toggle:checked ~ #review-lv-0004-modal,
 #review-wfh-0001-toggle:checked ~ #review-wfh-0001-modal,
 #add-leave-type-toggle:checked ~ #add-leave-type-modal,
 #delete-el-toggle:checked ~ #delete-el-modal,
@@ -497,18 +479,54 @@ details.custom-select-wrapper[open] summary.custom-select-trigger {
     flex-grow: 1 !important;
 }
 
-/* Ensure absolute dropdown lists inside scrollable modals are not clipped at the bottom */
+/* Modal Content and Scrollable Body Layout Rules */
+.modal-content {
+    max-height: 90vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+}
+
+.modal-scrollable-body {
+    flex-grow: 1 !important;
+    flex-shrink: 1 !important;
+    overflow-y: auto !important;
+    padding-right: 4px !important;
+    margin-bottom: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Fixed CTA actions at bottom of modals with clear top boundary and proper flex alignment */
+.modal-form-actions {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+    border-top: 1px solid var(--color-border) !important;
+    padding-top: 14px !important;
+    background: var(--color-white) !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.modal-form-actions label,
+.modal-form-actions button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure absolute dropdown lists inside scrollable modals have adequate padding when open */
 #apply-leave-modal .modal-scrollable-body,
 #apply-wfh-modal .modal-scrollable-body,
 #add-leave-type-modal .modal-scrollable-body {
-    padding-bottom: 90px !important;
-}
-
-#add-leave-type-modal .modal-content {
-    overflow: visible !important;
-}
-#add-leave-type-modal .modal-scrollable-body {
-    overflow: visible !important;
+    padding-bottom: 24px !important;
 }
 
 /* Allow Advanced Filters dropdowns to overflow without scrolling or whitespace */
@@ -520,9 +538,239 @@ details.custom-select-wrapper[open] summary.custom-select-trigger {
     padding-bottom: 20px !important;
 }
 
-/* Dynamically display active filter dot if any checkbox inside filters-modal is checked (Pure HTML/CSS) */
-body:has(#filters-modal input[type="checkbox"]:checked) .filter-btn-active {
-    display: block !important;
+/* ─── Mobile Leave & WFH Cards Component ─── */
+.mobile-request-cards {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.mobile-request-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.mobile-request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.mobile-request-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mobile-request-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-black);
+    line-height: 1.2;
+}
+
+.mobile-request-subhead {
+    font-size: 0.75rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.mobile-request-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    font-size: 0.75rem;
+}
+
+.mobile-req-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mobile-req-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.mobile-req-label {
+    font-size: 0.6875rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.mobile-req-val {
+    font-size: 0.78125rem;
+    font-weight: 600;
+    color: var(--color-black);
+    word-break: break-word;
+}
+
+.mobile-request-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+}
+
+.mobile-request-actions .btn-secondary,
+.mobile-request-actions .btn-primary {
+    height: 30px;
+    padding: 0 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-base);
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid var(--color-black);
+}
+
+/* ─── Mobile Media Queries (<= 768px) ─── */
+@media (max-width: 768px) {
+    /* Hide desktop table and display mobile card list */
+    .table-container {
+        display: none !important;
+    }
+    .mobile-request-cards {
+        display: flex !important;
+    }
+
+    /* KPI Grid standard 2 columns on mobile */
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    /* Mobile Page Header: Single column with prominent full-width CTA (Matching Staff Master) */
+    .page-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        margin-bottom: 14px !important;
+        width: 100% !important;
+    }
+
+    .page-title-group {
+        width: 100% !important;
+    }
+
+    .page-header .header-actions {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .page-header .header-actions button[style*="display: none"] {
+        display: none !important;
+    }
+
+    .page-header .header-actions .btn-primary:not([style*="display: none"]) {
+        width: 100% !important;
+        height: 38px !important;
+        font-size: 0.875rem !important;
+        font-weight: 600 !important;
+        justify-content: center !important;
+        white-space: nowrap !important;
+    }
+
+    /* Mobile Tabs: Scrollable or tight wrap without overflow */
+    .tab-nav {
+        display: flex !important;
+        gap: 16px !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        padding-bottom: 6px !important;
+        margin-bottom: 14px !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-link {
+        font-size: 0.8125rem !important;
+        padding-bottom: 6px !important;
+    }
+
+    /* Filters Stack */
+    .filters-bar {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+
+    .filters-bar .search-input-wrapper {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .filters-bar-buttons,
+    .filters-bar label[for="filters-toggle"],
+    .filters-bar button {
+        width: 100% !important;
+        height: 34px !important;
+        justify-content: center !important;
+    }
+
+    /* Pagination Mobile Box */
+    .mobile-pagination-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        align-items: center !important;
+        padding: 12px !important;
+        background: var(--color-white) !important;
+        border: 1px solid var(--color-border) !important;
+        border-radius: var(--border-radius-base) !important;
+        margin-top: 4px !important;
+    }
+
+    .mobile-pagination-wrapper .pagination-controls {
+        display: flex !important;
+        gap: 6px !important;
+    }
+
+    /* Modal Responsive Rules for Mobile (<= 768px) */
+    .modal-overlay {
+        padding: 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    .modal-content {
+        width: 100% !important;
+        max-width: calc(100vw - 32px) !important;
+        max-height: 85vh !important;
+        padding: 16px !important;
+    }
+
+    .modal-form-actions {
+        flex-direction: row !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+        padding-top: 12px !important;
+    }
+
+    .modal-form-actions label,
+    .modal-form-actions button {
+        flex: 1 !important;
+        height: 36px !important;
+        font-size: 0.8125rem !important;
+    }
 }
 
 

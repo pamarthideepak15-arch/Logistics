@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../Design System/components.css">
     <link rel="stylesheet" href="../Sidebar/sidebar.css">
     <link rel="stylesheet" href="offboarding.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     
@@ -45,7 +46,7 @@
                 <nav class="sidebar-nav">
                     <a href="../Staff-Management/index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                        Staff Master
+                        Employee Master
                     </a>
                     <a href="../Staff-Management/department-master.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -252,7 +253,7 @@
                                         <tr>
                                             <th style="text-align: left; padding: 8px 14px;">Document</th>
                                             <th style="text-align: left; padding: 8px 14px; width: 190px;">Status</th>
-                                            <th style="text-align: center; padding: 8px 14px; width: 120px;">Action</th>
+                                            <th style="text-align: center; padding: 8px 14px; width: 150px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -264,11 +265,8 @@
                                                     <option value="Pending">Pending</option>
                                                 </select>
                                             </td>
-                                            <td style="padding: 10px 14px; text-align: center;">
-                                                <button type="button" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;" onclick="downloadDoc('Relieving Letter')">
-                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                                    Download
-                                                </button>
+                                            <td style="padding: 10px 14px; text-align: center;" id="action-cell-doc1">
+                                                <!-- Action button dynamically rendered -->
                                             </td>
                                         </tr>
                                         <tr>
@@ -279,26 +277,8 @@
                                                     <option value="Pending">Pending</option>
                                                 </select>
                                             </td>
-                                            <td style="padding: 10px 14px; text-align: center;">
-                                                <button type="button" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;" onclick="downloadDoc('Experience Letter')">
-                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                                    Download
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding: 10px 14px; font-size: 0.8125rem; font-weight: 600;">Full &amp; Final Statement (F&amp;F)</td>
-                                            <td style="padding: 10px 14px;">
-                                                <select class="doc-status-select" id="select-doc-3" onchange="onDocDropdownChange('doc3', this.value)">
-                                                    <option value="Issued">Issued (Completed)</option>
-                                                    <option value="Pending">Pending</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding: 10px 14px; text-align: center;">
-                                                <button type="button" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;" onclick="downloadDoc('Full & Final Statement')">
-                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                                    Download
-                                                </button>
+                                            <td style="padding: 10px 14px; text-align: center;" id="action-cell-doc2">
+                                                <!-- Action button dynamically rendered -->
                                             </td>
                                         </tr>
                                         <tr>
@@ -309,11 +289,8 @@
                                                     <option value="Pending">Pending</option>
                                                 </select>
                                             </td>
-                                            <td style="padding: 10px 14px; text-align: center;">
-                                                <button type="button" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;" onclick="downloadDoc('Payslips (Last 6 Months)')">
-                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                                    Download
-                                                </button>
+                                            <td style="padding: 10px 14px; text-align: center;" id="action-cell-doc4">
+                                                <!-- Action button dynamically rendered -->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -468,7 +445,6 @@
             // Documents dropdowns
             document.getElementById('select-doc-1').value = empData.doc1;
             document.getElementById('select-doc-2').value = empData.doc2;
-            document.getElementById('select-doc-3').value = empData.doc3;
             document.getElementById('select-doc-4').value = empData.doc4;
 
             checkOverallStatus();
@@ -510,9 +486,195 @@
             }
         }
 
+        function renderDocActionButtons() {
+            const docs = [
+                { key: 'doc1', name: 'Relieving Letter', id: 'relieving' },
+                { key: 'doc2', name: 'Experience Letter', id: 'experience' },
+                { key: 'doc4', name: 'Payslips (Last 6 Months)', id: 'payslip' }
+            ];
+
+            docs.forEach((doc) => {
+                const cell = document.getElementById(`action-cell-${doc.key}`);
+                if (!cell) return;
+                const isIssued = (empData[doc.key] === 'Issued');
+
+                if (isIssued) {
+                    cell.innerHTML = `
+                        <button type="button" class="btn-primary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px; background: #0f172a;" onclick="downloadDoc('${doc.name}', '${doc.id}')" title="Download Generated PDF">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download
+                        </button>
+                    `;
+                } else {
+                    cell.innerHTML = `
+                        <button type="button" class="btn-secondary" style="height: 26px; padding: 0 8px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px; color: #888; border: 1px dashed #cbd5e1; cursor: pointer;" onclick="issueAndDownloadDoc('${doc.key}', '${doc.name}', '${doc.id}')" title="Generate & Issue Document">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M12 5v14M5 12h14"></path></svg>
+                            Generate
+                        </button>
+                    `;
+                }
+            });
+        }
+
         function onDocDropdownChange(docKey, val) {
             empData[docKey] = val;
+            renderDocActionButtons();
             checkOverallStatus();
+        }
+
+        function issueAndDownloadDoc(docKey, name, templateId) {
+            empData[docKey] = 'Issued';
+            document.getElementById(`select-${docKey.replace('doc', 'doc-')}`).value = 'Issued';
+            renderDocActionButtons();
+            checkOverallStatus();
+            downloadDoc(name, templateId);
+        }
+
+        function getActiveConfiguredTemplates() {
+            const stored = localStorage.getItem('hrms_offboarding_templates_v2');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length >= 3) return parsed;
+                } catch(e) {}
+            }
+            return null;
+        }
+
+        function downloadDoc(name, templateId) {
+            const globalComp = localStorage.getItem('hrms_offboarding_company') || "Logistics ERP Systems Ltd.";
+            const globalAddr = localStorage.getItem('hrms_offboarding_address') || "HQ Node Mumbai, Maharashtra, India - 400001";
+            const globalSign = localStorage.getItem('hrms_offboarding_signatory') || "Head of Human Resources & Governance";
+
+            // 1. Prepare dynamic mapping from backend data
+            const dynamicMapping = {
+                EmployeeName: empData.name,
+                EmployeeID: empData.id,
+                Designation: empData.desig,
+                Department: empData.dept,
+                Branch: empData.branch || 'Mumbai HQ',
+                JoiningDate: empData.joiningDate || '01 Aug 2022',
+                LastWorkingDate: empData.lwd,
+                IssueDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+                Company: globalComp,
+                PayPeriod: 'August 2026',
+                BasicSalary: '₹30,000.00',
+                GrossSalary: '₹60,000.00',
+                TotalEarnings: '₹60,000.00',
+                TotalDeductions: '₹3,800.00',
+                NetSalary: '₹56,200.00'
+            };
+
+            // 2. Fetch configured template from settings
+            const templates = getActiveConfiguredTemplates();
+            let matchedTemplate = null;
+
+            if (templates) {
+                if (templateId === 'relieving') matchedTemplate = templates.find(t => t.id === 'relieving' || t.typeKey === 'relieving');
+                else if (templateId === 'experience') matchedTemplate = templates.find(t => t.id === 'experience' || t.typeKey === 'experience');
+                else if (templateId === 'payslip') matchedTemplate = templates.find(t => t.id === 'payslip' || t.typeKey === 'payslip');
+            }
+
+            let docTitle = name.toUpperCase();
+            let docContent = '';
+
+            if (matchedTemplate && matchedTemplate.content) {
+                docTitle = matchedTemplate.title || name.toUpperCase();
+                docContent = matchedTemplate.content;
+            } else {
+                // Fallback default canonical content
+                if (templateId === 'relieving') {
+                    docTitle = 'RELIEVING ORDER AND WORK CLEARANCE';
+                    docContent = `Date: {{IssueDate}}\n\nTo,\n{{EmployeeName}}\nEmployee ID: {{EmployeeID}}\nDesignation: {{Designation}}\nDepartment: {{Department}}\nBranch: {{Branch}}\n\nSubject: Relieving Order and Acceptance of Resignation\n\nDear {{EmployeeName}},\n\nThis has reference to your formal resignation. We wish to inform you that your resignation has been accepted, and you are formally relieved from your services and responsibilities as {{Designation}} with effect from the close of business hours on {{LastWorkingDate}}.\n\nDuring your tenure from {{JoiningDate}} to {{LastWorkingDate}}, your conduct and performance were found satisfactory. You have handed over all company assets and clearances.\n\nYours sincerely,\n\nAuthorized Signatory\nFor {{Company}}\n${globalSign}`;
+                } else if (templateId === 'experience') {
+                    docTitle = 'TO WHOMSOEVER IT MAY CONCERN - EXPERIENCE CERTIFICATE';
+                    docContent = `Date: {{IssueDate}}\n\nTO WHOMSOEVER IT MAY CONCERN\n\nThis is to certify that {{EmployeeName}} (Employee ID: {{EmployeeID}}) was employed with {{Company}} as a full-time employee from {{JoiningDate}} to {{LastWorkingDate}}.\n\nDuring the tenure, {{EmployeeName}} served in the capacity of {{Designation}} in the {{Department}} department at our {{Branch}} facility.\n\nMajor responsibilities included operational workflow execution and organizational excellence.\n\nDuring this period, their conduct was found satisfactory. All exit clearances have been fulfilled.\n\nSincerely,\n\nHead of Human Resources\n{{Company}}\n${globalSign}`;
+                } else if (templateId === 'payslip') {
+                    docTitle = 'CONFIDENTIAL SALARY STATEMENT & EXIT VOUCHER';
+                    docContent = `SALARY SLIP & EXIT MONTH SETTLEMENT VOUCHER\nPay Period: {{PayPeriod}}\nCompany: {{Company}}\nIssue Date: {{IssueDate}}\n\nEMPLOYEE DETAILS:\nEmployee Name: {{EmployeeName}}          Employee ID: {{EmployeeID}}\nDesignation: {{Designation}}              Department: {{Department}}\n\nEARNINGS:\n- Basic Salary: {{BasicSalary}}\n- House Rent Allowance (HRA): ₹12,000.00\n- Special Allowances: ₹18,000.00\nTotal Gross Earnings: {{TotalEarnings}}\n\nSTATUTORY DEDUCTIONS:\n- EPF (12%): ₹3,600.00\n- Professional Tax (PT): ₹200.00\nTotal Deductions: {{TotalDeductions}}\n\nNET PAYABLE SALARY: {{NetSalary}}\n\nThis is a system generated statement.`;
+                } else {
+                    docTitle = 'FULL & FINAL SETTLEMENT STATEMENT';
+                    docContent = `Date: {{IssueDate}}\n\nFULL & FINAL SETTLEMENT (F&F) STATEMENT\n\nEmployee: {{EmployeeName}} ({{EmployeeID}})\nDesignation: {{Designation}} | Department: {{Department}}\nLast Working Day: {{LastWorkingDate}}\n\nSettlement Gross Wages: {{GrossSalary}}\nGratuity & Leave Encashment: ₹14,500.00\nTotal Payable: ₹74,500.00\nTotal Deductions (TDS/PT/Assets): ₹3,800.00\nNet Disbursed Settlement: ₹70,700.00\n\nAccounts & Payroll Clearance Completed.\nAuthorized Signatory, {{Company}}`;
+                }
+            }
+
+            // 3. Dynamic token replacement
+            Object.keys(dynamicMapping).forEach(key => {
+                const reg = new RegExp(`{{${key}}}`, 'g');
+                docContent = docContent.replace(reg, dynamicMapping[key]);
+                docTitle = docTitle.replace(reg, dynamicMapping[key]);
+            });
+
+            // 4. Clean dynamic file naming: EMP-1024_Rahul_Sharma_Relieving_Letter.pdf
+            const sanitizedEmpName = empData.name.replace(/[^a-zA-Z0-9]/g, '_');
+            const sanitizedDocName = name.replace(/[^a-zA-Z0-9]/g, '_');
+            const fileName = `${empData.id}_${sanitizedEmpName}_${sanitizedDocName}.pdf`;
+
+            // 5. Generate and download PDF using jsPDF
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                // Header styling
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(14);
+                doc.text(globalComp.toUpperCase(), 20, 22);
+
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(8.5);
+                doc.setTextColor(100, 116, 139);
+                doc.text(globalAddr, 20, 28);
+                doc.text("OFFICIAL EXIT RECORD • HRMS GOVERNANCE", 190, 28, { align: 'right' });
+
+                // Divider Line
+                doc.setDrawColor(15, 23, 42);
+                doc.setLineWidth(0.6);
+                doc.line(20, 32, 190, 32);
+
+                // Document Title
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(11);
+                doc.setTextColor(15, 23, 42);
+                doc.text(docTitle, 105, 42, { align: 'center' });
+
+                // Document Body Content
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(9.5);
+                doc.setTextColor(30, 41, 59);
+
+                const splitText = doc.splitTextToSize(docContent, 170);
+                doc.text(splitText, 20, 52);
+
+                // Footer branding
+                doc.setDrawColor(226, 232, 240);
+                doc.setLineWidth(0.3);
+                doc.line(20, 275, 190, 275);
+
+                doc.setFontSize(7.5);
+                doc.setTextColor(148, 163, 184);
+                doc.text(`Generated automatically by Logistics ERP HRMS Platform • Document ID: ${empData.id}-${Date.now().toString().slice(-6)}`, 20, 282);
+                doc.text(`Page 1 of 1`, 190, 282, { align: 'right' });
+
+                // Trigger browser PDF download
+                doc.save(fileName);
+
+            } catch (err) {
+                console.error('PDF generation error:', err);
+                // Fallback blob trigger
+                const blob = new Blob([docContent], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
         }
 
         function approveHR() {
@@ -554,10 +716,6 @@
             checkOverallStatus();
         }
 
-        function downloadDoc(name) {
-            alert(`Downloading generated ${name} PDF certificate for ${empData.name} (${empData.id})...`);
-        }
-
         function saveOffboardingChanges() {
             alert(`Offboarding changes for ${empData.name} (${empData.id}) saved successfully!`);
             window.location.href = 'index.html';
@@ -565,7 +723,7 @@
 
         function checkOverallStatus() {
             const approvalsCompleted = (empData.hrApproved === true);
-            const docsCompleted = (empData.doc1 === 'Issued') && (empData.doc2 === 'Issued') && (empData.doc3 === 'Issued') && (empData.doc4 === 'Issued');
+            const docsCompleted = (empData.doc1 === 'Issued') && (empData.doc2 === 'Issued') && (empData.doc4 === 'Issued');
 
             // Approvals header status
             const s2Header = document.getElementById('step2-header-status');
@@ -605,7 +763,10 @@
             }
         }
 
-        window.onload = loadEmployeeData;
+        window.onload = function() {
+            loadEmployeeData();
+            renderDocActionButtons();
+        };
     </script>
 </body>
 </html>

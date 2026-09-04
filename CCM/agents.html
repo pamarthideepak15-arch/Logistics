@@ -1,0 +1,1601 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents — CCM | Exelon Logistics ERP</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- Agents Module Stylesheet -->
+    <link rel="stylesheet" href="agents.css">
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- Delete Agent Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-delete-agent" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeleteAgentModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Employee / Agent</h3>
+            <p class="modal-desc">Are you sure you want to remove <strong id="delete-agent-name-text"></strong>? They will also be removed from any assigned call queues.</p>
+            <input type="hidden" id="delete-agent-id" value="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeleteAgentModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeleteAgent()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Agent Modal -->
+    <div class="modal-overlay" id="overlay-agent-form" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 480px; max-width: 95vw; overflow: visible; padding: 18px 20px; text-align: left; box-sizing: border-box;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeAgentModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h3 class="modal-title" id="agent-modal-title" style="font-size: 1rem; margin-bottom: 2px;">Add Agent / Employee</h3>
+            <p class="modal-desc" style="font-size: 0.75rem; color: #666; margin-bottom: 12px;">Map existing platform employee to CCM agent configuration.</p>
+            
+            <form id="agent-master-form" onsubmit="handleSaveAgent(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                <input type="hidden" id="agent-form-id" value="">
+                
+                <!-- 1. Branch (Multi-select dropdown with Select All checkbox) -->
+                <div class="form-group">
+                    <label style="font-size: 0.8125rem; font-weight: 600;">Branch *</label>
+                    <details class="modal-select-wrapper custom-select-wrapper" id="agent-modal-branch-details">
+                        <summary class="modal-select-trigger custom-select-trigger" id="agent-modal-branch-trigger">
+                            <span class="trigger-label placeholder">Select Branch</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="modal-select-dropdown custom-select-options">
+                            <div class="modal-search-box" onclick="event.stopPropagation();">
+                                <input type="text" class="modal-search-input" placeholder="Search branch..." oninput="filterModalBranchList(this.value)">
+                            </div>
+                            <div class="modal-select-actions-bar" onclick="event.stopPropagation();">
+                                <label class="modal-select-all-label">
+                                    <input type="checkbox" id="modal-branch-select-all-cb" onchange="toggleAllModalBranches(this.checked)">
+                                    <span id="modal-branch-select-all-text">Select All</span>
+                                </label>
+                            </div>
+                            <div id="modal-branch-options-container">
+                                <!-- Populated dynamically via JS -->
+                            </div>
+                        </div>
+                    </details>
+                    <input type="hidden" id="agent-form-branch" value="">
+                </div>
+
+                <!-- 2. Department (Multi-select dropdown with Select All checkbox) -->
+                <div class="form-group">
+                    <label style="font-size: 0.8125rem; font-weight: 600;">Department *</label>
+                    <details class="modal-select-wrapper custom-select-wrapper" id="agent-modal-dept-details" style="opacity: 0.6; pointer-events: none;">
+                        <summary class="modal-select-trigger custom-select-trigger" id="agent-modal-dept-trigger">
+                            <span class="trigger-label placeholder">Select Department</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="modal-select-dropdown custom-select-options">
+                            <div class="modal-search-box" onclick="event.stopPropagation();">
+                                <input type="text" class="modal-search-input" placeholder="Search department..." oninput="filterModalDeptList(this.value)">
+                            </div>
+                            <div class="modal-select-actions-bar" onclick="event.stopPropagation();">
+                                <label class="modal-select-all-label">
+                                    <input type="checkbox" id="modal-dept-select-all-cb" onchange="toggleAllModalDepts(this.checked)">
+                                    <span id="modal-dept-select-all-text">Select All</span>
+                                </label>
+                            </div>
+                            <div id="modal-dept-options-container">
+                                <!-- Populated dynamically via JS -->
+                            </div>
+                        </div>
+                    </details>
+                    <input type="hidden" id="agent-form-dept" value="">
+                </div>
+
+                <!-- 3. Role (Multi-select dropdown with Select All checkbox) -->
+                <div class="form-group">
+                    <label style="font-size: 0.8125rem; font-weight: 600;">Role *</label>
+                    <details class="modal-select-wrapper custom-select-wrapper" id="agent-modal-role-details" style="opacity: 0.6; pointer-events: none;">
+                        <summary class="modal-select-trigger custom-select-trigger" id="agent-modal-role-trigger">
+                            <span class="trigger-label placeholder">Select Role</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="modal-select-dropdown custom-select-options">
+                            <div class="modal-search-box" onclick="event.stopPropagation();">
+                                <input type="text" class="modal-search-input" placeholder="Search role..." oninput="filterModalRoleList(this.value)">
+                            </div>
+                            <div class="modal-select-actions-bar" onclick="event.stopPropagation();">
+                                <label class="modal-select-all-label">
+                                    <input type="checkbox" id="modal-role-select-all-cb" onchange="toggleAllModalRoles(this.checked)">
+                                    <span id="modal-role-select-all-text">Select All</span>
+                                </label>
+                            </div>
+                            <div id="modal-role-options-container">
+                                <!-- Populated dynamically via JS -->
+                            </div>
+                        </div>
+                    </details>
+                    <input type="hidden" id="agent-form-role" value="">
+                </div>
+
+                <!-- 4. Employee Name (Multi-select dropdown with Select All checkbox filtered by Branch + Dept + Role) -->
+                <div class="form-group">
+                    <label style="font-size: 0.8125rem; font-weight: 600;">Employee Name *</label>
+                    <details class="modal-select-wrapper custom-select-wrapper" id="agent-modal-emp-details" style="opacity: 0.6; pointer-events: none;">
+                        <summary class="modal-select-trigger custom-select-trigger" id="agent-modal-emp-trigger">
+                            <span class="trigger-label placeholder">Select Employee</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="modal-select-dropdown custom-select-options">
+                            <div class="modal-search-box" onclick="event.stopPropagation();">
+                                <input type="text" class="modal-search-input" placeholder="Search employee..." oninput="filterModalEmpList(this.value)">
+                            </div>
+                            <div class="modal-select-actions-bar" onclick="event.stopPropagation();">
+                                <label class="modal-select-all-label">
+                                    <input type="checkbox" id="modal-emp-select-all-cb" onchange="toggleAllModalEmps(this.checked)">
+                                    <span id="modal-emp-select-all-text">Select All</span>
+                                </label>
+                            </div>
+                            <div id="modal-emp-options-container">
+                                <!-- Populated dynamically via JS based on matching Branch + Dept + Role -->
+                            </div>
+                        </div>
+                    </details>
+                    <input type="hidden" id="agent-form-emp-id" value="">
+                    <input type="hidden" id="agent-form-name" value="">
+                    <input type="hidden" id="agent-form-email" value="">
+                    <input type="hidden" id="agent-form-phone" value="">
+                </div>
+
+                <div id="agent-form-error" style="display: none; color: #dc2626; font-size: 0.75rem; font-weight: 500;"></div>
+
+                <div class="modal-actions" style="margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--color-border); display: flex; gap: 8px;">
+                    <button type="button" class="btn-secondary" style="flex: 1; height: 32px; justify-content: center;" onclick="closeAgentModal()">Cancel</button>
+                    <button type="submit" id="agent-save-btn" class="btn-primary" style="flex: 1; height: 32px; justify-content: center;">Save Agent</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Admin Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+                
+                <nav class="rail-nav">
+                    <a href="../Company-Branches/index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads -->
+                    <a href="leads.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Leads
+                    </a>
+                
+                    <!-- Module 9: Tickets -->
+                    <a href="tickets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring -->
+                    <a href="live-monitoring.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND -->
+                    <a href="blacklist-dnd.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                                    <!-- Module 14: Settings -->
+                    <a href="settings.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Agents</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="main-scroll-area">
+                
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Agents &amp; Employees</h1>
+                        <p class="page-subtitle">Manage employee master records, branch mapping, roles, and telephony availability.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button type="button" class="btn-primary" onclick="openAddAgentModal()" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add Agent / Employee
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Bar -->
+                <div class="ccm-stats-row">
+                    <div class="ccm-stat-card">
+                        <div>
+                            <div class="ccm-stat-label">Total Agents</div>
+                            <div class="ccm-stat-val" id="stat-total-agents">6</div>
+                        </div>
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#64748b" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <div class="ccm-stat-card">
+                        <div>
+                            <div class="ccm-stat-label">Available</div>
+                            <div class="ccm-stat-val" id="stat-available-agents" style="color: #047857;">3</div>
+                        </div>
+                        <span class="agent-status-badge status-available">Available</span>
+                    </div>
+                    <div class="ccm-stat-card">
+                        <div>
+                            <div class="ccm-stat-label">On Call</div>
+                            <div class="ccm-stat-val" id="stat-oncall-agents" style="color: #1d4ed8;">1</div>
+                        </div>
+                        <span class="agent-status-badge status-oncall">On Call</span>
+                    </div>
+                    <div class="ccm-stat-card">
+                        <div>
+                            <div class="ccm-stat-label">Break</div>
+                            <div class="ccm-stat-val" id="stat-break-agents" style="color: #d97706;">1</div>
+                        </div>
+                        <span class="agent-status-badge status-break">Break</span>
+                    </div>
+                    <div class="ccm-stat-card">
+                        <div>
+                            <div class="ccm-stat-label">Offline</div>
+                            <div class="ccm-stat-val" id="stat-offline-agents" style="color: #64748b;">1</div>
+                        </div>
+                        <span class="agent-status-badge status-offline">Offline</span>
+                    </div>
+                </div>
+
+                <!-- CCM Agents Page Section -->
+                <div class="ccm-page-section">
+
+                    <!-- Filter Bar -->
+                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%; flex-wrap: wrap;">
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 220px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="agent-search-input" class="search-input" placeholder="Search by agent name..." oninput="filterAgents()">
+                        </div>
+
+                        <!-- Branch Filter (Multi-Select with Search & Select All) -->
+                        <details class="custom-select-wrapper" id="filter-branch-details" style="min-width: 170px;">
+                            <summary class="custom-select-trigger" id="filter-branch-trigger" style="height: 32px;">
+                                <span class="trigger-label">All Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="filter-branch-options">
+                                <div class="custom-select-search">
+                                    <div class="custom-select-search-wrapper">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterBranchDropdownOptions(this)">
+                                    </div>
+                                </div>
+                                <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                    <input type="checkbox" id="cb-branch-select-all" onchange="toggleAllBranchFilters(this.checked)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                    <span style="font-weight: 600; color: var(--color-black);">Select All</span>
+                                </label>
+                                <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
+                                <div id="filter-branch-list-items">
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Bengaluru" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Bengaluru</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Mumbai" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Mumbai</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Hyderabad" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Hyderabad</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Delhi" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Delhi</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Chennai" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Chennai</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Pune" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Pune</span>
+                                    </label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" class="cb-branch-filter-item" value="Mangalore" onchange="handleBranchItemCheckboxChange()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                        <span>Mangalore</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- Availability Filter -->
+                        <details class="custom-select-wrapper" id="filter-status-details" style="min-width: 140px;">
+                            <summary class="custom-select-trigger" id="filter-status-trigger" style="height: 32px;">
+                                <span class="trigger-label">All Availability</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option" onclick="filterByStatus('All')">All Availability</label>
+                                <label class="custom-option" onclick="filterByStatus('Available')">Available</label>
+                                <label class="custom-option" onclick="filterByStatus('On Call')">On Call</label>
+                                <label class="custom-option" onclick="filterByStatus('Break')">Break</label>
+                                <label class="custom-option" onclick="filterByStatus('Offline')">Offline</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Table View -->
+                    <div class="table-container ccm-desktop-table-container">
+                        <table class="ccm-branches-table agents-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="sortAgents('name')">
+                                        <div class="sort-header-content">
+                                            Agent Name
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortAgents('branch')">
+                                        <div class="sort-header-content">
+                                            Branch
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th>Assigned Queues</th>
+                                    <th class="sortable" onclick="sortAgents('availability')" style="text-align: center;">
+                                        <div class="sort-header-content" style="justify-content: center;">
+                                            Availability
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortAgents('status')" style="text-align: center;">
+                                        <div class="sort-header-content" style="justify-content: center;">
+                                            Status
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="agents-table-body">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination -->
+                        <div class="pagination-bar">
+                            <span id="agents-pagination-info">Showing 1-6 of 6</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <button type="button" class="page-btn" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Cards List -->
+                    <div class="ccm-mobile-branch-cards mobile-card-list" id="agents-mobile-cards" style="display: none; flex-direction: column; gap: 10px;">
+                        <!-- Mobile Cards -->
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Interactive Script for Agents Master Management -->
+    <script>
+        // Seed default agents master data (6 records with diverse branches & availability)
+        const defaultAgentsList = [
+            { id: "agt-1", name: "Deepak Kumar", callingMode: "App", ext: "", branch: "Bengaluru", dept: "Customer Support", role: "Customer Care Executive", availability: "Available", status: "Active", email: "deepak.kumar@exelon.com", phone: "+91 98450 11001" },
+            { id: "agt-2", name: "Priya Sharma", callingMode: "Hybrid", ext: "102", branch: "Mumbai", dept: "Operations", role: "Operations Coordinator", availability: "On Call", status: "Active", email: "priya.s@exelon.com", phone: "+91 98200 22002" },
+            { id: "agt-3", name: "Rahul Varma", callingMode: "App", ext: "", branch: "Hyderabad", dept: "Customer Support", role: "Customer Care Executive", availability: "Available", status: "Active", email: "rahul.v@exelon.com", phone: "+91 98490 33003" },
+            { id: "agt-4", name: "Ananya Iyer", callingMode: "Hybrid", ext: "104", branch: "Delhi", dept: "Customer Support", role: "Customer Care Executive", availability: "Offline", status: "Active", email: "ananya.i@exelon.com", phone: "+91 98110 44004" },
+            { id: "agt-5", name: "Venkatesh Rao", callingMode: "App", ext: "", branch: "Chennai", dept: "Operations", role: "Dispatch Executive", availability: "Break", status: "Active", email: "venkatesh.r@exelon.com", phone: "+91 98440 55005" },
+            { id: "agt-6", name: "Sneha Patil", callingMode: "Hybrid", ext: "201", branch: "Pune", dept: "Accounts", role: "Billing Executive", availability: "Available", status: "Active", email: "sneha.p@exelon.com", phone: "+91 98220 66006" }
+        ];
+
+        let agentsMaster = getAgentsFromStorage();
+        const allAvailableBranchesList = ["Bengaluru", "Mumbai", "Hyderabad", "Delhi", "Chennai", "Pune", "Mangalore"];
+        let selectedBranches = [];
+        let selectedStatusFilter = "All";
+        let currentSort = { column: "name", asc: true };
+
+        function getAgentsFromStorage() {
+            try {
+                const stored = localStorage.getItem('ccm_agents_master_v2');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length === 6) {
+                        return parsed;
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+            localStorage.setItem('ccm_agents_master_v2', JSON.stringify(defaultAgentsList));
+            return JSON.parse(JSON.stringify(defaultAgentsList));
+        }
+
+        const defaultQueuesSeed = [
+            { id: 1, name: "Bengaluru Customer Support", branch: "Bengaluru", agentIds: ["agt-1"] },
+            { id: 2, name: "Mumbai Dispatch Support", branch: "Mumbai", agentIds: ["agt-2"] },
+            { id: 3, name: "Hyderabad Helpline", branch: "Hyderabad", agentIds: ["agt-3"] },
+            { id: 4, name: "Delhi Priority Desk", branch: "Delhi", agentIds: ["agt-4"] },
+            { id: 5, name: "Chennai Operations Queue", branch: "Chennai", agentIds: ["agt-5"] },
+            { id: 6, name: "Pune Billing Queue", branch: "Pune", agentIds: ["agt-6"] }
+        ];
+
+        function getQueuesFromStorage() {
+            try {
+                const stored = localStorage.getItem('ccm_queues_data_v2');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length >= 6) return parsed;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+            localStorage.setItem('ccm_queues_data_v2', JSON.stringify(defaultQueuesSeed));
+            return defaultQueuesSeed;
+        }
+
+        function updateStats() {
+            const total = agentsMaster.length;
+            const available = agentsMaster.filter(a => a.availability === 'Available').length;
+            const oncall = agentsMaster.filter(a => a.availability === 'On Call').length;
+            const onBreak = agentsMaster.filter(a => a.availability === 'Break').length;
+            const offline = agentsMaster.filter(a => a.availability === 'Offline').length;
+
+            if (document.getElementById('stat-total-agents')) document.getElementById('stat-total-agents').textContent = total;
+            if (document.getElementById('stat-available-agents')) document.getElementById('stat-available-agents').textContent = available;
+            if (document.getElementById('stat-oncall-agents')) document.getElementById('stat-oncall-agents').textContent = oncall;
+            if (document.getElementById('stat-break-agents')) document.getElementById('stat-break-agents').textContent = onBreak;
+            if (document.getElementById('stat-offline-agents')) document.getElementById('stat-offline-agents').textContent = offline;
+        }
+
+        function getAssignedQueuesForAgent(agentId, agentName, agentBranch) {
+            const queues = getQueuesFromStorage();
+            return queues.filter(q => {
+                if (!q.agentIds || !Array.isArray(q.agentIds)) return false;
+                if (q.agentIds.includes(agentId)) return true;
+                // Also match by agent id mapping or name if agentId format varies
+                if (agentName && q.agentNames && q.agentNames.includes(agentName)) return true;
+                return false;
+            });
+        }
+
+        function getAvailabilityBadgeClass(avail) {
+            switch (avail) {
+                case 'Available': return 'status-available';
+                case 'On Call': return 'status-oncall';
+                case 'Break': return 'status-break';
+                case 'Offline': return 'status-offline';
+                default: return 'status-offline';
+            }
+        }
+
+        function toggleAgentStatus(id, isActive) {
+            const agent = agentsMaster.find(a => a.id === id);
+            if (agent) {
+                agent.status = isActive ? 'Active' : 'Inactive';
+                localStorage.setItem('ccm_agents_master_v2', JSON.stringify(agentsMaster));
+                updateStats();
+            }
+        }
+
+        function renderAgentsTable() {
+            const list = getFilteredAgents();
+            const tbody = document.getElementById('agents-table-body');
+            const paginationInfo = document.getElementById('agents-pagination-info');
+            const mobileCards = document.getElementById('agents-mobile-cards');
+
+            updateStats();
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #888; padding: 24px;">No agents found matching the selected filters.</td></tr>`;
+                if (paginationInfo) paginationInfo.textContent = `Showing 0 of ${agentsMaster.length}`;
+                if (mobileCards) mobileCards.innerHTML = `<div style="text-align:center; padding: 20px; color:#888;">No agents found.</div>`;
+                return;
+            }
+
+            tbody.innerHTML = list.map(agent => {
+                const assignedQueues = getAssignedQueuesForAgent(agent.id, agent.name, agent.branch);
+                const queuePills = assignedQueues.length > 0 ? 
+                    assignedQueues.map(q => `<span class="agent-queue-pill" title="${escapeHtml(q.name)}">${escapeHtml(q.name)}</span>`).join('') : 
+                    `<span style="color: #94a3b8; font-size: 0.75rem;">Not Assigned</span>`;
+
+                const availability = agent.availability || 'Available';
+                const isChecked = agent.status === 'Active';
+
+                return `
+                    <tr data-id="${agent.id}">
+                        <td style="font-weight: 600; color: var(--color-black);">
+                            ${escapeHtml(agent.name)}
+                        </td>
+                        <td>${escapeHtml(agent.branch)}</td>
+                        <td style="max-width: 280px;">${queuePills}</td>
+                        <td style="text-align: center;">
+                            <span class="agent-status-badge ${getAvailabilityBadgeClass(availability)}">${escapeHtml(availability)}</span>
+                        </td>
+                        <td style="text-align: center;">
+                            <label class="status-toggle" title="Toggle Status (Active/Inactive)" style="display: inline-flex;">
+                                <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleAgentStatus('${agent.id}', this.checked)">
+                                <div class="toggle-switch"></div>
+                            </label>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="ccm-action-icons">
+                                <button type="button" class="ccm-icon-btn" title="Edit Employee" onclick="openEditAgentModal('${agent.id}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </button>
+                                <button type="button" class="ccm-icon-btn" title="Delete Employee" onclick="openDeleteAgentModal('${agent.id}', '${escapeHtml(agent.name)}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Mobile Cards View
+            if (mobileCards) {
+                mobileCards.innerHTML = list.map(agent => {
+                    const assignedQueues = getAssignedQueuesForAgent(agent.id, agent.name, agent.branch);
+                    const availability = agent.availability || 'Available';
+                    const isChecked = agent.status === 'Active';
+
+                    return `
+                        <div class="mobile-data-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <div style="font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">${escapeHtml(agent.name)}</div>
+                                    <div style="font-size: 0.75rem; color: #666; margin-top: 2px;">
+                                        ${escapeHtml(agent.branch)}
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span class="agent-status-badge ${getAvailabilityBadgeClass(availability)}">${escapeHtml(availability)}</span>
+                                    <label class="status-toggle" title="Toggle Status">
+                                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleAgentStatus('${agent.id}', this.checked)">
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div style="font-size: 0.75rem; color: #444; background: var(--color-bg-light); padding: 6px 10px; border-radius: var(--border-radius-base);">
+                                <div style="color: #64748b;">Queues: ${assignedQueues.length > 0 ? assignedQueues.map(q => q.name).join(', ') : 'Not Assigned'}</div>
+                            </div>
+                            <div style="display: flex; gap: 8px; padding-top: 8px; border-top: 1px solid var(--color-border);">
+                                <button type="button" class="btn-secondary" style="flex: 1; height: 30px; font-size: 0.75rem; justify-content: center;" onclick="openEditAgentModal('${agent.id}')">Edit</button>
+                                <button type="button" class="btn-secondary" style="flex: 1; height: 30px; font-size: 0.75rem; justify-content: center; color: #dc2626; border-color: #fee2e2;" onclick="openDeleteAgentModal('${agent.id}', '${escapeHtml(agent.name)}')">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (paginationInfo) {
+                paginationInfo.textContent = `Showing 1-${list.length} of ${agentsMaster.length}`;
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function getFilteredAgents() {
+            const query = (document.getElementById('agent-search-input')?.value || '').toLowerCase().trim();
+            return agentsMaster.filter(a => {
+                const availability = a.availability || 'Available';
+                const matchesSearch = !query || a.name.toLowerCase().includes(query);
+                const matchesBranch = selectedBranches.length === 0 || selectedBranches.length === allAvailableBranchesList.length || selectedBranches.includes(a.branch);
+                const matchesStatus = selectedStatusFilter === 'All' || availability === selectedStatusFilter;
+
+                return matchesSearch && matchesBranch && matchesStatus;
+            });
+        }
+
+        function filterAgents() {
+            renderAgentsTable();
+        }
+
+        function filterBranchDropdownOptions(input) {
+            const query = input.value.toLowerCase().trim();
+            const container = document.getElementById('filter-branch-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    opt.style.display = 'flex';
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleAllBranchFilters(isChecked) {
+            const itemCheckboxes = document.querySelectorAll('.cb-branch-filter-item');
+            itemCheckboxes.forEach(cb => {
+                cb.checked = isChecked;
+            });
+            if (isChecked) {
+                selectedBranches = [...allAvailableBranchesList];
+            } else {
+                selectedBranches = [];
+            }
+            updateBranchFilterTriggerLabel();
+            renderAgentsTable();
+        }
+
+        function handleBranchItemCheckboxChange() {
+            const itemCheckboxes = document.querySelectorAll('.cb-branch-filter-item');
+            const selectAllCb = document.getElementById('cb-branch-select-all');
+            
+            selectedBranches = [];
+            let allChecked = true;
+            let noneChecked = true;
+
+            itemCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedBranches.push(cb.value);
+                    noneChecked = false;
+                } else {
+                    allChecked = false;
+                }
+            });
+
+            if (selectAllCb) {
+                selectAllCb.checked = allChecked;
+                selectAllCb.indeterminate = !allChecked && !noneChecked;
+            }
+
+            updateBranchFilterTriggerLabel();
+            renderAgentsTable();
+        }
+
+        function updateBranchFilterTriggerLabel() {
+            const trigger = document.querySelector('#filter-branch-trigger .trigger-label');
+            if (!trigger) return;
+
+            if (selectedBranches.length === 0 || selectedBranches.length === allAvailableBranchesList.length) {
+                trigger.textContent = 'All Branches';
+            } else if (selectedBranches.length === 1) {
+                trigger.textContent = selectedBranches[0];
+            } else {
+                trigger.textContent = `${selectedBranches.length} Branches`;
+            }
+        }
+
+        function filterByStatus(status) {
+            selectedStatusFilter = status;
+            const trigger = document.querySelector('#filter-status-trigger .trigger-label');
+            if (trigger) trigger.textContent = status === 'All' ? 'All Availability' : status;
+            document.getElementById('filter-status-details')?.removeAttribute('open');
+            renderAgentsTable();
+        }
+
+        function sortAgents(col) {
+            if (currentSort.column === col) {
+                currentSort.asc = !currentSort.asc;
+            } else {
+                currentSort.column = col;
+                currentSort.asc = true;
+            }
+
+            agentsMaster.sort((a, b) => {
+                let valA = '';
+                let valB = '';
+                if (col === 'availability') {
+                    valA = (a.availability || 'Available').toLowerCase();
+                    valB = (b.availability || 'Available').toLowerCase();
+                } else if (col === 'status') {
+                    valA = (a.status || 'Active').toLowerCase();
+                    valB = (b.status || 'Active').toLowerCase();
+                } else {
+                    valA = (a[col] || '').toLowerCase();
+                    valB = (b[col] || '').toLowerCase();
+                }
+                if (valA < valB) return currentSort.asc ? -1 : 1;
+                if (valA > valB) return currentSort.asc ? 1 : -1;
+                return 0;
+            });
+
+            renderAgentsTable();
+        }
+
+        // Platform Employee/Staff Master Reference Data (Matches Staff Management records with rich variety)
+        const platformStaffEmployees = [
+            // Bengaluru - Customer Support
+            { id: 'EMP001', name: 'Deepak Kumar', branch: 'Bengaluru', dept: 'Customer Support', role: 'Customer Care Executive', email: 'deepak.kumar@exelon.com', phone: '+91 98450 11001' },
+            { id: 'EMP008', name: 'Kavita Reddy', branch: 'Bengaluru', dept: 'Customer Support', role: 'Senior Support Specialist', email: 'kavita.r@exelon.com', phone: '+91 98450 77007' },
+            { id: 'EMP013', name: 'Manish Sharma', branch: 'Bengaluru', dept: 'Customer Support', role: 'Customer Care Executive', email: 'manish.s@exelon.com', phone: '+91 98450 88008' },
+            { id: 'EMP014', name: 'Ankita Sen', branch: 'Bengaluru', dept: 'Customer Support', role: 'Team Lead', email: 'ankita.s@exelon.com', phone: '+91 98450 99009' },
+            
+            // Bengaluru - Operations, Dispatch & Accounts
+            { id: 'EMP010', name: 'Neha Gupta', branch: 'Bengaluru', dept: 'Accounts', role: 'Accountant', email: 'neha@logistics.com', phone: '+91 98765 98765' },
+            { id: 'EMP015', name: 'Harish Babu', branch: 'Bengaluru', dept: 'Operations', role: 'Hub Supervisor', email: 'harish.b@exelon.com', phone: '+91 98451 12345' },
+            { id: 'EMP016', name: 'Pooja Hegde', branch: 'Bengaluru', dept: 'Dispatch', role: 'Dispatch Executive', email: 'pooja.h@exelon.com', phone: '+91 98452 23456' },
+            { id: 'EMP017', name: 'Sanjay Gowda', branch: 'Bengaluru', dept: 'Sales & CRM', role: 'Key Account Manager', email: 'sanjay.g@exelon.com', phone: '+91 98453 34567' },
+
+            // Mumbai - Operations, Customer Support, Fleet
+            { id: 'EMP002', name: 'Amit Patel', branch: 'Mumbai', dept: 'Operations', role: 'Operations Coordinator', email: 'amit@logistics.com', phone: '+91 98765 54321' },
+            { id: 'EMP003', name: 'Priya Sharma', branch: 'Mumbai', dept: 'Operations', role: 'Operations Coordinator', email: 'priya.s@exelon.com', phone: '+91 98200 22002' },
+            { id: 'EMP009', name: 'Siddharth Roy', branch: 'Mumbai', dept: 'Operations', role: 'Dispatch Executive', email: 'siddharth@logistics.com', phone: '+91 98765 87654' },
+            { id: 'EMP018', name: 'Farhan Merchant', branch: 'Mumbai', dept: 'Customer Support', role: 'Customer Care Executive', email: 'farhan.m@exelon.com', phone: '+91 98201 34567' },
+            { id: 'EMP019', name: 'Aditi Deshmukh', branch: 'Mumbai', dept: 'Accounts', role: 'Billing Executive', email: 'aditi.d@exelon.com', phone: '+91 98202 45678' },
+            { id: 'EMP020', name: 'Ravi Shankar', branch: 'Mumbai', dept: 'Dispatch', role: 'Fleet Coordinator', email: 'ravi.s@exelon.com', phone: '+91 98203 56789' },
+
+            // Hyderabad - Customer Support & Operations
+            { id: 'EMP004', name: 'Rahul Varma', branch: 'Hyderabad', dept: 'Customer Support', role: 'Customer Care Executive', email: 'rahul.v@exelon.com', phone: '+91 98490 33003' },
+            { id: 'EMP021', name: 'Divya Rao', branch: 'Hyderabad', dept: 'Customer Support', role: 'Senior Support Specialist', email: 'divya.r@exelon.com', phone: '+91 98491 67890' },
+            { id: 'EMP022', name: 'Srikanth Challa', branch: 'Hyderabad', dept: 'Operations', role: 'Operations Coordinator', email: 'srikanth.c@exelon.com', phone: '+91 98492 78901' },
+            { id: 'EMP023', name: 'Lavanya Nair', branch: 'Hyderabad', dept: 'Accounts', role: 'Accounts Lead', email: 'lavanya.n@exelon.com', phone: '+91 98493 89012' },
+
+            // Delhi - Customer Support, Dispatch, Operations
+            { id: 'EMP005', name: 'Ananya Iyer', branch: 'Delhi', dept: 'Customer Support', role: 'Customer Care Executive', email: 'ananya.i@exelon.com', phone: '+91 98110 44004' },
+            { id: 'EMP012', name: 'Vikram Singh', branch: 'Delhi', dept: 'Customer Support', role: 'Team Lead', email: 'vikram@logistics.com', phone: '+91 98765 76543' },
+            { id: 'EMP024', name: 'Gaurav Khanna', branch: 'Delhi', dept: 'Operations', role: 'Hub Supervisor', email: 'gaurav.k@exelon.com', phone: '+91 98111 90123' },
+            { id: 'EMP025', name: 'Simran Kaur', branch: 'Delhi', dept: 'Dispatch', role: 'Route Manager', email: 'simran.k@exelon.com', phone: '+91 98112 01234' },
+
+            // Chennai - Operations, Dispatch, Customer Support
+            { id: 'EMP006', name: 'Venkatesh Rao', branch: 'Chennai', dept: 'Operations', role: 'Dispatch Executive', email: 'venkatesh.r@exelon.com', phone: '+91 98440 55005' },
+            { id: 'EMP011', name: 'Rohan Mehta', branch: 'Chennai', dept: 'Operations', role: 'Hub Supervisor', email: 'rohan.mehta@logistics.com', phone: '+91 98765 09876' },
+            { id: 'EMP026', name: 'Karthik Subramanian', branch: 'Chennai', dept: 'Customer Support', role: 'Customer Care Executive', email: 'karthik.s@exelon.com', phone: '+91 98441 12345' },
+            { id: 'EMP027', name: 'Meenakshi Sundaram', branch: 'Chennai', dept: 'Accounts', role: 'Billing Executive', email: 'meenakshi.s@exelon.com', phone: '+91 98442 23456' },
+
+            // Pune - Accounts & Support
+            { id: 'EMP007', name: 'Sneha Patil', branch: 'Pune', dept: 'Accounts', role: 'Billing Executive', email: 'sneha.p@exelon.com', phone: '+91 98220 66006' },
+            { id: 'EMP028', name: 'Nikhil Kulkarni', branch: 'Pune', dept: 'Customer Support', role: 'Customer Care Executive', email: 'nikhil.k@exelon.com', phone: '+91 98221 34567' },
+            { id: 'EMP029', name: 'Tanvi Joshi', branch: 'Pune', dept: 'Operations', role: 'Operations Coordinator', email: 'tanvi.j@exelon.com', phone: '+91 98222 45678' },
+
+            // Mangalore & HQ
+            { id: 'EMP030', name: 'Prashanth Shetty', branch: 'Mangalore', dept: 'Customer Support', role: 'Customer Care Executive', email: 'prashanth.s@exelon.com', phone: '+91 98455 56789' },
+            { id: 'EMP031', name: 'Ashwini Alva', branch: 'Mangalore', dept: 'Operations', role: 'Dispatch Executive', email: 'ashwini.a@exelon.com', phone: '+91 98456 67890' },
+            { id: 'EMP032', name: 'Rajesh Kumar', branch: 'HQ', dept: 'Customer Support', role: 'Team Lead', email: 'rajesh.kumar@logisticserp.com', phone: '+91 98765 43210' }
+        ];
+
+        // State for Multi-selection in Modal
+        let modalSelectedBranches = [];
+        let modalSelectedDepts = [];
+        let modalSelectedRoles = [];
+        let modalSelectedEmpIds = [];
+
+        // 1. Branch Dropdown Helpers (Multi-select)
+        function renderModalBranchDropdown(filter = '') {
+            const container = document.getElementById('modal-branch-options-container');
+            if (!container) return;
+            const branches = Array.from(new Set(platformStaffEmployees.map(e => e.branch))).sort();
+            const filtered = branches.filter(b => !filter || b.toLowerCase().includes(filter.toLowerCase()));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 10px; font-size: 0.75rem; color: #888; text-align: center;">No branches found</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(b => {
+                const isSelected = modalSelectedBranches.includes(b);
+                return `
+                    <label class="modal-select-option ${isSelected ? 'selected' : ''}" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" class="cb-modal-branch-item" value="${escapeHtml(b)}" ${isSelected ? 'checked' : ''} onchange="handleModalBranchCheckboxChange(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);">
+                        <span style="font-weight: ${isSelected ? '700' : '500'};">${escapeHtml(b)}</span>
+                    </label>
+                `;
+            }).join('');
+
+            updateModalBranchSelectAllState();
+        }
+
+        function filterModalBranchList(val) {
+            renderModalBranchDropdown(val);
+        }
+
+        function handleModalBranchCheckboxChange(cb) {
+            const val = cb.value;
+            if (cb.checked) {
+                if (!modalSelectedBranches.includes(val)) modalSelectedBranches.push(val);
+            } else {
+                modalSelectedBranches = modalSelectedBranches.filter(b => b !== val);
+            }
+            updateModalBranchTrigger();
+            updateModalBranchSelectAllState();
+            onModalBranchSelectionChanged();
+        }
+
+        function toggleAllModalBranches(selectAll) {
+            const branches = Array.from(new Set(platformStaffEmployees.map(e => e.branch))).sort();
+            modalSelectedBranches = selectAll ? [...branches] : [];
+            updateModalBranchTrigger();
+            renderModalBranchDropdown();
+            onModalBranchSelectionChanged();
+        }
+
+        function updateModalBranchSelectAllState() {
+            const branches = Array.from(new Set(platformStaffEmployees.map(e => e.branch)));
+            const allCb = document.getElementById('modal-branch-select-all-cb');
+            const allText = document.getElementById('modal-branch-select-all-text');
+            const isAllSelected = branches.length > 0 && branches.every(b => modalSelectedBranches.includes(b));
+
+            if (allCb) allCb.checked = isAllSelected;
+            if (allText) allText.textContent = isAllSelected ? 'Deselect All' : 'Select All';
+        }
+
+        function updateModalBranchTrigger() {
+            const trigger = document.querySelector('#agent-modal-branch-trigger .trigger-label');
+            const hidden = document.getElementById('agent-form-branch');
+            if (hidden) hidden.value = modalSelectedBranches.join(', ');
+
+            if (trigger) {
+                if (modalSelectedBranches.length === 0) {
+                    trigger.textContent = 'Select Branch';
+                    trigger.classList.add('placeholder');
+                } else if (modalSelectedBranches.length === 1) {
+                    trigger.textContent = modalSelectedBranches[0];
+                    trigger.classList.remove('placeholder');
+                } else {
+                    trigger.textContent = `${modalSelectedBranches.length} Branches Selected`;
+                    trigger.classList.remove('placeholder');
+                }
+            }
+        }
+
+        function onModalBranchSelectionChanged() {
+            const deptWrapper = document.getElementById('agent-modal-dept-details');
+            if (modalSelectedBranches.length > 0) {
+                if (deptWrapper) {
+                    deptWrapper.style.opacity = '1';
+                    deptWrapper.style.pointerEvents = 'auto';
+                }
+            } else {
+                if (deptWrapper) {
+                    deptWrapper.style.opacity = '0.6';
+                    deptWrapper.style.pointerEvents = 'none';
+                }
+            }
+            // Retain valid selected depts that exist in selected branches
+            const availableDepts = Array.from(new Set(platformStaffEmployees.filter(e => modalSelectedBranches.includes(e.branch)).map(e => e.dept)));
+            modalSelectedDepts = modalSelectedDepts.filter(d => availableDepts.includes(d));
+            updateModalDeptTrigger();
+            renderModalDeptDropdown();
+            onModalDeptSelectionChanged();
+        }
+
+        // 2. Department Dropdown Helpers (Multi-select)
+        function renderModalDeptDropdown(filter = '') {
+            const container = document.getElementById('modal-dept-options-container');
+            if (!container) return;
+
+            const matchingEmps = modalSelectedBranches.length > 0 ? 
+                platformStaffEmployees.filter(e => modalSelectedBranches.includes(e.branch)) : 
+                platformStaffEmployees;
+            const depts = Array.from(new Set(matchingEmps.map(e => e.dept))).sort();
+            const filtered = depts.filter(d => !filter || d.toLowerCase().includes(filter.toLowerCase()));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 10px; font-size: 0.75rem; color: #888; text-align: center;">No departments found</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(d => {
+                const isSelected = modalSelectedDepts.includes(d);
+                return `
+                    <label class="modal-select-option ${isSelected ? 'selected' : ''}" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" class="cb-modal-dept-item" value="${escapeHtml(d)}" ${isSelected ? 'checked' : ''} onchange="handleModalDeptCheckboxChange(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);">
+                        <span style="font-weight: ${isSelected ? '700' : '500'};">${escapeHtml(d)}</span>
+                    </label>
+                `;
+            }).join('');
+
+            updateModalDeptSelectAllState();
+        }
+
+        function filterModalDeptList(val) {
+            renderModalDeptDropdown(val);
+        }
+
+        function handleModalDeptCheckboxChange(cb) {
+            const val = cb.value;
+            if (cb.checked) {
+                if (!modalSelectedDepts.includes(val)) modalSelectedDepts.push(val);
+            } else {
+                modalSelectedDepts = modalSelectedDepts.filter(d => d !== val);
+            }
+            updateModalDeptTrigger();
+            updateModalDeptSelectAllState();
+            onModalDeptSelectionChanged();
+        }
+
+        function toggleAllModalDepts(selectAll) {
+            const matchingEmps = modalSelectedBranches.length > 0 ? 
+                platformStaffEmployees.filter(e => modalSelectedBranches.includes(e.branch)) : 
+                platformStaffEmployees;
+            const depts = Array.from(new Set(matchingEmps.map(e => e.dept))).sort();
+            modalSelectedDepts = selectAll ? [...depts] : [];
+            updateModalDeptTrigger();
+            renderModalDeptDropdown();
+            onModalDeptSelectionChanged();
+        }
+
+        function updateModalDeptSelectAllState() {
+            const matchingEmps = modalSelectedBranches.length > 0 ? 
+                platformStaffEmployees.filter(e => modalSelectedBranches.includes(e.branch)) : 
+                platformStaffEmployees;
+            const depts = Array.from(new Set(matchingEmps.map(e => e.dept)));
+            const allCb = document.getElementById('modal-dept-select-all-cb');
+            const allText = document.getElementById('modal-dept-select-all-text');
+            const isAllSelected = depts.length > 0 && depts.every(d => modalSelectedDepts.includes(d));
+
+            if (allCb) allCb.checked = isAllSelected;
+            if (allText) allText.textContent = isAllSelected ? 'Deselect All' : 'Select All';
+        }
+
+        function updateModalDeptTrigger() {
+            const trigger = document.querySelector('#agent-modal-dept-trigger .trigger-label');
+            const hidden = document.getElementById('agent-form-dept');
+            if (hidden) hidden.value = modalSelectedDepts.join(', ');
+
+            if (trigger) {
+                if (modalSelectedDepts.length === 0) {
+                    trigger.textContent = 'Select Department';
+                    trigger.classList.add('placeholder');
+                } else if (modalSelectedDepts.length === 1) {
+                    trigger.textContent = modalSelectedDepts[0];
+                    trigger.classList.remove('placeholder');
+                } else {
+                    trigger.textContent = `${modalSelectedDepts.length} Departments Selected`;
+                    trigger.classList.remove('placeholder');
+                }
+            }
+        }
+
+        function onModalDeptSelectionChanged() {
+            const roleWrapper = document.getElementById('agent-modal-role-details');
+            if (modalSelectedDepts.length > 0) {
+                if (roleWrapper) {
+                    roleWrapper.style.opacity = '1';
+                    roleWrapper.style.pointerEvents = 'auto';
+                }
+            } else {
+                if (roleWrapper) {
+                    roleWrapper.style.opacity = '0.6';
+                    roleWrapper.style.pointerEvents = 'none';
+                }
+            }
+            // Retain valid selected roles
+            const availableRoles = Array.from(new Set(platformStaffEmployees.filter(e => 
+                modalSelectedBranches.includes(e.branch) && modalSelectedDepts.includes(e.dept)
+            ).map(e => e.role)));
+            modalSelectedRoles = modalSelectedRoles.filter(r => availableRoles.includes(r));
+            updateModalRoleTrigger();
+            renderModalRoleDropdown();
+            onModalRoleSelectionChanged();
+        }
+
+        // 3. Role Dropdown Helpers (Multi-select)
+        function renderModalRoleDropdown(filter = '') {
+            const container = document.getElementById('modal-role-options-container');
+            if (!container) return;
+
+            let matchingEmps = platformStaffEmployees;
+            if (modalSelectedBranches.length > 0) matchingEmps = matchingEmps.filter(e => modalSelectedBranches.includes(e.branch));
+            if (modalSelectedDepts.length > 0) matchingEmps = matchingEmps.filter(e => modalSelectedDepts.includes(e.dept));
+
+            const roles = Array.from(new Set(matchingEmps.map(e => e.role))).sort();
+            const filtered = roles.filter(r => !filter || r.toLowerCase().includes(filter.toLowerCase()));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 10px; font-size: 0.75rem; color: #888; text-align: center;">No roles found</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(r => {
+                const isSelected = modalSelectedRoles.includes(r);
+                return `
+                    <label class="modal-select-option ${isSelected ? 'selected' : ''}" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" class="cb-modal-role-item" value="${escapeHtml(r)}" ${isSelected ? 'checked' : ''} onchange="handleModalRoleCheckboxChange(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);">
+                        <span style="font-weight: ${isSelected ? '700' : '500'};">${escapeHtml(r)}</span>
+                    </label>
+                `;
+            }).join('');
+
+            updateModalRoleSelectAllState();
+        }
+
+        function filterModalRoleList(val) {
+            renderModalRoleDropdown(val);
+        }
+
+        function handleModalRoleCheckboxChange(cb) {
+            const val = cb.value;
+            if (cb.checked) {
+                if (!modalSelectedRoles.includes(val)) modalSelectedRoles.push(val);
+            } else {
+                modalSelectedRoles = modalSelectedRoles.filter(r => r !== val);
+            }
+            updateModalRoleTrigger();
+            updateModalRoleSelectAllState();
+            onModalRoleSelectionChanged();
+        }
+
+        function toggleAllModalRoles(selectAll) {
+            let matchingEmps = platformStaffEmployees;
+            if (modalSelectedBranches.length > 0) matchingEmps = matchingEmps.filter(e => modalSelectedBranches.includes(e.branch));
+            if (modalSelectedDepts.length > 0) matchingEmps = matchingEmps.filter(e => modalSelectedDepts.includes(e.dept));
+
+            const roles = Array.from(new Set(matchingEmps.map(e => e.role))).sort();
+            modalSelectedRoles = selectAll ? [...roles] : [];
+            updateModalRoleTrigger();
+            renderModalRoleDropdown();
+            onModalRoleSelectionChanged();
+        }
+
+        function updateModalRoleSelectAllState() {
+            let matchingEmps = platformStaffEmployees;
+            if (modalSelectedBranches.length > 0) matchingEmps = matchingEmps.filter(e => modalSelectedBranches.includes(e.branch));
+            if (modalSelectedDepts.length > 0) matchingEmps = matchingEmps.filter(e => modalSelectedDepts.includes(e.dept));
+
+            const roles = Array.from(new Set(matchingEmps.map(e => e.role)));
+            const allCb = document.getElementById('modal-role-select-all-cb');
+            const allText = document.getElementById('modal-role-select-all-text');
+            const isAllSelected = roles.length > 0 && roles.every(r => modalSelectedRoles.includes(r));
+
+            if (allCb) allCb.checked = isAllSelected;
+            if (allText) allText.textContent = isAllSelected ? 'Deselect All' : 'Select All';
+        }
+
+        function updateModalRoleTrigger() {
+            const trigger = document.querySelector('#agent-modal-role-trigger .trigger-label');
+            const hidden = document.getElementById('agent-form-role');
+            if (hidden) hidden.value = modalSelectedRoles.join(', ');
+
+            if (trigger) {
+                if (modalSelectedRoles.length === 0) {
+                    trigger.textContent = 'Select Role';
+                    trigger.classList.add('placeholder');
+                } else if (modalSelectedRoles.length === 1) {
+                    trigger.textContent = modalSelectedRoles[0];
+                    trigger.classList.remove('placeholder');
+                } else {
+                    trigger.textContent = `${modalSelectedRoles.length} Roles Selected`;
+                    trigger.classList.remove('placeholder');
+                }
+            }
+        }
+
+        function onModalRoleSelectionChanged() {
+            const empWrapper = document.getElementById('agent-modal-emp-details');
+            if (modalSelectedRoles.length > 0) {
+                if (empWrapper) {
+                    empWrapper.style.opacity = '1';
+                    empWrapper.style.pointerEvents = 'auto';
+                }
+            } else {
+                if (empWrapper) {
+                    empWrapper.style.opacity = '0.6';
+                    empWrapper.style.pointerEvents = 'none';
+                }
+            }
+
+            // Retain valid selected employee IDs
+            const matchingEmps = platformStaffEmployees.filter(e => 
+                modalSelectedBranches.includes(e.branch) && 
+                modalSelectedDepts.includes(e.dept) && 
+                modalSelectedRoles.includes(e.role)
+            );
+            const validEmpIds = matchingEmps.map(e => e.id);
+            modalSelectedEmpIds = modalSelectedEmpIds.filter(id => validEmpIds.includes(id));
+            updateModalEmpTrigger();
+            renderModalEmpDropdown();
+        }
+
+        // 4. Employee Name Dropdown Helpers (Multi-select matching Branch + Dept + Role)
+        function renderModalEmpDropdown(filter = '') {
+            const container = document.getElementById('modal-emp-options-container');
+            if (!container) return;
+
+            if (modalSelectedBranches.length === 0 || modalSelectedDepts.length === 0 || modalSelectedRoles.length === 0) {
+                container.innerHTML = `<div style="padding: 10px; font-size: 0.75rem; color: #888; text-align: center;">Select branch, department, and role first</div>`;
+                return;
+            }
+
+            const matchingEmps = platformStaffEmployees.filter(e => 
+                modalSelectedBranches.includes(e.branch) && 
+                modalSelectedDepts.includes(e.dept) && 
+                modalSelectedRoles.includes(e.role)
+            );
+
+            const filtered = matchingEmps.filter(e => 
+                !filter || e.name.toLowerCase().includes(filter.toLowerCase()) || e.id.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 10px; font-size: 0.75rem; color: #888; text-align: center;">No matching employees found.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(emp => {
+                const isSelected = modalSelectedEmpIds.includes(emp.id);
+                return `
+                    <label class="modal-select-option ${isSelected ? 'selected' : ''}" style="cursor: pointer; display: flex; align-items: center; justify-content: flex-start; gap: 8px; text-align: left;">
+                        <input type="checkbox" class="cb-modal-emp-item" value="${escapeHtml(emp.id)}" ${isSelected ? 'checked' : ''} onchange="handleModalEmpCheckboxChange(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); flex-shrink: 0;">
+                        <div style="text-align: left; display: flex; align-items: center; gap: 6px;">
+                            <span style="font-weight: ${isSelected ? '700' : '600'}; font-size: 0.8125rem;">${escapeHtml(emp.name)}</span>
+                            <span style="font-size: 0.6875rem; color: #64748b;">(${escapeHtml(emp.id)})</span>
+                            <span style="font-size: 0.6875rem; color: #94a3b8; margin-left: 4px;">• ${escapeHtml(emp.branch)}</span>
+                        </div>
+                    </label>
+                `;
+            }).join('');
+
+            updateModalEmpSelectAllState();
+        }
+
+        function filterModalEmpList(val) {
+            renderModalEmpDropdown(val);
+        }
+
+        function handleModalEmpCheckboxChange(cb) {
+            const id = cb.value;
+            if (cb.checked) {
+                if (!modalSelectedEmpIds.includes(id)) modalSelectedEmpIds.push(id);
+            } else {
+                modalSelectedEmpIds = modalSelectedEmpIds.filter(eId => eId !== id);
+            }
+            updateModalEmpTrigger();
+            updateModalEmpSelectAllState();
+            document.getElementById('agent-form-error').style.display = 'none';
+        }
+
+        function toggleAllModalEmps(selectAll) {
+            const matchingEmps = platformStaffEmployees.filter(e => 
+                modalSelectedBranches.includes(e.branch) && 
+                modalSelectedDepts.includes(e.dept) && 
+                modalSelectedRoles.includes(e.role)
+            );
+            modalSelectedEmpIds = selectAll ? matchingEmps.map(e => e.id) : [];
+            updateModalEmpTrigger();
+            renderModalEmpDropdown();
+            document.getElementById('agent-form-error').style.display = 'none';
+        }
+
+        function updateModalEmpSelectAllState() {
+            const matchingEmps = platformStaffEmployees.filter(e => 
+                modalSelectedBranches.includes(e.branch) && 
+                modalSelectedDepts.includes(e.dept) && 
+                modalSelectedRoles.includes(e.role)
+            );
+            const allCb = document.getElementById('modal-emp-select-all-cb');
+            const allText = document.getElementById('modal-emp-select-all-text');
+            const isAllSelected = matchingEmps.length > 0 && matchingEmps.every(e => modalSelectedEmpIds.includes(e.id));
+
+            if (allCb) allCb.checked = isAllSelected;
+            if (allText) allText.textContent = isAllSelected ? 'Deselect All' : 'Select All';
+        }
+
+        function updateModalEmpTrigger() {
+            const trigger = document.querySelector('#agent-modal-emp-trigger .trigger-label');
+            const hiddenId = document.getElementById('agent-form-emp-id');
+            const hiddenName = document.getElementById('agent-form-name');
+
+            const selectedEmps = platformStaffEmployees.filter(e => modalSelectedEmpIds.includes(e.id));
+
+            if (hiddenId) hiddenId.value = modalSelectedEmpIds.join(',');
+            if (hiddenName) hiddenName.value = selectedEmps.map(e => e.name).join(', ');
+
+            if (trigger) {
+                if (selectedEmps.length === 0) {
+                    trigger.textContent = 'Select Employee';
+                    trigger.classList.add('placeholder');
+                } else if (selectedEmps.length === 1) {
+                    trigger.textContent = selectedEmps[0].name;
+                    trigger.classList.remove('placeholder');
+                } else {
+                    trigger.textContent = `${selectedEmps.length} Employees Selected`;
+                    trigger.classList.remove('placeholder');
+                }
+            }
+        }
+
+        // ==========================================================================
+        // Modal Open / Edit / Save
+        // ==========================================================================
+
+        function openAddAgentModal() {
+            document.getElementById('agent-modal-title').textContent = "Add Agent / Employee";
+            document.getElementById('agent-form-id').value = "";
+            document.getElementById('agent-form-error').style.display = 'none';
+
+            // Reset Selection States
+            modalSelectedBranches = [];
+            modalSelectedDepts = [];
+            modalSelectedRoles = [];
+            modalSelectedEmpIds = [];
+
+            updateModalBranchTrigger();
+            renderModalBranchDropdown();
+
+            // Disable Downstream initially
+            const deptWrapper = document.getElementById('agent-modal-dept-details');
+            if (deptWrapper) {
+                deptWrapper.style.opacity = '0.6';
+                deptWrapper.style.pointerEvents = 'none';
+            }
+            updateModalDeptTrigger();
+
+            const roleWrapper = document.getElementById('agent-modal-role-details');
+            if (roleWrapper) {
+                roleWrapper.style.opacity = '0.6';
+                roleWrapper.style.pointerEvents = 'none';
+            }
+            updateModalRoleTrigger();
+
+            const empWrapper = document.getElementById('agent-modal-emp-details');
+            if (empWrapper) {
+                empWrapper.style.opacity = '0.6';
+                empWrapper.style.pointerEvents = 'none';
+            }
+            updateModalEmpTrigger();
+
+            document.getElementById('overlay-agent-form').style.display = 'flex';
+        }
+
+        function openEditAgentModal(agentId) {
+            const agent = agentsMaster.find(a => a.id === agentId);
+            if (!agent) return;
+
+            document.getElementById('agent-modal-title').textContent = "Edit Agent / Employee";
+            document.getElementById('agent-form-id').value = agent.id;
+            document.getElementById('agent-form-error').style.display = 'none';
+
+            // Set Single Edit Item
+            modalSelectedBranches = [agent.branch || "Bengaluru"];
+            modalSelectedDepts = [agent.dept || "Customer Support"];
+            modalSelectedRoles = [agent.role || "Customer Care Executive"];
+
+            const matchedStaff = platformStaffEmployees.find(e => e.name === agent.name && e.branch === agent.branch) || 
+                                 platformStaffEmployees.find(e => e.name === agent.name) || 
+                                 { id: 'EMP001', name: agent.name };
+
+            modalSelectedEmpIds = [matchedStaff.id];
+
+            updateModalBranchTrigger();
+            renderModalBranchDropdown();
+
+            const deptWrapper = document.getElementById('agent-modal-dept-details');
+            if (deptWrapper) {
+                deptWrapper.style.opacity = '1';
+                deptWrapper.style.pointerEvents = 'auto';
+            }
+            updateModalDeptTrigger();
+            renderModalDeptDropdown();
+
+            const roleWrapper = document.getElementById('agent-modal-role-details');
+            if (roleWrapper) {
+                roleWrapper.style.opacity = '1';
+                roleWrapper.style.pointerEvents = 'auto';
+            }
+            updateModalRoleTrigger();
+            renderModalRoleDropdown();
+
+            const empWrapper = document.getElementById('agent-modal-emp-details');
+            if (empWrapper) {
+                empWrapper.style.opacity = '1';
+                empWrapper.style.pointerEvents = 'auto';
+            }
+            updateModalEmpTrigger();
+            renderModalEmpDropdown();
+
+            document.getElementById('overlay-agent-form').style.display = 'flex';
+        }
+
+        function closeAgentModal() {
+            document.getElementById('overlay-agent-form').style.display = 'none';
+        }
+
+        function handleSaveAgent(e) {
+            e.preventDefault();
+            const id = document.getElementById('agent-form-id').value;
+            const errorDiv = document.getElementById('agent-form-error');
+
+            if (modalSelectedBranches.length === 0 || modalSelectedDepts.length === 0 || modalSelectedRoles.length === 0 || modalSelectedEmpIds.length === 0) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Please select at least one Branch, Department, Role, and Employee.';
+                    errorDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            const selectedStaffList = platformStaffEmployees.filter(e => modalSelectedEmpIds.includes(e.id));
+
+            if (id) {
+                // Edit single agent mapping
+                const singleStaff = selectedStaffList[0];
+                const index = agentsMaster.findIndex(a => a.id === id);
+                if (index !== -1 && singleStaff) {
+                    agentsMaster[index] = { 
+                        ...agentsMaster[index], 
+                        name: singleStaff.name, 
+                        branch: singleStaff.branch, 
+                        dept: singleStaff.dept, 
+                        role: singleStaff.role,
+                        email: singleStaff.email || agentsMaster[index].email,
+                        phone: singleStaff.phone || agentsMaster[index].phone
+                    };
+                }
+            } else {
+                // Add one or multiple agent mappings
+                let addedCount = 0;
+                selectedStaffList.forEach(staff => {
+                    const isDuplicate = agentsMaster.some(a => a.name.toLowerCase() === staff.name.toLowerCase() && a.branch === staff.branch);
+                    if (!isDuplicate) {
+                        const newId = "agt-" + (Date.now() + Math.floor(Math.random() * 1000));
+                        agentsMaster.unshift({ 
+                            id: newId, 
+                            name: staff.name, 
+                            callingMode: "App",
+                            ext: "", 
+                            branch: staff.branch, 
+                            dept: staff.dept, 
+                            role: staff.role, 
+                            availability: "Available", 
+                            status: "Active",
+                            email: staff.email || `${staff.name.toLowerCase().replace(/\s+/g, '.')}@exelon.com`,
+                            phone: staff.phone || '+91 98000 00000'
+                        });
+                        addedCount++;
+                    }
+                });
+
+                if (addedCount === 0 && selectedStaffList.length > 0) {
+                    if (errorDiv) {
+                        errorDiv.textContent = 'The selected employee(s) are already mapped as agents in their respective branches.';
+                        errorDiv.style.display = 'block';
+                    }
+                    return;
+                }
+            }
+
+            localStorage.setItem('ccm_agents_master_v2', JSON.stringify(agentsMaster));
+            closeAgentModal();
+            renderAgentsTable();
+            updateStats();
+        }
+
+        function openDeleteAgentModal(id, name) {
+            document.getElementById('delete-agent-id').value = id;
+            document.getElementById('delete-agent-name-text').textContent = name;
+            document.getElementById('overlay-delete-agent').style.display = 'flex';
+        }
+
+        function closeDeleteAgentModal() {
+            document.getElementById('overlay-delete-agent').style.display = 'none';
+        }
+
+        function confirmDeleteAgent() {
+            const id = document.getElementById('delete-agent-id').value;
+            agentsMaster = agentsMaster.filter(a => a.id !== id);
+            localStorage.setItem('ccm_agents_master_v2', JSON.stringify(agentsMaster));
+
+            // Also clean up any queues containing this agent
+            let queues = getQueuesFromStorage();
+            let queuesModified = false;
+            queues.forEach(q => {
+                if (q.agentIds && q.agentIds.includes(id)) {
+                    q.agentIds = q.agentIds.filter(agentId => agentId !== id);
+                    q.agentCount = q.agentIds.length;
+                    queuesModified = true;
+                }
+            });
+            if (queuesModified) {
+                localStorage.setItem('ccm_queues_data_v2', JSON.stringify(queues));
+            }
+
+            closeDeleteAgentModal();
+            renderAgentsTable();
+            updateStats();
+        }
+
+        // Global click-outside listener to close details dropdowns cleanly
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('details.custom-select-wrapper') && !e.target.closest('details.modal-select-wrapper')) {
+                document.querySelectorAll('details.custom-select-wrapper[open], details.modal-select-wrapper[open]').forEach(el => {
+                    el.removeAttribute('open');
+                });
+            }
+        });
+
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAgentsTable();
+            updateStats();
+            renderModalBranchDropdown();
+            renderModalDeptDropdown();
+            renderModalRoleDropdown();
+            renderModalEmpDropdown();
+        });
+    </script>
+</body>
+</html>

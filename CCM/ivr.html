@@ -1,0 +1,1134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVR — Exelon Logistics ERP</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- CCM Specific Stylesheet -->
+    <link rel="stylesheet" href="ccm.css">
+    <style>
+        /* Audio Player & Upload Components for IVR */
+        .audio-upload-box {
+            border: 1.5px dashed var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 14px 16px;
+            background-color: var(--color-bg-light);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .audio-upload-box:hover {
+            border-color: var(--color-primary);
+            background-color: rgba(37, 99, 235, 0.04);
+        }
+        .audio-player-card {
+            background-color: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .audio-file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+        .audio-file-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .audio-filename {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #111;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .audio-filesub {
+            font-size: 0.6875rem;
+            color: #6b7280;
+            margin-top: 1px;
+        }
+        .audio-controls-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .btn-audio-control {
+            height: 28px;
+            padding: 0 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            background: var(--color-white);
+            color: #1f2937;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-audio-control:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        .btn-audio-control.playing {
+            background: #f1f5f9;
+            color: var(--color-black);
+            border-color: #94a3b8;
+        }
+        .btn-audio-change {
+            height: 28px;
+            padding: 0 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            background: var(--color-white);
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-audio-change:hover {
+            background: #eff6ff;
+            border-color: var(--color-primary);
+        }
+        .btn-audio-remove {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            background: var(--color-white);
+            color: #dc2626;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-audio-remove:hover {
+            background: #fef2f2;
+            border-color: #dc2626;
+        }
+        .audio-transcript-box {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px dashed var(--color-border);
+            font-size: 0.75rem;
+            color: #4b5563;
+            font-style: italic;
+        }
+        /* Table Voice Prompt audio file pill & mini play control */
+        .table-audio-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 2px 8px 2px 6px;
+            background: #f8fafc;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--color-black);
+            max-width: 220px;
+        }
+        .table-audio-pill .audio-name {
+            font-family: monospace;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .btn-table-play {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: 50%;
+            color: var(--color-black);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        .btn-table-play:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+        .btn-table-play.playing {
+            background: #f1f5f9;
+            border-color: #64748b;
+        }
+        .table-audio-empty {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger (Pure CSS) -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- Pure CSS Tab Switchers (Tab 1: Central-number IVR Configuration, Tab 2: LR / Tracking Lookup) -->
+    <input type="radio" name="ivr-tab-selection" id="tab-ivr-config-toggle" class="ccm-tab-toggle" checked>
+    <input type="radio" name="ivr-tab-selection" id="tab-ivr-lookup-toggle" class="ccm-tab-toggle">
+
+    <!-- Pure CSS State Switchers for Tab 1 IVR Menu (Default: Configured State with Table) -->
+    <input type="radio" name="ivr-menu-state" id="ivr-menu-state-empty" class="ccm-ivr-state-toggle">
+    <input type="radio" name="ivr-menu-state" id="ivr-menu-state-configured" class="ccm-ivr-state-toggle" checked>
+
+    <!-- Pure CSS Modal: Add IVR -->
+    <input type="checkbox" id="modal-add-ivr-option" class="ccm-modal-toggle">
+    <div class="modal-overlay" id="overlay-add-ivr-option">
+        <div class="modal-content" style="width: 420px;">
+            <label for="modal-add-ivr-option" class="modal-close-label" title="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-title">Add IVR</h3>
+            <p class="modal-desc">Configure an IVR menu option for the central company number.</p>
+            <form id="add-ivr-form" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 0;">
+                <div class="form-group">
+                    <label for="new-ivr-key">DTMF Key *</label>
+                    <input type="text" id="new-ivr-key" placeholder="e.g. 1" style="background-color: var(--color-white); color: #111; font-weight: 700; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); height: 32px; padding: 0 10px; font-size: 0.8125rem;">
+                </div>
+                <div class="form-group">
+                    <label for="add-ivr-menu-name">Menu Name *</label>
+                    <input type="text" id="add-ivr-menu-name" placeholder="e.g. Shipment Tracking" style="background-color: var(--color-white); color: #111; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); height: 32px; padding: 0 10px; font-size: 0.8125rem;">
+                </div>
+
+                <!-- Optional Voice Prompt Audio Field -->
+                <div class="form-group">
+                    <label style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Voice Prompt</span>
+                        <span style="font-size: 0.6875rem; color: #888; font-weight: normal;">Optional</span>
+                    </label>
+                    <div id="add-prompt-empty-state" class="audio-upload-box" onclick="document.getElementById('add-prompt-file-input').click()">
+                        <input type="file" id="add-prompt-file-input" accept="audio/*,.mp3,.wav,.ogg" style="display: none;" onchange="handleAddPromptUpload(this)">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #4b5563;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span style="font-weight: 600; font-size: 0.75rem; color: #1f2937;">Upload Audio</span>
+                            <span style="font-size: 0.6875rem; color: #6b7280;">(MP3, WAV up to 10MB)</span>
+                        </div>
+                    </div>
+                    <div id="add-prompt-preview-state" class="audio-player-card" style="display: none;">
+                        <div class="audio-file-info">
+                            <div class="audio-file-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            </div>
+                            <div style="min-width: 0; flex: 1;">
+                                <div class="audio-filename" id="add-prompt-filename">shipment-status-prompt.mp3</div>
+                                <div class="audio-filesub">Voice Prompt Audio &bull; 0:04</div>
+                            </div>
+                            <div class="audio-controls-group">
+                                <button type="button" class="btn-audio-control" onclick="toggleAudioPreview('add-prompt', this)" title="Play / Preview">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                    <span>Play</span>
+                                </button>
+                                <button type="button" class="btn-audio-change" onclick="document.getElementById('add-prompt-file-input').click()" title="Change Audio">
+                                    Change
+                                </button>
+                                <button type="button" class="btn-audio-remove" onclick="removeAddPromptAudio()" title="Remove Audio">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Destination *</label>
+                    <details class="custom-select-wrapper" id="add-ivr-dest-select">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder" id="add-ivr-dest-selected-label">Select Destination</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option" onclick="selectAddIvrDest('LR/Tracking Self-Service')">LR/Tracking Self-Service</label>
+                            <label class="custom-option" onclick="selectAddIvrDest('Central Support Team')">Central Support Team</label>
+                            <label class="custom-option" onclick="selectAddIvrDest('Bengaluru Branch')">Bengaluru Branch</label>
+                            <label class="custom-option" onclick="selectAddIvrDest('Mumbai Hub')">Mumbai Hub</label>
+                            <label class="custom-option" onclick="selectAddIvrDest('Hyderabad Branch')">Hyderabad Branch</label>
+                        </div>
+                    </details>
+                </div>
+                <div class="modal-actions">
+                    <label for="modal-add-ivr-option" class="btn-secondary" style="cursor: pointer;">Cancel</label>
+                    <label for="ivr-menu-state-configured" class="btn-primary" style="cursor: pointer;" onclick="document.getElementById('modal-add-ivr-option').checked = false;">Save</label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pure CSS Modal: Edit IVR -->
+    <input type="checkbox" id="modal-edit-ivr-option" class="ccm-modal-toggle">
+    <div class="modal-overlay" id="overlay-edit-ivr-option">
+        <div class="modal-content" style="width: 420px;">
+            <label for="modal-edit-ivr-option" class="modal-close-label" title="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-title">Edit IVR</h3>
+            <p class="modal-desc">Update the configured IVR menu option.</p>
+            <form id="edit-ivr-form" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 0;">
+                <div class="form-group">
+                    <label for="edit-ivr-key">DTMF Key *</label>
+                    <input type="text" id="edit-ivr-key" value="1" style="background-color: var(--color-white); color: #111; font-weight: 700; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); height: 32px; padding: 0 10px; font-size: 0.8125rem;">
+                </div>
+                <div class="form-group">
+                    <label for="edit-ivr-menu-name">Menu Name *</label>
+                    <input type="text" id="edit-ivr-menu-name" value="Shipment Tracking" style="background-color: var(--color-white); color: #111; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); height: 32px; padding: 0 10px; font-size: 0.8125rem;">
+                </div>
+
+                <!-- Optional Voice Prompt Audio Field -->
+                <div class="form-group">
+                    <label style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Voice Prompt</span>
+                        <span style="font-size: 0.6875rem; color: #888; font-weight: normal;">Optional</span>
+                    </label>
+                    <div id="edit-prompt-empty-state" class="audio-upload-box" style="display: none;" onclick="document.getElementById('edit-prompt-file-input').click()">
+                        <input type="file" id="edit-prompt-file-input" accept="audio/*,.mp3,.wav,.ogg" style="display: none;" onchange="handleEditPromptUpload(this)">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #4b5563;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span style="font-weight: 600; font-size: 0.75rem; color: #1f2937;">Upload Audio</span>
+                            <span style="font-size: 0.6875rem; color: #6b7280;">(MP3, WAV up to 10MB)</span>
+                        </div>
+                    </div>
+                    <div id="edit-prompt-preview-state" class="audio-player-card">
+                        <input type="file" id="edit-prompt-file-input-alt" accept="audio/*,.mp3,.wav,.ogg" style="display: none;" onchange="handleEditPromptUpload(this)">
+                        <div class="audio-file-info">
+                            <div class="audio-file-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                            </div>
+                            <div style="min-width: 0; flex: 1;">
+                                <div class="audio-filename" id="edit-prompt-filename">shipment-status-prompt.mp3</div>
+                                <div class="audio-filesub">Voice Prompt Audio &bull; 0:04</div>
+                            </div>
+                            <div class="audio-controls-group">
+                                <button type="button" class="btn-audio-control" onclick="toggleAudioPreview('edit-prompt', this)" title="Play / Preview">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                    <span>Play</span>
+                                </button>
+                                <button type="button" class="btn-audio-change" onclick="document.getElementById('edit-prompt-file-input').click();" title="Change Audio">
+                                    Change
+                                </button>
+                                <button type="button" class="btn-audio-remove" onclick="removeEditPromptAudio()" title="Remove Audio">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Destination *</label>
+                    <details class="custom-select-wrapper" id="edit-ivr-dest-select">
+                        <summary class="custom-select-trigger">
+                            <span id="edit-ivr-dest-selected-label" style="font-weight: 600; color: #111;">LR/Tracking Self-Service</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option" onclick="selectEditIvrDest('LR/Tracking Self-Service')">LR/Tracking Self-Service</label>
+                            <label class="custom-option" onclick="selectEditIvrDest('Central Support Team')">Central Support Team</label>
+                            <label class="custom-option" onclick="selectEditIvrDest('Bengaluru Branch')">Bengaluru Branch</label>
+                            <label class="custom-option" onclick="selectEditIvrDest('Mumbai Hub')">Mumbai Hub</label>
+                            <label class="custom-option" onclick="selectEditIvrDest('Hyderabad Branch')">Hyderabad Branch</label>
+                        </div>
+                    </details>
+                </div>
+                <div class="modal-actions">
+                    <label for="modal-edit-ivr-option" class="btn-secondary" style="cursor: pointer;">Cancel</label>
+                    <label for="ivr-menu-state-configured" class="btn-primary" style="cursor: pointer;" onclick="document.getElementById('modal-edit-ivr-option').checked = false;">Save</label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pure CSS Modal: Delete IVR (Matching HRMS / CCM Standard) -->
+    <input type="checkbox" id="modal-delete-ivr-option" class="ccm-modal-toggle">
+    <div class="modal-overlay" id="overlay-delete-ivr-option">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <label for="modal-delete-ivr-option" class="modal-close-label" title="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete IVR</h3>
+            <p class="modal-desc">Are you sure you want to delete this IVR configuration from the menu?</p>
+            <div class="modal-actions">
+                <label for="modal-delete-ivr-option" class="btn-secondary" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;">Cancel</label>
+                <label for="ivr-menu-state-empty" class="btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="document.getElementById('modal-delete-ivr-option').checked = false;">Delete</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Admin Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <!-- Headset / Telephony Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads -->
+                    <a href="leads.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Leads
+                    </a>
+                
+                    <!-- Module 9: Tickets -->
+                    <a href="tickets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring -->
+                    <a href="live-monitoring.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND -->
+                    <a href="blacklist-dnd.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                                    <!-- Module 14: Settings -->
+                    <a href="settings.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">IVR</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="main-scroll-area">
+                
+                <!-- 1. Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">IVR</h1>
+                        <p class="page-subtitle">Configure central-number IVR and shipment self-service.</p>
+                    </div>
+                </div>
+
+                <!-- 2. Two Tabs (Pure CSS Tab Navigation) -->
+                <div class="ccm-tabs-container">
+                    <label for="tab-ivr-config-toggle" class="ccm-tab-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                        Central-number IVR Configuration
+                    </label>
+                    <label for="tab-ivr-lookup-toggle" class="ccm-tab-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        LR / Tracking Number Status Lookup
+                    </label>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════════
+                     TAB 1: CENTRAL-NUMBER IVR CONFIGURATION (CCM-6)
+                     ═══════════════════════════════════════════════════════════════ -->
+                <div id="tab-content-config" class="ccm-tab-content">
+                    
+                    <!-- IVR Configuration Card -->
+                    <div class="ccm-page-section">
+                        <div class="ccm-central-box">
+                            <div class="ccm-central-box-header">
+                                <div class="ccm-central-title-group">
+                                    <h2 class="ccm-central-title">IVR Configuration</h2>
+                                    <span class="ccm-central-subtitle">Configure the interactive voice response menu options for the central company number.</span>
+                                </div>
+                                <div class="ccm-field-item" style="flex-direction: row; align-items: center; gap: 8px;">
+                                    <span class="ccm-field-label" style="margin: 0;">Status:</span>
+                                    <label class="status-toggle" title="Toggle IVR Status">
+                                        <input type="checkbox" checked>
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Welcome Message Configuration Section (Above IVR Menu Table) -->
+                            <div style="margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--color-border);">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <div>
+                                        <h3 style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin: 0 0 2px 0;">Welcome Message</h3>
+                                        <p style="font-size: 0.6875rem; color: #666; margin: 0;">Configure the recorded greeting played to callers when connecting to the central number.</p>
+                                    </div>
+                                    <span style="font-size: 0.6875rem; color: #059669; background: #ecfdf5; padding: 2px 8px; border-radius: 12px; font-weight: 600; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
+                                        <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span> Active Greeting
+                                    </span>
+                                </div>
+
+                                <!-- Welcome Message Audio Configuration Card -->
+                                <div id="welcome-message-empty-state" class="audio-upload-box" style="display: flex;" onclick="document.getElementById('welcome-audio-file-input').click()">
+                                    <input type="file" id="welcome-audio-file-input" accept="audio/*,.mp3,.wav,.ogg" style="display: none;" onchange="handleWelcomeAudioUpload(this)">
+                                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #4b5563;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                        <span style="font-weight: 600; font-size: 0.8125rem; color: #1f2937;">Upload Audio</span>
+                                        <span style="font-size: 0.75rem; color: #6b7280;">(MP3, WAV up to 10MB)</span>
+                                    </div>
+                                </div>
+
+                                <div id="welcome-message-configured-state" class="audio-player-card" style="display: none;">
+                                    <input type="file" id="welcome-audio-file-input-alt" accept="audio/*,.mp3,.wav,.ogg" style="display: none;" onchange="handleWelcomeAudioUpload(this)">
+                                    <div class="audio-file-info">
+                                        <div class="audio-file-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                                        </div>
+                                        <div style="min-width: 0; flex: 1;">
+                                            <div class="audio-filename" id="welcome-audio-filename">welcome-greeting-central.mp3</div>
+                                            <div class="audio-filesub">Main Greeting Audio &bull; 0:08 &bull; 192 kbps</div>
+                                        </div>
+                                        <div class="audio-controls-group">
+                                            <button type="button" class="btn-audio-control" onclick="toggleAudioPreview('welcome', this)" title="Play / Preview">
+                                                <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                <span>Play</span>
+                                            </button>
+                                            <button type="button" class="btn-audio-change" onclick="document.getElementById('welcome-audio-file-input').click()" title="Change Audio">
+                                                Change Audio
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="audio-transcript-box">
+                                    <span style="font-weight: 600; color: #374151; font-style: normal;">Greeting Transcript:</span> "Welcome to ABC Logistics. Please select from the following options."
+                                </div>
+                            </div>
+
+                            <!-- Initial Empty State View -->
+                            <div id="ivr-menu-empty-view">
+                                <div class="ccm-central-empty-content">
+                                    <div class="ccm-central-empty-text">
+                                        <span class="ccm-central-empty-primary">No IVR menu options configured.</span>
+                                        <span class="ccm-central-empty-secondary">Configure IVR menu options for the central company number.</span>
+                                    </div>
+                                    <label for="modal-add-ivr-option" class="btn-primary" style="cursor: pointer; height: 32px; padding: 0 14px; font-size: 0.8125rem;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        Add IVR
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Configured State View (Compact Table Structure) -->
+                            <div id="ivr-menu-configured-view">
+                                <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+                                    <label for="modal-add-ivr-option" class="btn-primary" style="cursor: pointer; height: 30px; padding: 0 12px; font-size: 0.75rem;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        Add IVR
+                                    </label>
+                                </div>
+                                <div class="table-container">
+                                    <table class="ccm-branches-table ivr-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;" title="Drag & Reorder">
+                                                    <span style="opacity: 0.5;">::</span>
+                                                </th>
+                                                <th class="sortable">
+                                                    <div class="sort-header-content">
+                                                        Key
+                                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                                    </div>
+                                                </th>
+                                                <th class="sortable">
+                                                    <div class="sort-header-content">
+                                                        Menu Option
+                                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                                    </div>
+                                                </th>
+                                                <th class="sortable">
+                                                    <div class="sort-header-content">
+                                                        Action / Destination
+                                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                                    </div>
+                                                </th>
+                                                <th class="sortable">
+                                                    <div class="sort-header-content">
+                                                        Voice Prompt
+                                                        <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                                    </div>
+                                                </th>
+                                                <th style="text-align: center;">Status</th>
+                                                <th style="text-align: right;">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr draggable="true">
+                                                <td style="text-align: center;">
+                                                    <span class="ivr-drag-handle" title="Drag to reorder">
+                                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="1.5" fill="currentColor"></circle><circle cx="15" cy="6" r="1.5" fill="currentColor"></circle><circle cx="9" cy="12" r="1.5" fill="currentColor"></circle><circle cx="15" cy="12" r="1.5" fill="currentColor"></circle><circle cx="9" cy="18" r="1.5" fill="currentColor"></circle><circle cx="15" cy="18" r="1.5" fill="currentColor"></circle></svg>
+                                                    </span>
+                                                </td>
+                                                <td style="font-weight: 700;">1</td>
+                                                <td>Shipment Tracking</td>
+                                                <td>LR/Tracking Self-Service</td>
+                                                <td>
+                                                    <div class="table-audio-pill">
+                                                        <button type="button" class="btn-table-play" onclick="toggleAudioPreview('shipment-status', this)" title="Play / Preview">
+                                                            <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                        </button>
+                                                        <span class="audio-name">shipment-status.mp3</span>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <label class="status-toggle" title="Toggle Status" style="display: inline-flex;">
+                                                        <input type="checkbox" checked>
+                                                        <div class="toggle-switch"></div>
+                                                    </label>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <div class="ccm-action-icons">
+                                                        <label for="modal-edit-ivr-option" class="ccm-icon-btn" title="Edit">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                        </label>
+                                                        <label for="modal-delete-ivr-option" class="ccm-icon-btn" title="Delete">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr draggable="true">
+                                                <td style="text-align: center;">
+                                                    <span class="ivr-drag-handle" title="Drag to reorder">
+                                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="1.5" fill="currentColor"></circle><circle cx="15" cy="6" r="1.5" fill="currentColor"></circle><circle cx="9" cy="12" r="1.5" fill="currentColor"></circle><circle cx="15" cy="12" r="1.5" fill="currentColor"></circle><circle cx="9" cy="18" r="1.5" fill="currentColor"></circle><circle cx="15" cy="18" r="1.5" fill="currentColor"></circle></svg>
+                                                    </span>
+                                                </td>
+                                                <td style="font-weight: 700;">2</td>
+                                                <td>Customer Support</td>
+                                                <td>Central Support Team</td>
+                                                <td>
+                                                    <div class="table-audio-pill">
+                                                        <button type="button" class="btn-table-play" onclick="toggleAudioPreview('customer-support', this)" title="Play / Preview">
+                                                            <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                        </button>
+                                                        <span class="audio-name">customer-support.mp3</span>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <label class="status-toggle" title="Toggle Status" style="display: inline-flex;">
+                                                        <input type="checkbox" checked>
+                                                        <div class="toggle-switch"></div>
+                                                    </label>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <div class="ccm-action-icons">
+                                                        <label for="modal-edit-ivr-option" class="ccm-icon-btn" title="Edit">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                        </label>
+                                                        <label for="modal-delete-ivr-option" class="ccm-icon-btn" title="Delete">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr draggable="true">
+                                                <td style="text-align: center;">
+                                                    <span class="ivr-drag-handle" title="Drag to reorder">
+                                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="1.5" fill="currentColor"></circle><circle cx="15" cy="6" r="1.5" fill="currentColor"></circle><circle cx="9" cy="12" r="1.5" fill="currentColor"></circle><circle cx="15" cy="12" r="1.5" fill="currentColor"></circle><circle cx="9" cy="18" r="1.5" fill="currentColor"></circle><circle cx="15" cy="18" r="1.5" fill="currentColor"></circle></svg>
+                                                    </span>
+                                                </td>
+                                                <td style="font-weight: 700;">3</td>
+                                                <td>Branch Support</td>
+                                                <td>Bengaluru Branch</td>
+                                                <td>
+                                                    <div class="table-audio-pill">
+                                                        <button type="button" class="btn-table-play" onclick="toggleAudioPreview('branch-assistance', this)" title="Play / Preview">
+                                                            <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                                        </button>
+                                                        <span class="audio-name">branch-assistance.mp3</span>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <label class="status-toggle" title="Toggle Status" style="display: inline-flex;">
+                                                        <input type="checkbox" checked>
+                                                        <div class="toggle-switch"></div>
+                                                    </label>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <div class="ccm-action-icons">
+                                                        <label for="modal-edit-ivr-option" class="ccm-icon-btn" title="Edit">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                        </label>
+                                                        <label for="modal-delete-ivr-option" class="ccm-icon-btn" title="Delete">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════════════════
+                     TAB 2: LR / TRACKING NUMBER STATUS LOOKUP (CCM-8)
+                     ═══════════════════════════════════════════════════════════════ -->
+                <div id="tab-content-lookup" class="ccm-tab-content">
+                    
+                    <!-- Shipment Self-Service Card -->
+                    <div class="ccm-page-section">
+                        <div class="ccm-central-box">
+                            <div class="ccm-central-box-header">
+                                <div class="ccm-central-title-group">
+                                    <h2 class="ccm-central-title">Shipment Self-Service</h2>
+                                    <span class="ccm-central-subtitle">Automated shipment status lookup via IVR without requiring an agent.</span>
+                                </div>
+                                <div class="ccm-field-item" style="flex-direction: row; align-items: center; gap: 8px;">
+                                    <span class="ccm-field-label" style="margin: 0;">Status:</span>
+                                    <label class="status-toggle" title="Toggle Self-Service Status">
+                                        <input type="checkbox" checked>
+                                        <div class="toggle-switch"></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Supported Caller Input Methods -->
+                            <div style="margin-bottom: 16px;">
+                                <span class="ccm-field-label" style="display: block; margin-bottom: 6px;">Supported Caller Input Methods</span>
+                                <div class="ivr-input-methods-list">
+                                    <div class="ivr-input-method-item">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8" y2="16"></line><line x1="12" y1="16" x2="12" y2="16"></line><line x1="16" y1="16" x2="16" y2="16"></line></svg>
+                                        Enter LR / Tracking Number (DTMF Keypad Input)
+                                    </div>
+                                    <div class="ivr-input-method-item">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                                        Speak LR / Tracking Number (Voice Recognition Input)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Self-Service Execution Flow -->
+                            <div>
+                                <span class="ccm-field-label" style="display: block; margin-bottom: 6px;">Self-Service Lookup Flow</span>
+                                <div class="ivr-flow-diagram">
+                                    <div class="ivr-flow-step">
+                                        <span class="ivr-flow-step-num">Step 1</span>
+                                        <span class="ivr-flow-step-text">Caller</span>
+                                    </div>
+                                    <div class="ivr-flow-arrow">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </div>
+                                    <div class="ivr-flow-step">
+                                        <span class="ivr-flow-step-num">Step 2</span>
+                                        <span class="ivr-flow-step-text">LR / Tracking Number</span>
+                                    </div>
+                                    <div class="ivr-flow-arrow">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </div>
+                                    <div class="ivr-flow-step">
+                                        <span class="ivr-flow-step-num">Step 3</span>
+                                        <span class="ivr-flow-step-text">Shipment Lookup</span>
+                                    </div>
+                                    <div class="ivr-flow-arrow">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </div>
+                                    <div class="ivr-flow-step">
+                                        <span class="ivr-flow-step-num">Step 4</span>
+                                        <span class="ivr-flow-step-text">Current Shipment Status</span>
+                                    </div>
+                                    <div class="ivr-flow-arrow">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </div>
+                                    <div class="ivr-flow-step">
+                                        <span class="ivr-flow-step-num">Step 5</span>
+                                        <span class="ivr-flow-step-text">Caller Hears Status</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Interactive Scripts for IVR Audio & Options -->
+    <script>
+        // Web Audio synthesized preview chime / speech simulation
+        let activeAudioCtx = null;
+        let activeAudioTimer = null;
+        let activePlayButton = null;
+
+        function playSimulatedAudio(type, buttonEl) {
+            const isMini = buttonEl.classList.contains('btn-table-play');
+            
+            // Stop any currently playing audio
+            if (activeAudioCtx) {
+                try { activeAudioCtx.close(); } catch (e) {}
+                activeAudioCtx = null;
+            }
+            if (activeAudioTimer) {
+                clearTimeout(activeAudioTimer);
+                activeAudioTimer = null;
+            }
+            if (activePlayButton) {
+                const prevIsMini = activePlayButton.classList.contains('btn-table-play');
+                activePlayButton.classList.remove('playing');
+                if (prevIsMini) {
+                    activePlayButton.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+                } else {
+                    activePlayButton.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg><span>Play</span>`;
+                }
+                if (activePlayButton === buttonEl) {
+                    activePlayButton = null;
+                    return; // Toggle off
+                }
+            }
+
+            // Set playing state
+            buttonEl.classList.add('playing');
+            if (isMini) {
+                buttonEl.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+            } else {
+                buttonEl.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg><span>Stop</span>`;
+            }
+            activePlayButton = buttonEl;
+
+            // Generate realistic IVR chime using Web Audio API
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                activeAudioCtx = new AudioContext();
+                
+                const now = activeAudioCtx.currentTime;
+                const osc = activeAudioCtx.createOscillator();
+                const gain = activeAudioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, now); // D5
+                osc.frequency.setValueAtTime(880, now + 0.15); // A5
+                
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+                
+                osc.connect(gain);
+                gain.connect(activeAudioCtx.destination);
+                
+                osc.start(now);
+                osc.stop(now + 1.2);
+            } catch (err) {
+                console.log('Web Audio simulated play:', err);
+            }
+
+            // Reset after duration
+            activeAudioTimer = setTimeout(() => {
+                if (activePlayButton) {
+                    const activeIsMini = activePlayButton.classList.contains('btn-table-play');
+                    activePlayButton.classList.remove('playing');
+                    if (activeIsMini) {
+                        activePlayButton.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+                    } else {
+                        activePlayButton.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg><span>Play</span>`;
+                    }
+                    activePlayButton = null;
+                }
+            }, 3000);
+        }
+
+        function toggleAudioPreview(type, btn) {
+            playSimulatedAudio(type, btn);
+        }
+
+        // Welcome Message Handlers
+        function handleWelcomeAudioUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                document.getElementById('welcome-audio-filename').textContent = file.name;
+                document.getElementById('welcome-message-empty-state').style.display = 'none';
+                document.getElementById('welcome-message-configured-state').style.display = 'flex';
+            }
+        }
+
+        // Add IVR Modal Handlers
+        function selectAddIvrOption(name, destVal, defaultPrompt) {
+            const selectEl = document.getElementById('add-ivr-menu-select');
+            if (selectEl) selectEl.removeAttribute('open');
+            const label = document.getElementById('add-ivr-menu-selected-label');
+            if (label) {
+                label.textContent = name;
+                label.classList.remove('placeholder');
+                label.style.fontWeight = '600';
+                label.style.color = '#111';
+            }
+            if (defaultPrompt) {
+                document.getElementById('add-prompt-filename').textContent = defaultPrompt;
+                document.getElementById('add-prompt-empty-state').style.display = 'none';
+                document.getElementById('add-prompt-preview-state').style.display = 'flex';
+            }
+        }
+
+        function selectAddIvrDest(name) {
+            const selectEl = document.getElementById('add-ivr-dest-select');
+            if (selectEl) selectEl.removeAttribute('open');
+            const label = document.getElementById('add-ivr-dest-selected-label');
+            if (label) {
+                label.textContent = name;
+                label.classList.remove('placeholder');
+                label.style.fontWeight = '600';
+                label.style.color = '#111';
+            }
+        }
+
+        function handleAddPromptUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                document.getElementById('add-prompt-filename').textContent = file.name;
+                document.getElementById('add-prompt-empty-state').style.display = 'none';
+                document.getElementById('add-prompt-preview-state').style.display = 'flex';
+            }
+        }
+
+        function removeAddPromptAudio() {
+            document.getElementById('add-prompt-file-input').value = '';
+            document.getElementById('add-prompt-empty-state').style.display = 'block';
+            document.getElementById('add-prompt-preview-state').style.display = 'none';
+        }
+
+        // Edit IVR Modal Handlers
+        function selectEditIvrOption(name, destVal, defaultPrompt) {
+            const selectEl = document.getElementById('edit-ivr-menu-select');
+            if (selectEl) selectEl.removeAttribute('open');
+            const label = document.getElementById('edit-ivr-menu-selected-label');
+            if (label) {
+                label.textContent = name;
+                label.style.fontWeight = '600';
+                label.style.color = '#111';
+            }
+            if (defaultPrompt) {
+                document.getElementById('edit-prompt-filename').textContent = defaultPrompt;
+                document.getElementById('edit-prompt-empty-state').style.display = 'none';
+                document.getElementById('edit-prompt-preview-state').style.display = 'flex';
+            }
+        }
+
+        function selectEditIvrDest(name) {
+            const selectEl = document.getElementById('edit-ivr-dest-select');
+            if (selectEl) selectEl.removeAttribute('open');
+            const label = document.getElementById('edit-ivr-dest-selected-label');
+            if (label) {
+                label.textContent = name;
+                label.style.fontWeight = '600';
+                label.style.color = '#111';
+            }
+        }
+
+        function handleEditPromptUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                document.getElementById('edit-prompt-filename').textContent = file.name;
+                document.getElementById('edit-prompt-empty-state').style.display = 'none';
+                document.getElementById('edit-prompt-preview-state').style.display = 'flex';
+            }
+        }
+
+        function removeEditPromptAudio() {
+            document.getElementById('edit-prompt-file-input').value = '';
+            document.getElementById('edit-prompt-empty-state').style.display = 'block';
+            document.getElementById('edit-prompt-preview-state').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

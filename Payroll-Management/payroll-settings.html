@@ -256,7 +256,7 @@
                 <nav class="sidebar-nav">
                     <a href="../Staff-Management/index.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                        Staff Master
+                        Employee Master
                     </a>
                     <a href="../Staff-Management/department-master.html">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -496,6 +496,266 @@
                     </div>
                 </div>
 
+                <!-- 5. INCOME TAX / TDS SETTINGS CARD -->
+                <div class="card" style="margin-bottom: 18px; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: var(--color-white); overflow: hidden;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--color-border); background: var(--color-white); flex-wrap: wrap; gap: 12px;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <h3 class="card-title" style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">Income Tax / TDS</h3>
+                                <span style="font-size: 0.6875rem; font-weight: 600; padding: 2px 8px; border-radius: 12px; background: #000; color: #fff;">Statutory TDS</span>
+                            </div>
+                            <p style="margin: 3px 0 0 0; font-size: 0.75rem; color: #666;">Configure annual tax slabs, rebates, standard deductions, and cess for New &amp; Old Tax Regimes.</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <!-- Financial Year Selector -->
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 0.75rem; font-weight: 600; color: #444;">Financial Year:</span>
+                                <select id="tax-fy-select" onchange="changeTaxFY(this.value)" style="height: 30px; font-size: 0.75rem; font-weight: 600; padding: 0 10px; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: #fff; cursor: pointer; outline: none;">
+                                    <option value="2026-2027" selected>FY 2026-27 (AY 2027-28)</option>
+                                    <option value="2025-2026">FY 2025-26 (AY 2026-27)</option>
+                                    <option value="2024-2025">FY 2024-25 (AY 2025-26)</option>
+                                </select>
+                            </div>
+                            <label class="status-toggle" title="Enable / Disable TDS Auto-Deduction">
+                                <input type="checkbox" id="tds-enabled-toggle" checked onchange="toggleTDSSetting(this.checked)">
+                                <div class="toggle-switch"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="card-body" id="tds-settings-body" style="padding: 18px 20px; background: var(--color-white);">
+                        
+                        <!-- Onboarding Notice Banner -->
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 10px 14px; margin-bottom: 18px;">
+                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: #333;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                <span><strong>Regime Selection:</strong> The regime selected by the employee during onboarding (Staff Master) automatically determines which tax slab configuration is applied for monthly TDS calculations.</span>
+                            </div>
+                        </div>
+
+                        <!-- Regime Segmented Tabs -->
+                        <div style="display: flex; gap: 8px; border-bottom: 1px solid var(--color-border); padding-bottom: 12px; margin-bottom: 18px;">
+                            <button type="button" id="tab-regime-new" class="regime-tab-btn active" onclick="switchRegimeView('new')" style="padding: 6px 16px; font-size: 0.8125rem; font-weight: 700; border-radius: 6px; border: 1px solid #000; background: #000; color: #fff; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s ease;">
+                                <span>New Tax Regime</span>
+                                <span style="font-size: 0.6875rem; font-weight: 500; opacity: 0.85;">(Default u/s 115BAC)</span>
+                            </button>
+                            <button type="button" id="tab-regime-old" class="regime-tab-btn" onclick="switchRegimeView('old')" style="padding: 6px 16px; font-size: 0.8125rem; font-weight: 700; border-radius: 6px; border: 1px solid var(--color-border); background: #fff; color: #444; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s ease;">
+                                <span>Old Tax Regime</span>
+                                <span style="font-size: 0.6875rem; font-weight: 500; color: #777;">(With Exemptions &amp; 80C)</span>
+                            </button>
+                        </div>
+
+                        <!-- CONFIGURATION VIEW 1: NEW TAX REGIME -->
+                        <div id="view-regime-new" style="display: block;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <div>
+                                    <h4 style="margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--color-black);">New Tax Regime Slabs &amp; Rates</h4>
+                                    <span style="font-size: 0.75rem; color: #666;">Income tax slabs applicable under Section 115BAC for the selected Financial Year</span>
+                                </div>
+                            </div>
+
+                            <!-- New Regime Slabs Table -->
+                            <div class="table-container" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); margin-bottom: 18px;">
+                                <table class="data-table" style="margin: 0; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="padding-left: 16px;">Annual Income Slab (₹)</th>
+                                            <th>Tax Rate (%)</th>
+                                            <th>Cumulative Base Tax</th>
+                                            <th>Calculation Rule / Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="new-regime-slabs-tbody">
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>Up to ₹4,00,000</strong></td>
+                                            <td><span class="status-badge" style="font-weight:700;">Nil</span></td>
+                                            <td>₹0</td>
+                                            <td style="color:#555; font-size:0.75rem;">No tax applicable up to ₹4,00,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>₹4,00,001 &ndash; ₹8,00,000</strong></td>
+                                            <td><strong>5%</strong></td>
+                                            <td>₹0</td>
+                                            <td style="color:#555; font-size:0.75rem;">5% on the amount above ₹4,00,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>₹8,00,001 &ndash; ₹12,00,000</strong></td>
+                                            <td><strong>10%</strong></td>
+                                            <td>₹20,000</td>
+                                            <td style="color:#555; font-size:0.75rem;">₹20,000 + 10% on the amount above ₹8,00,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>₹12,00,001 &ndash; ₹16,00,000</strong></td>
+                                            <td><strong>15%</strong></td>
+                                            <td>₹60,000</td>
+                                            <td style="color:#555; font-size:0.75rem;">₹60,000 + 15% on the amount above ₹12,00,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>₹16,00,001 &ndash; ₹20,00,000</strong></td>
+                                            <td><strong>20%</strong></td>
+                                            <td>₹1,20,000</td>
+                                            <td style="color:#555; font-size:0.75rem;">₹1,20,000 + 20% on the amount above ₹16,00,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>₹20,00,001 &ndash; ₹24,00,000</strong></td>
+                                            <td><strong>25%</strong></td>
+                                            <td>₹2,00,000</td>
+                                            <td style="color:#555; font-size:0.75rem;">₹2,00,000 + 25% on the amount above ₹20,00,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>Above ₹24,00,000</strong></td>
+                                            <td><strong>30%</strong></td>
+                                            <td>₹3,00,000</td>
+                                            <td style="color:#555; font-size:0.75rem;">₹3,00,000 + 30% on the amount above ₹24,00,000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- New Regime Rules Grid: Standard Deduction, Rebate, Cess, Surcharge -->
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+                                
+                                <!-- Card 1: Standard Deduction -->
+                                <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px; background: var(--color-white);">
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>Standard Deduction</span>
+                                        <span class="status-badge status-active" style="font-size: 0.6875rem;">Auto-applied</span>
+                                    </div>
+                                    <div style="font-size: 1rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px;">₹75,000</div>
+                                    <p style="margin: 0; font-size: 0.6875rem; color: #666; line-height: 1.4;">Flat standard deduction allowed for salaried individuals under New Tax Regime u/s 16(ia).</p>
+                                </div>
+
+                                <!-- Card 2: Section 87A Tax Rebate -->
+                                <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px; background: var(--color-white);">
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>Tax Rebate (u/s 87A)</span>
+                                        <span class="status-badge status-active" style="font-size: 0.6875rem;">Full Rebate</span>
+                                    </div>
+                                    <div style="font-size: 1rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px;">Up to ₹12,75,000 Gross</div>
+                                    <p style="margin: 0; font-size: 0.6875rem; color: #666; line-height: 1.4;">Zero tax payable if taxable income (after standard deduction) is up to ₹12,00,000 (Effective ₹12.75 Lakhs).</p>
+                                </div>
+
+                                <!-- Card 3: Health & Education Cess -->
+                                <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px; background: var(--color-white);">
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>Health &amp; Education Cess</span>
+                                        <span class="status-badge" style="font-size: 0.6875rem;">Mandatory</span>
+                                    </div>
+                                    <div style="font-size: 1rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px;">4% on Total Tax</div>
+                                    <p style="margin: 0; font-size: 0.6875rem; color: #666; line-height: 1.4;">Statutory cess calculated on total computed income tax plus surcharge where applicable.</p>
+                                </div>
+
+                                <!-- Card 4: Surcharge & Marginal Relief -->
+                                <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px; background: var(--color-white);">
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>Surcharge &amp; Marginal Relief</span>
+                                        <span class="status-badge" style="font-size: 0.6875rem;">High Networth</span>
+                                    </div>
+                                    <div style="font-size: 1rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px;">10% &ndash; 25% (Max 25%)</div>
+                                    <p style="margin: 0; font-size: 0.6875rem; color: #666; line-height: 1.4;">&gt;₹50L: 10%, &gt;₹1Cr: 15%, &gt;₹2Cr: 25% with statutory marginal relief protection.</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- CONFIGURATION VIEW 2: OLD TAX REGIME -->
+                        <div id="view-regime-old" style="display: none;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <div>
+                                    <h4 style="margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--color-black);">Old Tax Regime Slabs &amp; Rates (Below 60 Years)</h4>
+                                    <span style="font-size: 0.75rem; color: #666;">Income tax slabs with allowable exemptions (HRA, LTA) and Chapter VI-A deductions</span>
+                                </div>
+                            </div>
+
+                            <!-- Old Regime Slabs Table -->
+                            <div class="table-container" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); margin-bottom: 18px;">
+                                <table class="data-table" style="margin: 0; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="padding-left: 16px;">Annual Income Slab (₹)</th>
+                                            <th>Tax Rate (%)</th>
+                                            <th>Cumulative Base Tax</th>
+                                            <th>Calculation Rule / Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="old-regime-slabs-tbody">
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>Up to ₹2,50,000</strong></td>
+                                            <td><span class="status-badge" style="font-weight:700;">Nil</span></td>
+                                            <td>₹0</td>
+                                            <td style="color:#555; font-size:0.75rem;">No tax applicable up to ₹2,50,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>₹2,50,001 &ndash; ₹5,00,000</strong></td>
+                                            <td><strong>5%</strong></td>
+                                            <td>₹0</td>
+                                            <td style="color:#555; font-size:0.75rem;">5% on the amount above ₹2,50,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>₹5,00,001 &ndash; ₹10,00,000</strong></td>
+                                            <td><strong>20%</strong></td>
+                                            <td>₹12,500</td>
+                                            <td style="color:#555; font-size:0.75rem;">₹12,500 + 20% on the amount above ₹5,00,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 16px;"><strong>Above ₹10,00,000</strong></td>
+                                            <td><strong>30%</strong></td>
+                                            <td>₹1,12,500</td>
+                                            <td style="color:#555; font-size:0.75rem;">₹1,12,500 + 30% on the amount above ₹10,00,000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Old Regime Rules Grid: Standard Deduction, Rebate, 80C Exemptions, Cess, Surcharge -->
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+                                
+                                <!-- Card 1: Standard Deduction -->
+                                <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px; background: var(--color-white);">
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>Standard Deduction</span>
+                                        <span class="status-badge status-active" style="font-size: 0.6875rem;">Auto-applied</span>
+                                    </div>
+                                    <div style="font-size: 1rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px;">₹50,000</div>
+                                    <p style="margin: 0; font-size: 0.6875rem; color: #666; line-height: 1.4;">Flat standard deduction for salaried staff under the Old Tax Regime u/s 16(ia).</p>
+                                </div>
+
+                                <!-- Card 2: Section 87A Tax Rebate -->
+                                <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px; background: var(--color-white);">
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>Tax Rebate (u/s 87A)</span>
+                                        <span class="status-badge status-active" style="font-size: 0.6875rem;">Up to ₹12,500</span>
+                                    </div>
+                                    <div style="font-size: 1rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px;">Up to ₹5,00,000 Net</div>
+                                    <p style="margin: 0; font-size: 0.6875rem; color: #666; line-height: 1.4;">Full tax rebate (max ₹12,500) if net taxable income after deductions does not exceed ₹5,00,000.</p>
+                                </div>
+
+                                <!-- Card 3: Eligible Deductions & Exemptions -->
+                                <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px; background: var(--color-white);">
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>Exemptions &amp; Chapter VI-A</span>
+                                        <span class="status-badge" style="font-size: 0.6875rem;">Employee Declared</span>
+                                    </div>
+                                    <div style="font-size: 1rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px;">80C (₹1.5L) + 80D + HRA</div>
+                                    <p style="margin: 0; font-size: 0.6875rem; color: #666; line-height: 1.4;">Eligible for Section 80C (PPF/EPF/ELSS), 80D (Health Insurance), Section 24 (Home Loan), and HRA exemption.</p>
+                                </div>
+
+                                <!-- Card 4: Cess & Surcharge -->
+                                <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px; background: var(--color-white);">
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                                        <span>Cess &amp; Surcharge</span>
+                                        <span class="status-badge" style="font-size: 0.6875rem;">Statutory</span>
+                                    </div>
+                                    <div style="font-size: 1rem; font-weight: 700; color: var(--color-black); margin-bottom: 4px;">4% Cess • 10%&ndash;37% Surcharge</div>
+                                    <p style="margin: 0; font-size: 0.6875rem; color: #666; line-height: 1.4;">4% Health &amp; Education Cess; Surcharge of 10% (&gt;50L), 15% (&gt;1Cr), 25% (&gt;2Cr), and 37% (&gt;5Cr).</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
@@ -575,6 +835,24 @@
                     <button type="submit" class="btn-primary">Save Policy</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal (Matching Staff Master Delete Popup UI) -->
+    <div class="modal-overlay" id="delete-payroll-settings-modal">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: center;">
+            <button type="button" class="modal-close" onclick="closePayrollDeleteModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title" id="payroll-delete-title">Delete Item</h3>
+            <p class="modal-desc" id="payroll-delete-desc">Are you sure you want to delete this record?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closePayrollDeleteModal()" style="height: 32px; flex: 1;">Cancel</button>
+                <button type="button" id="payroll-confirm-delete-btn" class="btn-primary" style="height: 32px; flex: 1;">Delete</button>
+            </div>
         </div>
     </div>
 
@@ -914,11 +1192,37 @@
             }
         }
 
+        let pendingDeleteAction = null;
+
+        function openPayrollDeleteModal(title, desc, onConfirm) {
+            document.getElementById('payroll-delete-title').textContent = title;
+            document.getElementById('payroll-delete-desc').textContent = desc;
+            pendingDeleteAction = onConfirm;
+            document.getElementById('delete-payroll-settings-modal').classList.add('active');
+        }
+
+        function closePayrollDeleteModal() {
+            document.getElementById('delete-payroll-settings-modal').classList.remove('active');
+            pendingDeleteAction = null;
+        }
+
+        document.getElementById('payroll-confirm-delete-btn').addEventListener('click', () => {
+            if (pendingDeleteAction) {
+                pendingDeleteAction();
+            }
+            closePayrollDeleteModal();
+        });
+
         function deleteComponent(idx) {
-            let list = getSalaryComponents();
-            list.splice(idx, 1);
-            saveSalaryComponents(list);
-            renderSalaryComponents();
+            const list = getSalaryComponents();
+            const comp = list[idx];
+            const name = comp ? comp.name : 'Salary Component';
+            openPayrollDeleteModal('Delete Component', `Are you sure you want to delete "${name}"?`, () => {
+                let currentList = getSalaryComponents();
+                currentList.splice(idx, 1);
+                saveSalaryComponents(currentList);
+                renderSalaryComponents();
+            });
         }
 
         // Increment Modals & Helpers
@@ -988,10 +1292,15 @@
         }
 
         function deleteIncrementPolicy(idx) {
-            let list = getIncrementPolicies();
-            list.splice(idx, 1);
-            saveIncrementPolicies(list);
-            renderIncrementPolicies();
+            const list = getIncrementPolicies();
+            const inc = list[idx];
+            const name = inc ? inc.name : 'Increment Policy';
+            openPayrollDeleteModal('Delete Policy', `Are you sure you want to delete "${name}"?`, () => {
+                let currentList = getIncrementPolicies();
+                currentList.splice(idx, 1);
+                saveIncrementPolicies(currentList);
+                renderIncrementPolicies();
+            });
         }
 
         function togglePFSetting(enabled) {
@@ -1006,10 +1315,56 @@
             body.style.pointerEvents = enabled ? 'auto' : 'none';
         }
 
+        // Switch between New and Old Tax Regime Configuration views
+        let currentRegimeView = 'new';
+        function switchRegimeView(regime) {
+            currentRegimeView = regime;
+            const btnNew = document.getElementById('tab-regime-new');
+            const btnOld = document.getElementById('tab-regime-old');
+            const viewNew = document.getElementById('view-regime-new');
+            const viewOld = document.getElementById('view-regime-old');
+
+            if (regime === 'new') {
+                btnNew.style.background = '#000';
+                btnNew.style.color = '#fff';
+                btnNew.style.borderColor = '#000';
+
+                btnOld.style.background = '#fff';
+                btnOld.style.color = '#444';
+                btnOld.style.borderColor = 'var(--color-border)';
+
+                viewNew.style.display = 'block';
+                viewOld.style.display = 'none';
+            } else {
+                btnOld.style.background = '#000';
+                btnOld.style.color = '#fff';
+                btnOld.style.borderColor = '#000';
+
+                btnNew.style.background = '#fff';
+                btnNew.style.color = '#444';
+                btnNew.style.borderColor = 'var(--color-border)';
+
+                viewOld.style.display = 'block';
+                viewNew.style.display = 'none';
+            }
+        }
+
+        function changeTaxFY(fy) {
+            localStorage.setItem('hrms_tax_fy', fy);
+        }
+
+        function toggleTDSSetting(enabled) {
+            const body = document.getElementById('tds-settings-body');
+            body.style.opacity = enabled ? '1' : '0.4';
+            body.style.pointerEvents = enabled ? 'auto' : 'none';
+        }
+
         function saveAllPayrollSettings() {
             localStorage.setItem('hrms_pt_states', JSON.stringify(ptStates));
             localStorage.setItem('hrms_pf_enabled', document.getElementById('pf-enabled-toggle').checked);
             localStorage.setItem('hrms_pt_enabled', document.getElementById('pt-enabled-toggle').checked);
+            localStorage.setItem('hrms_tds_enabled', document.getElementById('tds-enabled-toggle').checked);
+            localStorage.setItem('hrms_tax_fy', document.getElementById('tax-fy-select').value);
             
             window.location.href = 'payroll.html';
         }
@@ -1018,6 +1373,16 @@
             const storedStates = localStorage.getItem('hrms_pt_states');
             if (storedStates) {
                 try { ptStates = JSON.parse(storedStates); } catch(e) {}
+            }
+            const storedFY = localStorage.getItem('hrms_tax_fy');
+            if (storedFY && document.getElementById('tax-fy-select')) {
+                document.getElementById('tax-fy-select').value = storedFY;
+            }
+            const storedTDS = localStorage.getItem('hrms_tds_enabled');
+            if (storedTDS !== null && document.getElementById('tds-enabled-toggle')) {
+                const isEnabled = storedTDS === 'true';
+                document.getElementById('tds-enabled-toggle').checked = isEnabled;
+                toggleTDSSetting(isEnabled);
             }
             renderSalaryComponents();
             renderIncrementPolicies();

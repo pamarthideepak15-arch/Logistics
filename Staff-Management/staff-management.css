@@ -27,6 +27,10 @@
     z-index: 2000;
 }
 
+.modal-overlay.active {
+    display: flex !important;
+}
+
 /* Custom width for add form modal */
 #add-employee-modal .modal-content {
     width: 520px;
@@ -282,5 +286,700 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 input[type=number] { -moz-appearance: textfield; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE RULES (STAFF MASTER ERP)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Mobile Employee Cards Container (Hidden on Desktop by default) */
+.mobile-staff-cards {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mobile-staff-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    transition: border-color 0.15s ease;
+    cursor: pointer;
+}
+
+.mobile-staff-card:hover {
+    border-color: var(--color-black);
+}
+
+.mobile-card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-card-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-bg-light);
+    border: 1.5px solid var(--color-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-black);
+    flex-shrink: 0;
+}
+
+.mobile-card-identity {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mobile-card-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-black);
+    line-height: 1.2;
+}
+
+.mobile-card-subhead {
+    font-size: 0.75rem;
+    color: #555;
+    font-weight: 600;
+}
+
+.mobile-card-role {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.mobile-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 10px;
+    background: var(--color-bg-light);
+    border-radius: var(--border-radius-base);
+    font-size: 0.75rem;
+}
+
+.mobile-detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.mobile-detail-label {
+    color: #666;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.mobile-detail-val {
+    font-weight: 600;
+    color: var(--color-black);
+    text-align: right;
+}
+
+.mobile-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 6px;
+    border-top: 1px solid var(--color-border);
+}
+
+.mobile-card-actions-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mobile-card-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mobile-step-indicator-bar {
+    display: none;
+}
+
+/* ─── Breakpoints: Tablet & Mobile (<= 768px) ─── */
+@media (max-width: 768px) {
+    /* Hide desktop table and display mobile card list */
+    .table-container {
+        display: none !important;
+    }
+    .mobile-staff-cards {
+        display: flex !important;
+    }
+
+    /* Mobile Page Header: Single column with prominent full-width Add button */
+    .page-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        margin-bottom: 14px !important;
+    }
+
+    .page-header .header-actions {
+        width: 100% !important;
+        display: flex !important;
+    }
+
+    .page-header .header-actions .btn-primary {
+        width: 100% !important;
+        height: 38px !important;
+        justify-content: center !important;
+        font-size: 0.875rem !important;
+    }
+
+    /* Filters Stack Layout */
+    .filters-bar {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+        padding-bottom: 14px !important;
+        margin-bottom: 14px !important;
+    }
+
+    .filters-bar .search-input-wrapper {
+        width: 100% !important;
+    }
+
+    .filters-bar-buttons {
+        display: flex !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
+    .filters-bar-buttons label,
+    .filters-bar-buttons button {
+        flex: 1 !important;
+        height: 34px !important;
+        justify-content: center !important;
+    }
+
+    /* Form Grids & Review Grids: 1-Column Layout */
+    .form-grid,
+    .modal-form-grid,
+    .form-row-3,
+    .form-row-2col,
+    .emergency-contact-grid,
+    .geofence-coords-grid,
+    .geofence-policy-grid,
+    #review-summary-block div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .geofence-header-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+
+    .geofence-header-row button {
+        width: 100% !important;
+        justify-content: center !important;
+        height: 34px !important;
+    }
+
+    .full-width-field {
+        grid-column: span 1 !important;
+    }
+
+    .radio-group input[type="radio"],
+    .radio-card input[type="radio"],
+    input[type="radio"] {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        max-width: 16px !important;
+        border-radius: 50% !important;
+        flex-shrink: 0 !important;
+        display: inline-grid !important;
+    }
+
+    /* Wizard Onboarding Step Indicator Mobile Transformation */
+    .step-progress-container {
+        padding: 10px 12px !important;
+        overflow-x: hidden !important;
+    }
+
+    .step-progress {
+        display: none !important;
+    }
+
+    .mobile-step-indicator-bar {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .mobile-step-meta {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    .mobile-step-count {
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        color: var(--color-black) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.03em !important;
+    }
+
+    .mobile-step-title {
+        font-size: 0.8125rem !important;
+        font-weight: 700 !important;
+        color: var(--color-black) !important;
+    }
+
+    .mobile-step-dots-row {
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        width: 100% !important;
+    }
+
+    .mobile-step-track {
+        flex: 1 !important;
+        height: 4px !important;
+        border-radius: 2px !important;
+        background: var(--color-border) !important;
+        transition: background-color 0.2s ease !important;
+    }
+
+    .mobile-step-track.active {
+        background: var(--color-black) !important;
+    }
+
+    /* Selection Card Mobile */
+    .selection-card {
+        margin: 16px auto !important;
+        padding: 20px 16px !important;
+    }
+
+    .selection-buttons {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .selection-btn {
+        width: 100% !important;
+        height: 42px !important;
+    }
+
+    /* Onboarding wizard actions footer (Strictly Right-Aligned Group) */
+    .wizard-footer {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: var(--color-white) !important;
+        border-top: 1px solid var(--color-border) !important;
+        padding: 10px 16px !important;
+        z-index: 1000 !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        box-shadow: 0 -2px 8px rgba(0,0,0,0.04) !important;
+    }
+
+    .wizard-cta-group {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 8px !important;
+        margin-left: auto !important;
+        width: auto !important;
+    }
+
+    .wizard-footer button,
+    .wizard-cta-group button {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        height: 34px !important;
+        padding: 0 16px !important;
+        font-size: 0.8125rem !important;
+        font-weight: 600 !important;
+        white-space: nowrap !important;
+    }
+
+    .wizard-actions {
+        display: flex !important;
+        justify-content: flex-end !important;
+        gap: 8px !important;
+        position: sticky !important;
+        bottom: 0 !important;
+        background: var(--color-white) !important;
+        border-top: 1px solid var(--color-border) !important;
+        padding: 12px 16px !important;
+        z-index: 100 !important;
+    }
+
+    .wizard-actions button {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        height: 34px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VERIFICATION CARDS UI (Step 6)
+   ═══════════════════════════════════════════════════════════════ */
+.verif-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+    .verif-cards-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.verif-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    transition: border-color 0.15s ease;
+}
+
+.verif-card:hover {
+    border-color: var(--color-black);
+}
+
+.verif-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.verif-card-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-black);
+    line-height: 1.2;
+}
+
+.verif-card-sub {
+    font-size: 0.6875rem;
+    color: #666;
+    margin-top: 2px;
+}
+
+.verif-card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border);
+}
+
+.verif-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.verif-status-verified {
+    background: var(--color-black);
+    color: var(--color-white);
+    border: 1px solid var(--color-black);
+}
+
+.verif-status-pending {
+    background: var(--color-white);
+    color: var(--color-black);
+    border: 1px solid #8c8c8c;
+}
+
+.verif-status-review {
+    background: var(--color-bg-light);
+    color: var(--color-black);
+    border: 1px solid var(--color-border);
+}
+
+.verif-card-meta {
+    font-size: 0.6875rem;
+    color: #888;
+}
+
+/* ─── Very Small Screens (<= 480px) ─── */
+@media (max-width: 480px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+    .mobile-staff-card {
+        padding: 12px !important;
+    }
+    .wizard-cta-group {
+        gap: 6px !important;
+    }
+    .wizard-footer button,
+    .wizard-cta-group button {
+        padding: 0 12px !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+/* ─── Rehire Former Employee Screen & Form Styles ─── */
+.rehire-page-header {
+    margin-bottom: 16px;
+}
+
+.rehire-header-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+}
+
+.rehire-back-link {
+    color: var(--color-black);
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-top: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    transition: background 0.15s ease;
+}
+
+.rehire-back-link:hover {
+    background: var(--color-bg-light);
+}
+
+.rehire-search-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 20px !important;
+    margin-bottom: 16px !important;
+    box-sizing: border-box;
+}
+
+.rehire-search-form {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.rehire-form-group {
+    flex: 1;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.rehire-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-black);
+    margin: 0;
+    white-space: normal;
+    line-height: 1.3;
+}
+
+.rehire-input {
+    height: 36px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.8125rem;
+    padding: 0 12px;
+    border: 1px solid #8c8c8c;
+    border-radius: var(--border-radius-base);
+    outline: none;
+    font-family: inherit;
+    background: var(--color-white);
+    color: var(--color-black);
+    transition: border-color 0.15s ease;
+}
+
+.rehire-input:focus {
+    border-color: var(--color-black);
+}
+
+.rehire-search-btn {
+    height: 36px;
+    padding: 0 20px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: var(--border-radius-base);
+    background: var(--color-black);
+    color: var(--color-white);
+    border: 1px solid var(--color-black);
+    white-space: nowrap;
+    transition: opacity 0.15s ease;
+}
+
+.rehire-search-btn:hover {
+    opacity: 0.9;
+}
+
+.rehire-search-results {
+    margin-top: 14px;
+}
+
+.rehire-result-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    font-size: 0.75rem;
+    background: var(--color-bg-light);
+    gap: 12px;
+}
+
+.rehire-result-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.rehire-result-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.rehire-result-meta {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.rehire-result-exit {
+    font-size: 0.71875rem;
+    color: #555;
+}
+
+.rehire-select-btn {
+    height: 32px;
+    padding: 0 16px;
+    font-size: 0.78125rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+/* ─── Rehire Mobile Responsiveness (<= 768px) ─── */
+@media (max-width: 768px) {
+    #flow-rehire-employee {
+        padding: 0 4px;
+    }
+
+    .rehire-page-header {
+        margin-bottom: 14px !important;
+    }
+
+    .rehire-page-header .page-title {
+        font-size: 1.25rem !important;
+        line-height: 1.25 !important;
+        margin-bottom: 4px !important;
+        color: var(--color-black) !important;
+    }
+
+    .rehire-page-header .page-subtitle {
+        font-size: 0.8125rem !important;
+        line-height: 1.45 !important;
+        color: #666 !important;
+        width: 100% !important;
+    }
+
+    .rehire-search-card {
+        padding: 20px 16px !important;
+        border-radius: var(--border-radius-base) !important;
+    }
+
+    .rehire-search-form {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+    }
+
+    .rehire-form-group {
+        width: 100% !important;
+    }
+
+    .rehire-label {
+        font-size: 0.8125rem !important;
+        font-weight: 700 !important;
+        color: var(--color-black) !important;
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .rehire-input {
+        width: 100% !important;
+        height: 40px !important;
+        font-size: 0.8125rem !important;
+    }
+
+    .rehire-search-btn {
+        width: 100% !important;
+        height: 40px !important;
+        font-size: 0.875rem !important;
+        font-weight: 600 !important;
+        justify-content: center !important;
+    }
+
+    .rehire-result-card {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        padding: 14px !important;
+    }
+
+    .rehire-select-btn {
+        width: 100% !important;
+        height: 36px !important;
+        justify-content: center !important;
+    }
+}
 
 

@@ -1,0 +1,1207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blacklist / DND - CCM - Logistics Platform</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- CCM & Agents Unified Stylesheet -->
+    <link rel="stylesheet" href="agents.css">
+    <link rel="stylesheet" href="ccm.css">
+    <style>
+        /* Base SVG Safety Rule */
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .sidebar-logo svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .rail-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .sidebar-nav a svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .top-breadcrumb svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .top-profile-block svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Action Badges */
+        .action-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .action-badge-block {
+            background: #0f172a;
+            color: #ffffff;
+            border: 1px solid #0f172a;
+        }
+        .action-badge-flag {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #0f172a;
+        }
+
+        /* Phone Mono Cell */
+        .phone-cell {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-weight: 600;
+            font-size: 0.8125rem;
+            color: var(--color-black);
+            white-space: nowrap;
+        }
+
+        /* Blacklist / DND Specific Table Columns */
+        .ccm-branches-table.blacklist-dnd-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        .ccm-branches-table.blacklist-dnd-table th,
+        .ccm-branches-table.blacklist-dnd-table td {
+            padding: 8px 12px !important;
+            vertical-align: middle;
+        }
+        .ccm-branches-table.blacklist-dnd-table th:nth-child(1),
+        .ccm-branches-table.blacklist-dnd-table td:nth-child(1) {
+            width: 20% !important;
+            text-align: left !important;
+        }
+        .ccm-branches-table.blacklist-dnd-table th:nth-child(2),
+        .ccm-branches-table.blacklist-dnd-table td:nth-child(2) {
+            width: 11% !important;
+            text-align: left !important;
+        }
+        .ccm-branches-table.blacklist-dnd-table th:nth-child(3),
+        .ccm-branches-table.blacklist-dnd-table td:nth-child(3) {
+            width: 27% !important;
+            text-align: left !important;
+        }
+        .ccm-branches-table.blacklist-dnd-table th:nth-child(4),
+        .ccm-branches-table.blacklist-dnd-table td:nth-child(4) {
+            width: 20% !important;
+            text-align: left !important;
+        }
+        .ccm-branches-table.blacklist-dnd-table th:nth-child(5),
+        .ccm-branches-table.blacklist-dnd-table td:nth-child(5) {
+            width: 13% !important;
+            text-align: left !important;
+        }
+        .ccm-branches-table.blacklist-dnd-table th:nth-child(6),
+        .ccm-branches-table.blacklist-dnd-table td:nth-child(6) {
+            width: 9% !important;
+            text-align: right !important;
+            white-space: nowrap !important;
+        }
+
+        .agent-branch-sub {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.6875rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        .branch-badge {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Custom Select Search in Dropdowns (Matching Agents & Reports standard) */
+        .custom-select-search {
+            padding: 4px 6px 6px;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 4px;
+        }
+        .custom-select-search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .custom-select-search-input {
+            width: 100%;
+            height: 26px;
+            font-size: 0.75rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 0 8px 0 24px;
+            outline: none;
+            box-sizing: border-box;
+            background: #f8fafc;
+            color: var(--color-black);
+            font-family: inherit;
+        }
+        .custom-select-search-input:focus {
+            border-color: #0f172a;
+            background: #ffffff;
+        }
+
+        /* CCM Action Icons Standard */
+        .ccm-action-icons {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            justify-content: flex-end;
+        }
+        .ccm-icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-black);
+            padding: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background-color 0.15s ease, color 0.15s ease;
+            text-decoration: none;
+            line-height: 1;
+            width: 26px;
+            height: 26px;
+            box-sizing: border-box;
+        }
+        .ccm-icon-btn:hover {
+            background-color: var(--color-bg-light);
+            color: var(--color-black);
+        }
+        .ccm-icon-btn svg {
+            width: 14px !important;
+            height: 14px !important;
+            stroke: currentColor;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        /* Empty State */
+        .empty-table-state {
+            padding: 36px 16px;
+            text-align: center;
+            color: #64748b;
+        }
+        .empty-table-state svg {
+            width: 36px !important;
+            height: 36px !important;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Two-Tier Dark Sidebar (CCM Admin Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads -->
+                    <a href="leads.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <line x1="19" y1="8" x2="19" y2="14"></line>
+                            <line x1="22" y1="11" x2="16" y2="11"></line>
+                        </svg>
+                        Leads
+                    </a>
+                    <!-- Module 9: Tickets -->
+                    <a href="tickets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring -->
+                    <a href="live-monitoring.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND (Active) -->
+                    <a href="blacklist-dnd.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                                    <!-- Module 14: Settings -->
+                    <a href="settings.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            <!-- Top Header Breadcrumb -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Blacklist / DND</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Back to Welcome">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Blacklist / DND</h1>
+                        <p class="page-subtitle">Manage blocked or flagged phone numbers for incoming calls.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button type="button" class="btn-primary" onclick="openAddModal()" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add Number
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CCM Blacklist Page Section -->
+                <div class="ccm-page-section">
+                    <!-- Filters & Search Bar -->
+                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 10px; align-items: center; width: 100%; flex-wrap: wrap;">
+                        <!-- Search by phone / reason / agent -->
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 220px; position: relative;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #64748b;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="dnd-search-input" class="search-input" style="padding-left: 32px;" placeholder="Search phone, agent, reason..." oninput="handleSearch(this.value)">
+                        </div>
+
+                        <!-- All Actions Filter -->
+                        <details class="custom-select-wrapper" id="filter-action-details" style="min-width: 140px;">
+                            <summary class="custom-select-trigger" id="filter-action-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-action-label">All Actions</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option" onclick="setActionFilter('All', 'All Actions')"><input type="radio" name="filter-action" checked> All Actions</label>
+                                <label class="custom-option" onclick="setActionFilter('Block', 'Block')"><input type="radio" name="filter-action"> Block</label>
+                                <label class="custom-option" onclick="setActionFilter('Flag', 'Flag')"><input type="radio" name="filter-action"> Flag</label>
+                            </div>
+                        </details>
+
+                        <!-- All Branches Filter (With Search) -->
+                        <details class="custom-select-wrapper" id="filter-branch-details" style="min-width: 160px;">
+                            <summary class="custom-select-trigger" id="filter-branch-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-branch-label">All Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="filter-branch-options">
+                                <div class="custom-select-search">
+                                    <div class="custom-select-search-wrapper">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterBranchDropdownOptions(this)">
+                                    </div>
+                                </div>
+                                <div id="filter-branch-list-items">
+                                    <label class="custom-option" onclick="setBranchFilter('All', 'All Branches')"><input type="radio" name="filter-branch" checked> All Branches</label>
+                                    <label class="custom-option" onclick="setBranchFilter('Bengaluru', 'Bengaluru')"><input type="radio" name="filter-branch"> Bengaluru</label>
+                                    <label class="custom-option" onclick="setBranchFilter('Mumbai', 'Mumbai')"><input type="radio" name="filter-branch"> Mumbai</label>
+                                    <label class="custom-option" onclick="setBranchFilter('Hyderabad', 'Hyderabad')"><input type="radio" name="filter-branch"> Hyderabad</label>
+                                    <label class="custom-option" onclick="setBranchFilter('Delhi', 'Delhi')"><input type="radio" name="filter-branch"> Delhi</label>
+                                    <label class="custom-option" onclick="setBranchFilter('Chennai', 'Chennai')"><input type="radio" name="filter-branch"> Chennai</label>
+                                    <label class="custom-option" onclick="setBranchFilter('Pune', 'Pune')"><input type="radio" name="filter-branch"> Pune</label>
+                                    <label class="custom-option" onclick="setBranchFilter('HQ Central', 'HQ Central')"><input type="radio" name="filter-branch"> HQ Central</label>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- All Agents Filter (With Search) -->
+                        <details class="custom-select-wrapper" id="filter-agent-details" style="min-width: 170px;">
+                            <summary class="custom-select-trigger" id="filter-agent-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-agent-label">All Agents</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="filter-agent-options">
+                                <div class="custom-select-search">
+                                    <div class="custom-select-search-wrapper">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" class="custom-select-search-input" placeholder="Search agent..." oninput="filterAgentDropdownOptions(this)">
+                                    </div>
+                                </div>
+                                <div id="filter-agent-list-items">
+                                    <label class="custom-option" onclick="setAgentFilter('All', 'All Agents')"><input type="radio" name="filter-agent" checked> All Agents</label>
+                                    <label class="custom-option" onclick="setAgentFilter('Deepak Kumar', 'Deepak Kumar')"><input type="radio" name="filter-agent"> Deepak Kumar</label>
+                                    <label class="custom-option" onclick="setAgentFilter('Priya Sharma', 'Priya Sharma')"><input type="radio" name="filter-agent"> Priya Sharma</label>
+                                    <label class="custom-option" onclick="setAgentFilter('Rahul Varma', 'Rahul Varma')"><input type="radio" name="filter-agent"> Rahul Varma</label>
+                                    <label class="custom-option" onclick="setAgentFilter('Ananya Iyer', 'Ananya Iyer')"><input type="radio" name="filter-agent"> Ananya Iyer</label>
+                                    <label class="custom-option" onclick="setAgentFilter('Super Admin', 'Super Admin')"><input type="radio" name="filter-agent"> Super Admin</label>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- Reset Filter Button (Visible when filters are applied) -->
+                        <button type="button" id="btn-reset-filters" class="btn-secondary" onclick="resetAllFilters()" style="display: none; height: 32px; padding: 0 10px; font-size: 0.75rem; align-items: center; gap: 4px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            Reset
+                        </button>
+                    </div>
+
+                    <!-- Table Container -->
+                    <div class="table-container ccm-desktop-table-container">
+                        <table class="ccm-branches-table blacklist-dnd-table" id="dnd-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="handleSort('phone')">
+                                        <div class="sort-header-content">
+                                            Phone Number
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleSort('action')">
+                                        <div class="sort-header-content">
+                                            Action
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleSort('reason')">
+                                        <div class="sort-header-content">
+                                            Reason
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleSort('agentName')">
+                                        <div class="sort-header-content">
+                                            Added By &amp; Branch
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="handleSort('addedOn')">
+                                        <div class="sort-header-content">
+                                            Added On
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dnd-table-body">
+                                <!-- Rendered dynamically by JavaScript -->
+                            </tbody>
+                        </table>
+
+                        <!-- Pagination Bar -->
+                        <div class="pagination-bar" id="dnd-pagination-bar" style="border-top: 1px solid var(--color-border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;">
+                            <span id="dnd-pagination-info" style="font-size: 0.75rem; color: #64748b; font-weight: 500;">Showing 1-3 of 3</span>
+                            <div class="pagination-controls" style="display: flex; align-items: center; gap: 6px;">
+                                <button type="button" class="page-btn" id="btn-page-prev" onclick="changePage(-1)" disabled>Prev</button>
+                                <span class="page-number active" id="current-page-num" style="min-width: 24px; text-align: center; font-size: 0.75rem; font-weight: 600;">1</span>
+                                <button type="button" class="page-btn" id="btn-page-next" onclick="changePage(1)" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add / Edit Modal Overlay (Matching standard CCM modal-content structure) -->
+    <div class="modal-overlay" id="overlay-dnd-modal" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 440px; max-width: 95vw; overflow: visible; padding: 20px; text-align: left; box-sizing: border-box;">
+            <button type="button" class="modal-close-label" onclick="closeDndModal()" title="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h3 class="modal-title" id="dnd-modal-title" style="font-size: 1rem; margin-bottom: 2px;">Add Number</h3>
+            <p class="modal-desc" id="dnd-modal-subtitle" style="font-size: 0.75rem; color: #666; margin-bottom: 12px;">Configure incoming call behavior for this phone number.</p>
+
+            <div id="dnd-form-error" style="display: none; color: #dc2626; font-size: 0.75rem; font-weight: 500; margin-bottom: 8px;"></div>
+
+            <form id="dnd-entry-form" onsubmit="handleSaveDndEntry(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                <input type="hidden" id="dnd-form-id" value="">
+
+                <!-- Phone Number * -->
+                <div class="form-group">
+                    <label style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Phone Number *</label>
+                    <input type="text" id="dnd-phone-input" class="form-control" placeholder="e.g. +91 98765 43210" required style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 0 10px;">
+                </div>
+
+                <!-- Action * (Block / Flag) -->
+                <div class="form-group">
+                    <label style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Action *</label>
+                    <div style="display: flex; gap: 16px; align-items: center; margin-top: 2px;">
+                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: var(--color-black); cursor: pointer;">
+                            <input type="radio" name="dnd-action-radio" value="Block" checked style="accent-color: var(--color-black); cursor: pointer;">
+                            <strong>Block</strong> <span style="font-size: 0.75rem; color: #64748b;">(Reject incoming calls)</span>
+                        </label>
+                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; color: var(--color-black); cursor: pointer;">
+                            <input type="radio" name="dnd-action-radio" value="Flag" style="accent-color: var(--color-black); cursor: pointer;">
+                            <strong>Flag</strong> <span style="font-size: 0.75rem; color: #64748b;">(Highlight caller)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Reason -->
+                <div class="form-group">
+                    <label style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Reason</label>
+                    <textarea id="dnd-reason-input" class="form-control" placeholder="e.g. Repeated unwanted calls, suspicious caller, customer DND request..." style="width: 100%; height: 56px; font-size: 0.8125rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); padding: 6px 10px; resize: vertical; font-family: inherit;"></textarea>
+                </div>
+
+                <!-- Agent & Branch Attribution -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Added By (Agent) *</label>
+                        <details class="custom-select-wrapper" id="modal-agent-details" style="width: 100%;">
+                            <summary class="custom-select-trigger" id="modal-agent-trigger" style="height: 32px; border: 1px solid #8c8c8c;">
+                                <span id="modal-agent-label">Super Admin</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="modal-agent-options">
+                                <div class="custom-select-search">
+                                    <div class="custom-select-search-wrapper">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" id="modal-agent-search-input" class="custom-select-search-input" placeholder="Search agent..." oninput="filterModalAgentOptions(this)">
+                                    </div>
+                                </div>
+                                <div id="modal-agent-list-items">
+                                    <label class="custom-option" onclick="setModalAgent('Super Admin')">Super Admin</label>
+                                    <label class="custom-option" onclick="setModalAgent('Deepak Kumar')">Deepak Kumar</label>
+                                    <label class="custom-option" onclick="setModalAgent('Priya Sharma')">Priya Sharma</label>
+                                    <label class="custom-option" onclick="setModalAgent('Rahul Varma')">Rahul Varma</label>
+                                    <label class="custom-option" onclick="setModalAgent('Ananya Iyer')">Ananya Iyer</label>
+                                </div>
+                            </div>
+                        </details>
+                        <input type="hidden" id="dnd-agent-input" value="Super Admin">
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Branch *</label>
+                        <details class="custom-select-wrapper" id="modal-branch-details" style="width: 100%;">
+                            <summary class="custom-select-trigger" id="modal-branch-trigger" style="height: 32px; border: 1px solid #8c8c8c;">
+                                <span id="modal-branch-label">Bengaluru</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options" id="modal-branch-options">
+                                <div class="custom-select-search">
+                                    <div class="custom-select-search-wrapper">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <input type="text" id="modal-branch-search-input" class="custom-select-search-input" placeholder="Search branch..." oninput="filterModalBranchOptions(this)">
+                                    </div>
+                                </div>
+                                <div id="modal-branch-list-items">
+                                    <label class="custom-option" onclick="setModalBranch('Bengaluru')">Bengaluru</label>
+                                    <label class="custom-option" onclick="setModalBranch('Mumbai')">Mumbai</label>
+                                    <label class="custom-option" onclick="setModalBranch('Hyderabad')">Hyderabad</label>
+                                    <label class="custom-option" onclick="setModalBranch('Delhi')">Delhi</label>
+                                    <label class="custom-option" onclick="setModalBranch('Chennai')">Chennai</label>
+                                    <label class="custom-option" onclick="setModalBranch('Pune')">Pune</label>
+                                    <label class="custom-option" onclick="setModalBranch('HQ Central')">HQ Central</label>
+                                </div>
+                            </div>
+                        </details>
+                        <input type="hidden" id="dnd-branch-input" value="Bengaluru">
+                    </div>
+                </div>
+
+                <!-- Save / Cancel Actions -->
+                <div class="modal-actions" style="margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--color-border); display: flex; gap: 8px;">
+                    <button type="button" class="btn-secondary" style="flex: 1; height: 32px; justify-content: center;" onclick="closeDndModal()">Cancel</button>
+                    <button type="submit" class="btn-primary" style="flex: 1; height: 32px; justify-content: center;">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete / Remove Confirmation Modal (Matching existing CCM standard modal) -->
+    <div class="modal-overlay" id="overlay-delete-dnd" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeDeleteModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Entry</h3>
+            <p class="modal-desc">Are you sure you want to remove <strong id="delete-number-display"></strong> from the Blacklist/DND list?</p>
+            <input type="hidden" id="delete-entry-id" value="">
+            <div class="modal-actions" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--color-border); display: flex; gap: 8px;">
+                <button type="button" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; height: 32px; flex: 1;" onclick="confirmDeleteEntry()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // Sample Data with Agent Name and Branch
+        const initialDndData = [
+            { id: "dnd-1", phone: "+91 98765 43210", action: "Block", reason: "Repeated unwanted calls", agentName: "Deepak Kumar", branch: "Bengaluru", addedOn: "Sep 1, 2026" },
+            { id: "dnd-2", phone: "+91 98480 12345", action: "Flag", reason: "Suspicious caller", agentName: "Priya Sharma", branch: "Mumbai", addedOn: "Aug 28, 2026" },
+            { id: "dnd-3", phone: "+91 99887 65432", action: "Block", reason: "Customer requested DND", agentName: "Rahul Varma", branch: "Hyderabad", addedOn: "Aug 24, 2026" }
+        ];
+
+        const STORAGE_KEY = 'ccm_blacklist_dnd_data_v3';
+        let dndEntries = loadDndData();
+
+        // Filter and Pagination State
+        let searchQuery = '';
+        let selectedAction = 'All';
+        let selectedBranch = 'All';
+        let selectedAgent = 'All';
+        let currentSort = { column: 'addedOn', asc: false };
+        let currentPage = 1;
+        const pageSize = 10;
+
+        function loadDndData() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+            saveDndData(initialDndData);
+            return [...initialDndData];
+        }
+
+        function saveDndData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function normalizePhone(phone) {
+            return (phone || '').replace(/[\s\-\(\)]/g, '');
+        }
+
+        function formatDate(date) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const d = new Date(date);
+            return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ==========================================
+        // Dropdown Search Filtering (Branch & Agent)
+        // ==========================================
+        function filterBranchDropdownOptions(input) {
+            const query = (input.value || '').toLowerCase().trim();
+            const container = document.getElementById('filter-branch-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function filterAgentDropdownOptions(input) {
+            const query = (input.value || '').toLowerCase().trim();
+            const container = document.getElementById('filter-agent-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function filterModalAgentOptions(input) {
+            const query = (input.value || '').toLowerCase().trim();
+            const container = document.getElementById('modal-agent-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function filterModalBranchOptions(input) {
+            const query = (input.value || '').toLowerCase().trim();
+            const container = document.getElementById('modal-branch-list-items');
+            if (!container) return;
+            const options = container.querySelectorAll('.custom-option');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        // ==========================================
+        // Modal Agent & Branch Selection
+        // ==========================================
+        function setModalAgent(agentName) {
+            document.getElementById('modal-agent-label').textContent = agentName;
+            document.getElementById('dnd-agent-input').value = agentName;
+            document.getElementById('modal-agent-details').removeAttribute('open');
+        }
+
+        function setModalBranch(branchName) {
+            document.getElementById('modal-branch-label').textContent = branchName;
+            document.getElementById('dnd-branch-input').value = branchName;
+            document.getElementById('modal-branch-details').removeAttribute('open');
+        }
+
+        // ==========================================
+        // Filtering & Sorting
+        // ==========================================
+        function getFilteredEntries() {
+            return dndEntries.filter(item => {
+                // Search query: phone, reason, agentName, branch
+                if (searchQuery) {
+                    const queryNorm = normalizePhone(searchQuery);
+                    const phoneNorm = normalizePhone(item.phone);
+                    const matchPhone = phoneNorm.includes(queryNorm) || item.phone.toLowerCase().includes(searchQuery.toLowerCase());
+                    const matchReason = (item.reason || '').toLowerCase().includes(searchQuery.toLowerCase());
+                    const matchAgent = (item.agentName || '').toLowerCase().includes(searchQuery.toLowerCase());
+                    const matchBranch = (item.branch || '').toLowerCase().includes(searchQuery.toLowerCase());
+                    if (!matchPhone && !matchReason && !matchAgent && !matchBranch) return false;
+                }
+
+                // Action Filter
+                if (selectedAction !== 'All' && item.action !== selectedAction) {
+                    return false;
+                }
+
+                // Branch Filter
+                if (selectedBranch !== 'All' && (item.branch || '') !== selectedBranch) {
+                    return false;
+                }
+
+                // Agent Filter
+                if (selectedAgent !== 'All' && (item.agentName || '') !== selectedAgent) {
+                    return false;
+                }
+
+                return true;
+            }).sort((a, b) => {
+                let valA = a[currentSort.column] || '';
+                let valB = b[currentSort.column] || '';
+
+                if (currentSort.column === 'addedOn') {
+                    const dateA = new Date(valA).getTime() || 0;
+                    const dateB = new Date(valB).getTime() || 0;
+                    return currentSort.asc ? dateA - dateB : dateB - dateA;
+                }
+
+                valA = valA.toString().toLowerCase();
+                valB = valB.toString().toLowerCase();
+                if (valA < valB) return currentSort.asc ? -1 : 1;
+                if (valA > valB) return currentSort.asc ? 1 : -1;
+                return 0;
+            });
+        }
+
+        function updateResetButtonVisibility() {
+            const isFiltered = searchQuery !== '' || selectedAction !== 'All' || selectedBranch !== 'All' || selectedAgent !== 'All';
+            const btnReset = document.getElementById('btn-reset-filters');
+            if (btnReset) {
+                btnReset.style.display = isFiltered ? 'inline-flex' : 'none';
+            }
+        }
+
+        function handleSearch(query) {
+            searchQuery = query.trim();
+            currentPage = 1;
+            updateResetButtonVisibility();
+            renderTable();
+        }
+
+        function setActionFilter(action, label) {
+            selectedAction = action;
+            document.getElementById('filter-action-label').textContent = label;
+            document.getElementById('filter-action-details').removeAttribute('open');
+            currentPage = 1;
+            updateResetButtonVisibility();
+            renderTable();
+        }
+
+        function setBranchFilter(branch, label) {
+            selectedBranch = branch;
+            document.getElementById('filter-branch-label').textContent = label;
+            document.getElementById('filter-branch-details').removeAttribute('open');
+            currentPage = 1;
+            updateResetButtonVisibility();
+            renderTable();
+        }
+
+        function setAgentFilter(agent, label) {
+            selectedAgent = agent;
+            document.getElementById('filter-agent-label').textContent = label;
+            document.getElementById('filter-agent-details').removeAttribute('open');
+            currentPage = 1;
+            updateResetButtonVisibility();
+            renderTable();
+        }
+
+        function resetAllFilters() {
+            searchQuery = '';
+            selectedAction = 'All';
+            selectedBranch = 'All';
+            selectedAgent = 'All';
+
+            document.getElementById('dnd-search-input').value = '';
+            document.getElementById('filter-action-label').textContent = 'All Actions';
+            document.getElementById('filter-branch-label').textContent = 'All Branches';
+            document.getElementById('filter-agent-label').textContent = 'All Agents';
+
+            currentPage = 1;
+            updateResetButtonVisibility();
+            renderTable();
+        }
+
+        function handleSort(column) {
+            if (currentSort.column === column) {
+                currentSort.asc = !currentSort.asc;
+            } else {
+                currentSort.column = column;
+                currentSort.asc = true;
+            }
+            renderTable();
+        }
+
+        // ==========================================
+        // Pagination
+        // ==========================================
+        function changePage(delta) {
+            const list = getFilteredEntries();
+            const totalPages = Math.ceil(list.length / pageSize) || 1;
+            const targetPage = currentPage + delta;
+            if (targetPage >= 1 && targetPage <= totalPages) {
+                currentPage = targetPage;
+                renderTable();
+            }
+        }
+
+        // ==========================================
+        // Table Render
+        // ==========================================
+        function renderTable() {
+            const list = getFilteredEntries();
+            const total = list.length;
+            const totalPages = Math.ceil(total / pageSize) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = Math.min(startIndex + pageSize, total);
+            const pageData = list.slice(startIndex, endIndex);
+
+            const tbody = document.getElementById('dnd-table-body');
+            const paginationInfo = document.getElementById('dnd-pagination-info');
+            const btnPrev = document.getElementById('btn-page-prev');
+            const btnNext = document.getElementById('btn-page-next');
+            const pageNum = document.getElementById('current-page-num');
+
+            if (pageData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6">
+                            <div class="empty-table-state">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                                </svg>
+                                <div style="font-weight: 600; font-size: 0.875rem; color: #334155; margin-bottom: 2px;">No Blacklist / DND records found</div>
+                                <div style="font-size: 0.75rem;">Try adjusting your search query or filter selections.</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                paginationInfo.textContent = `Showing 0 of ${total}`;
+                btnPrev.disabled = true;
+                btnNext.disabled = true;
+                pageNum.textContent = '1';
+                return;
+            }
+
+            tbody.innerHTML = pageData.map(item => {
+                const isBlock = item.action === 'Block';
+                const actionBadge = isBlock ? 
+                    `<span class="action-badge action-badge-block">Block</span>` : 
+                    `<span class="action-badge action-badge-flag">Flag</span>`;
+
+                const agentName = item.agentName || 'Super Admin';
+                const branchName = item.branch || 'HQ Central';
+
+                return `
+                    <tr data-id="${escapeHtml(item.id)}">
+                        <td class="phone-cell">${escapeHtml(item.phone)}</td>
+                        <td>${actionBadge}</td>
+                        <td style="color: #334155; font-size: 0.8125rem;">${escapeHtml(item.reason || '—')}</td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--color-black); font-size: 0.8125rem;">${escapeHtml(agentName)}</div>
+                            <div class="agent-branch-sub">
+                                <span class="branch-badge">${escapeHtml(branchName)}</span>
+                            </div>
+                        </td>
+                        <td style="font-size: 0.8125rem; color: #64748b;">${escapeHtml(item.addedOn)}</td>
+                        <td style="text-align: right;">
+                            <div class="ccm-action-icons">
+                                <button type="button" class="ccm-icon-btn" title="Edit" onclick="openEditModal('${escapeHtml(item.id)}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                </button>
+                                <button type="button" class="ccm-icon-btn" title="Delete" onclick="openDeleteModal('${escapeHtml(item.id)}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            paginationInfo.textContent = `Showing ${total > 0 ? startIndex + 1 : 0}-${endIndex} of ${total}`;
+            btnPrev.disabled = currentPage <= 1;
+            btnNext.disabled = currentPage >= totalPages;
+            pageNum.textContent = `${currentPage}`;
+        }
+
+        // ==========================================
+        // Modal CRUD Operations
+        // ==========================================
+        function openAddModal() {
+            document.getElementById('dnd-modal-title').textContent = "Add Number";
+            document.getElementById('dnd-modal-subtitle').textContent = "Configure incoming call behavior for this phone number.";
+            document.getElementById('dnd-form-id').value = "";
+            document.getElementById('dnd-phone-input').value = "";
+            document.getElementById('dnd-reason-input').value = "";
+            
+            const modalAgentSearch = document.getElementById('modal-agent-search-input');
+            if (modalAgentSearch) {
+                modalAgentSearch.value = "";
+                filterModalAgentOptions(modalAgentSearch);
+            }
+            setModalAgent("Super Admin");
+
+            const modalBranchSearch = document.getElementById('modal-branch-search-input');
+            if (modalBranchSearch) {
+                modalBranchSearch.value = "";
+                filterModalBranchOptions(modalBranchSearch);
+            }
+            setModalBranch("Bengaluru");
+            document.getElementById('dnd-form-error').style.display = 'none';
+
+            // Set defaults: Action = Block
+            document.querySelector('input[name="dnd-action-radio"][value="Block"]').checked = true;
+
+            document.getElementById('overlay-dnd-modal').style.display = 'flex';
+            setTimeout(() => document.getElementById('dnd-phone-input').focus(), 50);
+        }
+
+        function openEditModal(id) {
+            const entry = dndEntries.find(item => item.id === id);
+            if (!entry) return;
+
+            document.getElementById('dnd-modal-title').textContent = "Edit Number";
+            document.getElementById('dnd-modal-subtitle').textContent = "Update action, reason, or agent attribution for this number.";
+            document.getElementById('dnd-form-id').value = entry.id;
+            document.getElementById('dnd-phone-input').value = entry.phone;
+            document.getElementById('dnd-reason-input').value = entry.reason || "";
+            
+            const modalAgentSearch = document.getElementById('modal-agent-search-input');
+            if (modalAgentSearch) {
+                modalAgentSearch.value = "";
+                filterModalAgentOptions(modalAgentSearch);
+            }
+            setModalAgent(entry.agentName || "Super Admin");
+
+            const modalBranchSearch = document.getElementById('modal-branch-search-input');
+            if (modalBranchSearch) {
+                modalBranchSearch.value = "";
+                filterModalBranchOptions(modalBranchSearch);
+            }
+            setModalBranch(entry.branch || "Bengaluru");
+            document.getElementById('dnd-form-error').style.display = 'none';
+
+            const actionRadio = document.querySelector(`input[name="dnd-action-radio"][value="${entry.action}"]`);
+            if (actionRadio) actionRadio.checked = true;
+
+            document.getElementById('overlay-dnd-modal').style.display = 'flex';
+            setTimeout(() => document.getElementById('dnd-phone-input').focus(), 50);
+        }
+
+        function closeDndModal() {
+            document.getElementById('overlay-dnd-modal').style.display = 'none';
+        }
+
+        function handleSaveDndEntry(e) {
+            e.preventDefault();
+            const id = document.getElementById('dnd-form-id').value;
+            const phone = document.getElementById('dnd-phone-input').value.trim();
+            const action = document.querySelector('input[name="dnd-action-radio"]:checked')?.value || 'Block';
+            const reason = document.getElementById('dnd-reason-input').value.trim();
+            const agentName = document.getElementById('dnd-agent-input').value.trim() || 'Super Admin';
+            const branch = document.getElementById('dnd-branch-input').value || 'Bengaluru';
+            const errorDiv = document.getElementById('dnd-form-error');
+
+            if (!phone) {
+                errorDiv.textContent = 'Phone number is required.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Normalize phone for duplicate checking
+            const normPhone = normalizePhone(phone);
+            if (normPhone.length < 5) {
+                errorDiv.textContent = 'Please enter a valid phone number with country code.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Prevent duplicate phone numbers
+            const duplicate = dndEntries.find(item => {
+                if (id && item.id === id) return false;
+                return normalizePhone(item.phone) === normPhone;
+            });
+
+            if (duplicate) {
+                errorDiv.textContent = `Entry already exists for ${phone}. Edit or remove the existing record.`;
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (id) {
+                // Edit existing
+                const index = dndEntries.findIndex(item => item.id === id);
+                if (index !== -1) {
+                    dndEntries[index] = {
+                        ...dndEntries[index],
+                        phone,
+                        action,
+                        reason,
+                        agentName,
+                        branch
+                    };
+                }
+            } else {
+                // Add new
+                const newId = 'dnd-' + Date.now();
+                const todayFormatted = formatDate(new Date());
+                dndEntries.unshift({
+                    id: newId,
+                    phone,
+                    action,
+                    reason,
+                    agentName,
+                    branch,
+                    addedOn: todayFormatted
+                });
+            }
+
+            saveDndData(dndEntries);
+            closeDndModal();
+            renderTable();
+        }
+
+        function openDeleteModal(id) {
+            const entry = dndEntries.find(item => item.id === id);
+            if (!entry) return;
+
+            document.getElementById('delete-entry-id').value = entry.id;
+            document.getElementById('delete-number-display').textContent = entry.phone;
+            document.getElementById('overlay-delete-dnd').style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('overlay-delete-dnd').style.display = 'none';
+        }
+
+        function confirmDeleteEntry() {
+            const id = document.getElementById('delete-entry-id').value;
+            dndEntries = dndEntries.filter(item => item.id !== id);
+            saveDndData(dndEntries);
+            closeDeleteModal();
+            renderTable();
+        }
+
+        // Global click-outside listener to close details dropdowns cleanly
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('details.custom-select-wrapper')) {
+                document.querySelectorAll('details.custom-select-wrapper[open]').forEach(el => {
+                    el.removeAttribute('open');
+                });
+            }
+        });
+
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable();
+        });
+    </script>
+</body>
+</html>

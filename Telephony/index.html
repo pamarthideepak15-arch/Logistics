@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telephony — Exelon Logistics ERP</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- Telephony Module Stylesheet -->
+    <link rel="stylesheet" href="telephony.css">
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger (Pure CSS) -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>    <!-- Pure CSS State Switchers for Deployment Telephony Integration (Default to Empty / Not Configured State) -->
+    <input type="radio" name="ccm-provider-state" id="provider-state-empty" class="ccm-provider-state-toggle" checked>
+    <input type="radio" name="ccm-provider-state" id="provider-state-configured" class="ccm-provider-state-toggle">
+
+    <!-- Active Provider Selection State (Default: Airtel IQ / MSIP once configured) -->
+    <input type="radio" name="active-provider-selection" id="active-provider-airtel" class="ccm-provider-state-toggle" checked>
+    <input type="radio" name="active-provider-selection" id="active-provider-exotel" class="ccm-provider-state-toggle">
+    <input type="radio" name="active-provider-selection" id="active-provider-ozonetel" class="ccm-provider-state-toggle">
+    <input type="radio" name="active-provider-selection" id="active-provider-other" class="ccm-provider-state-toggle">
+
+    <!-- Pure CSS Modal: Configure / Change Telephony Provider -->
+    <input type="checkbox" id="modal-provider" class="ccm-modal-toggle">
+    <div class="modal-overlay" id="overlay-provider">
+        <div class="modal-content" style="width: 420px;">
+            <label for="modal-provider" class="modal-close-label" title="Close">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
+            <h3 class="modal-title" id="provider-modal-title">Configure Telephony Provider</h3>
+            <p class="modal-desc">Select the cloud telephony provider and configure integration credentials.</p>
+            <form action="#saved-provider" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 0;">
+                <div class="form-group">
+                    <label>Provider *</label>
+                    <details class="custom-select-wrapper" id="provider-select-details">
+                        <summary class="custom-select-trigger">
+                            <span class="placeholder">Select Provider</span>
+                            <span class="selected-text selected-text-airtel">Airtel IQ / MSIP</span>
+                            <span class="selected-text selected-text-exotel">Exotel</span>
+                            <span class="selected-text selected-text-ozonetel">Ozonetel</span>
+                            <span class="selected-text selected-text-other">Equivalent / Other</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <div class="custom-select-options">
+                            <label class="custom-option" onclick="handleProviderChoiceChange('airtel');"><input type="radio" name="modal-provider-choice" id="modal-opt-airtel" value="airtel" checked> Airtel IQ / MSIP</label>
+                            <label class="custom-option" onclick="handleProviderChoiceChange('exotel');"><input type="radio" name="modal-provider-choice" id="modal-opt-exotel" value="exotel"> Exotel</label>
+                            <label class="custom-option" onclick="handleProviderChoiceChange('ozonetel');"><input type="radio" name="modal-provider-choice" id="modal-opt-ozonetel" value="ozonetel"> Ozonetel</label>
+                            <label class="custom-option" onclick="handleProviderChoiceChange('other');"><input type="radio" name="modal-provider-choice" id="modal-opt-other" value="other"> Equivalent / Other</label>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Integration Credentials / Settings Section (CCM-3) -->
+                <div class="provider-settings-section">
+                    <div class="provider-settings-header">
+                        <span class="provider-settings-title">Integration Credentials / Settings</span>
+                        <span class="provider-settings-subtitle">Authentication parameters for the selected provider interface.</span>
+                    </div>
+                    <div id="provider-fields-container" class="provider-fields-container">
+                        <!-- Dynamic fields rendered based on selected provider -->
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <label for="modal-provider" class="btn-secondary" style="cursor: pointer;">Cancel</label>
+                    <button type="button" class="btn-primary" style="cursor: pointer; border: none;" onclick="saveSelectedProvider();">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Admin Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="../Company-Branches/index.html" class="rail-icon active" data-tooltip="CCM">
+                        <!-- Headset / Telephony Icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="../Company-Branches/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="../Telephony/index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="../IVR/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="../Call-Routing/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="../Queues/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="../Agents/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="../CCM/customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Telephony</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="main-scroll-area">
+                
+                <!-- 1. Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Telephony</h1>
+                        <p class="page-subtitle">Manage the cloud telephony integration for the CCM system.</p>
+                    </div>
+                </div>
+
+                <!-- 2. Telephony Integration Card (Full-Width Card) -->
+                <div class="ccm-page-section">
+                    <div class="ccm-central-box">
+                        <div class="ccm-central-box-header">
+                            <div class="ccm-central-title-group">
+                                <h2 class="ccm-central-title">Telephony Integration</h2>
+                                <span class="ccm-central-subtitle">Cloud telephony integration is provided through a pluggable provider interface for this deployment.</span>
+                            </div>
+                        </div>
+
+                        <!-- 1. Initial Empty State View (When no provider is configured at deployment level) -->
+                        <div id="provider-empty-view">
+                            <div class="ccm-central-empty-content">
+                                <div class="ccm-central-empty-text">
+                                    <span class="ccm-central-empty-primary">No telephony provider configured.</span>
+                                    <span class="ccm-central-empty-secondary">A cloud telephony provider must be configured for the CCM telephony integration.</span>
+                                </div>
+                                <label for="modal-provider" class="btn-primary" style="cursor: pointer; height: 32px; padding: 0 14px; font-size: 0.8125rem;" onclick="openConfigureModal();">
+                                    Configure Provider
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 2. Configured / Active Integration View -->
+                        <div id="provider-configured-view">
+                            <div class="ccm-central-configured-content" style="align-items: center;">
+                                <div class="ccm-central-data-inline" style="gap: 48px;">
+                                    <div class="ccm-field-item">
+                                        <span class="ccm-field-label">PROVIDER</span>
+                                        <span class="ccm-field-value">
+                                             <span class="provider-name-display provider-name-airtel">Airtel IQ / MSIP</span>
+                                            <span class="provider-name-display provider-name-exotel">Exotel</span>
+                                            <span class="provider-name-display provider-name-ozonetel">Ozonetel</span>
+                                            <span class="provider-name-display provider-name-other">Equivalent / Other</span>
+                                        </span>
+                                    </div>
+                                    <div class="ccm-field-item">
+                                        <span class="ccm-field-label">STATUS</span>
+                                        <span class="ccm-field-value" id="provider-status-container">
+                                            <span class="badge badge-connected" id="telephony-status-badge">Connected</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <label for="modal-provider" class="btn-secondary" style="cursor: pointer; height: 30px; padding: 0 12px; font-size: 0.75rem;" onclick="openChangeModal();">
+                                    Change Provider
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 3. Calling Configuration Section (CCM-3) -->
+                <div class="ccm-page-section">
+                    <div class="calling-config-box">
+                        <div class="ccm-central-box-header">
+                            <div class="ccm-central-title-group">
+                                <h2 class="ccm-central-title">Calling Configuration</h2>
+                                <span class="ccm-central-subtitle">Configure how agents handle customer calls.</span>
+                            </div>
+                        </div>
+
+                        <form id="calling-config-form" onsubmit="saveCallingConfig(event)">
+                            <div class="calling-mode-group">
+                                <label class="calling-mode-label">Calling Mode *</label>
+                                <div class="calling-mode-options">
+                                    <label class="calling-radio-label">
+                                        <input type="radio" name="calling-mode" value="hybrid" onchange="enableSaveCallingBtn()">
+                                        Hybrid
+                                    </label>
+                                    <label class="calling-radio-label">
+                                        <input type="radio" name="calling-mode" value="in-app-only" onchange="enableSaveCallingBtn()">
+                                        In-app-only
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="calling-config-footer">
+                                <button type="submit" id="save-calling-btn" class="btn-primary" style="cursor: pointer; height: 32px; padding: 0 14px; font-size: 0.8125rem;" disabled>
+                                    Save Configuration
+                                </button>
+                                <span id="calling-config-feedback" class="save-feedback-toast">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Configuration saved successfully
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Track current state: configured = false (Initial Empty State), active provider key = null
+        let isConfigured = false;
+        let currentActiveProvider = null;
+        let validationTimer = null;
+        let feedbackTimer = null;
+
+        function enableSaveCallingBtn() {
+            const btn = document.getElementById('save-calling-btn');
+            if (btn) {
+                btn.disabled = false;
+            }
+        }
+
+        function saveCallingConfig(e) {
+            e.preventDefault();
+            const checkedMode = document.querySelector('input[name="calling-mode"]:checked');
+            if (!checkedMode) return;
+            
+            const feedbackElem = document.getElementById('calling-config-feedback');
+            if (feedbackElem) {
+                feedbackElem.classList.add('show');
+                if (feedbackTimer) clearTimeout(feedbackTimer);
+                feedbackTimer = setTimeout(() => {
+                    feedbackElem.classList.remove('show');
+                }, 2500);
+            }
+        }
+
+        // Provider-specific Configuration Schema (Reusable generic structure)
+        const providerConfigs = {
+            "airtel": {
+                name: "Airtel IQ / MSIP",
+                fields: [
+                    { id: "airtel-customer-id", label: "Customer / Account ID *", type: "text", placeholder: "e.g. CUST-AIRTEL-88210", value: "CUST-AIRTEL-88210" },
+                    { id: "airtel-api-key", label: "App Key / Client ID *", type: "text", placeholder: "e.g. key_airtel_live_79a8bc4", value: "key_airtel_live_79a8bc4" },
+                    { id: "airtel-api-secret", label: "API Secret / Auth Token *", type: "password", placeholder: "••••••••••••••••••••", value: "sec_token_991823719" },
+                    { id: "airtel-sip-trunk", label: "MSIP Trunk Domain *", type: "text", placeholder: "e.g. sip.airteliq.in", value: "sip.airteliq.in" }
+                ]
+            },
+            "exotel": {
+                name: "Exotel",
+                fields: [
+                    { id: "exotel-account-sid", label: "Account SID *", type: "text", placeholder: "e.g. exotel_acc_54190", value: "exotel_acc_54190" },
+                    { id: "exotel-api-key", label: "API Key *", type: "text", placeholder: "e.g. exo_key_live_41893", value: "exo_key_live_41893" },
+                    { id: "exotel-api-token", label: "API Token *", type: "password", placeholder: "••••••••••••••••••••", value: "exo_tok_9918231" },
+                    { id: "exotel-subdomain", label: "Subdomain / Cluster *", type: "text", placeholder: "e.g. api.exotel.com", value: "api.exotel.com" }
+                ]
+            },
+            "ozonetel": {
+                name: "Ozonetel",
+                fields: [
+                    { id: "ozonetel-customer-name", label: "CloudAgent Customer Name *", type: "text", placeholder: "e.g. exelon_logistics", value: "exelon_logistics" },
+                    { id: "ozonetel-api-key", label: "API Key *", type: "text", placeholder: "e.g. KK_ozonetel_live_382", value: "KK_ozonetel_live_382" },
+                    { id: "ozonetel-did", label: "Primary Campaign DID *", type: "text", placeholder: "e.g. 08045678900", value: "08045678900" }
+                ]
+            },
+            "other": {
+                name: "Equivalent / Other",
+                fields: [
+                    { id: "other-provider-name", label: "Provider Name / Identifier *", type: "text", placeholder: "e.g. Custom SIP Gateway", value: "Custom SIP Gateway" },
+                    { id: "other-endpoint-url", label: "Webhook / API Endpoint URL *", type: "text", placeholder: "e.g. https://telephony.custom-gateway.com/api", value: "https://telephony.custom-gateway.com/api" },
+                    { id: "other-auth-header", label: "Authorization Header / Token *", type: "password", placeholder: "••••••••••••••••••••", value: "bearer_token_xyz" }
+                ]
+            }
+        };
+
+        let selectedModalProvider = 'airtel';
+
+        function renderProviderFields(providerKey) {
+            const container = document.getElementById('provider-fields-container');
+            if (!container) return;
+
+            const config = providerConfigs[providerKey] || providerConfigs['other'];
+            container.innerHTML = config.fields.map(f => `
+                <div class="provider-field-item">
+                    <label for="${f.id}">${f.label}</label>
+                    <input type="${f.type}" id="${f.id}" placeholder="${f.placeholder}" value="${f.value}">
+                </div>
+            `).join('');
+        }
+
+        function handleProviderChoiceChange(providerKey) {
+            selectedModalProvider = providerKey;
+            const detailsElem = document.getElementById('provider-select-details');
+            if (detailsElem) {
+                detailsElem.removeAttribute('open');
+            }
+            const radio = document.getElementById('modal-opt-' + providerKey);
+            if (radio) {
+                radio.checked = true;
+            }
+            renderProviderFields(providerKey);
+        }
+
+        function openConfigureModal() {
+            const titleElem = document.getElementById('provider-modal-title');
+            if (titleElem) {
+                titleElem.textContent = 'Configure Telephony Provider';
+            }
+            selectedModalProvider = currentActiveProvider || 'airtel';
+            const targetRadio = document.getElementById('modal-opt-' + selectedModalProvider);
+            if (targetRadio) {
+                targetRadio.checked = true;
+            }
+            renderProviderFields(selectedModalProvider);
+        }
+
+        function openChangeModal() {
+            const titleElem = document.getElementById('provider-modal-title');
+            if (titleElem) {
+                titleElem.textContent = 'Change Telephony Provider';
+            }
+            selectedModalProvider = currentActiveProvider || 'airtel';
+            const targetRadio = document.getElementById('modal-opt-' + selectedModalProvider);
+            if (targetRadio) {
+                targetRadio.checked = true;
+            }
+            renderProviderFields(selectedModalProvider);
+        }
+
+        function saveSelectedProvider() {
+            const selectedVal = selectedModalProvider || 'airtel';
+            const modalToggle = document.getElementById('modal-provider');
+            if (modalToggle) {
+                modalToggle.checked = false;
+            }
+
+            // Switch UI to Configured State
+            isConfigured = true;
+            const configuredRadio = document.getElementById('provider-state-configured');
+            if (configuredRadio) {
+                configuredRadio.checked = true;
+            }
+
+            // Update displayed provider
+            currentActiveProvider = selectedVal;
+            const activeRadio = document.getElementById('active-provider-' + selectedVal);
+            if (activeRadio) {
+                activeRadio.checked = true;
+            }
+
+            // Trigger intermediate "Checking connection..." state
+            const statusBadge = document.getElementById('telephony-status-badge');
+            if (statusBadge) {
+                statusBadge.className = 'badge badge-connecting';
+                statusBadge.textContent = 'Checking connection...';
+            }
+
+            if (validationTimer) {
+                clearTimeout(validationTimer);
+            }
+
+            // Validate the selected deployment integration
+            validationTimer = setTimeout(() => {
+                const targetBadge = document.getElementById('telephony-status-badge');
+                if (!targetBadge) return;
+
+                // Cloud telephony provider validation for deployment interface
+                if (currentActiveProvider === 'airtel' || currentActiveProvider === 'exotel' || currentActiveProvider === 'ozonetel' || currentActiveProvider === 'other') {
+                    targetBadge.className = 'badge badge-connected';
+                    targetBadge.textContent = 'Connected';
+                } else {
+                    targetBadge.className = 'badge badge-failed';
+                    targetBadge.textContent = 'Connection Failed';
+                }
+            }, 1200);
+        }
+
+        // Initialize default provider fields on DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProviderFields('airtel');
+        });
+    </script>
+</body>
+</html>

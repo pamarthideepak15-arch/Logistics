@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers — CCM | Logistics Management Platform</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- CCM & Agents Unified Stylesheet -->
+    <link rel="stylesheet" href="agents.css">
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads -->
+                    <a href="leads.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Leads
+                    </a>
+                
+                    <!-- Module 9: Tickets -->
+                    <a href="tickets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring -->
+                    <a href="live-monitoring.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND -->
+                    <a href="blacklist-dnd.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                                    <!-- Module 14: Settings -->
+                    <a href="settings.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header Breadcrumb -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Customers</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Back to Welcome">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Customers</h1>
+                        <p class="page-subtitle">Manage customer information connected to calls and shipments.</p>
+                    </div>
+                    <div class="header-actions">
+                        <a href="import-customers.html" class="btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Import Customers
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CCM Customers Page Section -->
+                <div class="ccm-page-section">
+
+                    <!-- Filters & Search Bar -->
+                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%; flex-wrap: wrap;">
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 240px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="customer-search-input" class="search-input" placeholder="Search by customer name or phone number..." oninput="filterCustomerTable()">
+                        </div>
+
+                        <!-- All Branches Filter -->
+                        <details class="custom-select-wrapper" id="filter-branch-details" style="min-width: 160px;">
+                            <summary class="custom-select-trigger" id="filter-branch-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-branch-label">All Branches</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option" onclick="selectBranchFilter('all', 'All Branches')"><input type="radio" name="branch-filter" value="all" checked> All Branches</label>
+                                <label class="custom-option" onclick="selectBranchFilter('bengaluru', 'Bengaluru')"><input type="radio" name="branch-filter" value="bengaluru"> Bengaluru</label>
+                                <label class="custom-option" onclick="selectBranchFilter('mumbai', 'Mumbai')"><input type="radio" name="branch-filter" value="mumbai"> Mumbai</label>
+                                <label class="custom-option" onclick="selectBranchFilter('hyderabad', 'Hyderabad')"><input type="radio" name="branch-filter" value="hyderabad"> Hyderabad</label>
+                                <label class="custom-option" onclick="selectBranchFilter('delhi', 'Delhi')"><input type="radio" name="branch-filter" value="delhi"> Delhi</label>
+                                <label class="custom-option" onclick="selectBranchFilter('chennai', 'Chennai')"><input type="radio" name="branch-filter" value="chennai"> Chennai</label>
+                            </div>
+                        </details>
+
+                        <!-- All Customer Types Filter -->
+                        <details class="custom-select-wrapper" id="filter-type-details" style="min-width: 170px;">
+                            <summary class="custom-select-trigger" id="filter-type-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-type-label">All Customer Types</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option" onclick="selectTypeFilter('all', 'All Customer Types')"><input type="radio" name="type-filter" value="all" checked> All Customer Types</label>
+                                <label class="custom-option" onclick="selectTypeFilter('business', 'Business Customer')"><input type="radio" name="type-filter" value="business"> Business Customer</label>
+                                <label class="custom-option" onclick="selectTypeFilter('individual', 'Individual')"><input type="radio" name="type-filter" value="individual"> Individual</label>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Customer Table Container -->
+                    <div class="table-container ccm-desktop-table-container">
+                        <table class="ccm-branches-table customers-table" id="customer-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" onclick="sortCustomerTable(0)">
+                                        <div class="sort-header-content">
+                                            Customer Name
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortCustomerTable(1)">
+                                        <div class="sort-header-content">
+                                            Phone Number
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortCustomerTable(2)">
+                                        <div class="sort-header-content">
+                                            Customer Type
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" onclick="sortCustomerTable(3)">
+                                        <div class="sort-header-content">
+                                            Branch
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customer-table-body">
+                                <!-- Customer 1 -->
+                                <tr data-name="rajesh kumar" data-phone="+91 98765 43210" data-branch="bengaluru" data-type="business" data-gstin="29ABCDE1234F1Z5">
+                                    <td>
+                                        <a href="customer-360.html?id=CUST-1001" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Rajesh Kumar</a>
+                                    </td>
+                                    <td style="font-family: monospace; font-size: 0.8125rem; font-weight: 600;">+91 98765 43210</td>
+                                    <td>
+                                        <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Business Customer</span>
+                                    </td>
+                                    <td>Bengaluru</td>
+                                    <td style="text-align: right;">
+                                        <a href="customer-360.html?id=CUST-1001" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            360 View
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 2 -->
+                                <tr data-name="priya sharma" data-phone="+91 99887 65432" data-branch="mumbai" data-type="business" data-gstin="27AAACP9876Q1Z2">
+                                    <td>
+                                        <a href="customer-360.html?id=CUST-1002" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Priya Sharma</a>
+                                    </td>
+                                    <td style="font-family: monospace; font-size: 0.8125rem; font-weight: 600;">+91 99887 65432</td>
+                                    <td>
+                                        <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Business Customer</span>
+                                    </td>
+                                    <td>Mumbai</td>
+                                    <td style="text-align: right;">
+                                        <a href="customer-360.html?id=CUST-1002" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            360 View
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 3 -->
+                                <tr data-name="suresh reddy" data-phone="+91 98480 12345" data-branch="hyderabad" data-type="individual" data-gstin="">
+                                    <td>
+                                        <a href="customer-360.html?id=CUST-1003" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Suresh Reddy</a>
+                                    </td>
+                                    <td style="font-family: monospace; font-size: 0.8125rem; font-weight: 600;">+91 98480 12345</td>
+                                    <td>
+                                        <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Individual</span>
+                                    </td>
+                                    <td>Hyderabad</td>
+                                    <td style="text-align: right;">
+                                        <a href="customer-360.html?id=CUST-1003" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            360 View
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 4 -->
+                                <tr data-name="anil verma" data-phone="+91 98100 56789" data-branch="delhi" data-type="business" data-gstin="07AABCV5544R1ZA">
+                                    <td>
+                                        <a href="customer-360.html?id=CUST-1004" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Anil Verma</a>
+                                    </td>
+                                    <td style="font-family: monospace; font-size: 0.8125rem; font-weight: 600;">+91 98100 56789</td>
+                                    <td>
+                                        <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Business Customer</span>
+                                    </td>
+                                    <td>Delhi</td>
+                                    <td style="text-align: right;">
+                                        <a href="customer-360.html?id=CUST-1004" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            360 View
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <!-- Customer 5 -->
+                                <tr data-name="kavya nair" data-phone="+91 98950 24680" data-branch="chennai" data-type="individual" data-gstin="">
+                                    <td>
+                                        <a href="customer-360.html?id=CUST-1005" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Kavya Nair</a>
+                                    </td>
+                                    <td style="font-family: monospace; font-size: 0.8125rem; font-weight: 600;">+91 98950 24680</td>
+                                    <td>
+                                        <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Individual</span>
+                                    </td>
+                                    <td>Chennai</td>
+                                    <td style="text-align: right;">
+                                        <a href="customer-360.html?id=CUST-1005" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            360 View
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    <!-- Empty State (Hidden when records exist) -->
+                    <div id="customer-empty-state" class="ccm-empty-state-box" style="display: none; border-top: none; border-radius: 0;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32" style="color: #94a3b8;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <strong id="customer-empty-state-title">No customers found</strong>
+                        <span>Try changing your search or filters.</span>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-bar" id="customer-pagination">
+                        <span id="pagination-text">Showing 1-5 of 5</span>
+                        <div class="pagination-controls">
+                            <button type="button" class="page-btn" disabled>Prev</button>
+                            <span class="page-number">1</span>
+                            <button type="button" class="page-btn" disabled>Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Client-side Search & Filter Script -->
+    <script>
+        let currentBranch = 'all';
+        let currentType = 'all';
+
+        function selectBranchFilter(value, label) {
+            currentBranch = value;
+            const details = document.getElementById('filter-branch-details');
+            if (details) {
+                const labelEl = details.querySelector('.trigger-label');
+                if (labelEl) labelEl.textContent = label;
+                details.removeAttribute('open');
+            }
+            filterCustomerTable();
+        }
+
+        function selectTypeFilter(value, label) {
+            currentType = value;
+            const details = document.getElementById('filter-type-details');
+            if (details) {
+                const labelEl = details.querySelector('.trigger-label');
+                if (labelEl) labelEl.textContent = label;
+                details.removeAttribute('open');
+            }
+            filterCustomerTable();
+        }
+
+        function filterCustomerTable() {
+            const query = (document.getElementById('customer-search-input')?.value || '').toLowerCase().trim();
+            const rows = document.querySelectorAll('#customer-table-body tr');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const name = (row.getAttribute('data-name') || '').toLowerCase();
+                const phone = (row.getAttribute('data-phone') || '').toLowerCase().replace(/\s+/g, '');
+                const rawPhone = (row.getAttribute('data-phone') || '').toLowerCase();
+                const email = (row.getAttribute('data-email') || '').toLowerCase();
+                const branch = (row.getAttribute('data-branch') || '').toLowerCase();
+                const type = (row.getAttribute('data-type') || '').toLowerCase();
+
+                const cleanQuery = query.replace(/\s+/g, '');
+                const matchesQuery = !query || name.includes(query) || phone.includes(cleanQuery) || rawPhone.includes(query) || email.includes(query);
+                const matchesBranch = (currentBranch === 'all') || (branch === currentBranch);
+                const matchesType = (currentType === 'all') || (type === currentType);
+
+                if (matchesQuery && matchesBranch && matchesType) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            const emptyState = document.getElementById('customer-empty-state');
+            const emptyStateTitle = document.getElementById('customer-empty-state-title');
+            const pagination = document.getElementById('customer-pagination');
+            const paginationText = document.getElementById('pagination-text');
+            const countBadge = document.getElementById('customer-count-badge');
+
+            if (visibleCount === 0) {
+                if (emptyState) emptyState.style.display = 'flex';
+                if (emptyStateTitle) emptyStateTitle.textContent = query ? 'No customers match your search.' : 'No customers found.';
+                if (pagination) pagination.style.display = 'none';
+                if (countBadge) countBadge.textContent = '0 Customers';
+            } else {
+                if (emptyState) emptyState.style.display = 'none';
+                if (pagination) pagination.style.display = 'flex';
+                if (paginationText) paginationText.textContent = `Showing 1-${visibleCount} of ${visibleCount}`;
+                if (countBadge) countBadge.textContent = `${visibleCount} Customer${visibleCount > 1 ? 's' : ''}`;
+            }
+        }
+
+        // Customer Table Column Sorting
+        const sortDirections = {};
+
+        function sortCustomerTable(colIndex) {
+            const tbody = document.getElementById('customer-table-body');
+            if (!tbody) return;
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            sortDirections[colIndex] = !sortDirections[colIndex];
+            const asc = sortDirections[colIndex];
+
+            rows.sort((a, b) => {
+                const cellA = (a.children[colIndex]?.textContent || '').trim().toLowerCase();
+                const cellB = (b.children[colIndex]?.textContent || '').trim().toLowerCase();
+                if (cellA < cellB) return asc ? -1 : 1;
+                if (cellA > cellB) return asc ? 1 : -1;
+                return 0;
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    </script>
+</body>
+</html>

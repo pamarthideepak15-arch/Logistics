@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Queue — CCM | Exelon Logistics ERP</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- Queues Module Stylesheet -->
+    <link rel="stylesheet" href="queues.css">
+    <style>
+        .form-grid-4col {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr 1fr;
+            gap: 16px;
+        }
+        .form-grid-3col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+        .form-grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .section-card {
+            padding: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            background: var(--color-white);
+            margin-bottom: 20px;
+        }
+        .section-header {
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--color-black);
+            margin: 0;
+        }
+        .section-helper {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 2px;
+        }
+        .assigned-agents-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8125rem;
+            margin-top: 14px;
+        }
+        .assigned-agents-table th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-white);
+            background-color: var(--color-black);
+            border: none;
+            letter-spacing: 0.02em;
+        }
+        .assigned-agents-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-black);
+            vertical-align: middle;
+            background-color: var(--color-white);
+        }
+        .assigned-agents-table tbody tr:hover td {
+            background-color: var(--color-bg-light);
+        }
+        .remove-agent-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: 1px solid transparent;
+            color: #dc2626;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 3px 8px;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+        .remove-agent-action-btn:hover {
+            background-color: #fee2e2;
+            border-color: #fca5a5;
+        }
+        .remove-agent-action-btn svg {
+            width: 13px;
+            height: 13px;
+            stroke-width: 2;
+        }
+        .eligibility-info-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--border-radius-base);
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            font-size: 0.8125rem;
+            color: #166534;
+        }
+        .eligibility-prompt-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-bg-light);
+            border: 1px dashed var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 12px 14px;
+            color: #64748b;
+            font-size: 0.8125rem;
+            margin-bottom: 12px;
+        }
+        .pending-add-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: var(--border-radius-base);
+            padding: 10px 14px;
+            margin-top: 10px;
+            font-size: 0.8125rem;
+            color: #1e40af;
+        }
+        @media (max-width: 1024px) {
+            .form-grid-4col {
+                grid-template-columns: 1fr 1fr !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .form-grid-4col, .form-grid-3col, .form-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Remove Agent Confirmation Modal -->
+    <div class="modal-overlay" id="overlay-remove-agent" style="display: none;">
+        <div class="modal-content" style="position: relative; width: 360px; padding: 20px; text-align: left;">
+            <button type="button" class="modal-close-label" title="Close" onclick="closeRemoveAgentModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header" style="width: 36px; height: 36px; border-radius: 50%; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>
+            </div>
+            <h3 class="modal-title" style="font-size: 1rem; margin-bottom: 4px;">Remove Agent from Queue</h3>
+            <p class="modal-desc" style="font-size: 0.8125rem; color: #666; margin-bottom: 16px;">Are you sure you want to remove <strong id="modal-remove-agent-name" style="color: var(--color-black);"></strong> from this queue?</p>
+            <input type="hidden" id="modal-remove-agent-id" value="">
+            <div class="modal-actions" style="margin-top: 0; padding-top: 12px; border-top: 1px solid var(--color-border); display: flex; gap: 8px;">
+                <button type="button" class="btn-secondary" style="flex: 1; height: 32px; justify-content: center;" onclick="closeRemoveAgentModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="flex: 1; height: 32px; justify-content: center; background-color: #dc2626; border-color: #dc2626;" onclick="confirmRemoveAgent()">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Admin navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="../Company-Branches/index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="../Company-Branches/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="../Telephony/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="../IVR/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="../Call-Routing/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="../Queues/index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="../Agents/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="../CCM/customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="index.html" style="color: inherit; text-decoration: none;">Queues</a>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Add Queue</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Back to Welcome">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area" style="padding-bottom: 60px;">
+                <form id="add-queue-page-form" onsubmit="saveQueueAndRedirect(event)">
+                    
+                    <!-- Page Header with Back Button and Top-Right Action CTAs (Matching HRMS Standard) -->
+                    <div class="page-header">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <a href="index.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;" title="Back to Queues">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Add Queue</h1>
+                                <p class="page-subtitle">Configure queue criteria (Branch &rarr; Department &rarr; Role), assign eligible agents, and configure fallback.</p>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a href="index.html" class="btn-secondary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; text-decoration: none;">Cancel</a>
+                            <button type="submit" id="save-queue-btn" class="btn-primary" style="height: 32px; padding: 0 18px; font-size: 0.8125rem;" disabled>Save Queue</button>
+                        </div>
+                    </div>
+
+                    <!-- Queue Details Card -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">Queue Details</h3>
+                                <p class="section-helper">Specify the hierarchical target criteria (Branch &rarr; Department &rarr; Role) to determine eligible employees.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid-4col">
+                            <!-- 1. Queue Name -->
+                            <div class="form-group">
+                                <label for="add-name-val">Queue Name *</label>
+                                <input type="text" id="add-name-val" class="form-control" placeholder="e.g. Bengaluru Customer Support" required oninput="validatePageForm()">
+                            </div>
+
+                            <!-- 2. Branch -->
+                            <div class="form-group">
+                                <label>Branch *</label>
+                                <details class="custom-select-wrapper" id="add-branch-details">
+                                    <summary class="custom-select-trigger" id="add-branch-trigger">
+                                        <span class="trigger-label placeholder">Select Branch</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="max-height: 200px; overflow-y: auto;">
+                                        <div class="agent-search-box" onclick="event.stopPropagation();">
+                                            <input type="text" class="agent-search-input" placeholder="Search branch..." oninput="filterBranchOptions(this.value)">
+                                        </div>
+                                        <div id="add-branch-options-list">
+                                            <!-- Populated dynamically via JS -->
+                                        </div>
+                                    </div>
+                                </details>
+                                <input type="hidden" id="add-branch-val" value="">
+                            </div>
+
+                            <!-- 3. Department -->
+                            <div class="form-group">
+                                <label>Department *</label>
+                                <details class="custom-select-wrapper" id="add-dept-details">
+                                    <summary class="custom-select-trigger" id="add-dept-trigger">
+                                        <span class="trigger-label placeholder">Select Department</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="max-height: 200px; overflow-y: auto;">
+                                        <div class="agent-search-box" onclick="event.stopPropagation();">
+                                            <input type="text" class="agent-search-input" placeholder="Search department..." oninput="filterDepartmentOptions(this.value)">
+                                        </div>
+                                        <div id="add-dept-options-list">
+                                            <!-- Populated dynamically via JS -->
+                                        </div>
+                                    </div>
+                                </details>
+                                <input type="hidden" id="add-dept-val" value="">
+                            </div>
+
+                            <!-- 4. Role -->
+                            <div class="form-group">
+                                <label>Role *</label>
+                                <details class="custom-select-wrapper" id="add-role-details">
+                                    <summary class="custom-select-trigger" id="add-role-trigger">
+                                        <span class="trigger-label placeholder">Select Role</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="max-height: 200px; overflow-y: auto;">
+                                        <div class="agent-search-box" onclick="event.stopPropagation();">
+                                            <input type="text" class="agent-search-input" placeholder="Search role..." oninput="filterRoleOptions(this.value)">
+                                        </div>
+                                        <div id="add-role-options-list">
+                                            <!-- Populated dynamically via JS -->
+                                        </div>
+                                    </div>
+                                </details>
+                                <input type="hidden" id="add-role-val" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Queue Agents Card -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">Queue Agents</h3>
+                                <p class="section-helper">Filter, search, and select eligible employees for this queue based on selected criteria.</p>
+                            </div>
+                            <div id="eligible-count-badge" style="font-size: 0.75rem; font-weight: 600; background: var(--color-bg-light); border: 1px solid var(--color-border); padding: 3px 10px; border-radius: 12px; color: var(--color-black);">
+                                0 Eligible Employees
+                            </div>
+                        </div>
+
+                        <!-- Eligibility helper / banner -->
+                        <div id="criteria-incomplete-msg" class="eligibility-prompt-bar" style="background: var(--color-bg-light); border: 1px dashed var(--color-border); color: #555;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            <span>Please select <strong>Branch</strong>, <strong>Department</strong>, and <strong>Role</strong> above to load eligible employees.</span>
+                        </div>
+
+                        <div id="criteria-complete-box" style="display: none;">
+                            <div class="eligibility-info-bar" style="background: var(--color-bg-light); border: 1px solid var(--color-border); color: var(--color-black);">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                    <span>Eligible pool: <strong id="criteria-summary-text">Bengaluru &bull; Customer Support &bull; Customer Care Executive</strong></span>
+                                </div>
+                                <span id="criteria-eligible-text" style="font-weight: 700;">35 Eligible</span>
+                            </div>
+
+                            <!-- Searchable Multi-Select Selector -->
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Queue Agents *</label>
+                                <details class="custom-select-wrapper" id="add-agents-details">
+                                    <summary class="custom-select-trigger" id="add-agents-trigger">
+                                        <span class="trigger-label placeholder">0 Agents Selected</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options" style="max-height: 280px; overflow-y: auto;">
+                                        <div class="agent-search-box" onclick="event.stopPropagation();">
+                                            <input type="text" class="agent-search-input" id="add-agents-search-input" placeholder="Search employee name..." oninput="filterAgentsList(this.value)">
+                                            <div class="dropdown-agent-actions" id="add-agent-select-actions">
+                                                <label class="select-all-row" onclick="event.stopPropagation();">
+                                                    <input type="checkbox" id="add-select-all-checkbox" onchange="toggleSelectAllCheckbox(this.checked)">
+                                                    <span>Select All</span>
+                                                </label>
+                                                <button type="button" class="agent-action-link-btn clear" onclick="clearAllAgentsSelection(event)">Clear All</button>
+                                            </div>
+                                        </div>
+                                        <div id="add-agents-options-list" style="padding: 4px;">
+                                            <!-- Populated dynamically via JS -->
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Queue Behaviour & Fallback Card -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="section-title">Queue Behaviour &amp; Fallback</h3>
+                                <p class="section-helper">Waiting calls distribution and overflow routing fallback.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2col">
+                            <!-- Waiting Calls Info Card -->
+                            <div class="form-group" style="background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 12px 14px;">
+                                <label style="margin-bottom: 2px; color: var(--color-black); font-weight: 600;">Queue Call Distribution</label>
+                                <p style="font-size: 0.75rem; color: #555; line-height: 1.4; margin: 0;">
+                                    Incoming customer calls enter this queue and are distributed to available assigned agents. If all agents are busy, callers wait in the queue.
+                                </p>
+                            </div>
+
+                            <!-- Fallback Destination -->
+                            <div class="form-group">
+                                <label>Fallback Destination *</label>
+                                <details class="custom-select-wrapper" id="add-fallback-details">
+                                    <summary class="custom-select-trigger" id="add-fallback-trigger">
+                                        <span class="trigger-label">Central Support Team</span>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="custom-select-options">
+                                        <label class="custom-option selected" onclick="selectFallback('Central Support Team')">Central Support Team</label>
+                                        <label class="custom-option" onclick="selectFallback('Central-number IVR')">Central-number IVR</label>
+                                        <label class="custom-option" onclick="selectFallback('Branch Backup Queue')">Branch Backup Queue</label>
+                                    </div>
+                                </details>
+                                <input type="hidden" id="add-fallback-val" value="Central Support Team">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Error Feedback Area -->
+                    <div id="page-form-error" style="display: none; color: #dc2626; font-size: 0.75rem; font-weight: 500; margin-top: 16px;"></div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Interactive Script for Full Page Add Queue with Criteria Hierarchy -->
+    <script>
+        // Retrieve employee master dynamically from shared storage or seed large pool
+        function getAgentsMaster() {
+            const data = localStorage.getItem('ccm_agents_master_v1');
+            let baseList = [];
+            if (data) {
+                try {
+                    baseList = JSON.parse(data);
+                } catch (e) {}
+            }
+            if (!baseList || baseList.length === 0) {
+                baseList = [
+                    { id: "agt-1", name: "Deepak Kumar", ext: "101", branch: "Bengaluru", dept: "Customer Support", role: "Customer Care Executive", status: "Available" },
+                    { id: "agt-2", name: "Priya Sharma", ext: "102", branch: "Bengaluru", dept: "Customer Support", role: "Customer Care Executive", status: "On Call" },
+                    { id: "agt-3", name: "Rahul Varma", ext: "103", branch: "Bengaluru", dept: "Customer Support", role: "Customer Care Executive", status: "Available" },
+                    { id: "agt-4", name: "Ananya Iyer", ext: "104", branch: "Bengaluru", dept: "Customer Support", role: "Customer Care Executive", status: "Offline" },
+                    { id: "agt-5", name: "Venkatesh Rao", ext: "105", branch: "Bengaluru", dept: "Customer Support", role: "Customer Care Executive", status: "Available" },
+                    { id: "agt-101", name: "Kavya Menon", ext: "106", branch: "Bengaluru", dept: "Customer Support", role: "Customer Care Executive", status: "Available" },
+                    { id: "agt-102", name: "Harish Nambiar", ext: "107", branch: "Bengaluru", dept: "Customer Support", role: "Customer Care Executive", status: "On Call" }
+                ];
+            }
+
+            // Ensure scalable pool of 200+ employees for testing across departments & roles
+            const firstNames = ["Aarav", "Aditi", "Akhil", "Alok", "Amrita", "Anand", "Anjali", "Ankit", "Arun", "Bhavna", "Chetan", "Deepa", "Divya", "Gaurav", "Gayatri", "Harish", "Ishaan", "Kalyan", "Karan", "Kavita", "Madhav", "Manish", "Meera", "Manoj", "Neha", "Nikhil", "Pooja", "Pranav", "Priya", "Rahul", "Rajesh", "Ritu", "Rohan", "Sachin", "Sameer", "Sandhya", "Sanjay", "Shikha", "Shreya", "Siddharth", "Sneha", "Sonam", "Suresh", "Swati", "Tarun", "Varun", "Vikas", "Vikram", "Vinay", "Yamini"];
+            const lastNames = ["Sharma", "Verma", "Patel", "Reddy", "Nair", "Iyer", "Rao", "Gupta", "Deshmukh", "Menon", "Joshi", "Kulkarni", "Singhania", "Bose", "Ghosh", "Chatterjee", "Mehta", "Bhat", "Pillai", "Choudhury"];
+            
+            const branches = ["Bengaluru", "Mumbai", "Hyderabad", "Delhi", "Chennai", "Pune", "Mangalore", "Central HQ"];
+            const deptsWithRoles = [
+                { dept: "Customer Support", role: "Customer Care Executive" },
+                { dept: "Customer Support", role: "Support Lead" },
+                { dept: "Customer Support", role: "Escalation Desk Specialist" },
+                { dept: "Operations", role: "Operations Coordinator" },
+                { dept: "Operations", role: "Dispatch Executive" },
+                { dept: "Operations", role: "Hub Supervisor" },
+                { dept: "Accounts & Billing", role: "Billing Executive" },
+                { dept: "Sales & CRM", role: "Sales Executive" }
+            ];
+
+            // If base list is small, supplement with realistic employee directory up to 250 records
+            if (baseList.length < 250) {
+                let idx = baseList.length + 1;
+                for (let i = 0; i < 240; i++) {
+                    const fName = firstNames[i % firstNames.length];
+                    const lName = lastNames[(i * 3 + 7) % lastNames.length];
+                    const branch = branches[i % branches.length];
+                    const dr = deptsWithRoles[i % deptsWithRoles.length];
+                    const empId = `agt-gen-${idx}`;
+                    
+                    // Don't duplicate names if already exists
+                    const fullName = `${fName} ${lName}`;
+                    if (!baseList.some(e => e.name === fullName && e.branch === branch)) {
+                        baseList.push({
+                            id: empId,
+                            name: fullName,
+                            ext: String(100 + idx),
+                            branch: branch,
+                            dept: dr.dept,
+                            role: dr.role,
+                            status: i % 4 === 0 ? "On Call" : (i % 5 === 0 ? "Offline" : "Available")
+                        });
+                        idx++;
+                    }
+                }
+            }
+            return baseList;
+        }
+
+        const allEmployeesMaster = getAgentsMaster();
+
+        const allBranches = ["Bengaluru", "Mumbai", "Hyderabad", "Delhi", "Chennai", "Pune", "Mangalore", "Central HQ"];
+        const departmentRoleMap = {
+            "Customer Support": ["Customer Care Executive", "Support Lead", "Escalation Desk Specialist"],
+            "Operations": ["Operations Coordinator", "Dispatch Executive", "Hub Supervisor"],
+            "Accounts & Billing": ["Billing Executive", "Accountant"],
+            "Sales & CRM": ["Key Account Manager", "Sales Executive"]
+        };
+
+        let addSelectedAgents = [];
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // Branch filtering inside dropdown
+        function filterBranchOptions(query) {
+            const container = document.getElementById("add-branch-options-list");
+            const q = (query || '').toLowerCase().trim();
+            const filtered = allBranches.filter(b => !q || b.toLowerCase().includes(q));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 8px; font-size: 0.75rem; color: #888; text-align: center;">No branches found</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(b => 
+                `<label class="custom-option" onclick="selectBranch('${b}')">${b}</label>`
+            ).join('');
+        }
+
+        function selectBranch(branch) {
+            document.getElementById("add-branch-val").value = branch;
+            const trigger = document.querySelector("#add-branch-trigger .trigger-label");
+            trigger.textContent = branch;
+            trigger.classList.remove('placeholder');
+            document.getElementById("add-branch-details").removeAttribute('open');
+
+            renderDepartmentDropdown();
+            onCriteriaChanged();
+        }
+
+        function renderDepartmentDropdown(query = '') {
+            const deptList = Object.keys(departmentRoleMap);
+            const container = document.getElementById("add-dept-options-list");
+            const q = (query || '').toLowerCase().trim();
+            const filtered = deptList.filter(dept => !q || dept.toLowerCase().includes(q));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 8px; font-size: 0.75rem; color: #888; text-align: center;">No departments found</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(dept => 
+                `<label class="custom-option" onclick="selectDepartment('${dept}')">${dept}</label>`
+            ).join('');
+        }
+
+        function filterDepartmentOptions(query) {
+            renderDepartmentDropdown(query);
+        }
+
+        function selectDepartment(dept) {
+            document.getElementById("add-dept-val").value = dept;
+            const trigger = document.querySelector("#add-dept-trigger .trigger-label");
+            trigger.textContent = dept;
+            trigger.classList.remove('placeholder');
+            document.getElementById("add-dept-details").removeAttribute('open');
+
+            // Reset role
+            document.getElementById("add-role-val").value = "";
+            const roleTrigger = document.querySelector("#add-role-trigger .trigger-label");
+            roleTrigger.textContent = "Select Role";
+            roleTrigger.classList.add('placeholder');
+
+            renderRoleDropdown(dept);
+            onCriteriaChanged();
+        }
+
+        function renderRoleDropdown(dept, query = '') {
+            const currentDept = dept || document.getElementById("add-dept-val")?.value.trim();
+            const roles = departmentRoleMap[currentDept] || [];
+            const container = document.getElementById("add-role-options-list");
+            const q = (query || '').toLowerCase().trim();
+
+            if (!currentDept) {
+                container.innerHTML = `<div style="padding: 8px; font-size: 0.75rem; color: #888; text-align: center;">Please select a department first</div>`;
+                return;
+            }
+
+            const filtered = roles.filter(role => !q || role.toLowerCase().includes(q));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 8px; font-size: 0.75rem; color: #888; text-align: center;">No roles found</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(role => 
+                `<label class="custom-option" onclick="selectRole('${role}')">${role}</label>`
+            ).join('');
+        }
+
+        function filterRoleOptions(query) {
+            const currentDept = document.getElementById("add-dept-val")?.value.trim();
+            renderRoleDropdown(currentDept, query);
+        }
+
+        function selectRole(role) {
+            document.getElementById("add-role-val").value = role;
+            const trigger = document.querySelector("#add-role-trigger .trigger-label");
+            trigger.textContent = role;
+            trigger.classList.remove('placeholder');
+            document.getElementById("add-role-details").removeAttribute('open');
+
+            onCriteriaChanged();
+        }
+
+        function selectStatus(status) {
+            document.getElementById("add-status-val").value = status;
+            const trigger = document.querySelector("#add-status-trigger .trigger-label");
+            trigger.textContent = status;
+            document.getElementById("add-status-details").removeAttribute('open');
+        }
+
+        function selectFallback(fallback) {
+            const fallbackVal = fallback || 'Central Support Team';
+            document.getElementById("add-fallback-val").value = fallbackVal;
+            const trigger = document.querySelector("#add-fallback-trigger .trigger-label");
+            if (trigger) trigger.textContent = fallbackVal;
+            document.querySelectorAll("#add-fallback-details .custom-option").forEach(el => {
+                if (el.textContent.trim() === fallbackVal) {
+                    el.classList.add('selected');
+                } else {
+                    el.classList.remove('selected');
+                }
+            });
+            document.getElementById("add-fallback-details")?.removeAttribute('open');
+        }
+
+        function getEligibleEmployees() {
+            const branch = document.getElementById("add-branch-val")?.value.trim();
+            const dept = document.getElementById("add-dept-val")?.value.trim();
+            const role = document.getElementById("add-role-val")?.value.trim();
+
+            if (!branch || !dept || !role) return [];
+
+            return allEmployeesMaster.filter(emp => 
+                emp.branch === branch && emp.dept === dept && emp.role === role
+            );
+        }
+
+        function onCriteriaChanged() {
+            const branch = document.getElementById("add-branch-val")?.value.trim();
+            const dept = document.getElementById("add-dept-val")?.value.trim();
+            const role = document.getElementById("add-role-val")?.value.trim();
+
+            const isComplete = Boolean(branch && dept && role);
+            const incompleteMsg = document.getElementById("criteria-incomplete-msg");
+            const completeBox = document.getElementById("criteria-complete-box");
+            const eligibleBadge = document.getElementById("eligible-count-badge");
+
+            if (!isComplete) {
+                incompleteMsg.style.display = "flex";
+                completeBox.style.display = "none";
+                eligibleBadge.textContent = "0 Eligible Employees";
+                addSelectedAgents = [];
+                renderAgentsDropdown();
+                validatePageForm();
+                return;
+            }
+
+            incompleteMsg.style.display = "none";
+            completeBox.style.display = "block";
+
+            const eligible = getEligibleEmployees();
+            eligibleBadge.textContent = `${eligible.length} Eligible Employees`;
+            document.getElementById("criteria-summary-text").textContent = `${branch} • ${dept} • ${role}`;
+            document.getElementById("criteria-eligible-text").textContent = `${eligible.length} Eligible`;
+
+            // Auto-suggest queue name if empty
+            const nameInput = document.getElementById("add-name-val");
+            if (!nameInput.value.trim()) {
+                nameInput.value = `${branch} ${dept}`;
+            }
+
+            // Filter out existing selection that doesn't match new criteria
+            addSelectedAgents = addSelectedAgents.filter(id => eligible.some(e => e.id === id));
+
+            renderAgentsDropdown();
+            validatePageForm();
+        }
+
+        function renderAgentsDropdown(filterQuery = '') {
+            const eligible = getEligibleEmployees();
+            const container = document.getElementById("add-agents-options-list");
+            const query = filterQuery.toLowerCase().trim();
+
+            if (eligible.length === 0) {
+                container.innerHTML = `<div style="padding: 12px; font-size: 0.75rem; color: #888; text-align: center;">Please select criteria above to load eligible employees.</div>`;
+                updateAgentTriggerDisplay();
+                return;
+            }
+
+            const filtered = eligible.filter(agt => 
+                !query || agt.name.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="padding: 12px; font-size: 0.75rem; color: #888; text-align: center;">No employees matching "${escapeHtml(filterQuery)}"</div>`;
+                updateSelectAllCheckboxState();
+                updateAgentTriggerDisplay();
+                return;
+            }
+
+            container.innerHTML = filtered.map(agt => {
+                const isChecked = addSelectedAgents.includes(agt.id);
+                return `
+                    <label class="custom-option agent-item" onclick="toggleAgentSelection('${agt.id}', event)">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onclick="event.stopPropagation(); toggleAgentSelection('${agt.id}', event)">
+                        <div class="agent-info-text">${escapeHtml(agt.name)}</div>
+                    </label>
+                `;
+            }).join('');
+
+            updateSelectAllCheckboxState();
+            updateAgentTriggerDisplay();
+        }
+
+        function updateAgentTriggerDisplay() {
+            const trigger = document.querySelector("#add-agents-trigger .trigger-label");
+            if (!trigger) return;
+            const count = addSelectedAgents.length;
+            if (count === 0) {
+                trigger.textContent = "0 Agents Selected";
+                trigger.classList.add("placeholder");
+            } else {
+                trigger.textContent = `${count} Agent${count === 1 ? '' : 's'} Selected`;
+                trigger.classList.remove("placeholder");
+            }
+        }
+
+        function filterAgentsList(query) {
+            renderAgentsDropdown(query);
+        }
+
+        function toggleSelectAllCheckbox(isChecked) {
+            const eligible = getEligibleEmployees();
+            if (eligible.length === 0) return;
+
+            if (isChecked) {
+                // Select all eligible employees
+                const eligibleIds = eligible.map(e => e.id);
+                eligibleIds.forEach(id => {
+                    if (!addSelectedAgents.includes(id)) {
+                        addSelectedAgents.push(id);
+                    }
+                });
+            } else {
+                // If there is an active search query, unselect only visible filtered employees; otherwise unselect all eligible
+                const query = (document.getElementById("add-agents-search-input")?.value || '').toLowerCase().trim();
+                if (query) {
+                    const filteredIds = eligible.filter(e => e.name.toLowerCase().includes(query)).map(e => e.id);
+                    addSelectedAgents = addSelectedAgents.filter(id => !filteredIds.includes(id));
+                } else {
+                    addSelectedAgents = [];
+                }
+            }
+
+            const currentSearch = document.getElementById("add-agents-search-input")?.value || '';
+            renderAgentsDropdown(currentSearch);
+            validatePageForm();
+        }
+
+        function clearAllAgentsSelection(event) {
+            if (event) event.stopPropagation();
+            addSelectedAgents = [];
+            const selectAllCb = document.getElementById("add-select-all-checkbox");
+            if (selectAllCb) selectAllCb.checked = false;
+            const currentSearch = document.getElementById("add-agents-search-input")?.value || '';
+            renderAgentsDropdown(currentSearch);
+            validatePageForm();
+        }
+
+        function updateSelectAllCheckboxState() {
+            const eligible = getEligibleEmployees();
+            const selectAllCb = document.getElementById("add-select-all-checkbox");
+            if (!selectAllCb || eligible.length === 0) {
+                if (selectAllCb) selectAllCb.checked = false;
+                return;
+            }
+
+            const query = (document.getElementById("add-agents-search-input")?.value || '').toLowerCase().trim();
+            const listToCheck = query ? eligible.filter(e => e.name.toLowerCase().includes(query)) : eligible;
+
+            if (listToCheck.length > 0 && listToCheck.every(e => addSelectedAgents.includes(e.id))) {
+                selectAllCb.checked = true;
+            } else {
+                selectAllCb.checked = false;
+            }
+        }
+
+        function toggleAgentSelection(agentId, event) {
+            if (event) event.stopPropagation();
+            if (addSelectedAgents.includes(agentId)) {
+                addSelectedAgents = addSelectedAgents.filter(id => id !== agentId);
+            } else {
+                addSelectedAgents.push(agentId);
+            }
+
+            const currentSearch = document.getElementById("add-agents-search-input")?.value || '';
+            renderAgentsDropdown(currentSearch);
+            validatePageForm();
+        }
+
+        function removeAgent(agentId) {
+            addSelectedAgents = addSelectedAgents.filter(id => id !== agentId);
+            const currentSearch = document.getElementById("add-agents-search-input")?.value || '';
+            renderAgentsDropdown(currentSearch);
+            validatePageForm();
+        }
+
+        function assignAllEligible() {
+            const eligible = getEligibleEmployees();
+            addSelectedAgents = eligible.map(e => e.id);
+            const currentSearch = document.getElementById("add-agents-search-input")?.value || '';
+            renderAgentsDropdown(currentSearch);
+            validatePageForm();
+        }
+
+
+
+
+        function validatePageForm() {
+            const name = document.getElementById("add-name-val")?.value.trim();
+            const branch = document.getElementById("add-branch-val")?.value.trim();
+            const dept = document.getElementById("add-dept-val")?.value.trim();
+            const role = document.getElementById("add-role-val")?.value.trim();
+            const saveBtn = document.getElementById("save-queue-btn");
+
+            const isValid = Boolean(name && branch && dept && role && addSelectedAgents.length > 0);
+            if (saveBtn) {
+                saveBtn.disabled = !isValid;
+            }
+            return isValid;
+        }
+
+        function saveQueueAndRedirect(e) {
+            e.preventDefault();
+            if (!validatePageForm()) return;
+
+            const name = document.getElementById("add-name-val").value.trim();
+            const branch = document.getElementById("add-branch-val").value.trim();
+            const department = document.getElementById("add-dept-val").value.trim();
+            const role = document.getElementById("add-role-val").value.trim();
+            const status = document.getElementById("add-status-val").value || 'Active';
+            const fallback = document.getElementById("add-fallback-val").value || 'None';
+
+            let storedQueues = JSON.parse(localStorage.getItem('ccm_queues_data_v2') || 'null');
+            if (!storedQueues) {
+                storedQueues = [
+                    { id: 1, name: "Bengaluru Customer Support", branch: "Bengaluru", department: "Customer Support", role: "Customer Care Executive", agentCount: 35, agentIds: ["agt-1", "agt-2", "agt-3", "agt-4", "agt-5"], waitingCalls: 3, status: "Active", fallback: "Central Support Team" },
+                    { id: 2, name: "Mumbai Dispatch Support", branch: "Mumbai", department: "Operations", role: "Operations Coordinator", agentCount: 18, agentIds: ["agt-6", "agt-7", "agt-8"], waitingCalls: 0, status: "Active", fallback: "Central-number IVR" },
+                    { id: 3, name: "Hyderabad Helpline", branch: "Hyderabad", department: "Customer Support", role: "Customer Care Executive", agentCount: 24, agentIds: ["agt-9", "agt-10"], waitingCalls: 5, status: "Active", fallback: "Branch Backup Queue" }
+                ];
+            }
+
+            const isDuplicate = storedQueues.some(q => q.name.toLowerCase() === name.toLowerCase());
+            if (isDuplicate) {
+                const err = document.getElementById("page-form-error");
+                err.textContent = "A queue with this name already exists.";
+                err.style.display = "block";
+                return;
+            }
+
+            const nextId = storedQueues.reduce((max, q) => Math.max(max, q.id), 0) + 1;
+            const newQueue = {
+                id: nextId,
+                name,
+                branch,
+                department,
+                role,
+                agentCount: addSelectedAgents.length,
+                agentIds: [...addSelectedAgents],
+                waitingCalls: 0,
+                status,
+                fallback
+            };
+
+            storedQueues.push(newQueue);
+            localStorage.setItem('ccm_queues_data_v2', JSON.stringify(storedQueues));
+            window.location.href = "index.html";
+        }
+
+        // Global click-outside listener to close details dropdowns cleanly
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('details.custom-select-wrapper')) {
+                document.querySelectorAll('details.custom-select-wrapper[open]').forEach(el => {
+                    el.removeAttribute('open');
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            filterBranchOptions('');
+            renderDepartmentDropdown();
+            onCriteriaChanged();
+        });
+    </script>
+</body>
+</html>

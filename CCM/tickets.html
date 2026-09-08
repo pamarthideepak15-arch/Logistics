@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tickets — CCM | Logistics Management Platform</title>
+    <title>Tickets - CCM | Logistics Management Platform</title>
     <!-- Design System Global & Components CSS -->
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
@@ -608,6 +608,557 @@
         .sla-apply-btn:hover {
             opacity: 0.9;
         }
+
+        /* Default: Mobile ticket cards container hidden on desktop */
+        .mobile-tickets-list {
+            display: none;
+        }
+
+        /* ==========================================================
+           COMPREHENSIVE MOBILE RESPONSIVE SYSTEM FOR TICKETS (<=768px)
+           ========================================================== */
+        @media (max-width: 768px) {
+            /* 1. Page Header & Tabs */
+            .page-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                margin-bottom: 12px !important;
+            }
+
+            .page-title {
+                font-size: 1.1875rem !important;
+                line-height: 1.25 !important;
+                margin-bottom: 2px !important;
+            }
+
+            .page-subtitle {
+                font-size: 0.8125rem !important;
+                line-height: 1.4 !important;
+                color: #64748b !important;
+                word-break: normal !important;
+                overflow-wrap: break-word !important;
+            }
+
+            .header-actions {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+
+            .header-actions > [style*="display: none"],
+            .header-actions > [style*="display:none"],
+            #tickets-mgmt-header-actions[style*="display: none"],
+            #tickets-mgmt-header-actions[style*="display:none"],
+            #tickets-config-header-actions[style*="display: none"],
+            #tickets-config-header-actions[style*="display:none"] {
+                display: none !important;
+            }
+
+            #tickets-mgmt-header-actions:not([style*="display: none"]):not([style*="display:none"]) {
+                width: 100% !important;
+                display: flex !important;
+            }
+
+            #tickets-mgmt-header-actions #btn-add-ticket {
+                width: 100% !important;
+                height: 36px !important;
+                justify-content: center !important;
+                display: inline-flex !important;
+            }
+
+            #tickets-config-header-actions:not([style*="display: none"]):not([style*="display:none"]) {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+
+            #tickets-config-header-actions > button {
+                flex: 1 1 0% !important;
+                height: 36px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            .ccm-tab-bar {
+                display: flex !important;
+                width: 100% !important;
+                gap: 0 !important;
+                border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
+                margin-bottom: 14px !important;
+            }
+
+            .ccm-tab-btn {
+                flex: 1 !important;
+                padding: 10px 12px !important;
+                font-size: 0.8125rem !important;
+                text-align: center !important;
+                justify-content: center !important;
+            }
+
+            /* 2. Full-Width Stacked Filters Bar */
+            .filters-bar {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                margin-bottom: 14px !important;
+                padding-bottom: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .search-input-wrapper {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            .search-input {
+                width: 100% !important;
+                height: 38px !important;
+                box-sizing: border-box !important;
+                font-size: 0.8125rem !important;
+            }
+
+            .filters-bar .custom-select-wrapper {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                flex-shrink: 0 !important;
+            }
+
+            .filters-bar .custom-select-trigger {
+                width: 100% !important;
+                height: 36px !important;
+                padding: 0 12px !important;
+                font-size: 0.8125rem !important;
+                box-sizing: border-box !important;
+            }
+
+            .filters-bar .custom-select-options {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                z-index: 1050 !important;
+                left: 0 !important;
+                right: 0 !important;
+            }
+
+            /* 3. Hide Desktop Tickets Table on Mobile and Show Native Mobile Cards */
+            #tab-panel-tickets .table-container.ccm-desktop-table-container {
+                display: none !important;
+            }
+
+            #tab-panel-config .table-container.ccm-desktop-table-container {
+                display: block !important;
+                overflow-x: hidden !important;
+                border: 1px solid var(--color-border) !important;
+                border-radius: var(--border-radius-base, 8px) !important;
+                background: #ffffff !important;
+                margin-bottom: 12px !important;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            #tab-panel-config .config-mgmt-table {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                display: table !important;
+                border-collapse: collapse !important;
+                table-layout: fixed !important;
+            }
+
+            #tab-panel-config .config-mgmt-table thead {
+                display: table-header-group !important;
+            }
+
+            #tab-panel-config .config-mgmt-table tbody {
+                display: table-row-group !important;
+            }
+
+            #tab-panel-config .config-mgmt-table tr {
+                display: table-row !important;
+                background-color: #ffffff !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+
+            #tab-panel-config .config-mgmt-table th,
+            #tab-panel-config .config-mgmt-table td {
+                display: table-cell !important;
+                padding: 6px 4px !important;
+                vertical-align: middle !important;
+                border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
+                background-color: transparent !important;
+                box-sizing: border-box !important;
+            }
+
+            #tab-panel-config .config-mgmt-table th {
+                background-color: var(--color-table-header, #111827) !important;
+                color: #ffffff !important;
+                font-weight: 600 !important;
+                font-size: 0.6875rem !important;
+                letter-spacing: 0.02em !important;
+                padding: 8px 4px !important;
+                text-transform: uppercase !important;
+            }
+
+            #tab-panel-config .config-mgmt-table td::before {
+                display: none !important;
+            }
+
+            /* Workflow Table Columns */
+            #table-config-workflow th:first-child,
+            #table-config-workflow td:first-child {
+                width: 44px !important;
+                text-align: center !important;
+                padding-left: 4px !important;
+                padding-right: 2px !important;
+            }
+
+            #table-config-workflow th:nth-child(2),
+            #table-config-workflow td:nth-child(2) {
+                width: auto !important;
+                padding-left: 2px !important;
+                padding-right: 2px !important;
+            }
+
+            #table-config-workflow th:last-child,
+            #table-config-workflow td:last-child {
+                width: 82px !important;
+                text-align: right !important;
+                border-top: none !important;
+                margin-top: 0 !important;
+                padding-left: 2px !important;
+                padding-right: 4px !important;
+            }
+
+            /* SLA Table Columns */
+            #table-config-sla th:first-child,
+            #table-config-sla td:first-child {
+                width: 44% !important;
+                padding-left: 4px !important;
+                padding-right: 3px !important;
+            }
+
+            #table-config-sla th:nth-child(2),
+            #table-config-sla td:nth-child(2) {
+                width: 38% !important;
+                padding-left: 3px !important;
+                padding-right: 3px !important;
+            }
+
+            #table-config-sla th:last-child,
+            #table-config-sla td:last-child {
+                width: 56px !important;
+                min-width: 56px !important;
+                text-align: right !important;
+                border-top: none !important;
+                margin-top: 0 !important;
+                padding-left: 2px !important;
+                padding-right: 4px !important;
+            }
+
+            #table-config-sla th {
+                white-space: normal !important;
+                line-height: 1.25 !important;
+                font-size: 0.625rem !important;
+                padding: 6px 3px !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .config-inline-input {
+                width: 100% !important;
+                height: 32px !important;
+                font-size: 0.75rem !important;
+                padding: 0 6px !important;
+                border-radius: 4px !important;
+                box-sizing: border-box !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .sla-picker-trigger {
+                height: 32px !important;
+                font-size: 0.75rem !important;
+                padding: 0 6px !important;
+                box-sizing: border-box !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .sla-picker-trigger .sla-clock-icon svg {
+                width: 13px !important;
+                height: 13px !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .config-order-pill {
+                width: 20px !important;
+                height: 20px !important;
+                font-size: 0.6875rem !important;
+                border-radius: 4px !important;
+                flex-shrink: 0 !important;
+                padding: 0 !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .drag-handle {
+                padding: 2px !important;
+                margin-right: 2px !important;
+                flex-shrink: 0 !important;
+                display: none !important; /* Hide drag handle on small mobile to maximize clean room for input & arrows */
+            }
+
+            #tab-panel-config .config-mgmt-table .ccm-action-icons {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
+                gap: 2px !important;
+                flex-wrap: nowrap !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .ccm-icon-btn {
+                width: 24px !important;
+                height: 24px !important;
+                min-width: 24px !important;
+                padding: 0 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 4px !important;
+                border: 1px solid var(--color-border, #cbd5e1) !important;
+                background: #ffffff !important;
+                flex-shrink: 0 !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .ccm-icon-btn svg {
+                width: 12px !important;
+                height: 12px !important;
+            }
+
+            #tab-panel-config .section-card {
+                padding: 12px 10px !important;
+                margin-bottom: 12px !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                border-radius: 8px !important;
+            }
+
+            #tab-panel-config .section-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                margin-bottom: 10px !important;
+            }
+
+            #tab-panel-config .section-header .section-title {
+                font-size: 0.9375rem !important;
+                margin-bottom: 2px !important;
+            }
+
+            #tab-panel-config .section-header .section-helper {
+                font-size: 0.75rem !important;
+                line-height: 1.35 !important;
+            }
+
+            #tab-panel-config .section-header button {
+                width: 100% !important;
+                height: 34px !important;
+                font-size: 0.8125rem !important;
+                font-weight: 600 !important;
+                justify-content: center !important;
+                display: inline-flex !important;
+                align-items: center !important;
+            }
+
+            #tab-panel-config .config-input-hint {
+                font-size: 0.75rem !important;
+                line-height: 1.45 !important;
+                color: #64748b !important;
+                margin-top: 8px !important;
+            }
+
+            .mobile-tickets-list {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Purpose-designed Mobile Ticket Card */
+            .mobile-ticket-card {
+                background: #ffffff;
+                border: 1px solid var(--color-border, #e2e8f0);
+                border-radius: var(--border-radius-base, 6px);
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            /* Top Row: Ticket ID + Status Badge */
+            .mobile-ticket-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .mobile-ticket-id {
+                font-family: monospace;
+                font-weight: 700;
+                font-size: 0.875rem;
+                color: #0f172a;
+                text-decoration: none;
+            }
+
+            .mobile-ticket-id:hover {
+                color: #1e40af;
+                text-decoration: underline;
+            }
+
+            .mobile-ticket-badges {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                flex-wrap: wrap;
+            }
+
+            /* Main Content: Customer Name + Issue / Subject */
+            .mobile-ticket-main {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                width: 100%;
+            }
+
+            .mobile-ticket-customer {
+                font-size: 0.9375rem;
+                font-weight: 700;
+                color: #0f172a;
+                line-height: 1.3;
+                text-decoration: none;
+            }
+
+            .mobile-ticket-customer:hover {
+                color: #1e40af;
+                text-decoration: underline;
+            }
+
+            .mobile-ticket-subject {
+                font-size: 0.8125rem;
+                color: #334155;
+                line-height: 1.45;
+                font-weight: 500;
+                word-break: normal;
+                overflow-wrap: break-word;
+            }
+
+            /* Secondary Information: Branch + Priority + SLA */
+            .mobile-ticket-meta {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 8px;
+                padding-top: 8px;
+                border-top: 1px solid #f1f5f9;
+                font-size: 0.8125rem;
+            }
+
+            .mobile-ticket-meta-left {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .mobile-ticket-branch {
+                font-weight: 600;
+                color: #0f172a;
+            }
+
+            .mobile-ticket-sla {
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: #64748b;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            /* Bottom Actions Row */
+            .mobile-ticket-actions {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding-top: 8px;
+                border-top: 1px solid #f1f5f9;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .mobile-ticket-action-btn {
+                flex: 1;
+                height: 34px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                border-radius: var(--border-radius-base, 4px);
+                border: 1px solid #cbd5e1;
+                background: #ffffff;
+                color: #0f172a;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                text-decoration: none;
+                transition: all 0.15s ease;
+                box-sizing: border-box;
+            }
+
+            .mobile-ticket-action-btn:hover {
+                background: #f1f5f9;
+                border-color: #94a3b8;
+            }
+
+            .mobile-ticket-action-btn.btn-delete {
+                color: #b91c1c;
+                border-color: #fca5a5;
+                background: #fff;
+            }
+
+            .mobile-ticket-action-btn.btn-delete:hover {
+                background: #fef2f2;
+                border-color: #f87171;
+            }
+
+            /* Responsive Pagination */
+            .pagination-bar {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 10px !important;
+                padding: 12px 4px !important;
+            }
+
+            .pagination-controls {
+                width: 100% !important;
+                justify-content: center !important;
+                gap: 8px !important;
+            }
+
+            .pagination-controls .page-btn {
+                flex: 1 !important;
+                max-width: 100px !important;
+                height: 34px !important;
+                font-size: 0.75rem !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -779,16 +1330,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -1144,6 +1685,11 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Dedicated Mobile Ticket Cards Container (Rendered on <=768px) -->
+                    <div class="mobile-tickets-list" id="tickets-mobile-cards">
+                        <!-- Populated dynamically by renderTickets() -->
+                    </div>
                 </div>
 
                 <!-- TAB 2 PANEL: Configuration (Dedicated Ticket Configuration Area) -->
@@ -1310,7 +1856,7 @@
                 escalationNote: "SLA target of 8 Hours exceeded (14h elapsed). Escalated to Bengaluru Branch Manager.",
                 source: "Call",
                 callId: "CALL-9821",
-                callDateTime: "Sep 3, 2026 • 10:15 AM",
+                callDateTime: "Sep 3, 2026 · 10:15 AM",
                 allowEdit: true,
                 allowDelete: true
             },
@@ -1321,7 +1867,7 @@
                 phone: "+91 99887 65432",
                 customerType: "Existing",
                 subject: "Proof of Delivery (POD) Documentation Request",
-                details: "Requesting digital stamped POD copy for invoice reconciliation on Mumbai–Pune corridor delivery.",
+                details: "Requesting digital stamped POD copy for invoice reconciliation on Mumbai – Pune corridor delivery.",
                 branch: "Mumbai",
                 agentId: "agt-2",
                 agentName: "Priya Sharma",
@@ -1354,7 +1900,7 @@
                 escalated: false,
                 source: "Call",
                 callId: "CALL-9440",
-                callDateTime: "Sep 2, 2026 • 11:24 AM",
+                callDateTime: "Sep 2, 2026 · 11:24 AM",
                 allowEdit: true,
                 allowDelete: true
             },
@@ -1951,7 +2497,8 @@
 
         function renderTickets() {
             const tbody = document.getElementById('ticket-table-body');
-            if (!tbody) return;
+            const mobileContainer = document.getElementById('tickets-mobile-cards');
+            if (!tbody && !mobileContainer) return;
 
             const query = (document.getElementById('ticket-search-input')?.value || '').toLowerCase().trim();
 
@@ -1990,86 +2537,167 @@
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: #888; padding: 28px;">No matching tickets found.</td></tr>`;
+                if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: #888; padding: 28px;">No matching tickets found.</td></tr>`;
+                if (mobileContainer) mobileContainer.innerHTML = `<div style="text-align: center; color: #888; padding: 28px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;">No matching tickets found.</div>`;
                 document.getElementById('ticket-pagination-info').textContent = `Showing 0 of ${ticketsData.length}`;
                 return;
             }
 
-            tbody.innerHTML = filtered.map(t => {
-                let priorityBadge = '';
-                switch (t.priority) {
-                    case 'Low': priorityBadge = '<span class="badge-priority-low">Low</span>'; break;
-                    case 'Medium': priorityBadge = '<span class="badge-priority-medium">Medium</span>'; break;
-                    case 'High': priorityBadge = '<span class="badge-priority-high">High</span>'; break;
-                    default:
-                        priorityBadge = `<span class="badge-priority-low">${escapeHtml(t.priority)}</span>`;
-                }
+            // 1. RENDER DESKTOP TABLE ROWS (100% untouched desktop table design)
+            if (tbody) {
+                tbody.innerHTML = filtered.map(t => {
+                    let priorityBadge = '';
+                    switch (t.priority) {
+                        case 'Low': priorityBadge = '<span class="badge-priority-low">Low</span>'; break;
+                        case 'Medium': priorityBadge = '<span class="badge-priority-medium">Medium</span>'; break;
+                        case 'High': priorityBadge = '<span class="badge-priority-high">High</span>'; break;
+                        default:
+                            priorityBadge = `<span class="badge-priority-low">${escapeHtml(t.priority)}</span>`;
+                    }
 
-                // Status Badge
-                let statusBadge = '';
-                const lowerStatus = (t.status || '').toLowerCase();
-                if (lowerStatus === 'open') {
-                    statusBadge = '<span class="badge-status-open">Open</span>';
-                } else if (lowerStatus === 'in progress') {
-                    statusBadge = '<span class="badge-status-inprogress">In Progress</span>';
-                } else if (lowerStatus === 'resolved') {
-                    statusBadge = '<span class="badge-status-resolved">Resolved</span>';
-                } else if (lowerStatus === 'closed') {
-                    statusBadge = '<span class="badge-status-closed">Closed</span>';
-                } else {
-                    statusBadge = `<span class="badge-status-open">${escapeHtml(t.status)}</span>`;
-                }
+                    let statusBadge = '';
+                    const lowerStatus = (t.status || '').toLowerCase();
+                    if (lowerStatus === 'open') {
+                        statusBadge = '<span class="badge-status-open">Open</span>';
+                    } else if (lowerStatus === 'in progress') {
+                        statusBadge = '<span class="badge-status-inprogress">In Progress</span>';
+                    } else if (lowerStatus === 'resolved') {
+                        statusBadge = '<span class="badge-status-resolved">Resolved</span>';
+                    } else if (lowerStatus === 'closed') {
+                        statusBadge = '<span class="badge-status-closed">Closed</span>';
+                    } else {
+                        statusBadge = `<span class="badge-status-open">${escapeHtml(t.status)}</span>`;
+                    }
 
-                // SLA Breach / Escalated indicator
-                let escalationBadge = '';
-                if (t.escalated || t.slaBreached) {
-                    escalationBadge = `<span class="badge-escalated" title="SLA Breached - Escalated to ${escapeHtml(currentTicketConfig.escalation?.target || 'Branch Manager')}"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Escalated</span>`;
-                }
+                    let escalationBadge = '';
+                    if (t.escalated || t.slaBreached) {
+                        escalationBadge = `<span class="badge-escalated" title="SLA Breached - Escalated to ${escapeHtml(currentTicketConfig.escalation?.target || 'Branch Manager')}"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Escalated</span>`;
+                    }
 
-                return `
-                    <tr data-id="${t.id}">
-                        <td style="font-weight: 700; font-family: monospace;">
-                            <a href="javascript:void(0)" onclick="openViewTicketModal('${t.id}')" style="color: var(--color-black); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
-                                ${escapeHtml(t.id)}
-                            </a>
-                        </td>
-                        <td style="font-weight: 600;">
-                            <a href="customer-360.html?id=${t.customerId || 'CUST-1001'}" style="color: var(--color-black); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
-                                ${escapeHtml(t.customerName)}
-                            </a>
-                        </td>
-                        <td style="color: #475569; font-family: monospace; font-size: 0.75rem;">${escapeHtml(t.phone || '—')}</td>
-                        <td>
-                            <div style="font-weight: 500; color: var(--color-black); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px;" title="${escapeHtml(t.subject)}">
-                                ${escapeHtml(t.subject)}
-                            </div>
-                        </td>
-                        <td>${escapeHtml(t.branch)}</td>
-                        <td>${escapeHtml(t.agentName || 'Unassigned')}</td>
-                        <td>${priorityBadge}</td>
-                        <td>
-                            <div style="display: inline-flex; align-items: center; flex-wrap: wrap; gap: 2px;">
-                                ${statusBadge}
-                                ${escalationBadge}
-                            </div>
-                        </td>
-                        <td style="font-weight: 600; color: #334155; font-size: 0.75rem;">${escapeHtml(t.sla || '24 Hours')}</td>
-                        <td class="action-cell">
-                            <div class="ccm-action-icons" style="justify-content: flex-end;">
-                                <button type="button" class="ccm-icon-btn" title="View Ticket" onclick="openViewTicketModal('${t.id}')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                </button>
-                                <a href="edit-ticket.html?id=${encodeURIComponent(t.id)}" class="ccm-icon-btn" title="Edit Ticket" style="text-decoration: none;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    return `
+                        <tr data-id="${t.id}">
+                            <td style="font-weight: 700; font-family: monospace;">
+                                <a href="javascript:void(0)" onclick="openViewTicketModal('${t.id}')" style="color: var(--color-black); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                    ${escapeHtml(t.id)}
                                 </a>
-                                <button type="button" class="ccm-icon-btn" title="Delete Ticket" onclick="openDeleteTicketModal('${t.id}', '${escapeHtml(t.customerName)}')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </td>
+                            <td style="font-weight: 600;">
+                                <a href="customer-360.html?id=${t.customerId || 'CUST-1001'}" style="color: var(--color-black); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                    ${escapeHtml(t.customerName)}
+                                </a>
+                            </td>
+                            <td style="color: #475569; font-family: monospace; font-size: 0.75rem;">${escapeHtml(t.phone || '—')}</td>
+                            <td>
+                                <div style="font-weight: 500; color: var(--color-black); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px;" title="${escapeHtml(t.subject)}">
+                                    ${escapeHtml(t.subject)}
+                                </div>
+                            </td>
+                            <td>${escapeHtml(t.branch)}</td>
+                            <td>${escapeHtml(t.agentName || 'Unassigned')}</td>
+                            <td>${priorityBadge}</td>
+                            <td>
+                                <div style="display: inline-flex; align-items: center; flex-wrap: wrap; gap: 2px;">
+                                    ${statusBadge}
+                                    ${escalationBadge}
+                                </div>
+                            </td>
+                            <td style="font-weight: 600; color: #334155; font-size: 0.75rem;">${escapeHtml(t.sla || '24 Hours')}</td>
+                            <td class="action-cell">
+                                <div class="ccm-action-icons" style="justify-content: flex-end;">
+                                    <button type="button" class="ccm-icon-btn" title="View Ticket" onclick="openViewTicketModal('${t.id}')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    </button>
+                                    <a href="edit-ticket.html?id=${encodeURIComponent(t.id)}" class="ccm-icon-btn" title="Edit Ticket" style="text-decoration: none;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    </a>
+                                    <button type="button" class="ccm-icon-btn" title="Delete Ticket" onclick="openDeleteTicketModal('${t.id}', '${escapeHtml(t.customerName)}')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // 2. RENDER PURPOSE-DESIGNED MOBILE CARDS (Mobile Responsive View)
+            if (mobileContainer) {
+                mobileContainer.innerHTML = filtered.map(t => {
+                    let priorityBadge = '';
+                    switch (t.priority) {
+                        case 'Low': priorityBadge = '<span class="badge-priority-low">Low</span>'; break;
+                        case 'Medium': priorityBadge = '<span class="badge-priority-medium">Medium</span>'; break;
+                        case 'High': priorityBadge = '<span class="badge-priority-high">High</span>'; break;
+                        default:
+                            priorityBadge = `<span class="badge-priority-low">${escapeHtml(t.priority)}</span>`;
+                    }
+
+                    let statusBadge = '';
+                    const lowerStatus = (t.status || '').toLowerCase();
+                    if (lowerStatus === 'open') {
+                        statusBadge = '<span class="badge-status-open">Open</span>';
+                    } else if (lowerStatus === 'in progress') {
+                        statusBadge = '<span class="badge-status-inprogress">In Progress</span>';
+                    } else if (lowerStatus === 'resolved') {
+                        statusBadge = '<span class="badge-status-resolved">Resolved</span>';
+                    } else if (lowerStatus === 'closed') {
+                        statusBadge = '<span class="badge-status-closed">Closed</span>';
+                    } else {
+                        statusBadge = `<span class="badge-status-open">${escapeHtml(t.status)}</span>`;
+                    }
+
+                    let escalationBadge = '';
+                    if (t.escalated || t.slaBreached) {
+                        escalationBadge = `<span class="badge-escalated" title="SLA Breached"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Escalated</span>`;
+                    }
+
+                    return `
+                        <div class="mobile-ticket-card" data-id="${escapeHtml(t.id)}">
+                            <!-- 1. Top Row: Ticket ID + Status Badge -->
+                            <div class="mobile-ticket-header">
+                                <a href="javascript:void(0)" onclick="openViewTicketModal('${escapeHtml(t.id)}')" class="mobile-ticket-id">${escapeHtml(t.id)}</a>
+                                <div class="mobile-ticket-badges">
+                                    ${statusBadge}
+                                    ${escalationBadge}
+                                </div>
+                            </div>
+
+                            <!-- 2. Main Content: Customer Name + Issue / Subject -->
+                            <div class="mobile-ticket-main">
+                                <a href="customer-360.html?id=${escapeHtml(t.customerId || 'CUST-1001')}" class="mobile-ticket-customer">${escapeHtml(t.customerName)}</a>
+                                <div class="mobile-ticket-subject">${escapeHtml(t.subject)}</div>
+                            </div>
+
+                            <!-- 3. Secondary Information: Branch, Priority, SLA -->
+                            <div class="mobile-ticket-meta">
+                                <div class="mobile-ticket-meta-left">
+                                    <span class="mobile-ticket-branch">${escapeHtml(t.branch)}</span>
+                                    ${priorityBadge}
+                                </div>
+                                <div class="mobile-ticket-sla">
+                                    <span>SLA ${escapeHtml(t.sla || '24 Hours')}</span>
+                                </div>
+                            </div>
+
+                            <!-- 4. Bottom Action Row: View, Edit, Delete -->
+                            <div class="mobile-ticket-actions">
+                                <button type="button" class="mobile-ticket-action-btn" title="View Ticket" onclick="openViewTicketModal('${escapeHtml(t.id)}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <span>View</span>
+                                </button>
+                                <a href="edit-ticket.html?id=${encodeURIComponent(t.id)}" class="mobile-ticket-action-btn" title="Edit Ticket">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <span>Edit</span>
+                                </a>
+                                <button type="button" class="mobile-ticket-action-btn btn-delete" title="Delete Ticket" onclick="openDeleteTicketModal('${escapeHtml(t.id)}', '${escapeHtml(t.customerName)}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    <span>Delete</span>
                                 </button>
                             </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+                        </div>
+                    `;
+                }).join('');
+            }
 
             document.getElementById('ticket-pagination-info').textContent = `Showing 1-${filtered.length} of ${ticketsData.length}`;
         }
@@ -2151,8 +2779,8 @@
             if (!t) return;
 
             document.getElementById('view-ticket-id-subtitle').textContent = t.id;
-            document.getElementById('view-ticket-cust-name').textContent = t.customerName || '—';
-            document.getElementById('view-ticket-cust-phone').textContent = t.phone || '—';
+            document.getElementById('view-ticket-cust-name').textContent = t.customerName || '–';
+            document.getElementById('view-ticket-cust-phone').textContent = t.phone || '–';
             document.getElementById('view-ticket-cust-type-badge').textContent = (t.customerType || 'Existing') + ' Customer';
 
             document.getElementById('view-ticket-branch').textContent = t.branch;

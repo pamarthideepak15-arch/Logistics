@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IVR — Exelon Logistics ERP</title>
+    <title>IVR - Exelon Logistics ERP</title>
     <!-- Design System Global & Components CSS -->
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
@@ -11,6 +11,58 @@
     <!-- CCM Specific Stylesheet -->
     <link rel="stylesheet" href="ccm.css">
     <style>
+        /* Welcome Message Header Component */
+        .welcome-message-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto auto;
+            align-items: center;
+            column-gap: 16px;
+            margin-bottom: 8px;
+        }
+        .welcome-message-title {
+            grid-column: 1;
+            grid-row: 1;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: var(--color-black);
+            margin: 0 0 2px 0;
+        }
+        .welcome-message-subtitle {
+            grid-column: 1;
+            grid-row: 2;
+            font-size: 0.6875rem;
+            color: #666;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .welcome-message-badge {
+            grid-column: 2;
+            grid-row: 1 / span 2;
+            align-self: center;
+            font-size: 0.6875rem;
+            color: #059669;
+            background: #ecfdf5;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: 1px solid #a7f3d0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .welcome-message-badge-dot {
+            width: 6px;
+            height: 6px;
+            min-width: 6px;
+            border-radius: 50%;
+            background: #059669;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+
         /* Audio Player & Upload Components for IVR */
         .audio-upload-box {
             border: 1.5px dashed var(--color-border);
@@ -188,6 +240,485 @@
             color: #94a3b8;
             font-size: 0.75rem;
             font-style: italic;
+        }
+
+        /* Mobile Responsive Enhancements (<= 768px) */
+        @media (max-width: 768px) {
+            /* 1. Header & Page Layout */
+            .page-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 8px !important;
+                margin-bottom: 14px !important;
+            }
+            .page-title-group {
+                width: 100% !important;
+            }
+            .page-subtitle {
+                white-space: normal !important;
+                line-height: 1.4 !important;
+            }
+
+            /* 2. IVR Tabs Bar (Single-row Horizontal Scrolling) */
+            .ccm-tabs-container {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                gap: 6px !important;
+                margin-bottom: 14px !important;
+                border-bottom: 1px solid var(--color-border) !important;
+                scrollbar-width: none !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                padding-bottom: 2px !important;
+            }
+            .ccm-tabs-container::-webkit-scrollbar {
+                display: none !important;
+            }
+            .ccm-tab-label {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+                font-size: 0.8125rem !important;
+                padding: 8px 12px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+            }
+
+            /* 3. Central Box & Cards Spacing */
+            .ccm-central-box {
+                padding: 14px 14px !important;
+                margin-bottom: 14px !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+            }
+            .ccm-central-box-header {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+                margin-bottom: 14px !important;
+            }
+            .ccm-central-title-group {
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+            }
+            .ccm-central-title {
+                font-size: 0.9375rem !important;
+                line-height: 1.3 !important;
+                margin-bottom: 2px !important;
+            }
+            .ccm-central-subtitle {
+                font-size: 0.75rem !important;
+                line-height: 1.35 !important;
+                white-space: normal !important;
+                display: block !important;
+            }
+
+            /* 4. Supported Caller Input Methods: Stacked Vertically with Full Width */
+            .ivr-input-methods-list {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 8px !important;
+                width: 100% !important;
+                margin-top: 6px !important;
+            }
+            .ivr-input-method-item {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 12px !important;
+                width: 100% !important;
+                padding: 12px 14px !important;
+                font-size: 0.8125rem !important;
+                line-height: 1.35 !important;
+                box-sizing: border-box !important;
+                white-space: normal !important;
+                word-break: normal !important;
+            }
+            .ivr-input-method-item svg {
+                flex-shrink: 0 !important;
+                width: 18px !important;
+                height: 18px !important;
+            }
+
+            /* 5. Self-Service Lookup Flow: Responsive Vertical Step Layout */
+            .ivr-flow-diagram {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 8px !important;
+                width: 100% !important;
+                padding: 6px 0 0 0 !important;
+            }
+            .ivr-flow-step {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 4px !important;
+                width: 100% !important;
+                padding: 10px 14px !important;
+                box-sizing: border-box !important;
+                background-color: var(--color-bg-light) !important;
+                border: 1px solid var(--color-border) !important;
+                border-radius: var(--border-radius-base) !important;
+            }
+            .ivr-flow-step-num {
+                font-size: 0.65rem !important;
+                font-weight: 700 !important;
+                color: #64748b !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.04em !important;
+            }
+            .ivr-flow-step-text {
+                font-size: 0.8125rem !important;
+                font-weight: 700 !important;
+                color: var(--color-black) !important;
+                white-space: normal !important;
+                line-height: 1.3 !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+            }
+            .ivr-flow-arrow {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 0 !important;
+                margin: -2px 0 !important;
+                color: #94a3b8 !important;
+            }
+            .ivr-flow-arrow svg {
+                transform: rotate(90deg) !important;
+                width: 16px !important;
+                height: 16px !important;
+            }
+
+            /* 6. Audio Player / Greeting Components Mobile Polish */
+            .welcome-message-header {
+                grid-template-columns: 1fr auto !important;
+                grid-template-rows: auto auto !important;
+                column-gap: 10px !important;
+                row-gap: 4px !important;
+                margin-bottom: 12px !important;
+                align-items: center !important;
+            }
+            .welcome-message-title {
+                grid-column: 1 !important;
+                grid-row: 1 !important;
+                margin: 0 !important;
+                font-size: 0.8125rem !important;
+                line-height: 1.3 !important;
+            }
+            .welcome-message-badge {
+                grid-column: 2 !important;
+                grid-row: 1 !important;
+                align-self: center !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+                padding: 2px 8px !important;
+            }
+            .welcome-message-subtitle {
+                grid-column: 1 / -1 !important;
+                grid-row: 2 !important;
+                font-size: 0.6875rem !important;
+                color: #666 !important;
+                margin: 0 !important;
+                line-height: 1.4 !important;
+            }
+            .audio-upload-box {
+                padding: 12px 14px !important;
+            }
+            .audio-transcript-box {
+                line-height: 1.4 !important;
+                word-break: break-word !important;
+            }
+            .audio-player-card {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                padding: 12px 14px !important;
+            }
+            .audio-file-info {
+                width: 100% !important;
+                flex-wrap: wrap !important;
+            }
+            .audio-controls-group {
+                width: 100% !important;
+                display: flex !important;
+                gap: 8px !important;
+            }
+            .audio-controls-group .btn-audio-control,
+            .audio-controls-group .btn-audio-change {
+                flex: 1 1 0% !important;
+                height: 32px !important;
+                justify-content: center !important;
+            }
+
+            /* 7. IVR Menu Table Mobile Cards (Tab 1) */
+            .table-container table.ivr-table {
+                display: block !important;
+                width: 100% !important;
+                border: none !important;
+            }
+            .table-container table.ivr-table thead {
+                display: none !important;
+            }
+            .table-container table.ivr-table tbody {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                width: 100% !important;
+            }
+            .table-container table.ivr-table tbody tr {
+                display: grid !important;
+                grid-template-columns: auto auto 1fr auto !important;
+                align-items: center !important;
+                row-gap: 0 !important;
+                column-gap: 0 !important;
+                background-color: var(--color-white) !important;
+                border: 1px solid var(--color-border) !important;
+                border-radius: var(--border-radius-base, 8px) !important;
+                padding: 16px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
+                margin-bottom: 0 !important;
+                position: relative !important;
+            }
+            .table-container table.ivr-table tbody tr td {
+                padding: 0 !important;
+                font-size: 0.8125rem !important;
+                border: none !important;
+                background-color: transparent !important;
+                box-sizing: border-box !important;
+                text-align: left !important;
+                line-height: 1.4 !important;
+            }
+
+            /* --- TOP ROW: Drag handle, Key number, Menu Option (left) and Status toggle (right) --- */
+            /* td:nth-child(1) is Drag Handle */
+            .table-container table.ivr-table tbody tr td:nth-child(1) {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                width: auto !important;
+                flex-shrink: 0 !important;
+                order: 1 !important;
+                padding-right: 6px !important;
+                margin-bottom: 18px !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(1)::before {
+                display: none !important;
+                content: none !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(1) .ivr-drag-handle {
+                cursor: grab !important;
+                color: #94a3b8 !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            /* td:nth-child(2) is Key / Digit */
+            .table-container table.ivr-table tbody tr td:nth-child(2) {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                width: auto !important;
+                flex-shrink: 0 !important;
+                font-weight: 700 !important;
+                font-size: 0.875rem !important;
+                color: #0f172a !important;
+                order: 2 !important;
+                padding-right: 6px !important;
+                margin-bottom: 18px !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(2)::before {
+                display: none !important;
+                content: none !important;
+            }
+
+            /* td:nth-child(3) is Menu Option */
+            .table-container table.ivr-table tbody tr td:nth-child(3) {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                font-weight: 600 !important;
+                font-size: 0.875rem !important;
+                color: #0f172a !important;
+                order: 3 !important;
+                white-space: nowrap !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+                word-wrap: normal !important;
+                hyphens: none !important;
+                padding-right: 12px !important;
+                margin-bottom: 18px !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(3)::before {
+                display: none !important;
+                content: none !important;
+            }
+
+            /* td:nth-child(6) is Status Toggle (Right side of Top Row) */
+            .table-container table.ivr-table tbody tr td:nth-child(6) {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
+                width: auto !important;
+                flex-shrink: 0 !important;
+                order: 4 !important;
+                margin-left: auto !important;
+                margin-bottom: 18px !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(6)::before {
+                display: none !important;
+                content: none !important;
+            }
+
+            /* --- CONTENT SECTION: Full Width Destination & Voice Prompt --- */
+            /* td:nth-child(4) is Destination */
+            .table-container table.ivr-table tbody tr td:nth-child(4) {
+                grid-column: 1 / -1 !important;
+                order: 5 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 4px !important;
+                width: 100% !important;
+                margin-bottom: 16px !important;
+                color: #1e293b !important;
+                font-size: 0.8125rem !important;
+                font-weight: 500 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(4)::before {
+                content: "DESTINATION" !important;
+                font-weight: 700 !important;
+                font-size: 0.6875rem !important;
+                color: #64748b !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.05em !important;
+                display: block !important;
+                white-space: nowrap !important;
+                width: auto !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                flex: none !important;
+                margin: 0 !important;
+            }
+
+            /* td:nth-child(5) is Voice Prompt */
+            .table-container table.ivr-table tbody tr td:nth-child(5) {
+                grid-column: 1 / -1 !important;
+                order: 6 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                width: 100% !important;
+                margin-bottom: 18px !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(5)::before {
+                content: "VOICE PROMPT" !important;
+                font-weight: 700 !important;
+                font-size: 0.6875rem !important;
+                color: #64748b !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.05em !important;
+                display: block !important;
+                white-space: nowrap !important;
+                width: auto !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                flex: none !important;
+                margin: 0 !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(5) .table-audio-pill {
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                padding: 4px 10px 4px 6px !important;
+                background: #f8fafc !important;
+                border: 1px solid var(--color-border) !important;
+                border-radius: 4px !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                width: auto !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(5) .table-audio-pill .audio-name {
+                font-family: monospace !important;
+                font-size: 0.75rem !important;
+                color: #0f172a !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                max-width: 240px !important;
+                display: inline-block !important;
+            }
+
+            /* --- BOTTOM ROW: Edit & Delete Actions --- */
+            /* td:nth-child(7) is Actions */
+            .table-container table.ivr-table tbody tr td:nth-child(7) {
+                grid-column: 1 / -1 !important;
+                order: 7 !important;
+                border-top: 1px solid #f1f5f9 !important;
+                padding-top: 12px !important;
+                margin-top: 0 !important;
+                display: flex !important;
+                flex-direction: row !important;
+                width: 100% !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(7)::before {
+                display: none !important;
+                content: none !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(7) .ccm-action-icons {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                width: 100% !important;
+                gap: 10px !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(7) .ccm-icon-btn {
+                flex: 1 1 0% !important;
+                height: 32px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 6px !important;
+                background: #f8fafc !important;
+                border: 1px solid #e2e8f0 !important;
+                border-radius: 6px !important;
+                cursor: pointer !important;
+                color: #475569 !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+                font-family: inherit !important;
+                text-decoration: none !important;
+                transition: all 0.15s ease !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(7) .ccm-icon-btn:first-child::after {
+                content: "Edit" !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(7) .ccm-icon-btn:last-child::after {
+                content: "Delete" !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+                color: #dc2626 !important;
+            }
+            .table-container table.ivr-table tbody tr td:nth-child(7) .ccm-icon-btn:last-child {
+                color: #dc2626 !important;
+                border-color: #fee2e2 !important;
+                background: #fef2f2 !important;
+            }
         }
     </style>
 </head>
@@ -413,17 +944,6 @@
                     </a>
                 </nav>
             </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <!-- Headset / Telephony Icon -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
 
             <!-- Right Menu Pane -->
             <div class="sidebar-menu">
@@ -620,9 +1140,9 @@
                     </label>
                 </div>
 
-                <!-- ═══════════════════════════════════════════════════════════════
+                <!-- ---------------------------------------------------------------
                      TAB 1: CENTRAL-NUMBER IVR CONFIGURATION (CCM-6)
-                     ═══════════════════════════════════════════════════════════════ -->
+                     --------------------------------------------------------------- -->
                 <div id="tab-content-config" class="ccm-tab-content">
                     
                     <!-- IVR Configuration Card -->
@@ -644,20 +1164,18 @@
 
                             <!-- Welcome Message Configuration Section (Above IVR Menu Table) -->
                             <div style="margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--color-border);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <div>
-                                        <h3 style="font-size: 0.8125rem; font-weight: 700; color: var(--color-black); margin: 0 0 2px 0;">Welcome Message</h3>
-                                        <p style="font-size: 0.6875rem; color: #666; margin: 0;">Configure the recorded greeting played to callers when connecting to the central number.</p>
-                                    </div>
-                                    <span style="font-size: 0.6875rem; color: #059669; background: #ecfdf5; padding: 2px 8px; border-radius: 12px; font-weight: 600; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; gap: 4px;">
-                                        <span style="width: 6px; height: 6px; border-radius: 50%; background: #059669;"></span> Active Greeting
+                                <div class="welcome-message-header">
+                                    <h3 class="welcome-message-title">Welcome Message</h3>
+                                    <span class="welcome-message-badge">
+                                        <span class="welcome-message-badge-dot"></span> Active Greeting
                                     </span>
+                                    <p class="welcome-message-subtitle">Configure the recorded greeting played to callers when connecting to the central number.</p>
                                 </div>
 
                                 <!-- Welcome Message Audio Configuration Card -->
                                 <div id="welcome-message-empty-state" class="audio-upload-box" style="display: flex;" onclick="document.getElementById('welcome-audio-file-input').click()">
                                     <input type="file" id="welcome-audio-file-input" accept="audio/*,.mp3,.wav,.ogg" style="display: none;" onchange="handleWelcomeAudioUpload(this)">
-                                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #4b5563;">
+                                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #4b5563; flex-wrap: wrap;">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                         <span style="font-weight: 600; font-size: 0.8125rem; color: #1f2937;">Upload Audio</span>
                                         <span style="font-size: 0.75rem; color: #6b7280;">(MP3, WAV up to 10MB)</span>
@@ -861,9 +1379,9 @@
 
                 </div>
 
-                <!-- ═══════════════════════════════════════════════════════════════
+                <!-- ---------------------------------------------------------------
                      TAB 2: LR / TRACKING NUMBER STATUS LOOKUP (CCM-8)
-                     ═══════════════════════════════════════════════════════════════ -->
+                     --------------------------------------------------------------- -->
                 <div id="tab-content-lookup" class="ccm-tab-content">
                     
                     <!-- Shipment Self-Service Card -->

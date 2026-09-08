@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -220,6 +220,12 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
     <div class="app-layout">
         <!-- Two-Tier Dark Sidebar (CCM Admin Specific navigation) -->
         <aside class="sidebar">
@@ -230,16 +236,6 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                     </div>
                 </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
                 
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
@@ -1003,7 +999,7 @@
                     <tr data-id="${escapeHtml(item.id)}">
                         <td class="phone-cell">${escapeHtml(item.phone)}</td>
                         <td>${actionBadge}</td>
-                        <td style="color: #334155; font-size: 0.8125rem;">${escapeHtml(item.reason || '—')}</td>
+                        <td style="color: #334155; font-size: 0.8125rem;">${escapeHtml(item.reason || '–')}</td>
                         <td>
                             <div style="font-weight: 600; color: var(--color-black); font-size: 0.8125rem;">${escapeHtml(agentName)}</div>
                             <div class="agent-branch-sub">

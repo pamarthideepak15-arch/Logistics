@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Monitoring — CCM | Logistics Management Platform</title>
+    <title>Live Monitoring - CCM | Logistics Management Platform</title>
     <!-- Design System Global & Components CSS -->
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
@@ -70,7 +70,7 @@
 
         /* Status badges for Availability & Queues */
         .badge-avail-available {
-            padding: 2px 7px;
+            padding: 3px 8px;
             background: #ecfdf5;
             color: #065f46;
             border: 1px solid #a7f3d0;
@@ -79,10 +79,12 @@
             font-size: 0.75rem;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            white-space: nowrap;
+            line-height: 1;
         }
         .badge-avail-oncall {
-            padding: 2px 7px;
+            padding: 3px 8px;
             background: #eff6ff;
             color: #1e40af;
             border: 1px solid #bfdbfe;
@@ -91,10 +93,12 @@
             font-size: 0.75rem;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            white-space: nowrap;
+            line-height: 1;
         }
         .badge-avail-break {
-            padding: 2px 7px;
+            padding: 3px 8px;
             background: #fffbeb;
             color: #92400e;
             border: 1px solid #fde68a;
@@ -103,10 +107,12 @@
             font-size: 0.75rem;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            white-space: nowrap;
+            line-height: 1;
         }
         .badge-avail-offline {
-            padding: 2px 7px;
+            padding: 3px 8px;
             background: #f1f5f9;
             color: #64748b;
             border: 1px solid #cbd5e1;
@@ -115,7 +121,9 @@
             font-size: 0.75rem;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            white-space: nowrap;
+            line-height: 1;
         }
 
         /* Live Monitoring Dedicated Table Column Styles */
@@ -132,23 +140,33 @@
             padding: 8px 12px !important;
             vertical-align: middle !important;
         }
-        .live-active-calls-table th:first-child, .live-active-calls-table td:first-child { width: 15% !important; text-align: left !important; }
+
+        /* Branch Column visibility control */
+        .hide-branch-col .col-branch {
+            display: none !important;
+        }
+
+        /* Column widths for Active Calls (All Branches view: 7 columns) */
+        .live-active-calls-table th:first-child, .live-active-calls-table td:first-child { width: 16% !important; text-align: left !important; }
         .live-active-calls-table th:nth-child(2), .live-active-calls-table td:nth-child(2) { width: 18% !important; text-align: left !important; }
-        .live-active-calls-table th:nth-child(3), .live-active-calls-table td:nth-child(3) { width: 12% !important; text-align: left !important; }
-        .live-active-calls-table th:nth-child(4), .live-active-calls-table td:nth-child(4) { width: 11% !important; text-align: left !important; }
-        .live-active-calls-table th:nth-child(5), .live-active-calls-table td:nth-child(5) { width: 14% !important; text-align: left !important; }
+        .live-active-calls-table th.col-branch, .live-active-calls-table td.col-branch { width: 12% !important; text-align: left !important; }
+        .live-active-calls-table th:nth-child(4), .live-active-calls-table td:nth-child(4) { width: 10% !important; text-align: left !important; }
+        .live-active-calls-table th:nth-child(5), .live-active-calls-table td:nth-child(5) { width: 13% !important; text-align: left !important; }
         .live-active-calls-table th:nth-child(6), .live-active-calls-table td:nth-child(6) { width: 9% !important; text-align: left !important; }
-        .live-active-calls-table th:nth-child(7), .live-active-calls-table td:nth-child(7) { width: 21% !important; text-align: right !important; white-space: nowrap !important; }
+        .live-active-calls-table th:last-child, .live-active-calls-table td:last-child { width: 22% !important; text-align: right !important; white-space: nowrap !important; }
 
-        .live-waiting-queues-table th:first-child, .live-waiting-queues-table td:first-child { width: 34% !important; text-align: left !important; }
-        .live-waiting-queues-table th:nth-child(2), .live-waiting-queues-table td:nth-child(2) { width: 22% !important; text-align: left !important; }
-        .live-waiting-queues-table th:nth-child(3), .live-waiting-queues-table td:nth-child(3) { width: 22% !important; text-align: left !important; }
-        .live-waiting-queues-table th:nth-child(4), .live-waiting-queues-table td:nth-child(4) { width: 22% !important; text-align: left !important; }
+        /* Column widths for Waiting Calls & Queue Activity (All Branches view: 5 columns) */
+        .live-waiting-queues-table th.col-branch, .live-waiting-queues-table td.col-branch { width: 18% !important; text-align: left !important; }
+        .live-waiting-queues-table th:nth-child(2), .live-waiting-queues-table td:nth-child(2) { width: 24% !important; text-align: left !important; }
+        .live-waiting-queues-table th:nth-child(3), .live-waiting-queues-table td:nth-child(3) { width: 18% !important; text-align: left !important; }
+        .live-waiting-queues-table th:nth-child(4), .live-waiting-queues-table td:nth-child(4) { width: 20% !important; text-align: left !important; }
+        .live-waiting-queues-table th:last-child, .live-waiting-queues-table td:last-child { width: 20% !important; text-align: left !important; }
 
+        /* Column widths for Agent Availability (All Branches view: 4 columns) */
         .live-agent-avail-table th:first-child, .live-agent-avail-table td:first-child { width: 26% !important; text-align: left !important; }
-        .live-agent-avail-table th:nth-child(2), .live-agent-avail-table td:nth-child(2) { width: 24% !important; text-align: left !important; }
+        .live-agent-avail-table th.col-branch, .live-agent-avail-table td.col-branch { width: 24% !important; text-align: left !important; }
         .live-agent-avail-table th:nth-child(3), .live-agent-avail-table td:nth-child(3) { width: 26% !important; text-align: left !important; }
-        .live-agent-avail-table th:nth-child(4), .live-agent-avail-table td:nth-child(4) { width: 24% !important; text-align: left !important; }
+        .live-agent-avail-table th:last-child, .live-agent-avail-table td:last-child { width: 24% !important; text-align: left !important; }
 
         /* Custom Dropdown Filters */
         .custom-select-wrapper {
@@ -226,22 +244,663 @@
             border-color: var(--color-black);
         }
 
-        /* Custom Audio Toast */
-        #qa-session-toast {
+        /* ==========================================================
+           FLOATING LIVE CALL MONITORING PANEL (WHATSAPP-WEB STYLE / CCM DESIGN SYSTEM)
+           ========================================================== */
+        #live-qa-panel {
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: #0f172a;
-            color: #ffffff;
-            padding: 12px 18px;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+            width: 360px;
+            max-width: calc(100vw - 32px);
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.08);
+            z-index: 1050;
             display: none;
+            flex-direction: column;
+            overflow: hidden;
+            font-family: var(--font-family-primary);
+            animation: qaPanelSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes qaPanelSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Top Live Bar - Draggable Handle */
+        .qa-panel-top-bar {
+            background: #000000;
+            color: #ffffff;
+            padding: 10px 14px;
+            display: flex;
             align-items: center;
-            gap: 12px;
-            z-index: 1000;
+            justify-content: space-between;
+            border-bottom: 1px solid #262626;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+        }
+
+        .qa-panel-top-bar:active,
+        #live-qa-panel.is-dragging .qa-panel-top-bar {
+            cursor: grabbing;
+        }
+
+        .qa-panel-top-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .qa-live-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #262626;
+            border: 1px solid #404040;
+            color: #ffffff;
+            padding: 2px 7px;
+            border-radius: 9999px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .qa-live-pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            animation: qaLivePulse 1.8s infinite;
+        }
+
+        @keyframes qaLivePulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        .qa-panel-top-title {
             font-size: 0.8125rem;
-            border: 1px solid #334155;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .qa-panel-top-dur {
+            font-family: monospace;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: #171717;
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid #333333;
+        }
+
+        /* Mode Selector Strip */
+        .qa-mode-selector-wrap {
+            padding: 10px 14px 6px;
+            background: #fafafa;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .qa-mode-segmented-ctrl {
+            display: flex;
+            background: #f0f0f0;
+            padding: 3px;
+            border-radius: 8px;
+            gap: 2px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .qa-mode-seg-btn {
+            flex: 1;
+            padding: 6px 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #737373;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .qa-mode-seg-btn:hover {
+            color: #000000;
+        }
+
+        .qa-mode-seg-btn.active {
+            background: #000000;
+            color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Active Monitoring Mode Banner (Black & White) */
+        .qa-mode-banner {
+            margin: 8px 14px 0;
+            padding: 8px 10px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            background: #f5f5f5;
+            border: 1px solid #000000;
+            color: #000000;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .qa-mode-banner-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: -0.01em;
+        }
+
+        .qa-mode-desc-text {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            color: #525252;
+            line-height: 1.35;
+        }
+
+        /* Participants Container (Two Participant Cards) */
+        .qa-participants-body {
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #ffffff;
+        }
+
+        .qa-participant-card {
+            background: #ffffff;
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            padding: 10px 12px;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .qa-participant-card.highlight-direct {
+            border: 1.5px solid #000000;
+            background: #fafafa;
+        }
+
+        .qa-participant-card.highlight-conference {
+            border: 1.5px solid #000000;
+            background: #fafafa;
+        }
+
+        .qa-card-badge-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .qa-role-badge {
+            font-size: 0.625rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .qa-card-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .qa-person-name {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #000000;
+            line-height: 1.25;
+        }
+
+        .qa-person-sub {
+            font-size: 0.75rem;
+            color: #525252;
+            margin-top: 2px;
+        }
+
+        .qa-card-meta-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .qa-card-status-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: #000000;
+            background: #f5f5f5;
+            border: 1px solid #d4d4d4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            line-height: 1.2;
+        }
+
+        .qa-card-status-tag .live-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #000000;
+            display: inline-block;
+        }
+
+        .qa-card-detail-pill {
+            font-size: 0.6875rem;
+            color: #000000;
+            background: #f5f5f5;
+            border: 1px solid #d4d4d4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .qa-card-detail-pill strong {
+            font-weight: 700;
+            color: #525252;
+        }
+
+        /* Controls Footer (WhatsApp/Phone style call controls) */
+        .qa-panel-controls-footer {
+            padding: 12px 14px 14px;
+            background: #fafafa;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .qa-ctrl-btn {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background: #ffffff;
+            border: 1px solid #737373;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: #000000;
+            cursor: pointer;
+            flex: 1;
+            user-select: none;
+        }
+
+        /* User requirement: on hover no need to work - disable hover style shifts on control buttons */
+        .qa-ctrl-btn:hover {
+            /* Keep regular button appearance on hover without flicker or color shift */
+        }
+
+        .qa-ctrl-btn.active {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        .qa-ctrl-btn.active:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        .qa-ctrl-btn.muted-state {
+            background: #ffffff;
+            color: #000000;
+            border: 1.5px dashed #000000;
+        }
+
+        .qa-ctrl-btn.muted-state:hover {
+            background: #ffffff;
+            color: #000000;
+            border: 1.5px dashed #000000;
+        }
+
+        .qa-ctrl-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            background: #f5f5f5;
+            color: #a3a3a3;
+            border-color: #d4d4d4;
+        }
+
+        .qa-ctrl-btn:disabled:hover {
+            background: #f5f5f5;
+            color: #a3a3a3;
+            border-color: #d4d4d4;
+        }
+
+        .qa-ctrl-btn.disconnect-btn {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+            flex: 1.1;
+        }
+
+        .qa-ctrl-btn.disconnect-btn:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        .qa-ctrl-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Default: Mobile cards container hidden on desktop */
+        .mobile-cards-list {
+            display: none;
+        }
+
+        /* ==========================================================
+           COMPREHENSIVE MOBILE RESPONSIVE SYSTEM FOR LIVE MONITORING (<=768px)
+           ========================================================== */
+        @media (max-width: 768px) {
+            /* 1. Page Header & Tabs */
+            .page-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                margin-bottom: 12px !important;
+            }
+
+            .page-title {
+                font-size: 1.1875rem !important;
+                line-height: 1.25 !important;
+                margin-bottom: 2px !important;
+            }
+
+            .page-subtitle {
+                font-size: 0.8125rem !important;
+                line-height: 1.4 !important;
+                color: #64748b !important;
+                word-break: normal !important;
+                overflow-wrap: break-word !important;
+            }
+
+            .ccm-tabs-nav {
+                display: flex !important;
+                width: 100% !important;
+                gap: 0 !important;
+                border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
+                margin-bottom: 14px !important;
+                overflow-x: auto !important;
+                scrollbar-width: none !important;
+            }
+
+            .ccm-tabs-nav::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            .ccm-tabs-nav .ccm-tab-btn {
+                flex: 1 1 0 !important;
+                padding: 10px 8px !important;
+                font-size: 0.75rem !important;
+                text-align: center !important;
+                justify-content: center !important;
+                white-space: nowrap !important;
+                gap: 4px !important;
+            }
+
+            .ccm-tabs-nav .ccm-tab-btn svg {
+                width: 13px !important;
+                height: 13px !important;
+                flex-shrink: 0 !important;
+            }
+
+            .ccm-tab-badge {
+                font-size: 0.6875rem !important;
+                padding: 1px 5px !important;
+                border-radius: 10px !important;
+            }
+
+            /* 2. Full-Width Stacked Filters Bar */
+            .filters-bar {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                margin-bottom: 14px !important;
+                padding-bottom: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .search-input-wrapper {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            .search-input {
+                width: 100% !important;
+                height: 38px !important;
+                box-sizing: border-box !important;
+                font-size: 0.8125rem !important;
+            }
+
+            .filters-bar .custom-select-wrapper {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                flex-shrink: 0 !important;
+            }
+
+            .filters-bar .custom-select-trigger {
+                width: 100% !important;
+                height: 36px !important;
+                padding: 0 12px !important;
+                font-size: 0.8125rem !important;
+                box-sizing: border-box !important;
+            }
+
+            .filters-bar .custom-select-options {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                z-index: 1050 !important;
+                left: 0 !important;
+                right: 0 !important;
+            }
+
+            /* 3. Hide Desktop Table on Mobile and Show Native Mobile Cards */
+            .table-container.ccm-desktop-table-container {
+                display: none !important;
+            }
+
+            .mobile-cards-list {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* --- COMMON MOBILE CARD BASE --- */
+            .mobile-monitoring-card {
+                background: #ffffff;
+                border: 1px solid var(--color-border, #e2e8f0);
+                border-radius: var(--border-radius-base, 6px);
+                padding: 12px 14px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            /* Header Row */
+            .mob-card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .mob-card-primary-title {
+                font-size: 0.9375rem;
+                font-weight: 700;
+                color: #0f172a;
+                line-height: 1.25;
+            }
+
+            .mob-card-subtitle-block {
+                display: flex;
+                flex-direction: column;
+                gap: 1px;
+            }
+
+            .mob-cust-name {
+                font-size: 0.875rem;
+                font-weight: 600;
+                color: #0f172a;
+                line-height: 1.25;
+            }
+
+            .mob-cust-phone {
+                font-family: monospace;
+                font-size: 0.75rem;
+                font-weight: 500;
+                color: #64748b;
+            }
+
+            /* Clean Compact Metadata Key-Value List */
+            .mob-card-meta-list {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                padding-top: 4px;
+                border-top: 1px solid #f1f5f9;
+                font-size: 0.8125rem;
+            }
+
+            .mob-meta-row {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                line-height: 1.35;
+            }
+
+            .mob-meta-label {
+                color: #64748b;
+                font-size: 0.75rem;
+                font-weight: 500;
+                min-width: 54px;
+            }
+
+            .mob-meta-value {
+                color: #0f172a;
+                font-weight: 600;
+                font-size: 0.8125rem;
+            }
+
+            .mob-meta-value.mono {
+                font-family: monospace;
+                letter-spacing: 0.02em;
+            }
+
+            /* TAB 1: QA Actions Section */
+            .mob-qa-actions-section {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                margin-top: 4px;
+                padding-top: 8px;
+                border-top: 1px solid #f1f5f9;
+            }
+
+            .mob-qa-title {
+                font-size: 0.6875rem;
+                font-weight: 700;
+                color: #64748b;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+            }
+
+            .mob-qa-buttons-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                width: 100%;
+            }
+
+            .mob-qa-btn {
+                flex: 1 1 calc(33.333% - 4px);
+                min-width: 80px;
+                height: 32px;
+                padding: 0 6px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                border-radius: var(--border-radius-base, 4px);
+                border: 1px solid #cbd5e1;
+                background: #ffffff;
+                color: #0f172a;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                text-decoration: none;
+                transition: all 0.15s ease;
+                box-sizing: border-box;
+                white-space: nowrap;
+            }
+
+            .mob-qa-btn:hover {
+                background: #f8fafc;
+                border-color: #94a3b8;
+            }
+
+            .mob-qa-btn.active-qa {
+                background: #0f172a;
+                color: #ffffff;
+                border-color: #0f172a;
+            }
+
+            .mob-qa-btn svg {
+                width: 12px;
+                height: 12px;
+                flex-shrink: 0;
+            }
         }
     </style>
 </head>
@@ -253,13 +912,116 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </label>
 
-    <!-- QA Action Notification Toast -->
-    <div id="qa-session-toast">
-        <div style="width: 8px; height: 8px; background: #38bdf8; border-radius: 50%;" class="live-pulse-dot"></div>
-        <div>
-            <strong id="toast-mode">Listen-in Active</strong> &bull; <span id="toast-target">Rahul Varma (CUST-1003)</span>
+    <!-- Floating Live Call-Control QA Monitoring Panel -->
+    <div id="live-qa-panel" role="region" aria-label="Live Call QA Monitoring Panel">
+        <!-- Top Live Status Header (Draggable Handle) -->
+        <div class="qa-panel-top-bar" id="qa-panel-header" title="Click and drag to move panel anywhere">
+            <div class="qa-panel-top-left">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="opacity: 0.55; flex-shrink: 0;" aria-hidden="true">
+                    <circle cx="9" cy="6" r="1.5"></circle>
+                    <circle cx="15" cy="6" r="1.5"></circle>
+                    <circle cx="9" cy="12" r="1.5"></circle>
+                    <circle cx="15" cy="12" r="1.5"></circle>
+                    <circle cx="9" cy="18" r="1.5"></circle>
+                    <circle cx="15" cy="18" r="1.5"></circle>
+                </svg>
+                <span class="qa-live-pill">
+                    <span class="qa-live-pill-dot"></span>
+                    LIVE
+                </span>
+                <span class="qa-panel-top-title" id="panel-top-mode-title">Listen-in Active</span>
+            </div>
+            <div class="qa-panel-top-dur" id="panel-live-duration" title="Live Call Duration">00:00</div>
         </div>
-        <button type="button" onclick="endQaSession()" style="background: rgba(255,255,255,0.15); border: none; color: #fff; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: 600;">Disconnect</button>
+
+        <!-- Mode Selector Strip -->
+        <div class="qa-mode-selector-wrap">
+            <div class="qa-mode-segmented-ctrl" role="tablist" aria-label="Monitoring Mode Switcher">
+                <button type="button" class="qa-mode-seg-btn active mode-listen" id="btn-mode-listen" onclick="switchLiveQaMode('Listen-in')" title="Listen-in (Silent Monitoring)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                    Listen-in
+                </button>
+                <button type="button" class="qa-mode-seg-btn" id="btn-mode-whisper" onclick="switchLiveQaMode('Whisper')" title="Whisper (Coach Agent Privately)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                    Whisper
+                </button>
+                <button type="button" class="qa-mode-seg-btn" id="btn-mode-barge" onclick="switchLiveQaMode('Barge')" title="Barge (Join 3-Way Live Call)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Barge
+                </button>
+            </div>
+        </div>
+
+        <!-- Prominent Active Mode Banner -->
+        <div class="qa-mode-banner mode-listen" id="qa-active-mode-banner">
+            <span id="qa-mode-banner-text">Listen-in Active</span>
+            <span class="qa-mode-desc-text" id="qa-mode-banner-desc">Admin audio muted &bull; Silent monitoring</span>
+        </div>
+
+        <!-- Two Participant Cards (Customer & Agent) -->
+        <div class="qa-participants-body">
+            <!-- CARD 1 — CUSTOMER -->
+            <div class="qa-participant-card" id="card-participant-cust">
+                <div class="qa-card-badge-row">
+                    <span class="qa-role-badge cust">Customer</span>
+                    <span class="qa-card-status-tag" id="panel-cust-status">
+                        <span class="live-dot"></span>
+                        In Call
+                    </span>
+                </div>
+                <div class="qa-card-main">
+                    <div>
+                        <div class="qa-person-name" id="panel-cust-name">—</div>
+                        <div class="qa-person-sub" style="font-family: monospace;" id="panel-cust-phone">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 2 — AGENT -->
+            <div class="qa-participant-card" id="card-participant-agent">
+                <div class="qa-card-badge-row">
+                    <span class="qa-role-badge agent">Agent</span>
+                    <span class="qa-card-status-tag" id="panel-agent-status">
+                        <span class="live-dot"></span>
+                        On Call
+                    </span>
+                </div>
+                <div class="qa-card-main">
+                    <div>
+                        <div class="qa-person-name" id="panel-agent-name">—</div>
+                        <div class="qa-person-sub" id="panel-agent-branch">—</div>
+                    </div>
+                    <div class="qa-card-meta-right">
+                        <span class="qa-card-detail-pill" id="panel-agent-queue" title="Call routed from Support Queue">
+                            <strong>Queue:</strong> <span id="panel-queue-name">—</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Compact Call Controls Area -->
+        <div class="qa-panel-controls-footer">
+            <!-- Speaker Control -->
+            <button type="button" class="qa-ctrl-btn active" id="btn-admin-speaker" onclick="toggleAdminSpeaker()" title="Toggle Speaker Audio (Hear Call)">
+                <svg id="icon-speaker-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <svg id="icon-speaker-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                <span id="label-admin-speaker">Speaker On</span>
+            </button>
+
+            <!-- Mic Control (Disabled in Listen-in mode; Active in Whisper and Barge) -->
+            <button type="button" class="qa-ctrl-btn" id="btn-admin-mic" onclick="toggleAdminMic()" disabled title="Mic disabled in Listen-in mode (Silent monitoring only)">
+                <svg id="icon-mic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="display:block;"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                <svg id="icon-mic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="display:none;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                <span id="label-admin-mic">Mic Disabled</span>
+            </button>
+
+            <!-- Disconnect Control (Ends only Admin's monitoring session) -->
+            <button type="button" class="qa-ctrl-btn disconnect-btn" onclick="endQaSession()" title="Disconnect Monitoring Session (Live call continues)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"></path><line x1="23" y1="1" x2="1" y2="23"></line></svg>
+                <span>Disconnect</span>
+            </button>
+        </div>
     </div>
 
     <!-- App Layout -->
@@ -278,16 +1040,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -516,6 +1268,17 @@
                                 <input type="text" id="search-active-calls" class="search-input" placeholder="Search by Agent, Customer Name, or Phone Number..." oninput="filterActiveCalls()">
                             </div>
 
+                            <!-- Branch Multi-Select Filter with Search -->
+                            <details class="custom-select-wrapper branch-filter-wrapper" id="filter-active-branch-details" style="min-width: 175px; width: 175px; flex-shrink: 0;">
+                                <summary class="custom-select-trigger" id="filter-active-branch-trigger" style="height: 32px;">
+                                    <span class="trigger-label" id="filter-active-branch-label">All Branches</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options" id="filter-active-branch-options">
+                                    <!-- Populated dynamically via JS / RBAC with Search + Select All + Checkboxes -->
+                                </div>
+                            </details>
+
                             <!-- Queue Filter -->
                             <details class="custom-select-wrapper" id="filter-active-queue-details" style="min-width: 170px; width: 170px; flex-shrink: 0;">
                                 <summary class="custom-select-trigger" id="filter-active-queue-trigger" style="height: 32px;">
@@ -527,18 +1290,19 @@
                                     <label class="custom-option" onclick="selectActiveQueueFilter('Support Queue', 'Support Queue')"><input type="radio" name="active-queue-opt" value="Support Queue"> Support Queue</label>
                                     <label class="custom-option" onclick="selectActiveQueueFilter('Inquiry Queue', 'Inquiry Queue')"><input type="radio" name="active-queue-opt" value="Inquiry Queue"> Inquiry Queue</label>
                                     <label class="custom-option" onclick="selectActiveQueueFilter('Billing Queue', 'Billing Queue')"><input type="radio" name="active-queue-opt" value="Billing Queue"> Billing Queue</label>
+                                    <label class="custom-option" onclick="selectActiveQueueFilter('Escalation Queue', 'Escalation Queue')"><input type="radio" name="active-queue-opt" value="Escalation Queue"> Escalation Queue</label>
                                 </div>
                             </details>
                         </div>
 
                         <!-- Active Calls Table Container -->
                         <div class="table-container ccm-desktop-table-container">
-                            <table class="ccm-branches-table live-active-calls-table">
+                            <table class="ccm-branches-table live-active-calls-table" id="table-active-calls">
                                 <thead>
                                     <tr>
                                         <th>Agent</th>
                                         <th>Customer</th>
-                                        <th>Branch</th>
+                                        <th class="col-branch">Branch</th>
                                         <th>Call Duration</th>
                                         <th>Queue</th>
                                         <th>Status</th>
@@ -550,6 +1314,11 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Active Calls Mobile Cards Container -->
+                        <div class="mobile-cards-list" id="active-calls-mobile-cards">
+                            <!-- Populated dynamically via JS -->
+                        </div>
                     </div>
 
                     <!-- ================= TAB 2: WAITING CALLS & QUEUE ACTIVITY ================= -->
@@ -560,6 +1329,17 @@
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                 <input type="text" id="search-waiting-queues" class="search-input" placeholder="Search by Queue Name..." oninput="filterWaitingQueues()">
                             </div>
+
+                            <!-- Branch Filter -->
+                            <details class="custom-select-wrapper branch-filter-wrapper" id="filter-waiting-branch-details" style="min-width: 175px; width: 175px; flex-shrink: 0;">
+                                <summary class="custom-select-trigger" id="filter-waiting-branch-trigger" style="height: 32px;">
+                                    <span class="trigger-label" id="filter-waiting-branch-label">All Branches</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options" id="filter-waiting-branch-options">
+                                    <!-- Populated dynamically via JS / RBAC -->
+                                </div>
+                            </details>
 
                             <!-- Waiting Filter (All vs Has Waiting Calls) -->
                             <details class="custom-select-wrapper" id="filter-queue-load-details" style="min-width: 180px; width: 180px; flex-shrink: 0;">
@@ -577,9 +1357,10 @@
 
                         <!-- Waiting Queues Table Container -->
                         <div class="table-container ccm-desktop-table-container">
-                            <table class="ccm-branches-table live-waiting-queues-table">
+                            <table class="ccm-branches-table live-waiting-queues-table" id="table-waiting-queues">
                                 <thead>
                                     <tr>
+                                        <th class="col-branch">Branch</th>
                                         <th>Queue</th>
                                         <th>Waiting Calls</th>
                                         <th>Agents Available</th>
@@ -590,6 +1371,11 @@
                                     <!-- Populated dynamically via JS -->
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Waiting Queues Mobile Cards Container -->
+                        <div class="mobile-cards-list" id="waiting-queues-mobile-cards">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
@@ -602,32 +1388,14 @@
                                 <input type="text" id="search-agent-avail" class="search-input" placeholder="Search by Agent Name..." oninput="filterAgentAvail()">
                             </div>
 
-                            <!-- 1. Branch Multi-Select Filter with Search -->
-                            <details class="custom-select-wrapper" id="filter-avail-branch-details" style="min-width: 160px; width: 160px; flex-shrink: 0;">
+                            <!-- Branch Filter -->
+                            <details class="custom-select-wrapper branch-filter-wrapper" id="filter-avail-branch-details" style="min-width: 175px; width: 175px; flex-shrink: 0;">
                                 <summary class="custom-select-trigger" id="filter-avail-branch-trigger" style="height: 32px;">
                                     <span class="trigger-label" id="filter-avail-branch-label">All Branches</span>
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                 </summary>
-                                <div class="custom-select-options">
-                                    <div class="custom-select-search">
-                                        <div class="custom-select-search-wrapper" style="position: relative; display: flex; align-items: center;">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                            <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterAvailBranchDropdownOptions(this)" style="padding-left: 26px;">
-                                        </div>
-                                    </div>
-                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
-                                        <input type="checkbox" id="avail-branch-all-check" checked onchange="toggleAllAvailBranches(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
-                                        <span style="font-weight: 600; color: var(--color-black);">All Branches</span>
-                                    </label>
-                                    <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
-                                    <div id="filter-avail-branch-list-items">
-                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Bengaluru" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Bengaluru</span></label>
-                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Mumbai" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Mumbai</span></label>
-                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Hyderabad" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Hyderabad</span></label>
-                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Delhi" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Delhi</span></label>
-                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Chennai" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Chennai</span></label>
-                                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="avail-branch-filter-cb" value="Pune" onchange="updateAvailBranchSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Pune</span></label>
-                                    </div>
+                                <div class="custom-select-options" id="filter-avail-branch-options">
+                                    <!-- Populated dynamically via JS / RBAC -->
                                 </div>
                             </details>
 
@@ -649,11 +1417,11 @@
 
                         <!-- Agent Availability Table Container -->
                         <div class="table-container ccm-desktop-table-container">
-                            <table class="ccm-branches-table live-agent-avail-table">
+                            <table class="ccm-branches-table live-agent-avail-table" id="table-agent-avail">
                                 <thead>
                                     <tr>
                                         <th>Agent</th>
-                                        <th>Branch</th>
+                                        <th class="col-branch">Branch</th>
                                         <th>Queue</th>
                                         <th>Availability</th>
                                     </tr>
@@ -662,6 +1430,11 @@
                                     <!-- Populated dynamically via JS -->
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Agent Availability Mobile Cards Container -->
+                        <div class="mobile-cards-list" id="agent-avail-mobile-cards">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
 
@@ -673,41 +1446,64 @@
 
     <!-- Live Monitoring Data & Logic -->
     <script>
-        // Data Sources
+        // CCM Master Branch Data (Unified with CCM system)
+        const CCM_BRANCHES = ['Bengaluru', 'Mumbai', 'Hyderabad', 'Delhi', 'Chennai', 'Pune', 'Mangalore'];
+
+        // RBAC Context: Role ('Super Admin' or 'Branch Manager') and assigned branch
+        let currentRbac = {
+            role: 'Super Admin',
+            assignedBranch: 'Bengaluru' // Assigned branch if Branch Manager
+        };
+
+        // Multi-select selected branches array (default all branches selected)
+        let selectedBranches = [...CCM_BRANCHES];
+
+        // Data Sources (Consolidated across all branches)
         const activeCallsData = [
             { id: 'call-1', agent: 'Rahul Varma', customer: 'Suresh Reddy', phone: '+91 98480 12345', branch: 'Hyderabad', durationSec: 258, queue: 'Support Queue', status: 'On Call' },
             { id: 'call-2', agent: 'Deepak Kumar', customer: 'Rajesh Kumar', phone: '+91 98765 43210', branch: 'Bengaluru', durationSec: 165, queue: 'Inquiry Queue', status: 'On Call' },
-            { id: 'call-3', agent: 'Ananya Iyer', customer: 'Anil Verma', phone: '+91 98100 56789', branch: 'Delhi', durationSec: 72, queue: 'Support Queue', status: 'On Call' }
+            { id: 'call-3', agent: 'Ananya Iyer', customer: 'Anil Verma', phone: '+91 98100 56789', branch: 'Delhi', durationSec: 72, queue: 'Support Queue', status: 'On Call' },
+            { id: 'call-4', agent: 'Priya Sharma', customer: 'Vikram Mehta', phone: '+91 99887 65432', branch: 'Mumbai', durationSec: 310, queue: 'Support Queue', status: 'On Call' },
+            { id: 'call-5', agent: 'Venkatesh Rao', customer: 'Kavya Nair', phone: '+91 98950 24680', branch: 'Chennai', durationSec: 94, queue: 'Inquiry Queue', status: 'On Call' },
+            { id: 'call-6', agent: 'Sneha Patil', customer: 'Amitabh Joshi', phone: '+91 97654 32109', branch: 'Pune', durationSec: 182, queue: 'Billing Queue', status: 'On Call' },
+            { id: 'call-7', agent: 'Rohan Shenoy', customer: 'Divya Hegde', phone: '+91 98860 11223', branch: 'Mangalore', durationSec: 45, queue: 'Support Queue', status: 'On Call' }
         ];
 
         const waitingQueuesData = [
-            { queue: 'Support Queue', waitingCalls: 2, agentsAvail: 1, agentsOnCall: 2 },
-            { queue: 'Inquiry Queue', waitingCalls: 0, agentsAvail: 1, agentsOnCall: 1 },
-            { queue: 'Billing Queue', waitingCalls: 0, agentsAvail: 1, agentsOnCall: 0 },
-            { queue: 'Escalation Queue', waitingCalls: 1, agentsAvail: 0, agentsOnCall: 0 }
+            { branch: 'Hyderabad', queue: 'Support Queue', waitingCalls: 2, agentsAvail: 1, agentsOnCall: 2 },
+            { branch: 'Bengaluru', queue: 'Inquiry Queue', waitingCalls: 1, agentsAvail: 1, agentsOnCall: 1 },
+            { branch: 'Mumbai', queue: 'Support Queue', waitingCalls: 3, agentsAvail: 0, agentsOnCall: 2 },
+            { branch: 'Delhi', queue: 'Support Queue', waitingCalls: 1, agentsAvail: 1, agentsOnCall: 1 },
+            { branch: 'Chennai', queue: 'Inquiry Queue', waitingCalls: 0, agentsAvail: 1, agentsOnCall: 0 },
+            { branch: 'Pune', queue: 'Billing Queue', waitingCalls: 0, agentsAvail: 1, agentsOnCall: 1 },
+            { branch: 'Mangalore', queue: 'Escalation Queue', waitingCalls: 1, agentsAvail: 0, agentsOnCall: 1 }
         ];
 
         const agentAvailData = [
             { agent: 'Deepak Kumar', branch: 'Bengaluru', queue: 'Inquiry Queue', avail: 'On Call' },
-            { agent: 'Priya Sharma', branch: 'Mumbai', queue: 'Support Queue', avail: 'Available' },
+            { agent: 'Priya Sharma', branch: 'Mumbai', queue: 'Support Queue', avail: 'On Call' },
             { agent: 'Rahul Varma', branch: 'Hyderabad', queue: 'Support Queue', avail: 'On Call' },
             { agent: 'Ananya Iyer', branch: 'Delhi', queue: 'Support Queue', avail: 'On Call' },
-            { agent: 'Venkatesh Rao', branch: 'Chennai', queue: 'Inquiry Queue', avail: 'Break' },
-            { agent: 'Sneha Patil', branch: 'Pune', queue: 'Billing Queue', avail: 'Offline' }
+            { agent: 'Venkatesh Rao', branch: 'Chennai', queue: 'Inquiry Queue', avail: 'Available' },
+            { agent: 'Sneha Patil', branch: 'Pune', queue: 'Billing Queue', avail: 'On Call' },
+            { agent: 'Rohan Shenoy', branch: 'Mangalore', queue: 'Support Queue', avail: 'On Call' },
+            { agent: 'Kiran Desai', branch: 'Bengaluru', queue: 'Support Queue', avail: 'Available' },
+            { agent: 'Aditi Rao', branch: 'Mumbai', queue: 'Support Queue', avail: 'Break' },
+            { agent: 'Sandeep Reddy', branch: 'Hyderabad', queue: 'Inquiry Queue', avail: 'Available' },
+            { agent: 'Meera Kapoor', branch: 'Delhi', queue: 'Billing Queue', avail: 'Offline' },
+            { agent: 'Suresh Bhat', branch: 'Mangalore', queue: 'Inquiry Queue', avail: 'Available' }
         ];
 
         let activeQueueFilter = 'all';
         let queueLoadFilter = 'all';
-        let availBranchFilter = 'all';
         let availStatusFilter = 'all';
 
         let currentQaAction = null;
         let currentTargetAgent = null;
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderActiveCalls();
-            renderWaitingQueues();
-            renderAgentAvail();
+            initRbacAndBranchFilters();
+            renderAllTabs();
 
             // Close dropdowns on outside click
             document.addEventListener('click', (e) => {
@@ -719,6 +1515,163 @@
                 });
             });
         });
+
+        // Initialize RBAC Role and Branch Options in all 3 tabs
+        function initRbacAndBranchFilters() {
+            if (currentRbac.role === 'Branch Manager') {
+                selectedBranches = [currentRbac.assignedBranch];
+            } else {
+                if (selectedBranches.length === 0) {
+                    selectedBranches = [...CCM_BRANCHES];
+                }
+            }
+
+            renderMultiSelectBranchDropdown('filter-active-branch-options', 'active');
+            renderMultiSelectBranchDropdown('filter-waiting-branch-options', 'waiting');
+            renderMultiSelectBranchDropdown('filter-avail-branch-options', 'avail');
+
+            updateBranchFilterTriggerLabels();
+        }
+
+        // Render search + multi-select options inside tab branch dropdown
+        function renderMultiSelectBranchDropdown(containerId, tabKey) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            let html = '';
+
+            if (currentRbac.role === 'Super Admin') {
+                const isAllSelected = (selectedBranches.length === CCM_BRANCHES.length);
+
+                html = `
+                    <div class="custom-select-search" onclick="event.stopPropagation();">
+                        <div class="custom-select-search-wrapper" style="position: relative; display: flex; align-items: center;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" class="custom-select-search-input" placeholder="Search branch..." oninput="filterBranchDropdownList(this, '${tabKey}')" style="padding-left: 26px;">
+                        </div>
+                    </div>
+                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                        <input type="checkbox" id="cb-branch-all-${tabKey}" ${isAllSelected ? 'checked' : ''} onchange="toggleAllBranchSelections(this.checked)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                        <span style="font-weight: 600; color: var(--color-black);">All Branches</span>
+                    </label>
+                    <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
+                    <div id="branch-items-list-${tabKey}">
+                        ${CCM_BRANCHES.map(br => {
+                            const isChecked = selectedBranches.includes(br);
+                            return `
+                                <label class="custom-option branch-option-item" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
+                                    <input type="checkbox" class="cb-branch-item" value="${escapeHtml(br)}" ${isChecked ? 'checked' : ''} onchange="handleBranchItemToggle(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                    <span>${escapeHtml(br)}</span>
+                                </label>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            } else {
+                // Branch Manager scope: assigned branch only
+                html = `
+                    <div style="padding: 4px;">
+                        <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: default; user-select: none;">
+                            <input type="checkbox" checked disabled style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black);">
+                            <span style="font-weight: 600;">${escapeHtml(currentRbac.assignedBranch)}</span>
+                        </label>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Filter branch options by search input query
+        function filterBranchDropdownList(input, tabKey) {
+            const query = input.value.toLowerCase().trim();
+            const listContainer = document.getElementById(`branch-items-list-${tabKey}`);
+            if (!listContainer) return;
+
+            const options = listContainer.querySelectorAll('.branch-option-item');
+            options.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        // Toggle "All Branches" checkbox
+        function toggleAllBranchSelections(isChecked) {
+            if (isChecked) {
+                selectedBranches = [...CCM_BRANCHES];
+            } else {
+                selectedBranches = [];
+            }
+            syncAllBranchCheckboxes();
+            updateBranchFilterTriggerLabels();
+            renderAllTabs();
+        }
+
+        // Toggle individual branch checkbox
+        function handleBranchItemToggle(checkbox) {
+            const branchVal = checkbox.value;
+            if (checkbox.checked) {
+                if (!selectedBranches.includes(branchVal)) {
+                    selectedBranches.push(branchVal);
+                }
+            } else {
+                selectedBranches = selectedBranches.filter(b => b !== branchVal);
+            }
+
+            syncAllBranchCheckboxes();
+            updateBranchFilterTriggerLabels();
+            renderAllTabs();
+        }
+
+        // Synchronize all checkbox inputs across all 3 tabs
+        function syncAllBranchCheckboxes() {
+            const isAll = (selectedBranches.length === CCM_BRANCHES.length);
+            const isNone = (selectedBranches.length === 0);
+
+            ['active', 'waiting', 'avail'].forEach(key => {
+                const allCb = document.getElementById(`cb-branch-all-${key}`);
+                if (allCb) {
+                    allCb.checked = isAll;
+                    allCb.indeterminate = (!isAll && !isNone);
+                }
+            });
+
+            document.querySelectorAll('.cb-branch-item').forEach(cb => {
+                cb.checked = selectedBranches.includes(cb.value);
+            });
+        }
+
+        // Update dropdown trigger button label
+        function updateBranchFilterTriggerLabels() {
+            let labelText = 'All Branches';
+            if (currentRbac.role === 'Branch Manager') {
+                labelText = currentRbac.assignedBranch;
+            } else {
+                if (selectedBranches.length === 0) {
+                    labelText = 'No Branches';
+                } else if (selectedBranches.length === CCM_BRANCHES.length) {
+                    labelText = 'All Branches';
+                } else if (selectedBranches.length === 1) {
+                    labelText = selectedBranches[0];
+                } else {
+                    labelText = `${selectedBranches.length} Branches`;
+                }
+            }
+
+            const activeLbl = document.getElementById('filter-active-branch-label');
+            const waitingLbl = document.getElementById('filter-waiting-branch-label');
+            const availLbl = document.getElementById('filter-avail-branch-label');
+
+            if (activeLbl) activeLbl.textContent = labelText;
+            if (waitingLbl) waitingLbl.textContent = labelText;
+            if (availLbl) availLbl.textContent = labelText;
+        }
+
+        function renderAllTabs() {
+            renderActiveCalls();
+            renderWaitingQueues();
+            renderAgentAvail();
+        }
 
         // Tab Switching Handler
         function switchMonitoringTab(tabKey, btn) {
@@ -736,25 +1689,42 @@
         function renderActiveCalls() {
             const searchVal = (document.getElementById('search-active-calls')?.value || '').toLowerCase().trim();
             const tbody = document.getElementById('active-calls-tbody');
-            if (!tbody) return;
+            const mobileContainer = document.getElementById('active-calls-mobile-cards');
+            const table = document.getElementById('table-active-calls');
+            if (!tbody || !table) return;
+
+            // Branch Column Visibility: Visible if viewing multiple branches / all branches; hidden when exactly 1 branch is filtered
+            const isSingleBranchView = (selectedBranches.length === 1);
+            if (isSingleBranchView) {
+                table.classList.add('hide-branch-col');
+            } else {
+                table.classList.remove('hide-branch-col');
+            }
 
             const filtered = activeCallsData.filter(c => {
+                const matchBranch = selectedBranches.length === 0 || selectedBranches.includes(c.branch);
                 const matchSearch = !searchVal ||
                     c.agent.toLowerCase().includes(searchVal) ||
                     c.customer.toLowerCase().includes(searchVal) ||
                     c.phone.toLowerCase().includes(searchVal) ||
                     (c.branch && c.branch.toLowerCase().includes(searchVal));
                 const matchQueue = (activeQueueFilter === 'all') || (c.queue === activeQueueFilter);
-                return matchSearch && matchQueue;
+                return matchBranch && matchSearch && matchQueue;
             });
 
             document.getElementById('tab-count-active-calls').textContent = filtered.length;
 
+            const colSpan = isSingleBranchView ? 6 : 7;
+
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 28px; color: #64748b;">No active calls match the filter criteria.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="${colSpan}" style="text-align: center; padding: 28px; color: #64748b;">No active calls match the filter criteria.</td></tr>`;
+                if (mobileContainer) {
+                    mobileContainer.innerHTML = `<div style="text-align: center; padding: 32px 16px; background: #ffffff; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); color: #64748b; font-size: 0.8125rem;">No active calls match the filter criteria.</div>`;
+                }
                 return;
             }
 
+            // Render Desktop Table Rows
             tbody.innerHTML = filtered.map(c => {
                 const isListening = (currentQaAction === 'Listen-in' && currentTargetAgent === c.agent);
                 const isWhispering = (currentQaAction === 'Whisper' && currentTargetAgent === c.agent);
@@ -770,7 +1740,7 @@
                             <div style="font-weight: 600; color: #0f172a;">${escapeHtml(c.customer)}</div>
                             <div style="font-family: monospace; font-size: 0.75rem; color: #64748b;">${escapeHtml(c.phone)}</div>
                         </td>
-                        <td>
+                        <td class="col-branch">
                             <span style="font-weight: 500; color: #0f172a;">${escapeHtml(c.branch || '—')}</span>
                         </td>
                         <td>
@@ -801,6 +1771,69 @@
                     </tr>
                 `;
             }).join('');
+
+            // Render Mobile Clean Cards
+            if (mobileContainer) {
+                mobileContainer.innerHTML = filtered.map(c => {
+                    const isListening = (currentQaAction === 'Listen-in' && currentTargetAgent === c.agent);
+                    const isWhispering = (currentQaAction === 'Whisper' && currentTargetAgent === c.agent);
+                    const isBarging = (currentQaAction === 'Barge' && currentTargetAgent === c.agent);
+
+                    const mins = String(Math.floor(c.durationSec / 60)).padStart(2, '0');
+                    const secs = String(c.durationSec % 60).padStart(2, '0');
+
+                    return `
+                        <div class="mobile-monitoring-card" data-id="${c.id}">
+                            <!-- Top: Agent Name & On Call Status Badge -->
+                            <div class="mob-card-header">
+                                <span class="mob-card-primary-title">${escapeHtml(c.agent)}</span>
+                                <span class="badge-avail-oncall"><span class="live-pulse-dot" style="background:#2563eb; width:6px; height:6px;"></span>On Call</span>
+                            </div>
+
+                            <!-- Customer Name & Phone Number -->
+                            <div class="mob-card-subtitle-block">
+                                <div class="mob-cust-name">${escapeHtml(c.customer)}</div>
+                                <div class="mob-cust-phone">${escapeHtml(c.phone)}</div>
+                            </div>
+
+                            <!-- Metadata Key-Value List -->
+                            <div class="mob-card-meta-list">
+                                <div class="mob-meta-row">
+                                    <span class="mob-meta-label">Branch:</span>
+                                    <span class="mob-meta-value">${escapeHtml(c.branch || '—')}</span>
+                                </div>
+                                <div class="mob-meta-row">
+                                    <span class="mob-meta-label">Queue:</span>
+                                    <span class="mob-meta-value">${escapeHtml(c.queue)}</span>
+                                </div>
+                                <div class="mob-meta-row">
+                                    <span class="mob-meta-label">Duration:</span>
+                                    <span class="mob-meta-value mono" id="mob-dur-${c.id}">${mins}:${secs}</span>
+                                </div>
+                            </div>
+
+                            <!-- QA Actions Area -->
+                            <div class="mob-qa-actions-section">
+                                <div class="mob-qa-title">QA ACTIONS</div>
+                                <div class="mob-qa-buttons-grid">
+                                    <button type="button" class="mob-qa-btn ${isListening ? 'active-qa' : ''}" onclick="triggerQaAction('Listen-in', '${escapeHtml(c.agent)}', '${escapeHtml(c.customer)}', this)">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                                        ${isListening ? 'Listening...' : 'Listen-in'}
+                                    </button>
+                                    <button type="button" class="mob-qa-btn ${isWhispering ? 'active-qa' : ''}" onclick="triggerQaAction('Whisper', '${escapeHtml(c.agent)}', '${escapeHtml(c.customer)}', this)">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                                        ${isWhispering ? 'Whispering...' : 'Whisper'}
+                                    </button>
+                                    <button type="button" class="mob-qa-btn ${isBarging ? 'active-qa' : ''}" onclick="triggerQaAction('Barge', '${escapeHtml(c.agent)}', '${escapeHtml(c.customer)}', this)">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                        ${isBarging ? 'In Call...' : 'Barge'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
         }
 
         function filterActiveCalls() {
@@ -818,23 +1851,42 @@
         function renderWaitingQueues() {
             const searchVal = (document.getElementById('search-waiting-queues')?.value || '').toLowerCase().trim();
             const tbody = document.getElementById('waiting-queues-tbody');
-            if (!tbody) return;
+            const mobileContainer = document.getElementById('waiting-queues-mobile-cards');
+            const table = document.getElementById('table-waiting-queues');
+            if (!tbody || !table) return;
+
+            // Branch Column Visibility: Visible if viewing multiple branches / all branches; hidden when exactly 1 branch is filtered
+            const isSingleBranchView = (selectedBranches.length === 1);
+            if (isSingleBranchView) {
+                table.classList.add('hide-branch-col');
+            } else {
+                table.classList.remove('hide-branch-col');
+            }
 
             const filtered = waitingQueuesData.filter(q => {
-                const matchSearch = !searchVal || q.queue.toLowerCase().includes(searchVal);
+                const matchBranch = selectedBranches.length === 0 || selectedBranches.includes(q.branch);
+                const matchSearch = !searchVal || 
+                    q.queue.toLowerCase().includes(searchVal) ||
+                    (q.branch && q.branch.toLowerCase().includes(searchVal));
                 let matchLoad = true;
                 if (queueLoadFilter === 'waiting') matchLoad = q.waitingCalls > 0;
                 else if (queueLoadFilter === 'idle') matchLoad = q.waitingCalls === 0;
-                return matchSearch && matchLoad;
+                return matchBranch && matchSearch && matchLoad;
             });
 
             document.getElementById('tab-count-waiting-calls').textContent = filtered.length;
 
+            const colSpan = isSingleBranchView ? 4 : 5;
+
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 28px; color: #64748b;">No queues match the filter criteria.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="${colSpan}" style="text-align: center; padding: 28px; color: #64748b;">No queues match the filter criteria.</td></tr>`;
+                if (mobileContainer) {
+                    mobileContainer.innerHTML = `<div style="text-align: center; padding: 32px 16px; background: #ffffff; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); color: #64748b; font-size: 0.8125rem;">No queues match the filter criteria.</div>`;
+                }
                 return;
             }
 
+            // Render Desktop Table Rows
             tbody.innerHTML = filtered.map(q => {
                 const waitBadge = q.waitingCalls > 0 
                     ? `<span style="display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 4px; background: #fee2e2; color: #991b1b; font-weight: 700; font-family: monospace; font-size: 0.8125rem;">${q.waitingCalls} Calls</span>`
@@ -842,6 +1894,7 @@
 
                 return `
                     <tr>
+                        <td class="col-branch" style="font-weight: 500; color: #0f172a;">${escapeHtml(q.branch || '—')}</td>
                         <td style="font-weight: 600; color: #0f172a;">${escapeHtml(q.queue)}</td>
                         <td>${waitBadge}</td>
                         <td style="font-family: monospace; font-weight: 600; color: #065f46;">${q.agentsAvail} Agent${q.agentsAvail === 1 ? '' : 's'}</td>
@@ -849,6 +1902,42 @@
                     </tr>
                 `;
             }).join('');
+
+            // Render Mobile Cards
+            if (mobileContainer) {
+                mobileContainer.innerHTML = filtered.map(q => {
+                    const waitBadge = q.waitingCalls > 0 
+                        ? `<span style="display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 4px; background: #fee2e2; color: #991b1b; font-weight: 700; font-family: monospace; font-size: 0.75rem;">${q.waitingCalls} Waiting</span>`
+                        : `<span style="display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 4px; background: #f1f5f9; color: #64748b; font-weight: 600; font-family: monospace; font-size: 0.75rem;">0 Waiting</span>`;
+
+                    return `
+                        <div class="mobile-monitoring-card">
+                            <!-- Top Row: Branch & Queue Name -->
+                            <div class="mob-card-header">
+                                <span class="mob-card-primary-title">${escapeHtml(q.branch || '—')}</span>
+                                ${waitBadge}
+                            </div>
+                            <div style="font-size: 0.875rem; font-weight: 600; color: #1e40af;">${escapeHtml(q.queue)}</div>
+
+                            <!-- Metadata Key-Value List -->
+                            <div class="mob-card-meta-list">
+                                <div class="mob-meta-row">
+                                    <span class="mob-meta-label" style="min-width: 90px;">Waiting Calls:</span>
+                                    <span class="mob-meta-value mono">${q.waitingCalls}</span>
+                                </div>
+                                <div class="mob-meta-row">
+                                    <span class="mob-meta-label" style="min-width: 90px;">Agents Available:</span>
+                                    <span class="mob-meta-value mono" style="color: #065f46;">${q.agentsAvail} Agent${q.agentsAvail === 1 ? '' : 's'}</span>
+                                </div>
+                                <div class="mob-meta-row">
+                                    <span class="mob-meta-label" style="min-width: 90px;">Agents On Call:</span>
+                                    <span class="mob-meta-value mono" style="color: #1e40af;">${q.agentsOnCall} Agent${q.agentsOnCall === 1 ? '' : 's'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
         }
 
         function filterWaitingQueues() {
@@ -866,27 +1955,40 @@
         function renderAgentAvail() {
             const searchVal = (document.getElementById('search-agent-avail')?.value || '').toLowerCase().trim();
             const tbody = document.getElementById('agent-avail-tbody');
-            if (!tbody) return;
+            const mobileContainer = document.getElementById('agent-avail-mobile-cards');
+            const table = document.getElementById('table-agent-avail');
+            if (!tbody || !table) return;
 
-            // Selected Branches
-            const checkedBranchNodes = document.querySelectorAll('.avail-branch-filter-cb:checked');
-            const selectedBranches = Array.from(checkedBranchNodes).map(cb => cb.value);
-            const allBranchChecked = document.getElementById('avail-branch-all-check')?.checked;
+            // Branch Column Visibility: Visible if viewing multiple branches / all branches; hidden when exactly 1 branch is filtered
+            const isSingleBranchView = (selectedBranches.length === 1);
+            if (isSingleBranchView) {
+                table.classList.add('hide-branch-col');
+            } else {
+                table.classList.remove('hide-branch-col');
+            }
 
             const filtered = agentAvailData.filter(a => {
-                const matchSearch = !searchVal || a.agent.toLowerCase().includes(searchVal);
-                const matchBranch = allBranchChecked || selectedBranches.length === 0 || selectedBranches.includes(a.branch);
+                const matchBranch = selectedBranches.length === 0 || selectedBranches.includes(a.branch);
+                const matchSearch = !searchVal || 
+                    a.agent.toLowerCase().includes(searchVal) ||
+                    (a.branch && a.branch.toLowerCase().includes(searchVal));
                 const matchStatus = (availStatusFilter === 'all') || (a.avail === availStatusFilter);
-                return matchSearch && matchBranch && matchStatus;
+                return matchBranch && matchSearch && matchStatus;
             });
 
             document.getElementById('tab-count-agent-avail').textContent = filtered.length;
 
+            const colSpan = isSingleBranchView ? 3 : 4;
+
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 28px; color: #64748b;">No agents match the filter criteria.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="${colSpan}" style="text-align: center; padding: 28px; color: #64748b;">No agents match the filter criteria.</td></tr>`;
+                if (mobileContainer) {
+                    mobileContainer.innerHTML = `<div style="text-align: center; padding: 32px 16px; background: #ffffff; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); color: #64748b; font-size: 0.8125rem;">No agents match the filter criteria.</div>`;
+                }
                 return;
             }
 
+            // Render Desktop Table Rows
             tbody.innerHTML = filtered.map(a => {
                 let badge = '';
                 if (a.avail === 'Available') badge = '<span class="badge-avail-available">Available</span>';
@@ -897,56 +1999,48 @@
                 return `
                     <tr>
                         <td style="font-weight: 600; color: #0f172a;">${escapeHtml(a.agent)}</td>
-                        <td>${escapeHtml(a.branch)}</td>
+                        <td class="col-branch">${escapeHtml(a.branch)}</td>
                         <td>${escapeHtml(a.queue)}</td>
                         <td>${badge}</td>
                     </tr>
                 `;
             }).join('');
+
+            // Render Mobile Cards
+            if (mobileContainer) {
+                mobileContainer.innerHTML = filtered.map(a => {
+                    let badge = '';
+                    if (a.avail === 'Available') badge = '<span class="badge-avail-available">Available</span>';
+                    else if (a.avail === 'On Call') badge = '<span class="badge-avail-oncall">On Call</span>';
+                    else if (a.avail === 'Break') badge = '<span class="badge-avail-break">Break</span>';
+                    else badge = '<span class="badge-avail-offline">Offline</span>';
+
+                    return `
+                        <div class="mobile-monitoring-card">
+                            <!-- Top: Agent Name & Availability Badge -->
+                            <div class="mob-card-header">
+                                <span class="mob-card-primary-title">${escapeHtml(a.agent)}</span>
+                                ${badge}
+                            </div>
+
+                            <!-- Metadata Key-Value List -->
+                            <div class="mob-card-meta-list">
+                                <div class="mob-meta-row">
+                                    <span class="mob-meta-label">Branch:</span>
+                                    <span class="mob-meta-value">${escapeHtml(a.branch)}</span>
+                                </div>
+                                <div class="mob-meta-row">
+                                    <span class="mob-meta-label">Queue:</span>
+                                    <span class="mob-meta-value">${escapeHtml(a.queue)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
         }
 
         function filterAgentAvail() {
-            renderAgentAvail();
-        }
-
-        function filterAvailBranchDropdownOptions(input) {
-            const query = input.value.toLowerCase().trim();
-            const container = document.getElementById('filter-avail-branch-list-items');
-            if (!container) return;
-            const options = container.querySelectorAll('.custom-option');
-            options.forEach(opt => {
-                const text = opt.textContent.toLowerCase();
-                opt.style.display = text.includes(query) ? 'flex' : 'none';
-            });
-        }
-
-        function toggleAllAvailBranches(allCheckbox) {
-            const itemCheckboxes = document.querySelectorAll('.avail-branch-filter-cb');
-            itemCheckboxes.forEach(cb => {
-                cb.checked = allCheckbox.checked;
-            });
-            document.getElementById('filter-avail-branch-label').textContent = allCheckbox.checked ? 'All Branches' : 'No Branches';
-            renderAgentAvail();
-        }
-
-        function updateAvailBranchSelection() {
-            const allCheck = document.getElementById('avail-branch-all-check');
-            const itemCheckboxes = document.querySelectorAll('.avail-branch-filter-cb');
-            const checkedItems = document.querySelectorAll('.avail-branch-filter-cb:checked');
-
-            if (checkedItems.length === itemCheckboxes.length) {
-                allCheck.checked = true;
-                document.getElementById('filter-avail-branch-label').textContent = 'All Branches';
-            } else if (checkedItems.length === 0) {
-                allCheck.checked = false;
-                document.getElementById('filter-avail-branch-label').textContent = 'No Branches';
-            } else if (checkedItems.length === 1) {
-                allCheck.checked = false;
-                document.getElementById('filter-avail-branch-label').textContent = checkedItems[0].value;
-            } else {
-                allCheck.checked = false;
-                document.getElementById('filter-avail-branch-label').textContent = `${checkedItems.length} Branches`;
-            }
             renderAgentAvail();
         }
 
@@ -957,47 +2051,373 @@
             renderAgentAvail();
         }
 
-        // Real-Time Active Call Duration Timer
+        // Floating Live Monitoring QA Session State
+        let currentMonitoredCallId = null;
+        let adminSpeakerEnabled = true;
+        let adminMicMuted = false; // Starting state must always be Mic On
+
+        // Real-Time Active Call Duration Timer & Live Panel Timer Sync
         setInterval(() => {
             activeCallsData.forEach(c => {
                 c.durationSec++;
+                const mins = String(Math.floor(c.durationSec / 60)).padStart(2, '0');
+                const secs = String(c.durationSec % 60).padStart(2, '0');
+                const durText = `${mins}:${secs}`;
+
                 const el = document.getElementById('dur-' + c.id);
-                if (el) {
-                    const mins = String(Math.floor(c.durationSec / 60)).padStart(2, '0');
-                    const secs = String(c.durationSec % 60).padStart(2, '0');
-                    el.textContent = `${mins}:${secs}`;
+                if (el) el.textContent = durText;
+
+                const mobEl = document.getElementById('mob-dur-' + c.id);
+                if (mobEl) mobEl.textContent = durText;
+
+                // If this call is currently monitored in the floating panel, sync duration
+                if (currentMonitoredCallId === c.id) {
+                    const panelLiveDur = document.getElementById('panel-live-duration');
+                    const panelCustDur = document.getElementById('panel-cust-dur');
+                    if (panelLiveDur) panelLiveDur.textContent = durText;
+                    if (panelCustDur) panelCustDur.textContent = durText;
                 }
             });
         }, 1000);
 
-        // QA Listen-in Trigger
+        // QA Actions Trigger (From Table button or Mobile Card button)
         function triggerQaAction(action, agentName, custName, btn) {
-            const toast = document.getElementById('qa-session-toast');
-            const toastMode = document.getElementById('toast-mode');
-            const toastTarget = document.getElementById('toast-target');
-
+            // Find call record
+            const call = activeCallsData.find(c => c.agent === agentName && c.customer === custName) 
+                      || activeCallsData.find(c => c.agent === agentName);
+            
+            // If already monitoring this exact call and mode, clicking the same button ends the monitoring
             if (currentQaAction === action && currentTargetAgent === agentName) {
                 endQaSession();
                 return;
             }
 
+            // Update monitored targets
             currentQaAction = action;
             currentTargetAgent = agentName;
+            currentMonitoredCallId = call ? call.id : null;
 
+            // Reset admin audio states when starting or switching targets:
+            // "EVERY TIME MUST BE MIC ON IF THE ADMIN WANTS TO OFF HE CAN BUT STARTING MUST BE MIC ON"
+            adminMicMuted = false;
+            adminSpeakerEnabled = true;
+
+            // Update live monitoring table & mobile view active button states
             renderActiveCalls();
 
-            toastMode.textContent = `${action} Active`;
-            toastTarget.textContent = `${agentName} (${custName})`;
-            toast.style.display = 'flex';
+            // Populate & open floating live monitoring panel
+            updateLiveQaPanelUI(call, action);
         }
 
+        // Update the Floating Panel UI with the current call details & monitoring mode
+        function updateLiveQaPanelUI(call, mode) {
+            const panel = document.getElementById('live-qa-panel');
+            if (!panel) return;
+
+            // Resolve call data if not passed directly
+            if (!call && currentTargetAgent) {
+                call = activeCallsData.find(c => c.agent === currentTargetAgent);
+            }
+            if (!call) return;
+
+            const mins = String(Math.floor(call.durationSec / 60)).padStart(2, '0');
+            const secs = String(call.durationSec % 60).padStart(2, '0');
+            const durText = `${mins}:${secs}`;
+
+            // 1. Live Header
+            const topModeTitle = document.getElementById('panel-top-mode-title');
+            const liveDur = document.getElementById('panel-live-duration');
+            if (topModeTitle) topModeTitle.textContent = `${mode} Active`;
+            if (liveDur) liveDur.textContent = durText;
+
+            // 2. Mode Selector Segmented Buttons
+            const btnListen = document.getElementById('btn-mode-listen');
+            const btnWhisper = document.getElementById('btn-mode-whisper');
+            const btnBarge = document.getElementById('btn-mode-barge');
+
+            [btnListen, btnWhisper, btnBarge].forEach(b => {
+                if (b) {
+                    b.classList.remove('active', 'mode-listen', 'mode-whisper', 'mode-barge');
+                }
+            });
+
+            if (mode === 'Listen-in' && btnListen) {
+                btnListen.classList.add('active', 'mode-listen');
+            } else if (mode === 'Whisper' && btnWhisper) {
+                btnWhisper.classList.add('active', 'mode-whisper');
+            } else if (mode === 'Barge' && btnBarge) {
+                btnBarge.classList.add('active', 'mode-barge');
+            }
+
+            // 3. Active Mode Banner & Description
+            const banner = document.getElementById('qa-active-mode-banner');
+            const bannerText = document.getElementById('qa-mode-banner-text');
+            const bannerDesc = document.getElementById('qa-mode-banner-desc');
+
+            if (banner) {
+                banner.className = 'qa-mode-banner';
+                if (mode === 'Listen-in') {
+                    if (bannerText) bannerText.textContent = 'Listen-in Active';
+                    if (bannerDesc) bannerDesc.textContent = 'Silent monitoring • Customer and agent cannot hear admin';
+                } else if (mode === 'Whisper') {
+                    if (bannerText) bannerText.textContent = 'Whisper Active';
+                    if (bannerDesc) bannerDesc.textContent = 'Private to Agent • Customer cannot hear admin';
+                } else if (mode === 'Barge') {
+                    if (bannerText) bannerText.textContent = 'Barge Active';
+                    if (bannerDesc) bannerDesc.textContent = '3-Way Call • Customer, Agent and Admin are connected';
+                }
+            }
+
+            // 4. Participant Cards Data
+            // Card 1 — Customer (Customer = In Call)
+            const custNameEl = document.getElementById('panel-cust-name');
+            const custPhoneEl = document.getElementById('panel-cust-phone');
+            const custDurEl = document.getElementById('panel-cust-dur');
+            const custCard = document.getElementById('card-participant-cust');
+
+            if (custNameEl) custNameEl.textContent = call.customer;
+            if (custPhoneEl) custPhoneEl.textContent = call.phone;
+            if (custDurEl) custDurEl.textContent = durText;
+
+            // Card 2 — Agent (Agent = On Call, Queue = Support Queue)
+            const agentNameEl = document.getElementById('panel-agent-name');
+            const agentBranchEl = document.getElementById('panel-agent-branch');
+            const queueNameEl = document.getElementById('panel-queue-name');
+            const agentCard = document.getElementById('card-participant-agent');
+
+            if (agentNameEl) agentNameEl.textContent = call.agent;
+            if (agentBranchEl) agentBranchEl.textContent = `${call.branch || 'Main Branch'} Branch`;
+            if (queueNameEl) queueNameEl.textContent = call.queue || 'Support Queue';
+
+            // Visual card state adjustments based on QA mode
+            if (custCard) custCard.classList.remove('highlight-direct', 'highlight-conference');
+            if (agentCard) agentCard.classList.remove('highlight-direct', 'highlight-conference');
+
+            if (mode === 'Whisper') {
+                // Whisper: Agent is directly spoken to
+                if (agentCard) agentCard.classList.add('highlight-direct');
+            } else if (mode === 'Barge') {
+                // Barge: Both participants in active conference
+                if (custCard) custCard.classList.add('highlight-conference');
+                if (agentCard) agentCard.classList.add('highlight-conference');
+            }
+
+            // 5. Admin Call Controls (Speaker, Mic Mute/Unmute)
+            updateAdminControlButtons(mode);
+
+            // Display floating panel
+            panel.style.display = 'flex';
+        }
+
+        // Switch QA Mode directly from the Floating Panel segmented selector
+        function switchLiveQaMode(newMode) {
+            if (!currentTargetAgent) return;
+            currentQaAction = newMode;
+
+            // Synchronize Live Monitoring table button state
+            renderActiveCalls();
+
+            // Refresh floating panel for new mode
+            updateLiveQaPanelUI(null, newMode);
+        }
+
+        // Update Admin Speaker & Mic button visual & enabled states
+        function updateAdminControlButtons(mode) {
+            const btnSpeaker = document.getElementById('btn-admin-speaker');
+            const iconSpeakerOn = document.getElementById('icon-speaker-on');
+            const iconSpeakerOff = document.getElementById('icon-speaker-off');
+            const labelSpeaker = document.getElementById('label-admin-speaker');
+
+            const btnMic = document.getElementById('btn-admin-mic');
+            const iconMicOn = document.getElementById('icon-mic-on');
+            const iconMicOff = document.getElementById('icon-mic-off');
+            const labelMic = document.getElementById('label-admin-mic');
+
+            // Speaker UI: Speaker On / Off
+            if (btnSpeaker) {
+                if (adminSpeakerEnabled) {
+                    btnSpeaker.classList.add('active');
+                    if (iconSpeakerOn) iconSpeakerOn.style.display = 'block';
+                    if (iconSpeakerOff) iconSpeakerOff.style.display = 'none';
+                    if (labelSpeaker) labelSpeaker.textContent = 'Speaker On';
+                } else {
+                    btnSpeaker.classList.remove('active');
+                    if (iconSpeakerOn) iconSpeakerOn.style.display = 'none';
+                    if (iconSpeakerOff) iconSpeakerOff.style.display = 'block';
+                    if (labelSpeaker) labelSpeaker.textContent = 'Speaker Off';
+                }
+            }
+
+            // Admin Mic Control:
+            // In Listen-in: Admin strictly listens, mic is disabled (cannot speak in silent monitoring stage)
+            // In Whisper & Barge: Admin mic is active, starting by default with Mic On, and can be toggled to Mic Off
+            if (btnMic) {
+                if (mode === 'Listen-in') {
+                    btnMic.disabled = true;
+                    btnMic.classList.remove('active', 'muted-state');
+                    if (iconMicOff) iconMicOff.style.display = 'block';
+                    if (iconMicOn) iconMicOn.style.display = 'none';
+                    if (labelMic) labelMic.textContent = 'Mic Disabled';
+                    btnMic.title = 'Mic disabled in Listen-in mode (Silent monitoring only)';
+                } else {
+                    btnMic.disabled = false;
+                    if (adminMicMuted) {
+                        // When Admin turned it Off:
+                        btnMic.classList.remove('active');
+                        btnMic.classList.add('muted-state');
+                        if (iconMicOff) iconMicOff.style.display = 'block';
+                        if (iconMicOn) iconMicOn.style.display = 'none';
+                        if (labelMic) labelMic.textContent = 'Mic Off';
+                        btnMic.title = 'Mic Off (Click to turn Mic On)';
+                    } else {
+                        // Default starting state: Mic On
+                        btnMic.classList.add('active');
+                        btnMic.classList.remove('muted-state');
+                        if (iconMicOff) iconMicOff.style.display = 'none';
+                        if (iconMicOn) iconMicOn.style.display = 'block';
+                        if (labelMic) labelMic.textContent = 'Mic On';
+                        btnMic.title = 'Mic On (Click to turn Mic Off)';
+                    }
+                }
+            }
+        }
+
+        // Toggle Admin Speaker
+        function toggleAdminSpeaker() {
+            adminSpeakerEnabled = !adminSpeakerEnabled;
+            updateAdminControlButtons(currentQaAction || 'Listen-in');
+        }
+
+        // Toggle Admin Microphone (Allows Admin to turn Mic Off / Mic On during Whisper & Barge)
+        function toggleAdminMic() {
+            if (currentQaAction === 'Listen-in') return; // Cannot toggle mic in Listen-in mode
+            adminMicMuted = !adminMicMuted;
+            updateAdminControlButtons(currentQaAction || 'Listen-in');
+        }
+
+        // Disconnect: Ends only the Admin's monitoring session
+        // Closes the floating monitoring panel, resets table QA action buttons, does NOT end customer call
         function endQaSession() {
             currentQaAction = null;
             currentTargetAgent = null;
+            currentMonitoredCallId = null;
+            adminMicMuted = false; // Reset to default Mic On for next session
+            adminSpeakerEnabled = true;
+
+            // Reset table action buttons
             renderActiveCalls();
-            const toast = document.getElementById('qa-session-toast');
-            if (toast) toast.style.display = 'none';
+
+            // Hide the floating panel
+            const panel = document.getElementById('live-qa-panel');
+            if (panel) {
+                panel.style.display = 'none';
+                // Reset custom dragged position so it opens cleanly at its default location next time
+                panel.style.top = '';
+                panel.style.left = '';
+                panel.style.bottom = '';
+                panel.style.right = '';
+                panel.classList.remove('is-dragging');
+            }
         }
+
+        // ==========================================================
+        // DRAG & MOVE LOGIC FOR LIVE QA MONITORING PANEL
+        // Allows user to drag & move the card anywhere on screen
+        // ==========================================================
+        (function initDraggableQaPanel() {
+            const panel = document.getElementById('live-qa-panel');
+            const header = document.getElementById('qa-panel-header') || document.querySelector('.qa-panel-top-bar');
+            if (!panel || !header) return;
+
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+            let initialLeft = 0;
+            let initialTop = 0;
+
+            function onDragStart(e) {
+                // Ignore clicks on buttons or interactive elements inside header if any
+                if (e.target.closest('button, input, select, a')) return;
+
+                isDragging = true;
+                panel.classList.add('is-dragging');
+
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                startX = clientX;
+                startY = clientY;
+
+                // Get current bounding rect
+                const rect = panel.getBoundingClientRect();
+                initialLeft = rect.left;
+                initialTop = rect.top;
+
+                // Switch from bottom/right layout to fixed top/left coordinates
+                panel.style.bottom = 'auto';
+                panel.style.right = 'auto';
+                panel.style.left = `${initialLeft}px`;
+                panel.style.top = `${initialTop}px`;
+                panel.style.margin = '0';
+
+                // Prevent text selection while dragging
+                document.body.style.userSelect = 'none';
+                document.body.style.webkitUserSelect = 'none';
+
+                if (e.type === 'mousedown') {
+                    document.addEventListener('mousemove', onDragMove, { passive: false });
+                    document.addEventListener('mouseup', onDragEnd);
+                } else if (e.type === 'touchstart') {
+                    document.addEventListener('touchmove', onDragMove, { passive: false });
+                    document.addEventListener('touchend', onDragEnd);
+                    document.addEventListener('touchcancel', onDragEnd);
+                }
+            }
+
+            function onDragMove(e) {
+                if (!isDragging) return;
+                if (e.cancelable) e.preventDefault();
+
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                const deltaX = clientX - startX;
+                const deltaY = clientY - startY;
+
+                let newLeft = initialLeft + deltaX;
+                let newTop = initialTop + deltaY;
+
+                // Viewport boundaries clamping
+                const panelWidth = panel.offsetWidth || 360;
+                const panelHeight = panel.offsetHeight || 380;
+                const maxLeft = Math.max(0, window.innerWidth - panelWidth - 8);
+                const maxTop = Math.max(0, window.innerHeight - panelHeight - 8);
+
+                newLeft = Math.max(8, Math.min(newLeft, maxLeft));
+                newTop = Math.max(8, Math.min(newTop, maxTop));
+
+                panel.style.left = `${newLeft}px`;
+                panel.style.top = `${newTop}px`;
+            }
+
+            function onDragEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                panel.classList.remove('is-dragging');
+
+                document.body.style.userSelect = '';
+                document.body.style.webkitUserSelect = '';
+
+                document.removeEventListener('mousemove', onDragMove);
+                document.removeEventListener('mouseup', onDragEnd);
+                document.removeEventListener('touchmove', onDragMove);
+                document.removeEventListener('touchend', onDragEnd);
+                document.removeEventListener('touchcancel', onDragEnd);
+            }
+
+            header.addEventListener('mousedown', onDragStart);
+            header.addEventListener('touchstart', onDragStart, { passive: true });
+        })();
 
         function escapeHtml(str) {
             if (!str) return '';

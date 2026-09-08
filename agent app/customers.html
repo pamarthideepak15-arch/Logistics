@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CCM Agent App - Customers &amp; Customer 360</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="agent-app-body">
+
+    <div class="caa-app-container">
+
+        <!-- Top Profile Drawer State Toggle -->
+        <input type="checkbox" id="caa-toggle-profile" class="caa-profile-modal-toggle">
+
+        <!-- Pure CSS Customer 360 View Switcher -->
+        <input type="radio" name="c360-view" id="view-customer-list" class="caa-profile-modal-toggle" checked>
+        <input type="radio" name="c360-view" id="view-customer-360" class="caa-profile-modal-toggle">
+
+        <!-- ============================================================ -->
+        <!-- 1. MOBILE HEADER                                             -->
+        <!-- ============================================================ -->
+        <header class="caa-header">
+            <a href="index.html" class="caa-header-brand">
+                <div class="caa-brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <rect x="1" y="3" width="15" height="13"></rect>
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                </div>
+                <span class="caa-brand-text">CCM Agent</span>
+            </a>
+
+            <div class="caa-header-right">
+                <a href="profile.html" class="caa-profile-btn" title="Open Profile &amp; Account">
+                    <div class="caa-avatar-mini">DK</div>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- PROFILE DRAWER OVERLAY -->
+        <div class="caa-profile-overlay">
+            <div class="caa-profile-card">
+                <div class="caa-profile-card-top">
+                    <div class="caa-profile-user-info">
+                        <div class="caa-avatar-lg">DK</div>
+                        <div>
+                            <div class="caa-profile-name">Deepak Kumar</div>
+                            <div class="caa-profile-role">CCM Support Agent</div>
+                        </div>
+                    </div>
+                    <label for="caa-toggle-profile" class="caa-profile-close" title="Close">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </label>
+                </div>
+                <div class="caa-profile-meta-list">
+                    <div class="caa-profile-meta-row">
+                        <span class="caa-profile-meta-lbl">Agent ID</span>
+                        <span class="caa-profile-meta-val">AGT-1042</span>
+                    </div>
+                    <div class="caa-profile-meta-row">
+                        <span class="caa-profile-meta-lbl">Branch</span>
+                        <span class="caa-profile-meta-val">Bengaluru Branch</span>
+                    </div>
+                    <div class="caa-profile-meta-row">
+                        <span class="caa-profile-meta-lbl">Role</span>
+                        <span class="caa-profile-meta-val">CCM Agent</span>
+                    </div>
+                    <div class="caa-profile-meta-row">
+                        <span class="caa-profile-meta-lbl">Availability</span>
+                        <span class="caa-badge caa-badge-dark"><span class="caa-dot"></span> Available</span>
+                    </div>
+                </div>
+                <div class="caa-profile-actions">
+                    <a href="../Login/welcome.html" class="caa-logout-btn" title="Logout to ERP Portal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2. MAIN SCROLLABLE VIEWPORT                                  -->
+        <!-- ============================================================ -->
+        <main class="caa-viewport">
+
+            <!-- ======================================================== -->
+            <!-- VIEW A: CUSTOMER LIST (Unified Customer Master)          -->
+            <!-- ======================================================== -->
+            <div id="customer-list-panel">
+                
+                <div class="caa-page-head">
+                    <div class="caa-page-title">Customers</div>
+                    <span class="caa-badge">Unified Records</span>
+                </div>
+
+                <!-- Search Customer Field -->
+                <div class="caa-search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--caa-text-tertiary);">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" class="caa-search-input" placeholder="Search customer name, phone, or branch...">
+                </div>
+
+                <!-- Customer List Items (Customer Name, Phone Number, Customer Type, Branch) -->
+                <div class="caa-card">
+                    <!-- Customer 1 -->
+                    <label for="view-customer-360" class="caa-list-item" style="cursor: pointer;">
+                        <div class="caa-list-item-main">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span class="caa-list-title">Suresh Reddy</span>
+                                <span class="caa-badge" style="font-size: 0.5625rem; padding: 1px 5px;">Regular Shipper</span>
+                            </div>
+                            <span class="caa-list-sub">+91 98480 12345</span>
+                            <span class="caa-list-meta">Branch: Bengaluru Branch • 4 Shipments</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span class="caa-btn caa-btn-secondary caa-btn-sm">360 View</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--caa-text-tertiary);">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+
+                    <!-- Customer 2 -->
+                    <label for="view-customer-360" class="caa-list-item" style="cursor: pointer;">
+                        <div class="caa-list-item-main">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span class="caa-list-title">Rajesh Kumar</span>
+                                <span class="caa-badge" style="font-size: 0.5625rem; padding: 1px 5px;">Consignee</span>
+                            </div>
+                            <span class="caa-list-sub">+91 98111 22334</span>
+                            <span class="caa-list-meta">Branch: Mumbai Hub • 2 Shipments</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span class="caa-btn caa-btn-secondary caa-btn-sm">360 View</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--caa-text-tertiary);">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+
+                    <!-- Customer 3 -->
+                    <label for="view-customer-360" class="caa-list-item" style="cursor: pointer;">
+                        <div class="caa-list-item-main">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span class="caa-list-title">Priya Sharma</span>
+                                <span class="caa-badge" style="font-size: 0.5625rem; padding: 1px 5px;">Lead Customer</span>
+                            </div>
+                            <span class="caa-list-sub">+91 98220 54321</span>
+                            <span class="caa-list-meta">Branch: Hyderabad Branch • LEAD-8210</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span class="caa-btn caa-btn-secondary caa-btn-sm">360 View</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--caa-text-tertiary);">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+
+                    <!-- Customer 4 -->
+                    <label for="view-customer-360" class="caa-list-item" style="cursor: pointer;">
+                        <div class="caa-list-item-main">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span class="caa-list-title">Anil Verma</span>
+                                <span class="caa-badge" style="font-size: 0.5625rem; padding: 1px 5px;">Corporate</span>
+                            </div>
+                            <span class="caa-list-sub">+91 97123 45678</span>
+                            <span class="caa-list-meta">Branch: Delhi Branch • Contract Shipper</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span class="caa-btn caa-btn-secondary caa-btn-sm">360 View</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color: var(--caa-text-tertiary);">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- VIEW B: CUSTOMER 360 (The 6 BRD Core Areas)              -->
+            <!-- 1. Profile 2. Branch 3. Calls 4. LRs 5. Leads 6. Tickets -->
+            <!-- ======================================================== -->
+            <div id="customer-360-panel" style="display: none;">
+                
+                <!-- Top Navigation back to List -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <label for="view-customer-list" class="caa-btn caa-btn-secondary caa-btn-sm" style="cursor: pointer;">
+                        ← Back to Customers
+                    </label>
+                    <a href="calls.html" class="caa-btn caa-btn-primary caa-btn-sm" style="text-decoration: none;">
+                        Call Customer
+                    </a>
+                </div>
+
+                <!-- 1. Customer Profile -->
+                <div class="caa-card">
+                    <div class="caa-card-header">
+                        <span class="caa-card-title">1. Customer Profile</span>
+                        <span class="caa-badge caa-badge-dark">Unified Record</span>
+                    </div>
+                    <div style="font-size: 1rem; font-weight: 700; color: var(--caa-text-primary);">Suresh Reddy</div>
+                    <div style="font-size: 0.75rem; color: var(--caa-text-secondary); margin-top: 2px;">Phone: +91 98480 12345</div>
+                    <div style="font-size: 0.75rem; color: var(--caa-text-secondary); margin-top: 2px;">Type: Regular Shipper • ID: CUST-4091</div>
+                    <div style="font-size: 0.75rem; color: var(--caa-text-secondary); margin-top: 2px;">Address: Peenya Industrial Area, Bengaluru, Karnataka</div>
+                </div>
+
+                <!-- 2. Branch History (Cross-Branch History Supported) -->
+                <div class="caa-card">
+                    <div class="caa-card-header">
+                        <span class="caa-card-title">2. Branch History</span>
+                        <span class="caa-badge">Multi-Branch</span>
+                    </div>
+                    <div class="caa-list-item" style="padding: 6px 0;">
+                        <div class="caa-list-item-main">
+                            <span class="caa-list-title">Bengaluru Branch (Primary)</span>
+                            <span class="caa-list-sub">Active support branch • Last pickup: 04 Sep 2026</span>
+                        </div>
+                    </div>
+                    <div class="caa-list-item" style="padding: 6px 0;">
+                        <div class="caa-list-item-main">
+                            <span class="caa-list-title">Mumbai Hub</span>
+                            <span class="caa-list-sub">Origin hub for 3 freight shipments</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Call History -->
+                <div class="caa-card">
+                    <div class="caa-card-header">
+                        <span class="caa-card-title">3. Call History</span>
+                        <a href="call-history.html" style="font-size: 0.6875rem; color: var(--caa-text-secondary); text-decoration: underline;">All History</a>
+                    </div>
+                    <div class="caa-list-item" style="padding: 6px 0;">
+                        <div class="caa-list-item-main">
+                            <span class="caa-list-title">Inbound • 03:24 • Resolved</span>
+                            <span class="caa-list-sub">Today 10:15 AM • Agent: Deepak Kumar</span>
+                            <span class="caa-list-meta">Context: Shipment LR-BLR-84920 tracking</span>
+                        </div>
+                        <span class="caa-badge" style="font-size: 0.5625rem;">Recorded</span>
+                    </div>
+                    <div class="caa-list-item" style="padding: 6px 0;">
+                        <div class="caa-list-item-main">
+                            <span class="caa-list-title">Outbound • 01:45 • Follow-up</span>
+                            <span class="caa-list-sub">Yesterday 04:30 PM • Agent: Deepak Kumar</span>
+                        </div>
+                        <span class="caa-badge" style="font-size: 0.5625rem;">Recorded</span>
+                    </div>
+                </div>
+
+                <!-- 4. Shipment / LR History -->
+                <div class="caa-card">
+                    <div class="caa-card-header">
+                        <span class="caa-card-title">4. Shipment / LR History</span>
+                        <span class="caa-badge">Unified ERP</span>
+                    </div>
+                    <div class="caa-list-item" style="padding: 6px 0;">
+                        <div class="caa-list-item-main">
+                            <span class="caa-list-title" style="font-family: monospace;">LR-BLR-84920</span>
+                            <span class="caa-list-sub">Mumbai → Bengaluru • 12 Cartons (350 kg)</span>
+                            <span class="caa-list-meta">Status: Out for Delivery • Assigned Vehicle: KA-01-EA-4421</span>
+                        </div>
+                    </div>
+                    <div class="caa-list-item" style="padding: 6px 0;">
+                        <div class="caa-list-item-main">
+                            <span class="caa-list-title" style="font-family: monospace;">LR-MUM-71204</span>
+                            <span class="caa-list-sub">Bengaluru → Mumbai • 4 Crates (180 kg)</span>
+                            <span class="caa-list-meta">Status: In Transit • Estimated Arrival: Tomorrow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Linked Leads -->
+                <div class="caa-card">
+                    <div class="caa-card-header">
+                        <span class="caa-card-title">5. Linked Leads</span>
+                        <a href="leads.html" class="caa-btn caa-btn-secondary caa-btn-sm" style="text-decoration: none;">+ Lead</a>
+                    </div>
+                    <div class="caa-list-item" style="padding: 6px 0;">
+                        <div class="caa-list-item-main">
+                            <span class="caa-list-title">LEAD-8214 • FTL Freight Rate Expansion</span>
+                            <span class="caa-list-sub">Requirement: 20 Ton Reefer truck monthly</span>
+                            <span class="caa-list-meta">Status: Contacted • Source: Call</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Linked Support Tickets -->
+                <div class="caa-card">
+                    <div class="caa-card-header">
+                        <span class="caa-card-title">6. Linked Tickets</span>
+                        <a href="tickets.html" class="caa-btn caa-btn-secondary caa-btn-sm" style="text-decoration: none;">+ Ticket</a>
+                    </div>
+                    <div class="caa-list-item" style="padding: 6px 0;">
+                        <div class="caa-list-item-main">
+                            <span class="caa-list-title">TCK-7104 • Delivery Delay Inquiry</span>
+                            <span class="caa-list-sub">Subject: Delayed shipment query for LR-BLR-84920</span>
+                            <span class="caa-list-meta">Priority: High • Status: In Progress • SLA: Within 4 hrs</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- ============================================================ -->
+        <!-- 3. BOTTOM NAVIGATION (Fixed, Exactly 5 Items)                -->
+        <!-- ============================================================ -->
+        <nav class="caa-bottom-nav">
+            <a href="index.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Home</span>
+            </a>
+
+            <a href="calls.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Calls</span>
+            </a>
+
+            <a href="customers.html" class="caa-nav-item active">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Customers</span>
+            </a>
+
+            <a href="leads.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Leads</span>
+            </a>
+
+            <a href="tickets.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Tickets</span>
+            </a>
+        </nav>
+
+    </div>
+
+</body>
+</html>

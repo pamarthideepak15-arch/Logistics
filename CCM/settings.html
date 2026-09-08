@@ -1,0 +1,1794 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Roles &amp; Permissions / RBAC - CCM | Exelon Logistics ERP</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="../Design System/components.css">
+    <link rel="stylesheet" href="../Sidebar/sidebar.css">
+    <!-- CCM & Unified Stylesheet -->
+    <link rel="stylesheet" href="agents.css">
+    <style>
+        /* Custom styles specific to Roles & Permissions / RBAC */
+        .role-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .role-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .role-summary-card {
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base, 6px);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .role-summary-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .role-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .role-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .role-card-name {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--color-black);
+            margin: 0;
+        }
+
+        .role-card-desc {
+            font-size: 0.75rem;
+            color: #64748b;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .role-scope-box {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .role-scope-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #64748b;
+        }
+
+        .role-scope-val {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--color-black);
+        }
+
+        /* Access Scope Badges (Monochrome / Black & White Design System) */
+        .badge-scope-superadmin,
+        .badge-scope-branchmanager,
+        .badge-scope-agent {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: var(--border-radius-base, 4px);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            background: #ffffff;
+            color: var(--color-black);
+            border: 1px solid var(--color-border);
+            white-space: nowrap;
+        }
+
+        /* RBAC Table Styling & UI/UX */
+        .rbac-matrix-card {
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base, 6px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .rbac-matrix-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--color-border);
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .rbac-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .rbac-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.8125rem;
+            background: #ffffff;
+        }
+
+        .rbac-table th {
+            padding: 12px 16px;
+            background: #000000;
+            border-bottom: 1px solid #000000;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: left;
+            letter-spacing: 0.02em;
+        }
+
+        .rbac-table th .badge-scope-superadmin,
+        .rbac-table th .badge-scope-branchmanager,
+        .rbac-table th .badge-scope-agent {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .rbac-th-role {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rbac-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-black);
+            vertical-align: middle;
+            transition: background-color 0.12s ease;
+        }
+
+        .rbac-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rbac-table tbody tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .module-cell-title {
+            font-weight: 600;
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8125rem;
+        }
+
+        .module-icon-box {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            background: #f8fafc;
+            border: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--color-black);
+        }
+
+        .rbac-table tbody tr:hover .module-icon-box {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .module-cell-desc {
+            font-size: 0.6875rem;
+            color: #64748b;
+            margin-top: 3px;
+            padding-left: 38px;
+            line-height: 1.35;
+        }
+
+        /* RBAC Custom Details Dropdown Controls */
+        .rbac-table details.custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            width: 100%;
+            max-width: 190px;
+        }
+
+        .rbac-table details.custom-select-wrapper[open] > summary.custom-select-trigger::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: 99;
+            background: transparent;
+        }
+
+        .rbac-table summary.custom-select-trigger {
+            height: 32px;
+            padding: 0 10px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base, 4px);
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--color-black);
+            background-color: var(--color-white);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            list-style: none;
+            white-space: nowrap;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+
+        .rbac-table summary.custom-select-trigger::-webkit-details-marker {
+            display: none;
+        }
+
+        .rbac-table summary.custom-select-trigger:hover {
+            border-color: var(--color-black);
+        }
+
+        .rbac-table summary.custom-select-trigger > svg:last-child {
+            margin-left: auto !important;
+            flex-shrink: 0 !important;
+            color: var(--color-black);
+        }
+
+        .rbac-table details.custom-select-wrapper[open] summary.custom-select-trigger {
+            border-color: var(--color-black);
+        }
+
+        .rbac-table .custom-select-options {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            min-width: 140px;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base, 4px);
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow-y: auto;
+            max-height: 180px;
+            padding: 4px 0;
+        }
+
+        .rbac-table .custom-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--color-black);
+            transition: background-color 0.12s ease;
+        }
+
+        .rbac-table .custom-option:hover {
+            background-color: #f1f5f9;
+        }
+
+        .rbac-table .custom-option.selected {
+            font-weight: 700;
+            color: var(--color-black);
+            background-color: #f8fafc;
+        }
+
+        /* Non-configurable static boundary badge */
+        .no-access-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #64748b;
+            background: #f8fafc;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base, 4px);
+        }
+
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: 6px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+            pointer-events: none;
+        }
+
+        .toast-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .toast-notification.toast-success svg {
+            color: #ffffff;
+        }
+
+        .toast-notification.toast-info svg {
+            color: #ffffff;
+        }
+
+        /* Expand / Collapse Chevron indicator for mobile matrix cards */
+        .module-expand-btn {
+            display: none;
+        }
+
+        /* Mobile Responsive Layout Styles (@media max-width: 768px) */
+        @media (max-width: 768px) {
+            /* 1. Settings Page Header & Actions */
+            .page-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 14px !important;
+                margin-bottom: 16px !important;
+            }
+
+            .page-title-group {
+                width: 100% !important;
+            }
+
+            .page-title {
+                font-size: 1.25rem !important;
+                line-height: 1.3 !important;
+            }
+
+            .page-subtitle {
+                font-size: 0.8125rem !important;
+                line-height: 1.4 !important;
+                margin-top: 4px !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+
+            .header-actions {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+                width: 100% !important;
+            }
+
+            .header-actions .btn {
+                width: 100% !important;
+                height: 38px !important;
+                font-size: 0.8125rem !important;
+                font-weight: 600 !important;
+                justify-content: center !important;
+                box-sizing: border-box !important;
+            }
+
+            /* 2. Role Summary Cards (Vertical Stacking, 100% data preservation) */
+            .role-cards-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                margin-bottom: 20px !important;
+                width: 100% !important;
+            }
+
+            .role-summary-card {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                padding: 14px !important;
+                gap: 10px !important;
+            }
+
+            .role-card-header {
+                display: flex !important;
+                align-items: flex-start !important;
+                justify-content: space-between !important;
+                gap: 10px !important;
+            }
+
+            .role-card-name {
+                font-size: 0.9375rem !important;
+            }
+
+            .role-card-desc {
+                font-size: 0.75rem !important;
+                margin-top: 2px !important;
+                line-height: 1.35 !important;
+            }
+
+            .role-scope-box {
+                padding: 8px 10px !important;
+            }
+
+            /* 3. RBAC / Access Control Matrix Card conversion (Direct Card View) */
+            .rbac-matrix-card {
+                border-radius: var(--border-radius-base, 6px) !important;
+                margin-bottom: 24px !important;
+                border: none !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+            }
+
+            .rbac-matrix-header {
+                padding: 14px 14px !important;
+                background: var(--color-white) !important;
+                border: 1px solid var(--color-border) !important;
+                border-radius: var(--border-radius-base, 6px) !important;
+                margin-bottom: 12px !important;
+            }
+
+            .rbac-table-wrap {
+                overflow: visible !important;
+                width: 100% !important;
+            }
+
+            .rbac-table {
+                display: block !important;
+                width: 100% !important;
+                border-collapse: collapse !important;
+                background: transparent !important;
+            }
+
+            /* Hide Desktop Table Header */
+            .rbac-table thead {
+                display: none !important;
+            }
+
+            .rbac-table tbody {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                width: 100% !important;
+            }
+
+            /* Convert Each Table Row into an Isolated Mobile Module Card */
+            .rbac-table tbody tr {
+                display: flex !important;
+                flex-direction: column !important;
+                background: var(--color-white) !important;
+                border: 1px solid var(--color-border, #e2e8f0) !important;
+                border-radius: var(--border-radius-base, 6px) !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+                overflow: hidden !important;
+                padding: 14px !important;
+                gap: 10px !important;
+            }
+
+            .rbac-table tbody tr:hover {
+                background-color: var(--color-white) !important;
+            }
+
+            /* Module Card Header (td:first-child) */
+            .rbac-table tbody tr td:first-child {
+                padding: 0 0 12px 0 !important;
+                border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
+                position: relative !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                text-align: left !important;
+                background: transparent !important;
+                margin-bottom: 2px !important;
+            }
+
+            .module-cell-title {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                text-align: left !important;
+                gap: 10px !important;
+                font-size: 0.9375rem !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                width: 100% !important;
+            }
+
+            .module-icon-box {
+                flex-shrink: 0 !important;
+            }
+
+            .module-cell-desc {
+                padding-left: 38px !important;
+                font-size: 0.75rem !important;
+                color: #64748b !important;
+                margin-top: 3px !important;
+                line-height: 1.35 !important;
+                text-align: left !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .module-expand-btn {
+                display: none !important;
+            }
+
+            /* Direct Left-Aligned Role Permission Rows (td:nth-child(2), td:nth-child(3), td:nth-child(4)) */
+            .rbac-table tbody tr td:nth-child(2),
+            .rbac-table tbody tr td:nth-child(3),
+            .rbac-table tbody tr td:nth-child(4) {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                padding: 6px 0 !important;
+                border: none !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                background: transparent !important;
+                gap: 12px !important;
+                text-align: left !important;
+            }
+
+            /* Clean Left-Aligned Role Labels */
+            .rbac-table tbody tr td:nth-child(2)::before {
+                content: "SUPER ADMIN";
+                font-size: 0.6875rem !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.04em !important;
+                color: #475569 !important;
+                text-transform: uppercase !important;
+                display: inline-block !important;
+                flex: 1 1 auto !important;
+                text-align: left !important;
+                min-width: 0 !important;
+            }
+
+            .rbac-table tbody tr td:nth-child(3)::before {
+                content: "BRANCH MANAGER";
+                font-size: 0.6875rem !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.04em !important;
+                color: #475569 !important;
+                text-transform: uppercase !important;
+                display: inline-block !important;
+                flex: 1 1 auto !important;
+                text-align: left !important;
+                min-width: 0 !important;
+            }
+
+            .rbac-table tbody tr td:nth-child(4)::before {
+                content: "AGENT";
+                font-size: 0.6875rem !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.04em !important;
+                color: #475569 !important;
+                text-transform: uppercase !important;
+                display: inline-block !important;
+                flex: 1 1 auto !important;
+                text-align: left !important;
+                min-width: 0 !important;
+            }
+
+            /* Interactive Mobile Controls - Right-Aligned & Compact */
+            .rbac-table details.custom-select-wrapper {
+                max-width: 155px !important;
+                width: 155px !important;
+                flex-shrink: 0 !important;
+                margin-left: auto !important;
+            }
+
+            .rbac-table summary.custom-select-trigger {
+                width: 100% !important;
+                height: 32px !important;
+                font-size: 0.75rem !important;
+                padding: 0 10px !important;
+                border-radius: var(--border-radius-base, 4px) !important;
+                box-sizing: border-box !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+            }
+
+            .rbac-table .custom-select-options {
+                width: 100% !important;
+                min-width: 140px !important;
+                box-sizing: border-box !important;
+                z-index: 1000 !important;
+            }
+
+            .rbac-table .no-access-pill {
+                width: 155px !important;
+                max-width: 155px !important;
+                height: 32px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 0 10px !important;
+                font-size: 0.75rem !important;
+                border-radius: var(--border-radius-base, 4px) !important;
+                box-sizing: border-box !important;
+                flex-shrink: 0 !important;
+                margin-left: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="telephony.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="ivr.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="call-routing.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="queues.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="agents.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                    <!-- Module 8: Leads -->
+                    <a href="leads.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        Leads
+                    </a>
+                
+                    <!-- Module 9: Tickets -->
+                    <a href="tickets.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                            <path d="M13 5v2"></path>
+                            <path d="M13 11v2"></path>
+                            <path d="M13 17v2"></path>
+                        </svg>
+                        Tickets
+                    </a>
+                    <!-- Module 10: Live Monitoring -->
+                    <a href="live-monitoring.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12h5l3 7 4-14 3 7h5"></path>
+                        </svg>
+                        Live Monitoring
+                    </a>
+                    <!-- Module 11: Call Records -->
+                    <a href="call-records.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8v4l3 3"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M3 11a9 9 0 0 1 1.76-4.5"></path>
+                            <polyline points="2 4 4.5 4 4.5 6.5"></polyline>
+                        </svg>
+                        Call Records
+                    </a>
+                    <!-- Module 12: Reports -->
+                    <a href="reports.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                        Reports
+                    </a>
+                    <!-- Module 13: Blacklist / DND -->
+                    <a href="blacklist-dnd.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                        </svg>
+                        Blacklist / DND
+                    </a>
+                    <!-- Module 14: Settings (Active) -->
+                    <a href="settings.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        Settings
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header Breadcrumb -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Settings</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../Login/welcome.html" class="logout-btn" title="Back to Welcome">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title-group">
+                        <h1 class="page-title">Roles &amp; Permissions</h1>
+                        <p class="page-subtitle">BRD-defined role-based access control and module permissions across CCM.</p>
+                    </div>
+                    <div class="header-actions" style="display: flex; gap: 8px; align-items: center;">
+                        <button type="button" id="cancelSettingsBtn" class="btn btn-secondary">Cancel</button>
+                        <button type="button" id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+
+                <!-- 1. ROLES DEFINITION SECTION (3 BRD Defined Roles) -->
+                <div class="role-cards-grid">
+                    
+                    <!-- Role 1: Super Admin -->
+                    <div class="role-summary-card">
+                        <div class="role-card-header">
+                            <div class="role-title-group">
+                                <h3 class="role-card-name">Super Admin</h3>
+                                <p class="role-card-desc">Has full cross-branch access across CCM.</p>
+                            </div>
+                            <span class="badge-scope-superadmin">Full Cross-Branch</span>
+                        </div>
+                        <div class="role-scope-box">
+                            <span class="role-scope-label">Access Scope</span>
+                            <span class="role-scope-val">Full cross-branch access</span>
+                        </div>
+                    </div>
+
+                    <!-- Role 2: Branch Manager -->
+                    <div class="role-summary-card">
+                        <div class="role-card-header">
+                            <div class="role-title-group">
+                                <h3 class="role-card-name">Branch Manager</h3>
+                                <p class="role-card-desc">Manages call and CRM activities within the assigned branch.</p>
+                            </div>
+                            <span class="badge-scope-branchmanager">Own-Branch Scoped</span>
+                        </div>
+                        <div class="role-scope-box">
+                            <span class="role-scope-label">Access Scope</span>
+                            <span class="role-scope-val">Own-branch call and CRM access</span>
+                        </div>
+                    </div>
+
+                    <!-- Role 3: Agent -->
+                    <div class="role-summary-card">
+                        <div class="role-card-header">
+                            <div class="role-title-group">
+                                <h3 class="role-card-name">Agent</h3>
+                                <p class="role-card-desc">Handles assigned leads, tickets, and calls.</p>
+                            </div>
+                            <span class="badge-scope-agent">Own Records</span>
+                        </div>
+                        <div class="role-scope-box">
+                            <span class="role-scope-label">Access Scope</span>
+                            <span class="role-scope-val">Own leads, tickets, and calls</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 2. RBAC / ACCESS CONTROL MATRIX SECTION -->
+                <div class="rbac-matrix-card">
+                    <div class="rbac-matrix-header">
+                        <div>
+                            <h2 style="font-size: 0.9375rem; font-weight: 700; color: var(--color-black); margin: 0 0 4px 0;">RBAC / Access Control Matrix</h2>
+                            <p style="font-size: 0.75rem; color: #64748b; margin: 0;">Role-based access boundaries across all CCM modules as defined by the CCM BRD.</p>
+                        </div>
+                    </div>
+
+                    <div class="rbac-table-wrap">
+                        <form id="rbacForm" onsubmit="return false;">
+                        <table class="rbac-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 28%; min-width: 240px;">CCM Module</th>
+                                    <th style="width: 24%; min-width: 200px;">
+                                        <div class="rbac-th-role">
+                                            <span>Super Admin</span>
+                                            <span class="badge-scope-superadmin" style="font-size: 0.625rem; padding: 1px 6px;">Full Access</span>
+                                        </div>
+                                    </th>
+                                    <th style="width: 24%; min-width: 200px;">
+                                        <div class="rbac-th-role">
+                                            <span>Branch Manager</span>
+                                            <span class="badge-scope-branchmanager" style="font-size: 0.625rem; padding: 1px 6px;">Own Branch</span>
+                                        </div>
+                                    </th>
+                                    <th style="width: 24%; min-width: 200px;">
+                                        <div class="rbac-th-role">
+                                            <span>Agent</span>
+                                            <span class="badge-scope-agent" style="font-size: 0.625rem; padding: 1px 6px;">Own Records</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Module 1: Company & Branches -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="3" y="21" width="18" height="2"></rect><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path><path d="M9 9h1"></path><path d="M9 13h1"></path><path d="M9 17h1"></path><path d="M14 9h1"></path><path d="M14 13h1"></path><path d="M14 17h1"></path></svg>
+                                            </div>
+                                            Company &amp; Branches
+                                        </div>
+                                        <div class="module-cell-desc">Central telephony &amp; dedicated branch numbers</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="company_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="company_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="company_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="company_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 2: Telephony -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                            </div>
+                                            Telephony
+                                        </div>
+                                        <div class="module-cell-desc">Cloud provider interface &amp; credentials</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="telephony_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="telephony_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 3: IVR -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                                            </div>
+                                            IVR
+                                        </div>
+                                        <div class="module-cell-desc">Interactive voice response flow &amp; audio prompts</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="ivr_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="ivr_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 4: Call Routing -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+                                            </div>
+                                            Call Routing
+                                        </div>
+                                        <div class="module-cell-desc">Rules, conditions &amp; fallback distribution</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="routing_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="routing_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 5: Queues -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                            </div>
+                                            Queues
+                                        </div>
+                                        <div class="module-cell-desc">Call distribution queues &amp; member mapping</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="queues_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="queues_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="queues_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="queues_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 6: Agents -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                            </div>
+                                            Agents
+                                        </div>
+                                        <div class="module-cell-desc">Employee master mapping &amp; agent status</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="agents_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="agents_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="agents_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="agents_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="agents_agent" data-scope="own">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Records</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="own" data-label="Own Records">Own Records</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="agents_agent" value="own">
+                                        </details>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 7: Customers -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                            </div>
+                                            Customers
+                                        </div>
+                                        <div class="module-cell-desc">Unified customer directory &amp; Customer 360 view</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="customers_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="customers_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="customers_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="customers_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="customers_agent" data-scope="own">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Assigned Records</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="own" data-label="Assigned Records">Assigned Records</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="customers_agent" value="own">
+                                        </details>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 8: Leads -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                            </div>
+                                            Leads
+                                        </div>
+                                        <div class="module-cell-desc">Lead pipeline, follow-ups &amp; status transitions</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="leads_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="leads_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="leads_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="leads_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="leads_agent" data-scope="own">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Records</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="own" data-label="Own Records">Own Records</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="leads_agent" value="own">
+                                        </details>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 9: Tickets -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path><path d="M13 5v2"></path><path d="M13 11v2"></path><path d="M13 17v2"></path></svg>
+                                            </div>
+                                            Tickets
+                                        </div>
+                                        <div class="module-cell-desc">Support tickets, SLA tracking &amp; resolution</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="tickets_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="tickets_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="tickets_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="tickets_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="tickets_agent" data-scope="own">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Records</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="own" data-label="Own Records">Own Records</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="tickets_agent" value="own">
+                                        </details>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 10: Live Monitoring -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M2 12h5l3 7 4-14 3 7h5"></path></svg>
+                                            </div>
+                                            Live Monitoring
+                                        </div>
+                                        <div class="module-cell-desc">Real-time queue load, active calls &amp; supervisory controls</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="live_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="live_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="live_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="live_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 11: Call Records -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="9"></circle><path d="M3 11a9 9 0 0 1 1.76-4.5"></path><polyline points="2 4 4.5 4 4.5 6.5"></polyline></svg>
+                                            </div>
+                                            Call Records
+                                        </div>
+                                        <div class="module-cell-desc">Historical inbound, outbound, missed calls &amp; recordings</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="records_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="records_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="records_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="records_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="records_agent" data-scope="own">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Records</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="own" data-label="Own Records">Own Records</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="records_agent" value="own">
+                                        </details>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 12: Reports -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                            </div>
+                                            Reports
+                                        </div>
+                                        <div class="module-cell-desc">Call, agent, queue, lead, ticket &amp; branch analytics</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="reports_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="reports_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="reports_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="reports_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Module 13: Blacklist / DND -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                                            </div>
+                                            Blacklist / DND
+                                        </div>
+                                        <div class="module-cell-desc">Blocked phone numbers &amp; DND registries</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="blacklist_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="blacklist_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="blacklist_branchmanager" data-scope="branch">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Own Branch</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="branch" data-label="Own Branch">Own Branch</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="blacklist_branchmanager" value="branch">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+                                <!-- Module 14: Settings -->
+                                <tr>
+                                    <td>
+                                        <div class="module-cell-title">
+                                            <div class="module-icon-box">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                            </div>
+                                            Settings
+                                        </div>
+                                        <div class="module-cell-desc">Roles &amp; Permissions / RBAC configuration</div>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="settings_superadmin" data-scope="full">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">Full Access</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="full" data-label="Full Access">Full Access</label>
+                                                <label class="custom-option" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="settings_superadmin" value="full">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <details class="custom-select-wrapper" data-name="settings_branchmanager" data-scope="view">
+                                            <summary class="custom-select-trigger">
+                                                <span class="trigger-label">View Only</span>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </summary>
+                                            <div class="custom-select-options">
+                                                <label class="custom-option selected" data-value="view" data-label="View Only">View Only</label>
+                                                <label class="custom-option" data-value="none" data-label="No Access">No Access</label>
+                                            </div>
+                                            <input type="hidden" name="settings_branchmanager" value="view">
+                                        </details>
+                                    </td>
+                                    <td>
+                                        <span class="no-access-pill">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            No Access
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="settingsToast" class="toast-notification">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="toastMessage">Settings saved successfully.</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const STORAGE_KEY = 'ccm_rbac_matrix_config';
+            const saveBtn = document.getElementById('saveSettingsBtn');
+            const cancelBtn = document.getElementById('cancelSettingsBtn');
+            const toast = document.getElementById('settingsToast');
+            const toastMsg = document.getElementById('toastMessage');
+            let toastTimer;
+
+            function showToast(message, isSuccess) {
+                clearTimeout(toastTimer);
+                toastMsg.textContent = message;
+                toast.className = 'toast-notification show ' + (isSuccess ? 'toast-success' : 'toast-info');
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // Close other open details dropdowns when one opens
+            document.querySelectorAll('details.custom-select-wrapper').forEach(wrapper => {
+                wrapper.addEventListener('toggle', function() {
+                    if (this.open) {
+                        document.querySelectorAll('details.custom-select-wrapper').forEach(other => {
+                            if (other !== this && other.open) {
+                                other.removeAttribute('open');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Handle option click
+            document.querySelectorAll('.custom-select-wrapper .custom-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const wrapper = this.closest('details.custom-select-wrapper');
+                    if (!wrapper) return;
+
+                    const val = this.getAttribute('data-value');
+                    const label = this.getAttribute('data-label') || this.textContent.trim();
+                    const input = wrapper.querySelector('input[type="hidden"]');
+                    const triggerLabel = wrapper.querySelector('.trigger-label');
+
+                    if (input) input.value = val;
+                    if (triggerLabel) triggerLabel.textContent = label;
+                    wrapper.setAttribute('data-scope', val);
+
+                    wrapper.querySelectorAll('.custom-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+
+                    wrapper.removeAttribute('open');
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('details.custom-select-wrapper')) {
+                    document.querySelectorAll('details.custom-select-wrapper[open]').forEach(w => w.removeAttribute('open'));
+                }
+            });
+
+            function setDropdownValue(wrapper, val) {
+                const opt = wrapper.querySelector(`.custom-option[data-value="${val}"]`);
+                if (opt) {
+                    const label = opt.getAttribute('data-label') || opt.textContent.trim();
+                    const input = wrapper.querySelector('input[type="hidden"]');
+                    const triggerLabel = wrapper.querySelector('.trigger-label');
+
+                    if (input) input.value = val;
+                    if (triggerLabel) triggerLabel.textContent = label;
+                    wrapper.setAttribute('data-scope', val);
+
+                    wrapper.querySelectorAll('.custom-option').forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                }
+            }
+
+            function loadSettings() {
+                try {
+                    const saved = localStorage.getItem(STORAGE_KEY);
+                    if (saved) {
+                        const config = JSON.parse(saved);
+                        document.querySelectorAll('details.custom-select-wrapper').forEach(wrapper => {
+                            const name = wrapper.getAttribute('data-name');
+                            if (name && config[name]) {
+                                setDropdownValue(wrapper, config[name]);
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.error('Error loading RBAC settings:', e);
+                }
+            }
+
+            if (saveBtn) {
+                saveBtn.addEventListener('click', () => {
+                    const config = {};
+                    document.querySelectorAll('details.custom-select-wrapper').forEach(wrapper => {
+                        const name = wrapper.getAttribute('data-name');
+                        const input = wrapper.querySelector('input[type="hidden"]');
+                        if (name && input) {
+                            config[name] = input.value;
+                        }
+                    });
+                    try {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+                        showToast('Roles & Permissions saved successfully.', true);
+                    } catch (e) {
+                        console.error('Error saving RBAC settings:', e);
+                        showToast('Error saving settings.', false);
+                    }
+                });
+            }
+
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', () => {
+                    loadSettings();
+                    showToast('Unsaved changes discarded.', false);
+                });
+            }
+
+            // Mobile Expand / Collapse for RBAC Permission Cards
+            const rbacRows = document.querySelectorAll('.rbac-table tbody tr');
+            rbacRows.forEach(row => {
+                const firstTd = row.querySelector('td:first-child');
+                if (firstTd) {
+                    // Inject mobile expand chevron button if not present
+                    if (!firstTd.querySelector('.module-expand-btn')) {
+                        const expandBtn = document.createElement('span');
+                        expandBtn.className = 'module-expand-btn';
+                        expandBtn.setAttribute('aria-hidden', 'true');
+                        expandBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+                        firstTd.appendChild(expandBtn);
+                    }
+
+                    firstTd.addEventListener('click', function(e) {
+                        // Only trigger accordion toggle on mobile viewports (< 768px)
+                        if (window.innerWidth <= 768) {
+                            row.classList.toggle('is-expanded');
+                        }
+                    });
+                }
+            });
+
+            loadSettings();
+        });
+    </script>
+</body>
+</html>

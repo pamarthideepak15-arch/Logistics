@@ -109,6 +109,9 @@
                         <strong>Super Admin</strong>
                         <span>HQ-NODE-01</span>
                     </div>
+                    <a href="../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
                 </div>
             </header>
 
@@ -131,14 +134,14 @@
                     <div class="form-grid">
                         <div class="form-group" style="grid-column: 1 / -1;">
                             <label>Customer Type *</label>
-                            <div class="radio-group" style="display: flex; gap: 16px; width: 100%; max-width: 400px;">
-                                <label style="flex: 1; display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 6px 10px; box-sizing: border-box;">
-                                    <input type="radio" name="customer-type" id="type-individual" value="individual" checked style="width: 16px; height: 16px; margin: 0; cursor: pointer; accent-color: #000000; outline: none;">
-                                    Individual
+                            <div class="radio-group" style="max-width: 400px;">
+                                <label class="radio-card" style="flex: 1;">
+                                    <input type="radio" name="customer-type" id="type-individual" value="individual" checked>
+                                    <span>Individual</span>
                                 </label>
-                                <label style="flex: 1; display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 6px 10px; box-sizing: border-box;">
-                                    <input type="radio" name="customer-type" id="type-business" value="business" style="width: 16px; height: 16px; margin: 0; cursor: pointer; accent-color: #000000; outline: none;">
-                                    Business
+                                <label class="radio-card" style="flex: 1;">
+                                    <input type="radio" name="customer-type" id="type-business" value="business">
+                                    <span>Business</span>
                                 </label>
                             </div>
                         </div>

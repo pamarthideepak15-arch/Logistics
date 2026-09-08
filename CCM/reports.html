@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports — CCM | Logistics Management Platform</title>
+    <title>Reports - CCM | Logistics Management Platform</title>
     <!-- Design System Global & Components CSS -->
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
@@ -775,9 +775,483 @@
         .btn-apply-date:hover {
             background: #334155;
         }
+
+        /* ==========================================================
+           COMPREHENSIVE MOBILE RESPONSIVE SYSTEM FOR CCM REPORTS (<=768px)
+           ========================================================== */
+        @media (max-width: 768px) {
+            /* 1. Page Header & Actions */
+            .page-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                margin-bottom: 14px !important;
+            }
+
+            .page-title-group {
+                width: 100% !important;
+            }
+
+            .page-title {
+                font-size: 1.1875rem !important;
+                line-height: 1.25 !important;
+                margin-bottom: 2px !important;
+            }
+
+            .page-subtitle {
+                font-size: 0.8125rem !important;
+                line-height: 1.4 !important;
+                color: #64748b !important;
+                word-break: normal !important;
+                overflow-wrap: break-word !important;
+            }
+
+            .header-actions {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+                width: 100% !important;
+            }
+
+            .btn-export-outline,
+            .btn-export-filled {
+                width: 100% !important;
+                height: 36px !important;
+                padding: 0 10px !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+                justify-content: center !important;
+                box-sizing: border-box !important;
+                white-space: nowrap !important;
+            }
+
+            /* 2. Full-Width Stacked Global Filters (Date Range | Branch | View) */
+            .reports-global-filter-bar {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                padding: 12px !important;
+                border-radius: var(--border-radius-base, 6px) !important;
+                margin-bottom: 12px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .filter-item-group {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 4px !important;
+            }
+
+            .filter-item-label {
+                font-size: 0.6875rem !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.04em !important;
+                color: #475569 !important;
+                text-transform: uppercase !important;
+                margin-bottom: 2px !important;
+            }
+
+            .filter-item-group .custom-select-wrapper {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .filter-item-group .custom-select-trigger {
+                width: 100% !important;
+                height: 36px !important;
+                box-sizing: border-box !important;
+                padding: 0 12px !important;
+                font-size: 0.8125rem !important;
+            }
+
+            .filter-item-group .custom-select-options {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                z-index: 1050 !important;
+            }
+
+            /* 3. Global Presentation Switcher (Full-Width Segmented Control) */
+            .global-presentation-toolbar {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 6px !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin-bottom: 16px !important;
+                box-sizing: border-box !important;
+            }
+
+            .global-presentation-label {
+                font-size: 0.6875rem !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.04em !important;
+                color: #475569 !important;
+                text-transform: uppercase !important;
+            }
+
+            .global-view-switch-group {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .global-view-switch-btn {
+                height: 34px !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+                justify-content: center !important;
+                text-align: center !important;
+                width: 100% !important;
+            }
+
+            /* 4. Report Section Cards & Headers */
+            .report-section-card {
+                padding: 14px 12px !important;
+                border-radius: var(--border-radius-base, 6px) !important;
+                margin-bottom: 16px !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+
+            .report-section-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 4px !important;
+                padding-bottom: 10px !important;
+                margin-bottom: 12px !important;
+                border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
+                width: 100% !important;
+            }
+
+            .report-section-title {
+                font-size: 0.9375rem !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                line-height: 1.3 !important;
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+            }
+
+            .report-section-meta {
+                font-size: 0.75rem !important;
+                color: #64748b !important;
+                line-height: 1.35 !important;
+                margin: 0 !important;
+                word-break: normal !important;
+                overflow-wrap: break-word !important;
+            }
+
+            /* 5. KPI / Summary Numbers - Protected Non-Breaking Metrics */
+            .mini-stat-group {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+                width: 100% !important;
+                margin-bottom: 12px !important;
+            }
+
+            .mini-stat-group > .mini-stat-card:last-child:nth-child(odd) {
+                grid-column: 1 / -1 !important;
+            }
+
+            .mini-stat-card {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                justify-content: center !important;
+                padding: 10px 12px !important;
+                gap: 3px !important;
+                background: #f8fafc !important;
+                border: 1px solid var(--color-border, #e2e8f0) !important;
+                border-radius: var(--border-radius-base, 4px) !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            .mini-stat-label {
+                font-size: 0.6875rem !important;
+                font-weight: 600 !important;
+                color: #64748b !important;
+                line-height: 1.2 !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                width: 100% !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.02em !important;
+            }
+
+            .mini-stat-value {
+                font-size: 0.9375rem !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                line-height: 1.2 !important;
+                white-space: nowrap !important;
+                word-break: normal !important;
+                letter-spacing: -0.01em !important;
+            }
+
+            /* 6. TABLE -> MOBILE VERTICAL DATA CARDS */
+            .report-table-view-container .table-container.ccm-desktop-table-container {
+                overflow: visible !important;
+                width: 100% !important;
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+            }
+
+            .reports-data-table {
+                display: block !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                border: none !important;
+                background: transparent !important;
+            }
+
+            /* Hide Traditional Table Head */
+            .reports-data-table thead {
+                display: none !important;
+            }
+
+            /* Stacked Card Container */
+            .reports-data-table tbody {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+                width: 100% !important;
+            }
+
+            /* Each Table Row Converted to an Independent Mobile Record Card */
+            .reports-data-table tbody tr {
+                display: flex !important;
+                flex-direction: column !important;
+                background: #ffffff !important;
+                border: 1px solid var(--color-border, #e2e8f0) !important;
+                border-radius: var(--border-radius-base, 6px) !important;
+                padding: 12px 14px !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                gap: 6px !important;
+            }
+
+            /* Card Header: Primary Identifier (Branch / Scope / Agent) */
+            .reports-data-table tbody tr td:first-child {
+                padding: 0 0 8px 0 !important;
+                border-bottom: 1px solid var(--color-border, #f1f5f9) !important;
+                font-size: 0.875rem !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                text-align: left !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                line-height: 1.3 !important;
+            }
+
+            .reports-data-table tbody tr td:first-child strong {
+                font-weight: 700 !important;
+                color: #0f172a !important;
+            }
+
+            .reports-data-table tbody tr td:first-child::before {
+                display: none !important;
+            }
+
+            /* Secondary Metrics: Left-Aligned Label & Right-Aligned Uncompressed Value Row */
+            .reports-data-table tbody tr td:not(:first-child) {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 3px 0 !important;
+                border: none !important;
+                text-align: right !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                font-size: 0.8125rem !important;
+                gap: 12px !important;
+            }
+
+            .reports-data-table tbody tr td:not(:first-child)::before {
+                content: attr(data-label) !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+                color: #64748b !important;
+                text-align: left !important;
+                flex-shrink: 0 !important;
+                display: inline-block !important;
+                text-transform: none !important;
+                letter-spacing: normal !important;
+            }
+
+            .reports-data-table tbody tr td .table-num,
+            .reports-data-table tbody tr td.table-num {
+                white-space: nowrap !important;
+                word-break: normal !important;
+                font-weight: 600 !important;
+                color: #0f172a !important;
+                letter-spacing: normal !important;
+                font-family: inherit !important;
+            }
+
+            /* Summary / Footer Row */
+            .reports-data-table tfoot {
+                display: flex !important;
+                flex-direction: column !important;
+                margin-top: 10px !important;
+                width: 100% !important;
+            }
+
+            .reports-data-table tfoot tr {
+                display: flex !important;
+                flex-direction: column !important;
+                background: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                border-radius: var(--border-radius-base, 6px) !important;
+                padding: 12px 14px !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                gap: 6px !important;
+            }
+
+            .reports-data-table tfoot tr td:first-child {
+                padding: 0 0 6px 0 !important;
+                border-bottom: 1px solid #e2e8f0 !important;
+                font-size: 0.8125rem !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                text-transform: none !important;
+                letter-spacing: normal !important;
+                width: 100% !important;
+            }
+
+            .reports-data-table tfoot tr td:first-child::before {
+                display: none !important;
+            }
+
+            .reports-data-table tfoot tr td:not(:first-child) {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 3px 0 !important;
+                border: none !important;
+                text-align: right !important;
+                font-size: 0.8125rem !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                gap: 12px !important;
+            }
+
+            .reports-data-table tfoot tr td:not(:first-child)::before {
+                content: attr(data-label) !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+                color: #475569 !important;
+                text-align: left !important;
+                display: inline-block !important;
+                text-transform: none !important;
+            }
+
+            /* In Consolidated Mode with a Single Summary Row, hide redundant duplicate tfoot */
+            .reports-data-table:has(tbody tr:only-child) tfoot {
+                display: none !important;
+            }
+
+            /* Pagination on Mobile */
+            .pagination-bar {
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+                padding: 10px 4px !important;
+                justify-content: center !important;
+            }
+
+            /* 7. CHARTS & VISUALIZATIONS MOBILE OPTIMIZATION */
+            .chart-view-grid {
+                padding: 0 !important;
+                gap: 12px !important;
+                background: transparent !important;
+                border: none !important;
+                width: 100% !important;
+            }
+
+            .chart-view-card {
+                padding: 12px !important;
+                border: 1px solid var(--color-border, #e2e8f0) !important;
+                border-radius: var(--border-radius-base, 6px) !important;
+                background: #ffffff !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+
+            .chart-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 8px !important;
+                padding-bottom: 8px !important;
+                border-bottom: 1px solid #f1f5f9 !important;
+                margin-bottom: 10px !important;
+            }
+
+            .chart-title {
+                font-size: 0.8125rem !important;
+                line-height: 1.3 !important;
+            }
+
+            .chart-legend {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 6px 12px !important;
+                font-size: 0.6875rem !important;
+            }
+
+            .chart-view-card .svg-chart {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 5 / 1 !important;
+                min-height: 125px !important;
+                display: block !important;
+                overflow: visible !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mini-stat-group {
+                grid-template-columns: 1fr !important;
+            }
+
+            .header-actions {
+                grid-template-columns: 1fr !important;
+            }
+
+            .chart-view-card .svg-chart {
+                min-width: 0 !important;
+                max-width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 5 / 1 !important;
+                min-height: 110px !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
 
     <!-- App Layout -->
     <div class="app-layout">
@@ -795,17 +1269,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <!-- Headset / Telephony Icon -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -1197,7 +1660,7 @@
                                             <span><span class="legend-dot" style="background:#777777; border: 1px dashed #000;"></span> Outbound Traffic</span>
                                         </div>
                                     </div>
-                                    <svg class="svg-chart" id="chart-svg-1" viewBox="0 0 1000 140" preserveAspectRatio="none"></svg>
+                                    <svg class="svg-chart" id="chart-svg-1" viewBox="0 0 1000 200"></svg>
                                 </div>
                             </div>
                         </div>
@@ -1214,7 +1677,7 @@
                                 </span>
                                 2. Agent Performance
                             </h3>
-                            <span class="report-section-meta" id="meta-r2">Agent call handling efficiency and answer rates</span>
+                            <span class="report-section-meta" id="meta-r2">Individual agent call metrics, average handle time, and missed calls</span>
                         </div>
 
                         <!-- Table View Container -->
@@ -1234,27 +1697,27 @@
                             <div class="chart-view-grid">
                                 <div class="mini-stat-group">
                                     <div class="mini-stat-card">
-                                        <span class="mini-stat-label">Calls Offered</span>
-                                        <span class="mini-stat-value" id="r2-stat-offered">1,428</span>
-                                    </div>
-                                    <div class="mini-stat-card">
                                         <span class="mini-stat-label">Calls Handled</span>
                                         <span class="mini-stat-value" id="r2-stat-handled">1,318</span>
                                     </div>
                                     <div class="mini-stat-card">
-                                        <span class="mini-stat-label">Avg Answer Rate</span>
-                                        <span class="mini-stat-value" id="r2-stat-rate">92.3%</span>
+                                        <span class="mini-stat-label">Average AHT</span>
+                                        <span class="mini-stat-value" id="r2-stat-aht">04:12</span>
+                                    </div>
+                                    <div class="mini-stat-card">
+                                        <span class="mini-stat-label">Missed Calls</span>
+                                        <span class="mini-stat-value" id="r2-stat-missed">48</span>
                                     </div>
                                 </div>
                                 <div class="chart-view-card">
                                     <div class="chart-header">
-                                        <span class="chart-title" id="chart-2-title">Answer Rate Comparison (%)</span>
+                                        <span class="chart-title" id="chart-2-title">Agent Call Volume &amp; AHT</span>
                                         <div class="chart-legend">
-                                            <span><span class="legend-dot" style="background:#000000;"></span> Answer Rate (%)</span>
-                                            <span style="font-size: 0.72rem; color: #555555;">Target Benchmark: 90%</span>
+                                            <span><span class="legend-dot" style="background:#0f172a;"></span> Calls Handled</span>
+                                            <span style="font-size: 0.72rem; color: #555555;">Individual Agent Breakdown</span>
                                         </div>
                                     </div>
-                                    <svg class="svg-chart" id="chart-svg-2" viewBox="0 0 1000 140" preserveAspectRatio="none"></svg>
+                                    <svg class="svg-chart" id="chart-svg-2" viewBox="0 0 1000 200"></svg>
                                 </div>
                             </div>
                         </div>
@@ -1307,7 +1770,7 @@
                                             <span style="font-size: 0.72rem; color: #555555;">Target Range: 03:30 - 05:00</span>
                                         </div>
                                     </div>
-                                    <svg class="svg-chart" id="chart-svg-3" viewBox="0 0 1000 140" preserveAspectRatio="none"></svg>
+                                    <svg class="svg-chart" id="chart-svg-3" viewBox="0 0 1000 200"></svg>
                                 </div>
                             </div>
                         </div>
@@ -1364,7 +1827,7 @@
                                             <span style="font-size: 0.72rem; color: #555555;">SLA Threshold: &le; 5.0%</span>
                                         </div>
                                     </div>
-                                    <svg class="svg-chart" id="chart-svg-4" viewBox="0 0 1000 140" preserveAspectRatio="none"></svg>
+                                    <svg class="svg-chart" id="chart-svg-4" viewBox="0 0 1000 200"></svg>
                                 </div>
                             </div>
                         </div>
@@ -1421,7 +1884,7 @@
                                             <span style="font-size: 0.72rem; color: #555555;">Target Benchmark: &le; 3.0%</span>
                                         </div>
                                     </div>
-                                    <svg class="svg-chart" id="chart-svg-5" viewBox="0 0 1000 140" preserveAspectRatio="none"></svg>
+                                    <svg class="svg-chart" id="chart-svg-5" viewBox="0 0 1000 200"></svg>
                                 </div>
                             </div>
                         </div>
@@ -1478,7 +1941,7 @@
                                             <span style="font-size: 0.72rem; color: #555555;">Zero Breach Target</span>
                                         </div>
                                     </div>
-                                    <svg class="svg-chart" id="chart-svg-6" viewBox="0 0 1000 140" preserveAspectRatio="none"></svg>
+                                    <svg class="svg-chart" id="chart-svg-6" viewBox="0 0 1000 200"></svg>
                                 </div>
                             </div>
                         </div>
@@ -1531,7 +1994,7 @@
                                             <span><span class="legend-dot" style="background:#777777; border: 1px dashed #000;"></span> Ticket Resolution Rate</span>
                                         </div>
                                     </div>
-                                    <svg class="svg-chart" id="chart-svg-7" viewBox="0 0 1000 140" preserveAspectRatio="none"></svg>
+                                    <svg class="svg-chart" id="chart-svg-7" viewBox="0 0 1000 200"></svg>
                                 </div>
                             </div>
                         </div>
@@ -1597,63 +2060,63 @@
                 { branch: "Mangaluru", hub: "Mangalore Port Agency", phone: "+91 824 244 0042", callVolume: { inbound: 30, outbound: 8, total: 38 }, agentPerf: { agentsCount: 1, callsHandled: 35, totalOffered: 38, answerRate: 92.1, transfers: 1 }, aht: { totalCalls: 35, ahtSec: 226 }, abandonment: { inbound: 30, abandoned: 1, abandRate: 3.3 }, missed: { inbound: 30, missed: 1, missedRate: 3.3, callbacksLogged: 1, callbacksCompleted: 1 }, slaBreach: { tickets: 5, breaches: 0 }, conversion: { leads: 4, leadsConverted: 2, leadConvRate: 50.0, tickets: 5, ticketsResolved: 5, ticketResRate: 100.0 } }
             ],
             agents: [
-                { id: "AGT-101", name: "Rahul Sharma", branch: "Bengaluru", offered: 112, answered: 106, answerRate: 94.6, ahtSec: 228, transfers: 4 },
-                { id: "AGT-102", name: "Priya Sundaram", branch: "Bengaluru", offered: 104, answered: 98, answerRate: 94.2, ahtSec: 238, transfers: 5 },
-                { id: "AGT-103", name: "Anand Kumar", branch: "Bengaluru", offered: 98, answered: 90, answerRate: 91.8, ahtSec: 260, transfers: 6 },
-                { id: "AGT-104", name: "Sneha Reddy", branch: "Bengaluru", offered: 96, answered: 88, answerRate: 91.7, ahtSec: 254, transfers: 3 },
-                { id: "AGT-201", name: "Vikram Malhotra", branch: "Mumbai", offered: 130, answered: 122, answerRate: 93.8, ahtSec: 263, transfers: 5 },
-                { id: "AGT-202", name: "Neha Joshi", branch: "Mumbai", offered: 126, answered: 115, answerRate: 91.3, ahtSec: 282, transfers: 5 },
-                { id: "AGT-203", name: "Amitabh Sen", branch: "Mumbai", offered: 122, answered: 111, answerRate: 91.0, ahtSec: 283, transfers: 4 },
-                { id: "AGT-301", name: "Kavita Rao", branch: "Hyderabad", offered: 102, answered: 96, answerRate: 94.1, ahtSec: 225, transfers: 3 },
-                { id: "AGT-302", name: "Suresh Babu", branch: "Hyderabad", offered: 92, answered: 86, answerRate: 93.5, ahtSec: 240, transfers: 4 },
-                { id: "AGT-303", name: "Meera Nair", branch: "Hyderabad", offered: 88, answered: 80, answerRate: 90.9, ahtSec: 243, transfers: 4 },
-                { id: "AGT-401", name: "Rajesh Verma", branch: "Delhi", offered: 92, answered: 84, answerRate: 91.3, ahtSec: 286, transfers: 5 },
-                { id: "AGT-402", name: "Pooja Gupta", branch: "Delhi", offered: 86, answered: 77, answerRate: 89.5, ahtSec: 304, transfers: 4 },
-                { id: "AGT-403", name: "Aman Deep", branch: "Delhi", offered: 80, answered: 73, answerRate: 91.3, ahtSec: 265, transfers: 3 },
-                { id: "AGT-501", name: "Karthik Subramanian", branch: "Chennai", offered: 110, answered: 102, answerRate: 92.7, ahtSec: 249, transfers: 4 },
-                { id: "AGT-502", name: "Divya Balaji", branch: "Chennai", offered: 112, answered: 104, answerRate: 92.9, ahtSec: 235, transfers: 4 },
-                { id: "AGT-601", name: "Deepak Shinde", branch: "Pune", offered: 96, answered: 88, answerRate: 91.7, ahtSec: 262, transfers: 4 },
-                { id: "AGT-602", name: "Sonali Kulkarni", branch: "Pune", offered: 92, answered: 84, answerRate: 91.3, ahtSec: 258, transfers: 3 },
-                { id: "AGT-701", name: "Debojit Ghosh", branch: "Kolkata", offered: 94, answered: 86, answerRate: 91.5, ahtSec: 268, transfers: 3 },
-                { id: "AGT-702", name: "Rimi Mukherjee", branch: "Kolkata", offered: 88, answered: 80, answerRate: 90.9, ahtSec: 272, transfers: 3 },
-                { id: "AGT-801", name: "Jigar Patel", branch: "Ahmedabad", offered: 84, answered: 78, answerRate: 92.9, ahtSec: 248, transfers: 3 },
-                { id: "AGT-802", name: "Bhavna Shah", branch: "Ahmedabad", offered: 80, answered: 73, answerRate: 91.3, ahtSec: 252, transfers: 2 },
-                { id: "AGT-901", name: "Manish Yadav", branch: "Gurugram", offered: 82, answered: 76, answerRate: 92.7, ahtSec: 260, transfers: 3 },
-                { id: "AGT-902", name: "Swati Bansal", branch: "Gurugram", offered: 74, answered: 68, answerRate: 91.9, ahtSec: 270, transfers: 2 },
-                { id: "AGT-1001", name: "Rohit Saxena", branch: "Noida", offered: 70, answered: 64, answerRate: 91.4, ahtSec: 252, transfers: 2 },
-                { id: "AGT-1002", name: "Ankita Mishra", branch: "Noida", offered: 68, answered: 62, answerRate: 91.2, ahtSec: 258, transfers: 2 },
-                { id: "AGT-1101", name: "Hardik Choksi", branch: "Surat", offered: 126, answered: 116, answerRate: 92.1, ahtSec: 240, transfers: 4 },
-                { id: "AGT-1201", name: "Gaurav Shekhawat", branch: "Jaipur", offered: 120, answered: 110, answerRate: 91.7, ahtSec: 248, transfers: 3 },
-                { id: "AGT-1301", name: "Vivek Tiwari", branch: "Lucknow", offered: 116, answered: 106, answerRate: 91.4, ahtSec: 252, transfers: 3 },
-                { id: "AGT-1401", name: "Abhishek Shukla", branch: "Kanpur", offered: 100, answered: 91, answerRate: 91.0, ahtSec: 258, transfers: 3 },
-                { id: "AGT-1501", name: "Sunil Deshmukh", branch: "Nagpur", offered: 110, answered: 101, answerRate: 91.8, ahtSec: 245, transfers: 3 },
-                { id: "AGT-1601", name: "Rituja Patidar", branch: "Indore", offered: 104, answered: 95, answerRate: 91.3, ahtSec: 242, transfers: 3 },
-                { id: "AGT-1701", name: "Alok Chauhan", branch: "Bhopal", offered: 88, answered: 80, answerRate: 90.9, ahtSec: 260, transfers: 2 },
-                { id: "AGT-1801", name: "Chaitanya Raju", branch: "Visakhapatnam", offered: 94, answered: 86, answerRate: 91.5, ahtSec: 238, transfers: 2 },
-                { id: "AGT-1901", name: "Rakesh Ranjan", branch: "Patna", offered: 96, answered: 87, answerRate: 90.6, ahtSec: 275, transfers: 3 },
-                { id: "AGT-2001", name: "Ketan Mehta", branch: "Vadodara", offered: 82, answered: 75, answerRate: 91.5, ahtSec: 244, transfers: 2 },
-                { id: "AGT-2101", name: "Muthu Kumaran", branch: "Coimbatore", offered: 86, answered: 79, answerRate: 91.9, ahtSec: 232, transfers: 2 },
-                { id: "AGT-2201", name: "Siddharth Menon", branch: "Kochi", offered: 80, answered: 74, answerRate: 92.5, ahtSec: 230, transfers: 2 },
-                { id: "AGT-2301", name: "Lekshmi Pillai", branch: "Thiruvananthapuram", offered: 62, answered: 57, answerRate: 91.9, ahtSec: 235, transfers: 1 },
-                { id: "AGT-2401", name: "Harpreet Singh", branch: "Chandigarh", offered: 78, answered: 72, answerRate: 92.3, ahtSec: 240, transfers: 2 },
-                { id: "AGT-2501", name: "Gurpreet Gill", branch: "Ludhiana", offered: 74, answered: 68, answerRate: 91.9, ahtSec: 250, transfers: 2 },
-                { id: "AGT-2601", name: "Navjot Kaur", branch: "Amritsar", offered: 56, answered: 51, answerRate: 91.1, ahtSec: 246, transfers: 1 },
-                { id: "AGT-2701", name: "Bhaskar Barua", branch: "Guwahati", offered: 72, answered: 65, answerRate: 90.3, ahtSec: 278, transfers: 2 },
-                { id: "AGT-2801", name: "Soumya Mohanty", branch: "Bhubaneswar", offered: 68, answered: 62, answerRate: 91.2, ahtSec: 254, transfers: 2 },
-                { id: "AGT-2901", name: "Debashish Jena", branch: "Cuttack", offered: 50, answered: 46, answerRate: 92.0, ahtSec: 242, transfers: 1 },
-                { id: "AGT-3001", name: "Suraj Topno", branch: "Ranchi", offered: 60, answered: 55, answerRate: 91.7, ahtSec: 260, transfers: 1 },
-                { id: "AGT-3101", name: "Pooja Hansda", branch: "Jamshedpur", offered: 54, answered: 49, answerRate: 90.7, ahtSec: 252, transfers: 1 },
-                { id: "AGT-3201", name: "Vikas Dewangan", branch: "Raipur", offered: 58, answered: 53, answerRate: 91.4, ahtSec: 250, transfers: 1 },
-                { id: "AGT-3301", name: "Mohit Kulshreshtha", branch: "Agra", offered: 54, answered: 49, answerRate: 90.7, ahtSec: 256, transfers: 1 },
-                { id: "AGT-3401", name: "Siddhesh Tripathi", branch: "Varanasi", offered: 52, answered: 47, answerRate: 90.4, ahtSec: 262, transfers: 1 },
-                { id: "AGT-3501", name: "Kapil Tyagi", branch: "Meerut", offered: 46, answered: 42, answerRate: 91.3, ahtSec: 248, transfers: 1 },
-                { id: "AGT-3601", name: "Bhavesh Gondaliya", branch: "Rajkot", offered: 54, answered: 49, answerRate: 90.7, ahtSec: 245, transfers: 1 },
-                { id: "AGT-3701", name: "Tanmay Bagul", branch: "Nashik", offered: 50, answered: 46, answerRate: 92.0, ahtSec: 242, transfers: 1 },
-                { id: "AGT-3801", name: "Selvaraj Pandian", branch: "Madurai", offered: 46, answered: 42, answerRate: 91.3, ahtSec: 236, transfers: 1 },
-                { id: "AGT-3901", name: "Venkatesh Murthy", branch: "Mysuru", offered: 44, answered: 41, answerRate: 93.2, ahtSec: 228, transfers: 1 },
-                { id: "AGT-4001", name: "Nagaraju Chowdary", branch: "Vijayawada", offered: 52, answered: 48, answerRate: 92.3, ahtSec: 235, transfers: 1 },
-                { id: "AGT-4101", name: "Girish Kulkarni", branch: "Hubballi", offered: 42, answered: 39, answerRate: 92.9, ahtSec: 230, transfers: 1 },
-                { id: "AGT-4201", name: "Rohan D'Souza", branch: "Mangaluru", offered: 38, answered: 35, answerRate: 92.1, ahtSec: 226, transfers: 1 }
+                { id: "AGT-101", name: "Deepak Kumar", branch: "Bengaluru", callsHandled: 128, ahtSec: 252, missedCalls: 6, transfers: 4 },
+                { id: "AGT-102", name: "Priya Sundaram", branch: "Bengaluru", callsHandled: 98, ahtSec: 238, missedCalls: 4, transfers: 5 },
+                { id: "AGT-103", name: "Anand Kumar", branch: "Bengaluru", callsHandled: 84, ahtSec: 260, missedCalls: 5, transfers: 6 },
+                { id: "AGT-104", name: "Sneha Reddy", branch: "Bengaluru", callsHandled: 72, ahtSec: 254, missedCalls: 3, transfers: 3 },
+                { id: "AGT-201", name: "Priya Sharma", branch: "Mumbai", callsHandled: 139, ahtSec: 266, missedCalls: 5, transfers: 5 },
+                { id: "AGT-202", name: "Vikram Malhotra", branch: "Mumbai", callsHandled: 118, ahtSec: 263, missedCalls: 4, transfers: 5 },
+                { id: "AGT-203", name: "Neha Joshi", branch: "Mumbai", callsHandled: 91, ahtSec: 282, missedCalls: 5, transfers: 4 },
+                { id: "AGT-301", name: "Rahul Varma", branch: "Hyderabad", callsHandled: 116, ahtSec: 228, missedCalls: 4, transfers: 3 },
+                { id: "AGT-302", name: "Kavita Rao", branch: "Hyderabad", callsHandled: 82, ahtSec: 225, missedCalls: 3, transfers: 4 },
+                { id: "AGT-303", name: "Suresh Babu", branch: "Hyderabad", callsHandled: 64, ahtSec: 240, missedCalls: 4, transfers: 4 },
+                { id: "AGT-401", name: "Ananya Iyer", branch: "Delhi", callsHandled: 104, ahtSec: 245, missedCalls: 7, transfers: 5 },
+                { id: "AGT-402", name: "Rajesh Verma", branch: "Delhi", callsHandled: 76, ahtSec: 286, missedCalls: 5, transfers: 4 },
+                { id: "AGT-403", name: "Pooja Gupta", branch: "Delhi", callsHandled: 54, ahtSec: 304, missedCalls: 4, transfers: 3 },
+                { id: "AGT-501", name: "Karthik Subramanian", branch: "Chennai", callsHandled: 108, ahtSec: 249, missedCalls: 4, transfers: 4 },
+                { id: "AGT-502", name: "Divya Balaji", branch: "Chennai", callsHandled: 98, ahtSec: 235, missedCalls: 3, transfers: 4 },
+                { id: "AGT-601", name: "Deepak Shinde", branch: "Pune", callsHandled: 92, ahtSec: 262, missedCalls: 4, transfers: 4 },
+                { id: "AGT-602", name: "Sonali Kulkarni", branch: "Pune", callsHandled: 80, ahtSec: 258, missedCalls: 3, transfers: 3 },
+                { id: "AGT-701", name: "Debojit Ghosh", branch: "Kolkata", callsHandled: 88, ahtSec: 268, missedCalls: 3, transfers: 3 },
+                { id: "AGT-702", name: "Rimi Mukherjee", branch: "Kolkata", callsHandled: 78, ahtSec: 272, missedCalls: 4, transfers: 3 },
+                { id: "AGT-801", name: "Jigar Patel", branch: "Ahmedabad", callsHandled: 82, ahtSec: 248, missedCalls: 3, transfers: 3 },
+                { id: "AGT-802", name: "Bhavna Shah", branch: "Ahmedabad", callsHandled: 69, ahtSec: 252, missedCalls: 2, transfers: 2 },
+                { id: "AGT-901", name: "Manish Yadav", branch: "Gurugram", callsHandled: 78, ahtSec: 260, missedCalls: 3, transfers: 3 },
+                { id: "AGT-902", name: "Swati Bansal", branch: "Gurugram", callsHandled: 66, ahtSec: 270, missedCalls: 2, transfers: 2 },
+                { id: "AGT-1001", name: "Rohit Saxena", branch: "Noida", callsHandled: 68, ahtSec: 252, missedCalls: 2, transfers: 2 },
+                { id: "AGT-1002", name: "Ankita Mishra", branch: "Noida", callsHandled: 58, ahtSec: 258, missedCalls: 2, transfers: 2 },
+                { id: "AGT-1101", name: "Hardik Choksi", branch: "Surat", callsHandled: 116, ahtSec: 240, missedCalls: 4, transfers: 4 },
+                { id: "AGT-1201", name: "Gaurav Shekhawat", branch: "Jaipur", callsHandled: 110, ahtSec: 248, missedCalls: 3, transfers: 3 },
+                { id: "AGT-1301", name: "Vivek Tiwari", branch: "Lucknow", callsHandled: 106, ahtSec: 252, missedCalls: 3, transfers: 3 },
+                { id: "AGT-1401", name: "Abhishek Shukla", branch: "Kanpur", callsHandled: 91, ahtSec: 258, missedCalls: 3, transfers: 3 },
+                { id: "AGT-1501", name: "Sunil Deshmukh", branch: "Nagpur", callsHandled: 101, ahtSec: 245, missedCalls: 3, transfers: 3 },
+                { id: "AGT-1601", name: "Rituja Patidar", branch: "Indore", callsHandled: 95, ahtSec: 242, missedCalls: 3, transfers: 3 },
+                { id: "AGT-1701", name: "Alok Chauhan", branch: "Bhopal", callsHandled: 80, ahtSec: 260, missedCalls: 2, transfers: 2 },
+                { id: "AGT-1801", name: "Chaitanya Raju", branch: "Visakhapatnam", callsHandled: 86, ahtSec: 238, missedCalls: 2, transfers: 2 },
+                { id: "AGT-1901", name: "Rakesh Ranjan", branch: "Patna", callsHandled: 87, ahtSec: 275, missedCalls: 3, transfers: 3 },
+                { id: "AGT-2001", name: "Ketan Mehta", branch: "Vadodara", callsHandled: 75, ahtSec: 244, missedCalls: 2, transfers: 2 },
+                { id: "AGT-2101", name: "Muthu Kumaran", branch: "Coimbatore", callsHandled: 79, ahtSec: 232, missedCalls: 2, transfers: 2 },
+                { id: "AGT-2201", name: "Siddharth Menon", branch: "Kochi", callsHandled: 74, ahtSec: 230, missedCalls: 2, transfers: 2 },
+                { id: "AGT-2301", name: "Lekshmi Pillai", branch: "Thiruvananthapuram", callsHandled: 57, ahtSec: 235, missedCalls: 1, transfers: 1 },
+                { id: "AGT-2401", name: "Harpreet Singh", branch: "Chandigarh", callsHandled: 72, ahtSec: 240, missedCalls: 2, transfers: 2 },
+                { id: "AGT-2501", name: "Gurpreet Gill", branch: "Ludhiana", callsHandled: 68, ahtSec: 250, missedCalls: 2, transfers: 2 },
+                { id: "AGT-2601", name: "Navjot Kaur", branch: "Amritsar", callsHandled: 51, ahtSec: 246, missedCalls: 1, transfers: 1 },
+                { id: "AGT-2701", name: "Bhaskar Barua", branch: "Guwahati", callsHandled: 65, ahtSec: 278, missedCalls: 2, transfers: 2 },
+                { id: "AGT-2801", name: "Soumya Mohanty", branch: "Bhubaneswar", callsHandled: 62, ahtSec: 254, missedCalls: 2, transfers: 2 },
+                { id: "AGT-2901", name: "Debashish Jena", branch: "Cuttack", callsHandled: 46, ahtSec: 242, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3001", name: "Suraj Topno", branch: "Ranchi", callsHandled: 55, ahtSec: 260, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3101", name: "Pooja Hansda", branch: "Jamshedpur", callsHandled: 49, ahtSec: 252, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3201", name: "Vikas Dewangan", branch: "Raipur", callsHandled: 53, ahtSec: 250, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3301", name: "Mohit Kulshreshtha", branch: "Agra", callsHandled: 49, ahtSec: 256, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3401", name: "Siddhesh Tripathi", branch: "Varanasi", callsHandled: 47, ahtSec: 262, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3501", name: "Kapil Tyagi", branch: "Meerut", callsHandled: 42, ahtSec: 248, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3601", name: "Bhavesh Gondaliya", branch: "Rajkot", callsHandled: 49, ahtSec: 245, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3701", name: "Tanmay Bagul", branch: "Nashik", callsHandled: 46, ahtSec: 242, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3801", name: "Selvaraj Pandian", branch: "Madurai", callsHandled: 42, ahtSec: 236, missedCalls: 1, transfers: 1 },
+                { id: "AGT-3901", name: "Venkatesh Murthy", branch: "Mysuru", callsHandled: 41, ahtSec: 228, missedCalls: 1, transfers: 1 },
+                { id: "AGT-4001", name: "Nagaraju Chowdary", branch: "Vijayawada", callsHandled: 48, ahtSec: 235, missedCalls: 1, transfers: 1 },
+                { id: "AGT-4101", name: "Girish Kulkarni", branch: "Hubballi", callsHandled: 39, ahtSec: 230, missedCalls: 1, transfers: 1 },
+                { id: "AGT-4201", name: "Rohan D'Souza", branch: "Mangaluru", callsHandled: 35, ahtSec: 226, missedCalls: 1, transfers: 1 }
             ]
         };
 
@@ -1796,6 +2259,13 @@
         let calDragStart = null;
         let calDragCurrent = null;
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        function formatAHTMMSS(sec) {
+            if (!sec || isNaN(sec)) return '00:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.round(sec % 60);
+            return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
 
         function formatAHT(sec) {
             const m = Math.floor(sec / 60);
@@ -2305,16 +2775,21 @@
 
             // Dynamically scale agent metrics
             const agents = rawAgents.map(a => {
-                const offered = Math.max(1, Math.round(a.offered * factor));
-                const answered = Math.max(1, Math.min(offered, Math.round(a.answered * factor)));
-                const answerRate = offered > 0 ? Number(((answered / offered) * 100).toFixed(1)) : 0;
-                const transfers = Math.max(0, Math.round(a.transfers * factor));
+                const callsHandled = Math.max(1, Math.round(a.callsHandled * factor));
+                const missedCalls = Math.max(0, Math.round(a.missedCalls * factor));
+                const offered = callsHandled + missedCalls;
+                const answered = callsHandled;
+                const answerRate = offered > 0 ? Number(((answered / offered) * 100).toFixed(1)) : 100;
+                const transfers = Math.max(0, Math.round((a.transfers || 2) * factor));
                 return {
                     ...a,
+                    callsHandled,
+                    missedCalls,
                     offered,
                     answered,
                     answerRate,
-                    transfers
+                    transfers,
+                    ahtSec: a.ahtSec
                 };
             });
 
@@ -2349,19 +2824,19 @@
                 r1Tbody.innerHTML = `
                     <tr>
                         <td><strong>Consolidated (${branches.length} Selected Branches)</strong></td>
-                        <td class="text-right table-num">${cvIn.toLocaleString()}</td>
-                        <td class="text-right table-num">${cvOut.toLocaleString()}</td>
-                        <td class="text-right table-num" style="font-weight: 700;">${cvTot.toLocaleString()}</td>
-                        <td class="text-right table-num">${inPct}%</td>
+                        <td class="text-right table-num" data-label="Inbound">${cvIn.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Outbound">${cvOut.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Total Calls" style="font-weight: 700;">${cvTot.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Inbound %">${inPct}%</td>
                     </tr>
                 `;
                 r1Tfoot.innerHTML = `
                     <tr>
                         <td>Total</td>
-                        <td class="text-right table-num">${cvIn.toLocaleString()}</td>
-                        <td class="text-right table-num">${cvOut.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Inbound">${cvIn.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Outbound">${cvOut.toLocaleString()}</td>
                         <td class="text-right table-num">${cvTot.toLocaleString()}</td>
-                        <td class="text-right table-num">${inPct}%</td>
+                        <td class="text-right table-num" data-label="Inbound %">${inPct}%</td>
                     </tr>
                 `;
                 renderPaginationBar(1, 1, 1, 10);
@@ -2387,10 +2862,10 @@
                     html += `
                         <tr>
                             <td><strong>${b.hub}</strong></td>
-                            <td class="text-right table-num">${b.callVolume.inbound.toLocaleString()}</td>
-                            <td class="text-right table-num">${b.callVolume.outbound.toLocaleString()}</td>
-                            <td class="text-right table-num" style="font-weight: 600;">${b.callVolume.total.toLocaleString()}</td>
-                            <td class="text-right table-num">${pct}%</td>
+                            <td class="text-right table-num" data-label="Inbound">${b.callVolume.inbound.toLocaleString()}</td>
+                            <td class="text-right table-num" data-label="Outbound">${b.callVolume.outbound.toLocaleString()}</td>
+                            <td class="text-right table-num" data-label="Total Calls" style="font-weight: 600;">${b.callVolume.total.toLocaleString()}</td>
+                            <td class="text-right table-num" data-label="Inbound %">${pct}%</td>
                         </tr>
                     `;
                 });
@@ -2398,10 +2873,10 @@
                 r1Tfoot.innerHTML = `
                     <tr>
                         <td>Total (${branches.length} Branches)</td>
-                        <td class="text-right table-num">${cvIn.toLocaleString()}</td>
-                        <td class="text-right table-num">${cvOut.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Inbound">${cvIn.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Outbound">${cvOut.toLocaleString()}</td>
                         <td class="text-right table-num">${cvTot.toLocaleString()}</td>
-                        <td class="text-right table-num">${inPct}%</td>
+                        <td class="text-right table-num" data-label="Inbound %">${inPct}%</td>
                     </tr>
                 `;
                 renderPaginationBar(1, totalBranches1, p1.page, p1.pageSize);
@@ -2413,123 +2888,67 @@
             // ------------------------------------------------------
             // 2. AGENT PERFORMANCE
             // ------------------------------------------------------
-            let apOffered = 0, apHandled = 0, apTransfers = 0;
-            branches.forEach(b => {
-                apOffered += b.agentPerf.totalOffered;
-                apHandled += b.agentPerf.callsHandled;
-                apTransfers += b.agentPerf.transfers;
+            let r2HandledSum = 0, r2SecSum = 0, r2MissedSum = 0;
+            agents.forEach(a => {
+                r2HandledSum += a.callsHandled;
+                r2SecSum += (a.ahtSec * a.callsHandled);
+                r2MissedSum += a.missedCalls;
             });
-            const apRate = apOffered > 0 ? ((apHandled / apOffered) * 100).toFixed(1) : '0.0';
+            const r2AvgAHTSec = r2HandledSum > 0 ? Math.round(r2SecSum / r2HandledSum) : 245;
 
-            document.getElementById('r2-stat-offered').textContent = apOffered.toLocaleString();
-            document.getElementById('r2-stat-handled').textContent = apHandled.toLocaleString();
-            document.getElementById('r2-stat-rate').textContent = `${apRate}%`;
+            if (document.getElementById('r2-stat-handled')) document.getElementById('r2-stat-handled').textContent = r2HandledSum.toLocaleString();
+            if (document.getElementById('r2-stat-aht')) document.getElementById('r2-stat-aht').textContent = formatAHTMMSS(r2AvgAHTSec);
+            if (document.getElementById('r2-stat-missed')) document.getElementById('r2-stat-missed').textContent = r2MissedSum.toLocaleString();
 
             const r2Thead = document.getElementById('r2-thead');
             const r2Tbody = document.getElementById('r2-tbody');
             const r2Tfoot = document.getElementById('r2-tfoot');
 
             const p2 = reportPagination[2];
+            const totalAgents2 = agents.length;
+            const maxPage2 = Math.max(1, Math.ceil(totalAgents2 / p2.pageSize));
+            if (p2.page > maxPage2) p2.page = maxPage2;
+            const start2 = (p2.page - 1) * p2.pageSize;
+            const pagedAgents2 = agents.slice(start2, start2 + p2.pageSize);
 
-            if (isConsolidated) {
-                r2Thead.innerHTML = `
-                    <th>Branch</th>
-                    <th class="text-right">Agents</th>
-                    <th class="text-right">Offered</th>
-                    <th class="text-right">Handled</th>
-                    <th class="text-right">Answer Rate</th>
-                    <th class="text-right">Transfers</th>
-                `;
-                
-                const totalBranches2 = branches.length;
-                const maxPage2 = Math.max(1, Math.ceil(totalBranches2 / p2.pageSize));
-                if (p2.page > maxPage2) p2.page = maxPage2;
-                const start2 = (p2.page - 1) * p2.pageSize;
-                const pagedBranches2 = branches.slice(start2, start2 + p2.pageSize);
+            r2Thead.innerHTML = `
+                <th>Agent</th>
+                <th>Branch</th>
+                <th class="text-right">Calls Handled</th>
+                <th class="text-right">AHT</th>
+                <th class="text-right">Missed Calls</th>
+            `;
 
-                let html = '';
-                let agSum = 0;
-                branches.forEach(b => { agSum += b.agentPerf.agentsCount; });
-
-                pagedBranches2.forEach(b => {
-                    html += `
-                        <tr>
-                            <td><strong>${b.hub}</strong></td>
-                            <td class="text-right table-num">${b.agentPerf.agentsCount}</td>
-                            <td class="text-right table-num">${b.agentPerf.totalOffered}</td>
-                            <td class="text-right table-num" style="font-weight: 600;">${b.agentPerf.callsHandled}</td>
-                            <td class="text-right"><span class="rate-badge ${b.agentPerf.answerRate >= 92 ? 'rate-good' : 'rate-warn'}">${b.agentPerf.answerRate}%</span></td>
-                            <td class="text-right table-num">${b.agentPerf.transfers}</td>
-                        </tr>
-                    `;
-                });
-                r2Tbody.innerHTML = html;
-                r2Tfoot.innerHTML = `
+            let r2Html = '';
+            pagedAgents2.forEach(a => {
+                r2Html += `
                     <tr>
-                        <td>Consolidated Total</td>
-                        <td class="text-right table-num">${agSum}</td>
-                        <td class="text-right table-num">${apOffered}</td>
-                        <td class="text-right table-num">${apHandled}</td>
-                        <td class="text-right"><span class="rate-badge ${parseFloat(apRate) >= 92 ? 'rate-good' : 'rate-warn'}">${apRate}%</span></td>
-                        <td class="text-right table-num">${apTransfers}</td>
+                        <td>
+                            <strong>${a.name}</strong>
+                            <span style="display: block; font-size: 0.70rem; color: #64748b; font-family: monospace;">${a.id}</span>
+                        </td>
+                        <td data-label="Branch">${a.branch}</td>
+                        <td class="text-right table-num" data-label="Calls Handled" style="font-weight: 600;">${a.callsHandled.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="AHT" style="font-family: monospace; font-weight: 600; color: #0284c7;">${formatAHTMMSS(a.ahtSec)}</td>
+                        <td class="text-right table-num" data-label="Missed Calls" style="color: ${a.missedCalls > 5 ? '#dc2626' : 'inherit'};">${a.missedCalls}</td>
                     </tr>
                 `;
-                renderPaginationBar(2, totalBranches2, p2.page, p2.pageSize);
-            } else {
-                r2Thead.innerHTML = `
-                    <th>Agent ID &amp; Name</th>
-                    <th>Branch</th>
-                    <th class="text-right">Offered</th>
-                    <th class="text-right">Handled</th>
-                    <th class="text-right">Answer Rate</th>
-                    <th class="text-right">Transfers</th>
-                `;
-                
-                const totalAgents2 = agents.length;
-                const maxPage2 = Math.max(1, Math.ceil(totalAgents2 / p2.pageSize));
-                if (p2.page > maxPage2) p2.page = maxPage2;
-                const start2 = (p2.page - 1) * p2.pageSize;
-                const pagedAgents2 = agents.slice(start2, start2 + p2.pageSize);
+            });
+            r2Tbody.innerHTML = r2Html;
 
-                let html = '';
-                let offSum = 0, handSum = 0, transSum = 0;
-                agents.forEach(a => {
-                    offSum += a.offered;
-                    handSum += a.answered;
-                    transSum += a.transfers;
-                });
+            const scopeLabel2 = isConsolidated ? `Consolidated Total (${agents.length} Agents)` : `Total (${agents.length} Agents)`;
+            r2Tfoot.innerHTML = `
+                <tr>
+                    <td>${scopeLabel2}</td>
+                    <td>–</td>
+                    <td class="text-right table-num" style="font-weight: 700;">${r2HandledSum.toLocaleString()}</td>
+                    <td class="text-right table-num" style="font-family: monospace; font-weight: 700; color: #0284c7;">${formatAHTMMSS(r2AvgAHTSec)}</td>
+                    <td class="text-right table-num" style="font-weight: 700;">${r2MissedSum.toLocaleString()}</td>
+                </tr>
+            `;
+            renderPaginationBar(2, totalAgents2, p2.page, p2.pageSize);
 
-                pagedAgents2.forEach(a => {
-                    html += `
-                        <tr>
-                            <td>
-                                <strong>${a.name}</strong>
-                                <span style="display: block; font-size: 0.70rem; color: #64748b; font-family: monospace;">${a.id}</span>
-                            </td>
-                            <td>${a.branch}</td>
-                            <td class="text-right table-num">${a.offered}</td>
-                            <td class="text-right table-num" style="font-weight: 600;">${a.answered}</td>
-                            <td class="text-right"><span class="rate-badge ${a.answerRate >= 92 ? 'rate-good' : 'rate-warn'}">${a.answerRate}%</span></td>
-                            <td class="text-right table-num">${a.transfers}</td>
-                        </tr>
-                    `;
-                });
-                r2Tbody.innerHTML = html;
-                const totRate = offSum > 0 ? ((handSum / offSum) * 100).toFixed(1) : '0.0';
-                r2Tfoot.innerHTML = `
-                    <tr>
-                        <td>Total (${agents.length} Agents)</td>
-                        <td>—</td>
-                        <td class="text-right table-num">${offSum}</td>
-                        <td class="text-right table-num">${handSum}</td>
-                        <td class="text-right"><span class="rate-badge ${parseFloat(totRate) >= 92 ? 'rate-good' : 'rate-warn'}">${totRate}%</span></td>
-                        <td class="text-right table-num">${transSum}</td>
-                    </tr>
-                `;
-                renderPaginationBar(2, totalAgents2, p2.page, p2.pageSize);
-            }
-
-            // Draw Dynamic Chart 2: Agent / Branch Answer Rate
+            // Draw Dynamic Chart 2: Agent Performance Comparison
             drawAnswerRateChart(branches, agents, isConsolidated);
 
             // ------------------------------------------------------
@@ -2569,8 +2988,8 @@
                     html += `
                         <tr>
                             <td><strong>${b.hub}</strong></td>
-                            <td class="text-right table-num">${b.aht.totalCalls.toLocaleString()}</td>
-                            <td class="text-right table-num" style="font-weight: 600; color: #0284c7;">${formatAHT(b.aht.ahtSec)}</td>
+                            <td class="text-right table-num" data-label="Calls Handled">${b.aht.totalCalls.toLocaleString()}</td>
+                            <td class="text-right table-num" data-label="Average Handle Time" style="font-weight: 600; color: #0284c7;">${formatAHT(b.aht.ahtSec)}</td>
                         </tr>
                     `;
                 });
@@ -2611,9 +3030,9 @@
                                 <strong>${a.name}</strong>
                                 <span style="display: block; font-size: 0.70rem; color: #64748b; font-family: monospace;">${a.id}</span>
                             </td>
-                            <td>${a.branch}</td>
-                            <td class="text-right table-num">${a.answered.toLocaleString()}</td>
-                            <td class="text-right table-num" style="font-weight: 600; color: #0284c7;">${formatAHT(a.ahtSec)}</td>
+                            <td data-label="Branch">${a.branch}</td>
+                            <td class="text-right table-num" data-label="Calls Handled">${a.answered.toLocaleString()}</td>
+                            <td class="text-right table-num" data-label="Average Handle Time" style="font-weight: 600; color: #0284c7;">${formatAHT(a.ahtSec)}</td>
                         </tr>
                     `;
                 });
@@ -2622,7 +3041,7 @@
                 r3Tfoot.innerHTML = `
                     <tr>
                         <td>Total (${agents.length} Agents)</td>
-                        <td>—</td>
+                        <td>–</td>
                         <td class="text-right table-num">${agCalls.toLocaleString()}</td>
                         <td class="text-right table-num" style="font-weight: 700; color: #0284c7;">${formatAHT(agAHT)}</td>
                     </tr>
@@ -2669,9 +3088,9 @@
                 r4Html += `
                     <tr>
                         <td><strong>${b.hub}</strong></td>
-                        <td class="text-right table-num">${b.abandonment.inbound.toLocaleString()}</td>
-                        <td class="text-right table-num" style="font-weight: 600; color: #b91c1c;">${b.abandonment.abandoned.toLocaleString()}</td>
-                        <td class="text-right"><span class="rate-badge ${b.abandonment.abandRate <= 5.0 ? 'rate-good' : 'rate-alert'}">${b.abandonment.abandRate}%</span></td>
+                        <td class="text-right table-num" data-label="Inbound Offered">${b.abandonment.inbound.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Abandoned Calls" style="font-weight: 600; color: #b91c1c;">${b.abandonment.abandoned.toLocaleString()}</td>
+                        <td class="text-right" data-label="Abandonment Rate"><span class="rate-badge ${b.abandonment.abandRate <= 5.0 ? 'rate-good' : 'rate-alert'}">${b.abandonment.abandRate}%</span></td>
                     </tr>
                 `;
             });
@@ -2730,11 +3149,11 @@
                 r5Html += `
                     <tr>
                         <td><strong>${b.hub}</strong></td>
-                        <td class="text-right table-num">${b.missed.inbound.toLocaleString()}</td>
-                        <td class="text-right table-num" style="font-weight: 600; color: #b91c1c;">${b.missed.missed.toLocaleString()}</td>
-                        <td class="text-right"><span class="rate-badge ${b.missed.missedRate <= 3.0 ? 'rate-good' : 'rate-warn'}">${b.missed.missedRate}%</span></td>
-                        <td class="text-right table-num">${b.missed.callbacksLogged.toLocaleString()}</td>
-                        <td class="text-right table-num" style="color: #15803d; font-weight: 600;">${b.missed.callbacksCompleted.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Inbound">${b.missed.inbound.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Missed Calls" style="font-weight: 600; color: #b91c1c;">${b.missed.missed.toLocaleString()}</td>
+                        <td class="text-right" data-label="Missed Rate"><span class="rate-badge ${b.missed.missedRate <= 3.0 ? 'rate-good' : 'rate-warn'}">${b.missed.missedRate}%</span></td>
+                        <td class="text-right table-num" data-label="Callbacks Logged">${b.missed.callbacksLogged.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Callbacks Done" style="color: #15803d; font-weight: 600;">${b.missed.callbacksCompleted.toLocaleString()}</td>
                     </tr>
                 `;
             });
@@ -2791,9 +3210,9 @@
                 r6Html += `
                     <tr>
                         <td><strong>${b.hub}</strong></td>
-                        <td class="text-right table-num">${b.slaBreach.tickets.toLocaleString()}</td>
-                        <td class="text-right table-num" style="font-weight: 600; color: #b91c1c;">${b.slaBreach.breaches.toLocaleString()}</td>
-                        <td class="text-right"><span class="rate-badge ${parseFloat(bPct) <= 2.0 ? 'rate-good' : 'rate-alert'}">${bPct}%</span></td>
+                        <td class="text-right table-num" data-label="Total Tickets">${b.slaBreach.tickets.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="SLA Breached" style="font-weight: 600; color: #b91c1c;">${b.slaBreach.breaches.toLocaleString()}</td>
+                        <td class="text-right" data-label="Breach %"><span class="rate-badge ${parseFloat(bPct) <= 2.0 ? 'rate-good' : 'rate-alert'}">${bPct}%</span></td>
                     </tr>
                 `;
             });
@@ -2852,12 +3271,12 @@
                 r7Html += `
                     <tr>
                         <td><strong>${b.hub}</strong></td>
-                        <td class="text-right table-num">${b.conversion.leads.toLocaleString()}</td>
-                        <td class="text-right table-num" style="font-weight: 600; color: #15803d;">${b.conversion.leadsConverted.toLocaleString()}</td>
-                        <td class="text-right"><span class="rate-badge rate-good">${b.conversion.leadConvRate}%</span></td>
-                        <td class="text-right table-num">${b.conversion.tickets.toLocaleString()}</td>
-                        <td class="text-right table-num" style="font-weight: 600; color: #15803d;">${b.conversion.ticketsResolved.toLocaleString()}</td>
-                        <td class="text-right"><span class="rate-badge rate-good">${b.conversion.ticketResRate}%</span></td>
+                        <td class="text-right table-num" data-label="Leads">${b.conversion.leads.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Converted" style="font-weight: 600; color: #15803d;">${b.conversion.leadsConverted.toLocaleString()}</td>
+                        <td class="text-right" data-label="Lead %"><span class="rate-badge rate-good">${b.conversion.leadConvRate}%</span></td>
+                        <td class="text-right table-num" data-label="Tickets">${b.conversion.tickets.toLocaleString()}</td>
+                        <td class="text-right table-num" data-label="Resolved" style="font-weight: 600; color: #15803d;">${b.conversion.ticketsResolved.toLocaleString()}</td>
+                        <td class="text-right" data-label="Ticket %"><span class="rate-badge rate-good">${b.conversion.ticketResRate}%</span></td>
                     </tr>
                 `;
             });
@@ -2923,8 +3342,8 @@
             const inRatios = [0.65, 0.78, 0.72, 1.15, 0.95, 1.35, 1.2];
             const outRatios = [0.35, 0.38, 0.42, 0.50, 0.45, 0.55, 0.48];
 
-            const leftM = 50;
-            const rightM = 970;
+            const leftM = 65;
+            const rightM = 945;
             const widthSpan = rightM - leftM;
             const step = count > 1 ? widthSpan / (count - 1) : widthSpan;
 
@@ -2939,8 +3358,8 @@
                 const outVal = Math.round((totalOut / count) * (outRatios[i] || 0.4));
                 const totalSlot = inVal + outVal;
                 
-                const yIn = Math.max(18, Math.min(115, Math.round(115 - (inVal / yTop) * 92)));
-                const yOut = Math.max(18, Math.min(115, Math.round(115 - (outVal / yTop) * 92)));
+                const yIn = Math.max(30, Math.min(150, Math.round(155 - (inVal / yTop) * 120)));
+                const yOut = Math.max(30, Math.min(150, Math.round(155 - (outVal / yTop) * 120)));
                 
                 inPts.push({ x, y: yIn, val: inVal });
                 outPts.push({ x, y: yOut, val: outVal });
@@ -2949,47 +3368,47 @@
                     <g class="chart-interactive-item" 
                        onmousemove="showChartTooltip(event, '${labels[i]} Volume', [{label:'Inbound', value:'${inVal.toLocaleString()}'}, {label:'Outbound', value:'${outVal.toLocaleString()}'}, {label:'Total', value:'${totalSlot.toLocaleString()}'}])"
                        onmouseleave="hideChartTooltip()">
-                        <circle cx="${x}" cy="${yIn}" r="14" fill="transparent" />
-                        <circle cx="${x}" cy="${yIn}" r="4" fill="#0f172a" stroke="#ffffff" stroke-width="2" />
-                        <text x="${x}" y="${Math.max(12, yIn - 7)}" font-size="10" fill="#0f172a" font-weight="700" text-anchor="middle">${inVal.toLocaleString()}</text>
-                        <circle cx="${x}" cy="${yOut}" r="3.5" fill="#64748b" stroke="#ffffff" stroke-width="1.5" />
+                        <circle cx="${x}" cy="${yIn}" r="18" fill="transparent" />
+                        <circle cx="${x}" cy="${yIn}" r="5" fill="#0f172a" stroke="#ffffff" stroke-width="2.5" />
+                        <text x="${x}" y="${Math.max(18, yIn - 11)}" font-size="13" fill="#0f172a" font-weight="700" text-anchor="middle">${inVal.toLocaleString()}</text>
+                        <circle cx="${x}" cy="${yOut}" r="4" fill="#64748b" stroke="#ffffff" stroke-width="2" />
                     </g>
                 `;
 
                 xLabelsHtml += `
-                    <line x1="${x}" y1="115" x2="${x}" y2="120" stroke="#cbd5e1" stroke-width="1" />
-                    <text x="${x}" y="132" font-size="9.5" fill="#64748b" font-weight="600" text-anchor="middle">${labels[i]}</text>
+                    <line x1="${x}" y1="155" x2="${x}" y2="162" stroke="#cbd5e1" stroke-width="1.2" />
+                    <text x="${x}" y="180" font-size="13" fill="#64748b" font-weight="600" text-anchor="middle">${labels[i]}</text>
                 `;
             }
 
-            const inAreaPath = `M ${inPts[0].x} 115 L ${inPts.map(p => `${p.x} ${p.y}`).join(' L ')} L ${inPts[inPts.length-1].x} 115 Z`;
+            const inAreaPath = `M ${inPts[0].x} 155 L ${inPts.map(p => `${p.x} ${p.y}`).join(' L ')} L ${inPts[inPts.length-1].x} 155 Z`;
             const inLinePath = `M ${inPts.map(p => `${p.x} ${p.y}`).join(' L ')}`;
             const outLinePath = `M ${outPts.map(p => `${p.x} ${p.y}`).join(' L ')}`;
 
             svg.innerHTML = `
                 <defs>
                     <linearGradient id="grad-cv-mono-v2" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#0f172a" stop-opacity="0.14"/>
+                        <stop offset="0%" stop-color="#0f172a" stop-opacity="0.16"/>
                         <stop offset="100%" stop-color="#0f172a" stop-opacity="0.01"/>
                     </linearGradient>
                 </defs>
 
                 <!-- Grid lines & Y-axis labels -->
-                <line x1="${leftM}" y1="23" x2="${rightM}" y2="23" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="26" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">${yTop.toLocaleString()}</text>
+                <line x1="${leftM}" y1="35" x2="${rightM}" y2="35" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="39" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">${yTop.toLocaleString()}</text>
 
-                <line x1="${leftM}" y1="69" x2="${rightM}" y2="69" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="72" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">${yMid.toLocaleString()}</text>
+                <line x1="${leftM}" y1="95" x2="${rightM}" y2="95" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="99" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">${yMid.toLocaleString()}</text>
 
-                <line x1="${leftM}" y1="115" x2="${rightM}" y2="115" stroke="#cbd5e1" stroke-width="1.2" />
-                <text x="${leftM - 10}" y="118" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">0</text>
+                <line x1="${leftM}" y1="155" x2="${rightM}" y2="155" stroke="#cbd5e1" stroke-width="1.5" />
+                <text x="${leftM - 12}" y="159" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">0</text>
 
                 <!-- Inbound Fill Area -->
                 <path d="${inAreaPath}" fill="url(#grad-cv-mono-v2)" />
 
                 <!-- Polylines -->
-                <path d="${inLinePath}" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="${outLinePath}" fill="none" stroke="#64748b" stroke-width="1.8" stroke-dasharray="5,4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="${inLinePath}" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="${outLinePath}" fill="none" stroke="#64748b" stroke-width="2.2" stroke-dasharray="6,5" stroke-linecap="round" stroke-linejoin="round" />
 
                 <!-- Data points -->
                 ${dotsHtml}
@@ -2998,63 +3417,64 @@
             `;
         }
 
-        // 2. Answer Rate Chart (Refined Columns with 90% SLA Target Baseline)
+        // 2. Agent Performance Chart (Calls Handled & AHT Overview)
         function drawAnswerRateChart(branches, agents, isConsolidated) {
             const svg = document.getElementById('chart-svg-2');
             if (!svg) return;
 
-            const items = isConsolidated ? branches.slice(0, 8) : agents.slice(0, 8);
+            const items = agents.slice(0, 8);
             const count = items.length;
-            const leftM = 50;
-            const rightM = 970;
+            if (count === 0) {
+                svg.innerHTML = '<text x="500" y="100" text-anchor="middle" fill="#94a3b8" font-size="14">No agent data available</text>';
+                return;
+            }
+            const leftM = 65;
+            const rightM = 945;
             const totalWidth = rightM - leftM;
             const slotWidth = totalWidth / count;
-            const barWidth = Math.min(42, slotWidth * 0.48);
+            const barWidth = Math.min(52, slotWidth * 0.52);
+
+            let maxHandled = 1;
+            items.forEach(a => { if (a.callsHandled > maxHandled) maxHandled = a.callsHandled; });
+            const yMax = Math.ceil((maxHandled * 1.15) / 20) * 20 || 150;
 
             let barsHtml = '';
             items.forEach((item, idx) => {
                 const centerX = leftM + idx * slotWidth + slotWidth / 2;
                 const x = centerX - barWidth / 2;
-                const rate = isConsolidated ? item.agentPerf.answerRate : item.answerRate;
-                const name = isConsolidated ? item.hub : item.name.split(' ')[0];
-                const fullName = isConsolidated ? item.hub : `${item.name} (${item.id})`;
-                const offered = isConsolidated ? item.agentPerf.totalOffered : item.offered;
-                const handled = isConsolidated ? item.agentPerf.callsHandled : item.answered;
-                const height = Math.max(6, Math.round((rate / 100) * 92));
-                const y = 115 - height;
-                const isGood = rate >= 90;
-                const barFill = isGood ? '#0f172a' : '#64748b';
+                const handled = item.callsHandled;
+                const name = item.name.split(' ')[0];
+                const fullName = `${item.name} (${item.id})`;
+                const ahtFormatted = formatAHTMMSS(item.ahtSec);
+                const missed = item.missedCalls;
+                const height = Math.max(8, Math.round((handled / yMax) * 120));
+                const y = 155 - height;
+                const barFill = '#0f172a';
 
                 barsHtml += `
                     <g class="chart-interactive-item"
-                       onmousemove="showChartTooltip(event, '${fullName}', [{label:'Answer Rate', value:'${rate}%'}, {label:'Handled', value:'${handled.toLocaleString()}'}, {label:'Offered', value:'${offered.toLocaleString()}'}, {label:'Status', value:'${isGood ? 'Meets SLA (>=90%)' : 'Below Target'}'}])"
+                       onmousemove="showChartTooltip(event, '${fullName}', [{label:'Branch', value:'${item.branch}'}, {label:'Calls Handled', value:'${handled.toLocaleString()}'}, {label:'AHT', value:'${ahtFormatted}'}, {label:'Missed Calls', value:'${missed}'}])"
                        onmouseleave="hideChartTooltip()">
                         <!-- Subtle background column track -->
-                        <rect x="${x}" y="23" width="${barWidth}" height="92" fill="#f8fafc" rx="4" />
+                        <rect x="${x}" y="35" width="${barWidth}" height="120" fill="#f8fafc" rx="5" />
                         <!-- Value Column -->
-                        <rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="${barFill}" rx="3" />
-                        <text x="${centerX}" y="${Math.max(16, y - 6)}" font-size="9.5" fill="#0f172a" font-weight="700" text-anchor="middle">${rate}%</text>
-                        <text x="${centerX}" y="132" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">${name}</text>
+                        <rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="${barFill}" rx="4" />
+                        <text x="${centerX}" y="${Math.max(22, y - 8)}" font-size="12" fill="#0f172a" font-weight="700" text-anchor="middle">${handled}</text>
+                        <text x="${centerX}" y="180" font-size="12" fill="#475569" font-weight="600" text-anchor="middle">${name}</text>
                     </g>
                 `;
             });
 
-            // Benchmark 90% Y-coordinate
-            const y90 = 115 - Math.round((90 / 100) * 92);
-
             svg.innerHTML = `
                 <!-- Grid Lines -->
-                <line x1="${leftM}" y1="23" x2="${rightM}" y2="23" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="26" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">100%</text>
+                <line x1="${leftM}" y1="35" x2="${rightM}" y2="35" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="39" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">${yMax}</text>
 
-                <line x1="${leftM}" y1="${y90}" x2="${rightM}" y2="${y90}" stroke="#0f172a" stroke-width="1.2" stroke-dasharray="4,4" />
-                <text x="${rightM + 6}" y="${y90 + 3}" font-size="8.5" fill="#0f172a" font-weight="700" text-anchor="start">90% Target</text>
+                <line x1="${leftM}" y1="95" x2="${rightM}" y2="95" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="99" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">${Math.round(yMax / 2)}</text>
 
-                <line x1="${leftM}" y1="69" x2="${rightM}" y2="69" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="72" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">50%</text>
-
-                <line x1="${leftM}" y1="115" x2="${rightM}" y2="115" stroke="#cbd5e1" stroke-width="1.2" />
-                <text x="${leftM - 10}" y="118" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">0%</text>
+                <line x1="${leftM}" y1="155" x2="${rightM}" y2="155" stroke="#cbd5e1" stroke-width="1.5" />
+                <text x="${leftM - 12}" y="159" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">0</text>
 
                 <!-- Bars & Labels -->
                 ${barsHtml}
@@ -3067,21 +3487,21 @@
             if (!svg) return;
 
             const count = labels.length;
-            const leftM = 50;
-            const rightM = 970;
+            const leftM = 65;
+            const rightM = 945;
             const widthSpan = rightM - leftM;
             const step = count > 1 ? widthSpan / (count - 1) : widthSpan;
 
-            const yCenter = Math.max(25, Math.min(100, 115 - (avgAHTSec / 360) * 92));
+            const yCenter = Math.max(35, Math.min(135, 155 - (avgAHTSec / 360) * 120));
             const pts = [];
             let dotsHtml = '';
             let xLabelsHtml = '';
 
             for (let i = 0; i < count; i++) {
                 const x = Math.round(leftM + i * step);
-                const offset = Math.sin(i * 1.5) * 10;
-                const y = Math.max(22, Math.min(108, Math.round(yCenter + offset)));
-                const currentSec = Math.round(((115 - y) / 92) * 360);
+                const offset = Math.sin(i * 1.5) * 14;
+                const y = Math.max(32, Math.min(145, Math.round(yCenter + offset)));
+                const currentSec = Math.round(((155 - y) / 120) * 360);
                 const formatted = formatAHT(currentSec);
                 pts.push(`${x},${y}`);
 
@@ -3089,34 +3509,34 @@
                     <g class="chart-interactive-item"
                        onmousemove="showChartTooltip(event, '${labels[i]} AHT', [{label:'Average Duration', value:'${formatted}'}, {label:'Total Seconds', value:'${currentSec}s'}, {label:'Target Band', value:'03:30 - 05:00'}])"
                        onmouseleave="hideChartTooltip()">
-                        <circle cx="${x}" cy="${y}" r="14" fill="transparent" />
-                        <circle cx="${x}" cy="${y}" r="4" fill="#0f172a" stroke="#ffffff" stroke-width="2" />
-                        <text x="${x}" y="${Math.max(12, y - 7)}" font-size="9.5" fill="#0f172a" font-weight="700" text-anchor="middle">${formatted}</text>
+                        <circle cx="${x}" cy="${y}" r="18" fill="transparent" />
+                        <circle cx="${x}" cy="${y}" r="5" fill="#0f172a" stroke="#ffffff" stroke-width="2.5" />
+                        <text x="${x}" y="${Math.max(18, y - 10)}" font-size="12.5" fill="#0f172a" font-weight="700" text-anchor="middle">${formatted}</text>
                     </g>
                 `;
 
                 xLabelsHtml += `
-                    <line x1="${x}" y1="115" x2="${x}" y2="120" stroke="#cbd5e1" stroke-width="1" />
-                    <text x="${x}" y="132" font-size="9.5" fill="#64748b" font-weight="600" text-anchor="middle">${labels[i]}</text>
+                    <line x1="${x}" y1="155" x2="${x}" y2="162" stroke="#cbd5e1" stroke-width="1.2" />
+                    <text x="${x}" y="180" font-size="13" fill="#64748b" font-weight="600" text-anchor="middle">${labels[i]}</text>
                 `;
             }
 
             svg.innerHTML = `
                 <!-- Grid lines & Y labels -->
-                <line x1="${leftM}" y1="23" x2="${rightM}" y2="23" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="26" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">06:00</text>
+                <line x1="${leftM}" y1="35" x2="${rightM}" y2="35" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="39" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">06:00</text>
 
-                <line x1="${leftM}" y1="54" x2="${rightM}" y2="54" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="57" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">04:00</text>
+                <line x1="${leftM}" y1="75" x2="${rightM}" y2="75" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="79" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">04:00</text>
 
-                <line x1="${leftM}" y1="85" x2="${rightM}" y2="85" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="88" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">02:00</text>
+                <line x1="${leftM}" y1="115" x2="${rightM}" y2="115" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="119" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">02:00</text>
 
-                <line x1="${leftM}" y1="115" x2="${rightM}" y2="115" stroke="#cbd5e1" stroke-width="1.2" />
-                <text x="${leftM - 10}" y="118" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">00:00</text>
+                <line x1="${leftM}" y1="155" x2="${rightM}" y2="155" stroke="#cbd5e1" stroke-width="1.5" />
+                <text x="${leftM - 12}" y="159" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">00:00</text>
 
                 <!-- Trend Line -->
-                <polyline fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pts.join(' ')}" />
+                <polyline fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${pts.join(' ')}" />
 
                 ${dotsHtml}
                 ${xLabelsHtml}
@@ -3129,8 +3549,8 @@
             if (!svg) return;
 
             const count = labels.length;
-            const leftM = 50;
-            const rightM = 970;
+            const leftM = 65;
+            const rightM = 945;
             const widthSpan = rightM - leftM;
             const step = count > 1 ? widthSpan / (count - 1) : widthSpan;
 
@@ -3142,7 +3562,7 @@
             for (let i = 0; i < count; i++) {
                 const x = Math.round(leftM + i * step);
                 const curRate = Math.max(0.5, Number((rate * (rDeltas[i] || 1.0)).toFixed(1)));
-                const y = Math.max(22, Math.min(115, Math.round(115 - (curRate / 8.0) * 92)));
+                const y = Math.max(30, Math.min(150, Math.round(155 - (curRate / 8.0) * 120)));
                 const isBreached = curRate > 5.0;
                 pts.push(`${x},${y}`);
 
@@ -3150,37 +3570,37 @@
                     <g class="chart-interactive-item"
                        onmousemove="showChartTooltip(event, '${labels[i]} Abandonment', [{label:'Abandonment Rate', value:'${curRate}%'}, {label:'Threshold Limit', value:'<= 5.0%'}, {label:'Compliance', value:'${isBreached ? 'Breached' : 'Within Limit'}'}])"
                        onmouseleave="hideChartTooltip()">
-                        <circle cx="${x}" cy="${y}" r="14" fill="transparent" />
-                        <circle cx="${x}" cy="${y}" r="4" fill="#0f172a" stroke="#ffffff" stroke-width="2" />
-                        <text x="${x}" y="${Math.max(12, y - 7)}" font-size="9.5" fill="#0f172a" font-weight="700" text-anchor="middle">${curRate}%</text>
+                        <circle cx="${x}" cy="${y}" r="18" fill="transparent" />
+                        <circle cx="${x}" cy="${y}" r="5" fill="#0f172a" stroke="#ffffff" stroke-width="2.5" />
+                        <text x="${x}" y="${Math.max(18, y - 10)}" font-size="12.5" fill="#0f172a" font-weight="700" text-anchor="middle">${curRate}%</text>
                     </g>
                 `;
 
                 xLabelsHtml += `
-                    <line x1="${x}" y1="115" x2="${x}" y2="120" stroke="#cbd5e1" stroke-width="1" />
-                    <text x="${x}" y="132" font-size="9.5" fill="#64748b" font-weight="600" text-anchor="middle">${labels[i]}</text>
+                    <line x1="${x}" y1="155" x2="${x}" y2="162" stroke="#cbd5e1" stroke-width="1.2" />
+                    <text x="${x}" y="180" font-size="13" fill="#64748b" font-weight="600" text-anchor="middle">${labels[i]}</text>
                 `;
             }
 
             // Benchmark 5.0% threshold line
-            const y5 = 115 - Math.round((5.0 / 8.0) * 92);
+            const y5 = 155 - Math.round((5.0 / 8.0) * 120);
 
             svg.innerHTML = `
                 <!-- Grid Lines -->
-                <line x1="${leftM}" y1="23" x2="${rightM}" y2="23" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="26" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">8.0%</text>
+                <line x1="${leftM}" y1="35" x2="${rightM}" y2="35" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="39" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">8.0%</text>
 
-                <line x1="${leftM}" y1="${y5}" x2="${rightM}" y2="${y5}" stroke="#0f172a" stroke-width="1.2" stroke-dasharray="4,4" />
-                <text x="${rightM + 6}" y="${y5 + 3}" font-size="8.5" fill="#0f172a" font-weight="700" text-anchor="start">5.0% SLA Target</text>
+                <line x1="${leftM}" y1="${y5}" x2="${rightM}" y2="${y5}" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="5,5" />
+                <text x="${rightM + 8}" y="${y5 + 4}" font-size="11" fill="#0f172a" font-weight="700" text-anchor="start">5.0% SLA Target</text>
 
-                <line x1="${leftM}" y1="69" x2="${rightM}" y2="69" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="72" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">4.0%</text>
+                <line x1="${leftM}" y1="95" x2="${rightM}" y2="95" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="99" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">4.0%</text>
 
-                <line x1="${leftM}" y1="115" x2="${rightM}" y2="115" stroke="#cbd5e1" stroke-width="1.2" />
-                <text x="${leftM - 10}" y="118" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">0.0%</text>
+                <line x1="${leftM}" y1="155" x2="${rightM}" y2="155" stroke="#cbd5e1" stroke-width="1.5" />
+                <text x="${leftM - 12}" y="159" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">0.0%</text>
 
                 <!-- Polyline -->
-                <polyline fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pts.join(' ')}" />
+                <polyline fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${pts.join(' ')}" />
 
                 ${dotsHtml}
                 ${xLabelsHtml}
@@ -3194,23 +3614,23 @@
 
             const items = branches.slice(0, 8);
             const count = items.length;
-            const leftM = 50;
-            const rightM = 970;
+            const leftM = 65;
+            const rightM = 945;
             const totalWidth = rightM - leftM;
             const slotWidth = totalWidth / count;
-            const barWidth = Math.min(42, slotWidth * 0.48);
+            const barWidth = Math.min(52, slotWidth * 0.52);
 
             let barsHtml = '';
             items.forEach((item, idx) => {
                 const centerX = leftM + idx * slotWidth + slotWidth / 2;
                 const x = centerX - barWidth / 2;
                 const rate = item.missed.missedRate;
-                const name = item.hub;
+                const name = item.hub.split(' ')[0];
                 const missed = item.missed.missed;
                 const cbDone = item.missed.callbacksCompleted;
                 const cbTotal = item.missed.callbacksLogged;
-                const height = Math.max(5, Math.round((rate / 5.0) * 92));
-                const y = 115 - height;
+                const height = Math.max(7, Math.round((rate / 5.0) * 120));
+                const y = 155 - height;
                 const isGood = rate <= 3.0;
                 const barFill = isGood ? '#0f172a' : '#64748b';
 
@@ -3218,30 +3638,30 @@
                     <g class="chart-interactive-item"
                        onmousemove="showChartTooltip(event, '${item.hub}', [{label:'Missed Rate', value:'${rate}%'}, {label:'Missed Calls', value:'${missed.toLocaleString()}'}, {label:'Callbacks Done', value:'${cbDone}/${cbTotal}'}, {label:'Target Status', value:'${isGood ? 'Within Benchmark (<=3%)' : 'Exceeded Target'}'}])"
                        onmouseleave="hideChartTooltip()">
-                        <rect x="${x}" y="23" width="${barWidth}" height="92" fill="#f8fafc" rx="4" />
-                        <rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="${barFill}" rx="3" />
-                        <text x="${centerX}" y="${Math.max(16, y - 6)}" font-size="9.5" fill="#0f172a" font-weight="700" text-anchor="middle">${rate}%</text>
-                        <text x="${centerX}" y="132" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">${name}</text>
+                        <rect x="${x}" y="35" width="${barWidth}" height="120" fill="#f8fafc" rx="5" />
+                        <rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="${barFill}" rx="4" />
+                        <text x="${centerX}" y="${Math.max(22, y - 8)}" font-size="12.5" fill="#0f172a" font-weight="700" text-anchor="middle">${rate}%</text>
+                        <text x="${centerX}" y="180" font-size="12" fill="#475569" font-weight="600" text-anchor="middle">${name}</text>
                     </g>
                 `;
             });
 
             // Benchmark 3% target line
-            const y3 = 115 - Math.round((3.0 / 5.0) * 92);
+            const y3 = 155 - Math.round((3.0 / 5.0) * 120);
 
             svg.innerHTML = `
                 <!-- Grid Lines -->
-                <line x1="${leftM}" y1="23" x2="${rightM}" y2="23" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="26" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">5.0%</text>
+                <line x1="${leftM}" y1="35" x2="${rightM}" y2="35" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="39" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">5.0%</text>
 
-                <line x1="${leftM}" y1="${y3}" x2="${rightM}" y2="${y3}" stroke="#0f172a" stroke-width="1.2" stroke-dasharray="4,4" />
-                <text x="${rightM + 6}" y="${y3 + 3}" font-size="8.5" fill="#0f172a" font-weight="700" text-anchor="start">3.0% Max Target</text>
+                <line x1="${leftM}" y1="${y3}" x2="${rightM}" y2="${y3}" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="5,5" />
+                <text x="${rightM + 8}" y="${y3 + 4}" font-size="11" fill="#0f172a" font-weight="700" text-anchor="start">3.0% Max Target</text>
 
-                <line x1="${leftM}" y1="69" x2="${rightM}" y2="69" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="72" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">2.5%</text>
+                <line x1="${leftM}" y1="95" x2="${rightM}" y2="95" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="99" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">2.5%</text>
 
-                <line x1="${leftM}" y1="115" x2="${rightM}" y2="115" stroke="#cbd5e1" stroke-width="1.2" />
-                <text x="${leftM - 10}" y="118" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">0.0%</text>
+                <line x1="${leftM}" y1="155" x2="${rightM}" y2="155" stroke="#cbd5e1" stroke-width="1.5" />
+                <text x="${leftM - 12}" y="159" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">0.0%</text>
 
                 ${barsHtml}
             `;
@@ -3254,11 +3674,11 @@
 
             const items = branches.slice(0, 8);
             const count = items.length;
-            const leftM = 50;
-            const rightM = 970;
+            const leftM = 65;
+            const rightM = 945;
             const totalWidth = rightM - leftM;
             const slotWidth = totalWidth / count;
-            const barWidth = Math.min(42, slotWidth * 0.48);
+            const barWidth = Math.min(52, slotWidth * 0.52);
 
             let maxVal = 0;
             items.forEach(i => { if (i.slaBreach.breaches > maxVal) maxVal = i.slaBreach.breaches; });
@@ -3271,33 +3691,33 @@
                 const bCount = item.slaBreach.breaches;
                 const tCount = item.slaBreach.tickets;
                 const bPct = tCount > 0 ? ((bCount / tCount) * 100).toFixed(1) : '0.0';
-                const name = item.hub;
-                const height = Math.max(bCount > 0 ? 6 : 0, Math.round((bCount / maxVal) * 92));
-                const y = 115 - height;
+                const name = item.hub.split(' ')[0];
+                const height = Math.max(bCount > 0 ? 8 : 0, Math.round((bCount / maxVal) * 120));
+                const y = 155 - height;
                 const barFill = bCount > 2 ? '#0f172a' : (bCount > 0 ? '#475569' : '#cbd5e1');
 
                 barsHtml += `
                     <g class="chart-interactive-item"
                        onmousemove="showChartTooltip(event, '${item.hub}', [{label:'SLA Breaches', value:'${bCount}'}, {label:'Total Tickets', value:'${tCount}'}, {label:'Breach Rate', value:'${bPct}%'}])"
                        onmouseleave="hideChartTooltip()">
-                        <rect x="${x}" y="23" width="${barWidth}" height="92" fill="#f8fafc" rx="4" />
-                        <rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="${barFill}" rx="3" />
-                        <text x="${centerX}" y="${Math.max(16, y - 6)}" font-size="9.5" fill="#0f172a" font-weight="700" text-anchor="middle">${bCount}</text>
-                        <text x="${centerX}" y="132" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle">${name}</text>
+                        <rect x="${x}" y="35" width="${barWidth}" height="120" fill="#f8fafc" rx="5" />
+                        <rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="${barFill}" rx="4" />
+                        <text x="${centerX}" y="${Math.max(22, y - 8)}" font-size="12.5" fill="#0f172a" font-weight="700" text-anchor="middle">${bCount}</text>
+                        <text x="${centerX}" y="180" font-size="12" fill="#475569" font-weight="600" text-anchor="middle">${name}</text>
                     </g>
                 `;
             });
 
             svg.innerHTML = `
                 <!-- Grid Lines -->
-                <line x1="${leftM}" y1="23" x2="${rightM}" y2="23" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="26" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">${maxVal}</text>
+                <line x1="${leftM}" y1="35" x2="${rightM}" y2="35" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="39" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">${maxVal}</text>
 
-                <line x1="${leftM}" y1="69" x2="${rightM}" y2="69" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="72" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">${Math.round(maxVal / 2)}</text>
+                <line x1="${leftM}" y1="95" x2="${rightM}" y2="95" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="99" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">${Math.round(maxVal / 2)}</text>
 
-                <line x1="${leftM}" y1="115" x2="${rightM}" y2="115" stroke="#cbd5e1" stroke-width="1.2" />
-                <text x="${leftM - 10}" y="118" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">0</text>
+                <line x1="${leftM}" y1="155" x2="${rightM}" y2="155" stroke="#cbd5e1" stroke-width="1.5" />
+                <text x="${leftM - 12}" y="159" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">0</text>
 
                 ${barsHtml}
             `;
@@ -3308,49 +3728,49 @@
             const svg = document.getElementById('chart-svg-7');
             if (!svg) return;
 
-            const leftM = 50;
-            const rightM = 970;
+            const leftM = 65;
+            const rightM = 945;
             const totalWidth = rightM - leftM;
 
-            const leadH = Math.max(6, Math.round((leadRate / 100) * 92));
-            const leadY = 115 - leadH;
+            const leadH = Math.max(8, Math.round((leadRate / 100) * 120));
+            const leadY = 155 - leadH;
 
-            const tkH = Math.max(6, Math.round((ticketRate / 100) * 92));
-            const tkY = 115 - tkH;
+            const tkH = Math.max(8, Math.round((ticketRate / 100) * 120));
+            const tkY = 155 - tkH;
 
-            const barW = 120;
+            const barW = 140;
             const x1 = leftM + totalWidth * 0.28 - barW / 2;
             const x2 = leftM + totalWidth * 0.72 - barW / 2;
 
             svg.innerHTML = `
                 <!-- Grid lines -->
-                <line x1="${leftM}" y1="23" x2="${rightM}" y2="23" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="26" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">100%</text>
+                <line x1="${leftM}" y1="35" x2="${rightM}" y2="35" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="39" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">100%</text>
 
-                <line x1="${leftM}" y1="69" x2="${rightM}" y2="69" stroke="#f1f5f9" stroke-width="1" />
-                <text x="${leftM - 10}" y="72" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">50%</text>
+                <line x1="${leftM}" y1="95" x2="${rightM}" y2="95" stroke="#f1f5f9" stroke-width="1" />
+                <text x="${leftM - 12}" y="99" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">50%</text>
 
-                <line x1="${leftM}" y1="115" x2="${rightM}" y2="115" stroke="#cbd5e1" stroke-width="1.2" />
-                <text x="${leftM - 10}" y="118" font-size="9" fill="#94a3b8" font-weight="600" text-anchor="end">0%</text>
+                <line x1="${leftM}" y1="155" x2="${rightM}" y2="155" stroke="#cbd5e1" stroke-width="1.5" />
+                <text x="${leftM - 12}" y="159" font-size="12" fill="#94a3b8" font-weight="600" text-anchor="end">0%</text>
 
                 <!-- Lead Conversion Bar -->
                 <g class="chart-interactive-item"
                    onmousemove="showChartTooltip(event, 'Lead Conversion Rate', [{label:'Conversion Rate', value:'${leadRate}%'}, {label:'Metric Type', value:'Leads Converted / Total'}])"
                    onmouseleave="hideChartTooltip()">
-                    <rect x="${x1}" y="23" width="${barW}" height="92" fill="#f8fafc" rx="5" />
-                    <rect x="${x1}" y="${leadY}" width="${barW}" height="${leadH}" fill="#0f172a" rx="4" />
-                    <text x="${x1 + barW / 2}" y="${Math.max(16, leadY - 7)}" font-size="11" fill="#0f172a" font-weight="700" text-anchor="middle">${leadRate}%</text>
-                    <text x="${x1 + barW / 2}" y="132" font-size="10" fill="#333333" font-weight="600" text-anchor="middle">Leads Converted Rate</text>
+                    <rect x="${x1}" y="35" width="${barW}" height="120" fill="#f8fafc" rx="6" />
+                    <rect x="${x1}" y="${leadY}" width="${barW}" height="${leadH}" fill="#0f172a" rx="5" />
+                    <text x="${x1 + barW / 2}" y="${Math.max(22, leadY - 9)}" font-size="13.5" fill="#0f172a" font-weight="700" text-anchor="middle">${leadRate}%</text>
+                    <text x="${x1 + barW / 2}" y="180" font-size="13" fill="#333333" font-weight="600" text-anchor="middle">Leads Converted Rate</text>
                 </g>
 
                 <!-- Ticket Resolution Bar -->
                 <g class="chart-interactive-item"
                    onmousemove="showChartTooltip(event, 'Ticket Resolution Rate', [{label:'Resolution Rate', value:'${ticketRate}%'}, {label:'Metric Type', value:'Resolved / Total Support Tickets'}])"
                    onmouseleave="hideChartTooltip()">
-                    <rect x="${x2}" y="23" width="${barW}" height="92" fill="#f8fafc" rx="5" />
-                    <rect x="${x2}" y="${tkY}" width="${barW}" height="${tkH}" fill="#64748b" rx="4" />
-                    <text x="${x2 + barW / 2}" y="${Math.max(16, tkY - 7)}" font-size="11" fill="#0f172a" font-weight="700" text-anchor="middle">${ticketRate}%</text>
-                    <text x="${x2 + barW / 2}" y="132" font-size="10" fill="#333333" font-weight="600" text-anchor="middle">Ticket Resolution Rate</text>
+                    <rect x="${x2}" y="35" width="${barW}" height="120" fill="#f8fafc" rx="6" />
+                    <rect x="${x2}" y="${tkY}" width="${barW}" height="${tkH}" fill="#64748b" rx="5" />
+                    <text x="${x2 + barW / 2}" y="${Math.max(22, tkY - 9)}" font-size="13.5" fill="#0f172a" font-weight="700" text-anchor="middle">${ticketRate}%</text>
+                    <text x="${x2 + barW / 2}" y="180" font-size="13" fill="#333333" font-weight="600" text-anchor="middle">Ticket Resolution Rate</text>
                 </g>
             `;
         }
@@ -3405,11 +3825,13 @@
             });
 
             const agents = rawAgents.map(a => {
-                const offered = Math.max(1, Math.round(a.offered * factor));
-                const answered = Math.max(1, Math.min(offered, Math.round(a.answered * factor)));
-                const answerRate = offered > 0 ? Number(((answered / offered) * 100).toFixed(1)) : 0;
-                const transfers = Math.max(0, Math.round(a.transfers * factor));
-                return { ...a, offered, answered, answerRate, transfers };
+                const callsHandled = Math.max(1, Math.round(a.callsHandled * factor));
+                const missedCalls = Math.max(0, Math.round(a.missedCalls * factor));
+                const offered = callsHandled + missedCalls;
+                const answered = callsHandled;
+                const answerRate = offered > 0 ? Number(((answered / offered) * 100).toFixed(1)) : 100;
+                const transfers = Math.max(0, Math.round((a.transfers || 2) * factor));
+                return { ...a, callsHandled, missedCalls, offered, answered, answerRate, transfers, ahtSec: a.ahtSec };
             });
 
             // 1. Call Volume
@@ -3435,28 +3857,17 @@
 
             // 2. Agent Performance
             csv += `=== 2. Agent Performance ===\r\n`;
-            if (isConsolidated) {
-                csv += `"Branch","Agents","Offered","Handled","Answer Rate","Transfers"\r\n`;
-                let agSum = 0, apOffered = 0, apHandled = 0, apTransfers = 0;
-                branches.forEach(b => {
-                    agSum += b.agentPerf.agentsCount;
-                    apOffered += b.agentPerf.totalOffered;
-                    apHandled += b.agentPerf.callsHandled;
-                    apTransfers += b.agentPerf.transfers;
-                    csv += `"${b.hub}","${b.agentPerf.agentsCount}","${b.agentPerf.totalOffered}","${b.agentPerf.callsHandled}","${b.agentPerf.answerRate}%","${b.agentPerf.transfers}"\r\n`;
-                });
-                const apRate = apOffered > 0 ? ((apHandled / apOffered) * 100).toFixed(1) : '0.0';
-                csv += `"Consolidated Total","${agSum}","${apOffered}","${apHandled}","${apRate}%","${apTransfers}"\r\n`;
-            } else {
-                csv += `"Agent ID","Agent Name","Branch","Offered","Handled","Answer Rate","Transfers"\r\n`;
-                let offSum = 0, handSum = 0, transSum = 0;
-                agents.forEach(a => {
-                    offSum += a.offered; handSum += a.answered; transSum += a.transfers;
-                    csv += `"${a.id}","${a.name}","${a.branch}","${a.offered}","${a.answered}","${a.answerRate}%","${a.transfers}"\r\n`;
-                });
-                const totRate = offSum > 0 ? ((handSum / offSum) * 100).toFixed(1) : '0.0';
-                csv += `"Total (${agents.length} Agents)","—","—","${offSum}","${handSum}","${totRate}%","${transSum}"\r\n`;
-            }
+            csv += `"Agent","Branch","Calls Handled","AHT","Missed Calls"\r\n`;
+            let r2HandledSum = 0, r2SecSum = 0, r2MissedSum = 0;
+            agents.forEach(a => {
+                r2HandledSum += a.callsHandled;
+                r2SecSum += (a.ahtSec * a.callsHandled);
+                r2MissedSum += a.missedCalls;
+                csv += `"${a.name} (${a.id})","${a.branch}","${a.callsHandled}","${formatAHTMMSS(a.ahtSec)}","${a.missedCalls}"\r\n`;
+            });
+            const r2AvgAHT = r2HandledSum > 0 ? (r2SecSum / r2HandledSum) : 245;
+            const scopeLabel2 = isConsolidated ? `Consolidated Total (${agents.length} Agents)` : `Total (${agents.length} Agents)`;
+            csv += `"${scopeLabel2}","–","${r2HandledSum}","${formatAHTMMSS(r2AvgAHT)}","${r2MissedSum}"\r\n`;
             csv += `\r\n`;
 
             // 3. AHT
@@ -3475,12 +3886,12 @@
                 csv += `"Agent ID","Agent Name","Branch","Calls Handled","Average Handle Time (AHT)"\r\n`;
                 let agCalls = 0, agSecSum = 0;
                 agents.forEach(a => {
-                    agCalls += a.answered;
-                    agSecSum += (a.ahtSec * a.answered);
-                    csv += `"${a.id}","${a.name}","${a.branch}","${a.answered}","${formatAHT(a.ahtSec)}"\r\n`;
+                    agCalls += a.callsHandled;
+                    agSecSum += (a.ahtSec * a.callsHandled);
+                    csv += `"${a.id}","${a.name}","${a.branch}","${a.callsHandled}","${formatAHT(a.ahtSec)}"\r\n`;
                 });
                 const agAHT = agCalls > 0 ? (agSecSum / agCalls) : 0;
-                csv += `"Total (${agents.length} Agents)","—","—","${agCalls}","${formatAHT(agAHT)}"\r\n`;
+                csv += `"Total (${agents.length} Agents)","–","–","${agCalls}","${formatAHT(agAHT)}"\r\n`;
             }
             csv += `\r\n`;
 

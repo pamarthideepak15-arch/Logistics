@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
     <link rel="stylesheet" href="../Sidebar/sidebar.css">
-    <link rel="stylesheet" href="company-branches.css">
+    <link rel="stylesheet" href="ccm.css">
     <style>
         /* Compact Flow Stepper */
         .flow-stepper {
@@ -111,6 +111,27 @@
             font-size: 0.8125rem;
         }
 
+        #step-card-1 .branch-assign-table {
+            table-layout: fixed;
+        }
+
+        #step-card-1 .branch-assign-table th:first-child,
+        #step-card-1 .branch-assign-table td:first-child {
+            width: 44px;
+            min-width: 44px;
+            max-width: 44px;
+            text-align: center;
+            padding: 6px 0;
+            vertical-align: middle;
+        }
+
+        #step-card-1 .branch-assign-table th:nth-child(2),
+        #step-card-1 .branch-assign-table td:nth-child(2) {
+            text-align: left;
+            padding: 6px 12px;
+            vertical-align: middle;
+        }
+
         .branch-assign-table th {
             background-color: var(--color-table-header);
             color: var(--color-white);
@@ -140,6 +161,7 @@
         .tel-field-wrapper {
             display: flex;
             align-items: center;
+            width: 100%;
             max-width: 260px;
         }
 
@@ -157,10 +179,17 @@
             font-weight: 600;
             color: #475569;
             user-select: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            width: 44px;
+            min-width: 44px;
+            box-sizing: border-box;
+            line-height: 1;
         }
 
         .tel-field-input {
             flex: 1;
+            min-width: 0;
             height: 30px;
             padding: 0 8px;
             border: 1px solid var(--color-border);
@@ -192,6 +221,353 @@
             font-size: 0.75rem;
             font-weight: 500;
             margin-bottom: 10px;
+        }
+
+        /* Mobile Responsive Improvements for Add Branch Numbers */
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                width: 100% !important;
+            }
+
+            .app-layout {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                width: 100% !important;
+            }
+
+            .app-content {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            .main-scroll-area {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                padding: 10px !important;
+            }
+
+            .add-branch-page-header,
+            .page-header.add-branch-page-header,
+            html body .main-scroll-area .page-header {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                margin-bottom: 14px !important;
+                width: 100% !important;
+            }
+
+            .add-branch-page-header > div:first-child,
+            .page-header > div:first-child {
+                width: 100% !important;
+                display: flex !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+            }
+
+            .page-title-group {
+                width: 100% !important;
+                flex: 1 1 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 2px !important;
+            }
+
+            .add-branch-page-header .header-actions,
+            .page-header .header-actions {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 8px !important;
+                margin-top: 4px !important;
+            }
+
+            .header-actions > div[style*="display: none"] {
+                display: none !important;
+            }
+
+            .header-actions > div:not([style*="display: none"]) {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px !important;
+                align-items: center !important;
+                flex: 1 1 100% !important;
+            }
+
+            .header-actions .btn-primary,
+            .header-actions .btn-secondary {
+                height: 38px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 0.8125rem !important;
+                padding: 0 10px !important;
+                box-sizing: border-box !important;
+                white-space: nowrap !important;
+            }
+
+            #top-actions-step-1 a.btn-secondary {
+                flex: 0 0 75px !important;
+                width: 75px !important;
+            }
+
+            #top-actions-step-1 button.btn-primary,
+            #top-btn-proceed-1 {
+                flex: 1 1 auto !important;
+                width: auto !important;
+                gap: 6px !important;
+                font-weight: 600 !important;
+                font-size: 0.775rem !important;
+            }
+
+            #top-actions-step-2 button.btn-secondary {
+                flex: 0 0 75px !important;
+                width: 75px !important;
+            }
+
+            #top-actions-step-2 button.btn-primary {
+                flex: 1 1 auto !important;
+                width: auto !important;
+                gap: 6px !important;
+                font-weight: 600 !important;
+                font-size: 0.775rem !important;
+            }
+
+            #top-actions-step-3 button.btn-secondary:first-child {
+                flex: 0 0 65px !important;
+                width: 65px !important;
+            }
+
+            #top-actions-step-3 a.btn-secondary {
+                flex: 0 0 70px !important;
+                width: 70px !important;
+            }
+
+            #top-actions-step-3 button.btn-primary {
+                flex: 1 1 auto !important;
+                width: auto !important;
+                font-weight: 600 !important;
+                font-size: 0.775rem !important;
+            }
+
+            .flow-stepper {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                padding: 8px 12px !important;
+                overflow-x: auto !important;
+                scrollbar-width: none !important;
+                -webkit-overflow-scrolling: touch !important;
+                border-radius: var(--border-radius-base) !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                gap: 6px !important;
+            }
+
+            .flow-stepper::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            .step-item {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+                font-size: 0.75rem !important;
+            }
+
+            .step-divider {
+                flex-shrink: 0 !important;
+                width: 16px !important;
+                min-width: 16px !important;
+                margin: 0 4px !important;
+            }
+
+            .step-subheader {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                width: 100% !important;
+                margin-bottom: 10px !important;
+            }
+
+            .table-container {
+                border: 1px solid var(--color-border) !important;
+                border-radius: var(--border-radius-base) !important;
+                background-color: var(--color-white) !important;
+                overflow: hidden !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .branch-assign-table {
+                display: table !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                table-layout: fixed !important;
+                border-collapse: collapse !important;
+            }
+
+            .branch-assign-table thead {
+                display: table-header-group !important;
+            }
+
+            .branch-assign-table thead tr {
+                display: table-row !important;
+            }
+
+            .branch-assign-table thead th {
+                display: table-cell !important;
+                background-color: var(--color-table-header) !important;
+                color: var(--color-white) !important;
+                padding: 8px 8px !important;
+                font-size: 0.8125rem !important;
+                font-weight: 600 !important;
+                border: none !important;
+                vertical-align: middle !important;
+            }
+
+            /* Step 1 Table Columns */
+            #step-card-1 .branch-assign-table thead th:first-child,
+            #step-card-1 .branch-assign-table tbody tr td:first-child {
+                width: 44px !important;
+                min-width: 44px !important;
+                max-width: 44px !important;
+                text-align: center !important;
+                padding: 8px 0 !important;
+                vertical-align: middle !important;
+            }
+
+            #step-card-1 .branch-assign-table thead th:nth-child(2),
+            #step-card-1 .branch-assign-table tbody tr td:nth-child(2) {
+                width: auto !important;
+                text-align: left !important;
+                padding: 8px 10px !important;
+                vertical-align: middle !important;
+            }
+
+            #step-card-1 .branch-assign-table .custom-checkbox {
+                display: inline-block !important;
+                margin: 0 auto !important;
+                vertical-align: middle !important;
+            }
+
+            /* Step 2 & Step 3 Table Columns (No horizontal scroll, 34% Branch / 66% Phone) */
+            #step-card-2 .branch-assign-table,
+            #step-card-3 .branch-assign-table {
+                table-layout: fixed !important;
+                width: 100% !important;
+            }
+
+            #step-card-2 .branch-assign-table thead th:first-child,
+            #step-card-2 .branch-assign-table tbody tr td:first-child,
+            #step-card-3 .branch-assign-table thead th:first-child,
+            #step-card-3 .branch-assign-table tbody tr td:first-child {
+                width: 34% !important;
+                max-width: 34% !important;
+                padding: 8px 6px !important;
+                font-size: 0.775rem !important;
+                word-break: break-word !important;
+                vertical-align: middle !important;
+            }
+
+            #step-card-2 .branch-assign-table thead th:nth-child(2),
+            #step-card-2 .branch-assign-table tbody tr td:nth-child(2),
+            #step-card-3 .branch-assign-table thead th:nth-child(2),
+            #step-card-3 .branch-assign-table tbody tr td:nth-child(2) {
+                width: 66% !important;
+                max-width: 66% !important;
+                padding: 8px 6px !important;
+                vertical-align: middle !important;
+            }
+
+            .branch-assign-table tbody {
+                display: table-row-group !important;
+            }
+
+            .branch-assign-table tbody tr {
+                display: table-row !important;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin-bottom: 0 !important;
+            }
+
+            .branch-assign-table tbody tr td {
+                display: table-cell !important;
+                padding: 8px 6px !important;
+                border-bottom: 1px solid var(--color-border) !important;
+                border-top: none !important;
+                font-size: 0.8125rem !important;
+                color: var(--color-black) !important;
+                background: transparent !important;
+                vertical-align: middle !important;
+            }
+
+            .branch-assign-table tbody tr:last-child td {
+                border-bottom: none !important;
+            }
+
+            .branch-assign-table tbody tr td::before {
+                display: none !important;
+            }
+
+            /* Step 2 +91 Phone Input: ALWAYS on ONE line, never stacked */
+            .tel-field-wrapper {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .tel-prefix-box {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-shrink: 0 !important;
+                width: 42px !important;
+                min-width: 42px !important;
+                max-width: 42px !important;
+                height: 32px !important;
+                white-space: nowrap !important;
+                font-size: 0.75rem !important;
+                font-weight: 600 !important;
+                color: #475569 !important;
+                background: var(--color-bg-light) !important;
+                border: 1px solid var(--color-border) !important;
+                border-right: none !important;
+                border-radius: var(--border-radius-base) 0 0 var(--border-radius-base) !important;
+                box-sizing: border-box !important;
+                line-height: 1 !important;
+                letter-spacing: 0 !important;
+            }
+
+            .tel-field-input {
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                width: 100% !important;
+                height: 32px !important;
+                padding: 0 6px !important;
+                font-size: 0.75rem !important;
+                border: 1px solid var(--color-border) !important;
+                border-radius: 0 var(--border-radius-base) var(--border-radius-base) 0 !important;
+                box-sizing: border-box !important;
+            }
         }
     </style>
 </head>
@@ -391,7 +767,7 @@
             <div class="main-scroll-area">
                 
                 <!-- Page Header with Back Button and Top-Right Action Controls -->
-                <div class="page-header" style="margin-bottom: 12px;">
+                <div class="page-header add-branch-page-header" style="margin-bottom: 12px;">
                     <div style="display: flex; align-items: flex-start; gap: 10px;">
                         <a href="index.html" class="back-link" title="Back to Company &amp; Branches" style="color: inherit; text-decoration: none; font-size: 1.125rem; font-weight: 700; line-height: 1.2; padding-top: 2px;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -443,17 +819,17 @@
                 <div class="flow-stepper">
                     <div class="step-item active" id="step-ind-1">
                         <div class="step-circle">1</div>
-                        <span>1. Select Branches</span>
+                        <span>Select Branches</span>
                     </div>
                     <div class="step-divider"></div>
                     <div class="step-item" id="step-ind-2">
                         <div class="step-circle">2</div>
-                        <span>2. Assign Dedicated Numbers</span>
+                        <span>Assign Numbers</span>
                     </div>
                     <div class="step-divider"></div>
                     <div class="step-item" id="step-ind-3">
                         <div class="step-circle">3</div>
-                        <span>3. Review &amp; Save</span>
+                        <span>Review &amp; Save</span>
                     </div>
                 </div>
 
@@ -503,7 +879,7 @@
                 <!-- STEP 2: ASSIGN DEDICATED NUMBERS -->
                 <!-- ========================================================================= -->
                 <div id="step-card-2" class="ccm-page-section" style="display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div class="step-subheader" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Assign dedicated direct telephony number for each selected branch:</span>
                         <span class="selection-badge-pill" id="step2-count-badge">0 branches</span>
                     </div>
@@ -527,7 +903,7 @@
                 <!-- STEP 3: REVIEW & SAVE -->
                 <!-- ========================================================================= -->
                 <div id="step-card-3" class="ccm-page-section" style="display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div class="step-subheader" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <span style="font-size: 0.8125rem; font-weight: 600; color: var(--color-black);">Selected Branches</span>
                         <span class="selection-badge-pill" id="step3-count-badge">Ready to Save</span>
                     </div>

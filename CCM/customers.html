@@ -10,6 +10,54 @@
     <link rel="stylesheet" href="../Sidebar/sidebar.css">
     <!-- CCM & Agents Unified Stylesheet -->
     <link rel="stylesheet" href="agents.css">
+    <style>
+        .source-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid transparent;
+            line-height: 1.3;
+        }
+        .source-badge.source-web {
+            background-color: #eff6ff;
+            color: #1e40af;
+            border-color: #bfdbfe;
+        }
+        .source-badge.source-wab {
+            background-color: #f0fdf4;
+            color: #166534;
+            border-color: #bbf7d0;
+        }
+        .source-badge.source-brc {
+            background-color: #faf5ff;
+            color: #6b21a8;
+            border-color: #e9d5ff;
+        }
+        .source-badge.source-ctp {
+            background-color: #fff7ed;
+            color: #9a3412;
+            border-color: #fed7aa;
+        }
+        .source-badge.source-csv {
+            background-color: #f8fafc;
+            color: #334155;
+            border-color: #cbd5e1;
+        }
+
+        /* Column Specific Layout */
+        .customers-table th:nth-child(5),
+        .customers-table td:nth-child(5) {
+            text-align: left !important;
+        }
+        .customers-table th:nth-child(5) .sort-header-content {
+            justify-content: flex-start !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -35,16 +83,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -309,12 +347,18 @@
                                             <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
                                         </div>
                                     </th>
+                                    <th class="sortable" onclick="sortCustomerTable(4)" style="text-align: left;">
+                                        <div class="sort-header-content" style="justify-content: flex-start;">
+                                            Source
+                                            <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
+                                        </div>
+                                    </th>
                                     <th style="text-align: right;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="customer-table-body">
                                 <!-- Customer 1 -->
-                                <tr data-name="rajesh kumar" data-phone="+91 98765 43210" data-branch="bengaluru" data-type="business" data-gstin="29ABCDE1234F1Z5">
+                                <tr data-name="rajesh kumar" data-phone="+91 98765 43210" data-branch="bengaluru" data-type="business" data-source="website" data-gstin="29ABCDE1234F1Z5">
                                     <td>
                                         <a href="customer-360.html?id=CUST-1001" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Rajesh Kumar</a>
                                     </td>
@@ -323,6 +367,9 @@
                                         <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Business Customer</span>
                                     </td>
                                     <td>Bengaluru</td>
+                                    <td style="text-align: left;">
+                                        <span class="source-badge source-web">Website</span>
+                                    </td>
                                     <td style="text-align: right;">
                                         <a href="customer-360.html?id=CUST-1001" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -332,7 +379,7 @@
                                 </tr>
 
                                 <!-- Customer 2 -->
-                                <tr data-name="priya sharma" data-phone="+91 99887 65432" data-branch="mumbai" data-type="business" data-gstin="27AAACP9876Q1Z2">
+                                <tr data-name="priya sharma" data-phone="+91 99887 65432" data-branch="mumbai" data-type="business" data-source="whatsapp" data-gstin="27AAACP9876Q1Z2">
                                     <td>
                                         <a href="customer-360.html?id=CUST-1002" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Priya Sharma</a>
                                     </td>
@@ -341,6 +388,9 @@
                                         <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Business Customer</span>
                                     </td>
                                     <td>Mumbai</td>
+                                    <td style="text-align: left;">
+                                        <span class="source-badge source-wab">WhatsApp</span>
+                                    </td>
                                     <td style="text-align: right;">
                                         <a href="customer-360.html?id=CUST-1002" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -350,7 +400,7 @@
                                 </tr>
 
                                 <!-- Customer 3 -->
-                                <tr data-name="suresh reddy" data-phone="+91 98480 12345" data-branch="hyderabad" data-type="individual" data-gstin="">
+                                <tr data-name="suresh reddy" data-phone="+91 98480 12345" data-branch="hyderabad" data-type="individual" data-source="branch visit" data-gstin="">
                                     <td>
                                         <a href="customer-360.html?id=CUST-1003" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Suresh Reddy</a>
                                     </td>
@@ -359,6 +409,9 @@
                                         <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Individual</span>
                                     </td>
                                     <td>Hyderabad</td>
+                                    <td style="text-align: left;">
+                                        <span class="source-badge source-brc">Branch Visit</span>
+                                    </td>
                                     <td style="text-align: right;">
                                         <a href="customer-360.html?id=CUST-1003" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -368,7 +421,7 @@
                                 </tr>
 
                                 <!-- Customer 4 -->
-                                <tr data-name="anil verma" data-phone="+91 98100 56789" data-branch="delhi" data-type="business" data-gstin="07AABCV5544R1ZA">
+                                <tr data-name="anil verma" data-phone="+91 98100 56789" data-branch="delhi" data-type="business" data-source="whatsapp" data-gstin="07AABCV5544R1ZA">
                                     <td>
                                         <a href="customer-360.html?id=CUST-1004" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Anil Verma</a>
                                     </td>
@@ -377,6 +430,9 @@
                                         <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Business Customer</span>
                                     </td>
                                     <td>Delhi</td>
+                                    <td style="text-align: left;">
+                                        <span class="source-badge source-wab">WhatsApp</span>
+                                    </td>
                                     <td style="text-align: right;">
                                         <a href="customer-360.html?id=CUST-1004" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -386,7 +442,7 @@
                                 </tr>
 
                                 <!-- Customer 5 -->
-                                <tr data-name="kavya nair" data-phone="+91 98950 24680" data-branch="chennai" data-type="individual" data-gstin="">
+                                <tr data-name="kavya nair" data-phone="+91 98950 24680" data-branch="chennai" data-type="individual" data-source="website" data-gstin="">
                                     <td>
                                         <a href="customer-360.html?id=CUST-1005" style="font-weight: 700; color: var(--color-black); text-decoration: none;">Kavya Nair</a>
                                     </td>
@@ -395,6 +451,9 @@
                                         <span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: var(--color-black);">Individual</span>
                                     </td>
                                     <td>Chennai</td>
+                                    <td style="text-align: left;">
+                                        <span class="source-badge source-web">Website</span>
+                                    </td>
                                     <td style="text-align: right;">
                                         <a href="customer-360.html?id=CUST-1005" class="btn-secondary" style="height: 26px; padding: 0 10px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>

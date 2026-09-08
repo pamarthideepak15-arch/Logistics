@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Offboarding Settings</title>
+    <link rel="stylesheet" href="../../Design System/global.css">
+    <link rel="stylesheet" href="../../Design System/components.css">
+    <link rel="stylesheet" href="../../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="../Staff-Management/staff-management.css">
+    <link rel="stylesheet" href="offboarding.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Modern Compact Drawer / Modal Architecture */
+        .settings-drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.45);
+            display: none;
+            justify-content: flex-end;
+            align-items: stretch;
+            z-index: 2100;
+            backdrop-filter: blur(2px);
+        }
+        .settings-drawer-overlay.active {
+            display: flex;
+        }
+        .settings-drawer {
+            width: 820px;
+            max-width: 100%;
+            height: 100vh;
+            background: #ffffff;
+            box-shadow: -6px 0 24px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            animation: slideDrawer 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        @keyframes slideDrawer {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--color-border);
+            background: #ffffff;
+            flex-shrink: 0;
+        }
+        .drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .drawer-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-top: 1px solid var(--color-border);
+            background: #ffffff;
+            flex-shrink: 0;
+        }
+
+        /* Form Controls Compact */
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .field-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .field-input, .field-select {
+            height: 30px;
+            font-size: 0.8125rem;
+            padding: 0 10px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            outline: none;
+            background: #ffffff;
+            box-sizing: border-box;
+            font-family: inherit;
+            color: #111;
+        }
+        .field-input:focus, .field-select:focus {
+            border-color: #000000;
+        }
+        .field-input[readonly] {
+            background: #f4f4f5;
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        /* Variables Section */
+        .variables-card {
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 10px 12px;
+        }
+        .variables-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .var-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 7px;
+            background: #f4f4f5;
+            border: 1px solid #e4e4e7;
+            border-radius: 4px;
+            font-size: 0.6875rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #27272a;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s ease;
+        }
+        .var-chip:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        /* Compact Editor Container */
+        .editor-container {
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .editor-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--color-border);
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .toolbar-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .tool-btn {
+            height: 24px;
+            min-width: 24px;
+            padding: 0 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 1px solid var(--color-border);
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            user-select: none;
+        }
+        .tool-btn:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+        .quick-action-btn {
+            height: 22px;
+            padding: 0 8px;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 3px;
+            color: #1e293b;
+            cursor: pointer;
+        }
+        .quick-action-btn:hover {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        .editor-textarea {
+            width: 100%;
+            height: 280px;
+            min-height: 280px;
+            max-height: 280px;
+            border: none;
+            padding: 12px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            color: #111;
+            outline: none;
+            resize: none;
+            box-sizing: border-box;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+
+        /* Type Badges */
+        .badge-type-system {
+            background: #f4f4f5;
+            color: #3f3f46;
+            border: 1px solid #d4d4d8;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+        .badge-type-custom {
+            background: #000000;
+            color: #ffffff;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+
+        /* Realistic A4-style Preview Sheet */
+        .preview-a4-sheet {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+            border-radius: 4px;
+            padding: 32px 36px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            font-size: 0.8125rem;
+        }
+        .preview-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #0f172a;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+        .preview-doc-title {
+            text-align: center;
+            font-size: 0.9375rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: underline;
+            margin: 14px 0 20px 0;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Drawer Toggle -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        <!-- Two-Tier Dark Sidebar (HRMS Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="../Staff-Management/index.html" class="rail-icon active" data-tooltip="HRMS">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">HUMAN RESOURCES</div>
+                <nav class="sidebar-nav">
+                    <a href="../Staff-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        Employee Master
+                    </a>
+                    <a href="../Staff-Management/department-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Department Master
+                    </a>
+                    <a href="../Staff-Management/role-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Role Master
+                    </a>
+                    <a href="../Staff-Management/branch-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Master
+                    </a>
+                    <a href="../Attendance/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Attendance
+                    </a>
+                    <a href="../Shift-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Shift Management
+                    </a>
+                    <a href="../Leave-Management/leave-management.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Leave &amp; WFH
+                    </a>
+                    <a href="../Payroll-Management/payroll.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                        Payroll
+                    </a>
+                    <a href="index.html" class="active nav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Offboarding
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            
+            <!-- Top Header Breadcrumb -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>HRMS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="index.html" style="color: inherit; text-decoration: none;">Offboarding</a>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px; margin: 0 4px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Settings</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area" style="padding-bottom: 60px;">
+                
+                <!-- Page Title & Actions -->
+                <div class="page-header" style="margin-bottom: 16px;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <a href="index.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
+                        <div class="page-title-group" style="text-align: left;">
+                            <h1 class="page-title" style="line-height: 1.2; margin-bottom: 2px;">Offboarding Settings</h1>
+                            <p class="page-subtitle">Configure standard exit document templates and letterhead parameters.</p>
+                        </div>
+                    </div>
+                    <!-- Header Action Buttons -->
+                    <div class="header-actions" style="display: flex; gap: 10px; align-items: center;">
+                        <a href="index.html" class="btn-secondary" style="text-decoration: none; height: 30px; line-height: 28px; padding: 0 14px; box-sizing: border-box; font-size: 0.8125rem;">Cancel</a>
+                        <button type="button" class="btn-primary" onclick="saveAllOffboardingSettings()" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; font-weight: 600;">Save Settings</button>
+                    </div>
+                </div>
+
+                <!-- 1. COMPANY LETTERHEAD & ISSUANCE PARAMETERS CARD (TOP - COMPACT) -->
+                <div class="card" style="margin-bottom: 16px; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: var(--color-white); overflow: hidden;">
+                    <div class="card-header" style="padding: 10px 18px; border-bottom: 1px solid var(--color-border); background: var(--color-white); display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3 class="card-title" style="margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--color-black);">Company Letterhead &amp; Issuance Parameters</h3>
+                            <p style="margin: 2px 0 0 0; font-size: 0.6875rem; color: #666;">Global letterhead details, corporate entity, and authorized signatory automatically populate generated exit documents.</p>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button type="button" class="btn-secondary" onclick="openLetterheadPreviewModal()" style="height: 26px; padding: 0 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px;" title="Preview Master Letterhead">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <span>Preview Letterhead</span>
+                            </button>
+                            <button type="button" class="btn-secondary" onclick="downloadLetterheadPDF()" style="height: 26px; padding: 0 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px; border-color: #0f172a; color: #0f172a;" title="Download Master Letterhead PDF">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Download Letterhead</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding: 12px 18px; display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Primary Global Fields (Compact Row) -->
+                        <div style="display: grid; grid-template-columns: 1fr 1.3fr 1.1fr; gap: 12px;">
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label class="field-label" style="font-size: 0.6875rem; margin-bottom: 3px;">Company / Entity Legal Name</label>
+                                <input type="text" id="global-company-name" class="field-input" style="height: 30px; font-size: 0.8125rem;" value="Logistics ERP Systems Ltd.">
+                            </div>
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label class="field-label" style="font-size: 0.6875rem; margin-bottom: 3px;">Corporate Address / Node</label>
+                                <input type="text" id="global-company-addr" class="field-input" style="height: 30px; font-size: 0.8125rem;" value="HQ Node Mumbai, Maharashtra, India - 400001">
+                            </div>
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label class="field-label" style="font-size: 0.6875rem; margin-bottom: 3px;">Default Authorized Signatory</label>
+                                <input type="text" id="global-signatory" class="field-input" style="height: 30px; font-size: 0.8125rem;" value="Head of Human Resources & Governance">
+                            </div>
+                        </div>
+
+                        <!-- Dedicated Letterhead Area (Compact Row) -->
+                        <div style="border-top: 1px solid #f1f5f9; padding-top: 10px; display: grid; grid-template-columns: 180px 1.1fr 1.3fr; gap: 12px; align-items: flex-end;">
+                            <!-- Company Logo Inline -->
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label class="field-label" style="font-size: 0.6875rem; margin-bottom: 3px;">Company Logo</label>
+                                <div style="display: flex; align-items: center; gap: 8px; border: 1px dashed var(--color-border); border-radius: var(--border-radius-base); padding: 4px 8px; background: #f8fafc; height: 30px; box-sizing: border-box;">
+                                    <div id="letterhead-logo-preview" style="width: 20px; height: 20px; border-radius: 3px; background: #0f172a; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                    </div>
+                                    <span style="font-size: 0.6875rem; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;" id="logo-filename-label">Default Emblem</span>
+                                    <input type="file" id="letterhead-logo-input" accept="image/*" style="display: none;" onchange="handleLogoUpload(this)">
+                                    <button type="button" class="btn-secondary" onclick="document.getElementById('letterhead-logo-input').click()" style="height: 20px; padding: 0 6px; font-size: 0.625rem; white-space: nowrap;">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Letterhead Header Text -->
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label class="field-label" style="font-size: 0.6875rem; margin-bottom: 3px;">Letterhead Header Text / Tagline</label>
+                                <input type="text" id="global-letterhead-header" class="field-input" style="height: 30px; font-size: 0.8125rem;" value="Corporate HR &amp; Governance Center • Reg. No. LOG-2026-IND">
+                            </div>
+
+                            <!-- Letterhead Footer Notice -->
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label class="field-label" style="font-size: 0.6875rem; margin-bottom: 3px;">Letterhead Footer Notice / Legal Note</label>
+                                <input type="text" id="global-letterhead-footer" class="field-input" style="height: 30px; font-size: 0.8125rem;" value="Confidential &amp; Proprietary. Authenticated under HRMS Governance.">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. EXIT DOCUMENT TEMPLATES COMPACT TABLE CARD (BELOW) -->
+                <div class="card" style="margin-bottom: 18px; border: 1px solid var(--color-border); border-radius: var(--border-radius-base); background: var(--color-white); overflow: hidden;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--color-border); background: var(--color-white);">
+                        <div>
+                            <h3 class="card-title" style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">Exit Document Templates</h3>
+                            <p style="margin: 3px 0 0 0; font-size: 0.75rem; color: #666;">Standard and custom separation letters generated upon employee offboarding.</p>
+                        </div>
+                        <button type="button" class="btn-primary" onclick="openCreateNewTemplateDrawer()" style="height: 28px; font-size: 0.75rem; padding: 0 12px;">
+                            + Create Template
+                        </button>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <div class="table-container" style="border: none; border-radius: 0; margin: 0;">
+                            <table class="data-table" style="margin: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding-left: 20px; width: 220px;">Template</th>
+                                        <th style="min-width: 260px;">Document Title</th>
+                                        <th>Variables</th>
+                                        <th style="width: 100px; text-align: center;">Status</th>
+                                        <th style="width: 100px; text-align: center; padding-right: 20px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="document-templates-tbody">
+                                    <!-- Populated dynamically with compact rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- COMPACT RIGHT-SIDE DRAWER: CREATE / EDIT TEMPLATE -->
+    <div class="settings-drawer-overlay" id="template-editor-drawer">
+        <div class="settings-drawer">
+            <!-- Drawer Header -->
+            <div class="drawer-header">
+                <div>
+                    <h3 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: #111;" id="drawer-title">Edit Template — Relieving Letter</h3>
+                    <p style="margin: 2px 0 0 0; font-size: 0.6875rem; color: #666;" id="drawer-subtitle">Configure title, structure, and dynamic variable tokens.</p>
+                </div>
+                <button type="button" onclick="closeDrawer()" style="background: none; border: none; cursor: pointer; font-size: 1.25rem; line-height: 1; color: #666;">&times;</button>
+            </div>
+
+            <!-- VIEW 1: EDITOR FORM -->
+            <div id="drawer-edit-view" style="display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+                <div class="drawer-body">
+                    <input type="hidden" id="form-template-id" value="">
+                    
+                    <!-- Metadata Fields (2-Column Grid) -->
+                    <div class="form-grid-2">
+                        <div class="field-group">
+                            <label class="field-label">Template Name *</label>
+                            <input type="text" id="form-template-name" class="field-input" placeholder="e.g. Relieving Letter" required>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Document Header Title *</label>
+                            <input type="text" id="form-template-title" class="field-input" placeholder="e.g. RELIEVING ORDER AND WORK CLEARANCE" required>
+                        </div>
+                    </div>
+
+                    <!-- Template-Specific Variables Box -->
+                    <div class="variables-card">
+                        <div class="variables-header">
+                            <span class="field-label" style="margin: 0;">Insert Relevant Variables (Click to insert at cursor)</span>
+                            <span style="font-size: 0.6875rem; color: #666;" id="var-count-label">9 available</span>
+                        </div>
+                        <div id="relevant-variables-container" style="display: flex; flex-wrap: wrap; gap: 5px;">
+                            <!-- Populated with template-specific variables only -->
+                        </div>
+                    </div>
+
+                    <!-- Content Editor Area -->
+                    <div class="field-group" style="flex: 1;">
+                        <label class="field-label">Template Content Body *</label>
+                        <div class="editor-container">
+                            <div class="editor-toolbar">
+                                <div class="toolbar-group">
+                                    <button type="button" class="tool-btn" title="Bold" onclick="applyFormat('bold')"><b>B</b></button>
+                                    <button type="button" class="tool-btn" title="Italic" onclick="applyFormat('italic')"><i>I</i></button>
+                                    <button type="button" class="tool-btn" title="Underline" onclick="applyFormat('underline')"><u>U</u></button>
+                                    <span style="border-left: 1px solid #cbd5e1; height: 16px; margin: 0 2px;"></span>
+                                    <button type="button" class="tool-btn" title="Bullet List" onclick="applyFormat('bullet')">• List</button>
+                                    <button type="button" class="tool-btn" title="Numbered List" onclick="applyFormat('number')">1. List</button>
+                                </div>
+                                <div class="toolbar-group">
+                                    <span style="font-size: 0.6875rem; color: #666; font-weight: 600;">Quick Actions:</span>
+                                    <button type="button" class="quick-action-btn" onclick="insertQuickAction('salutation')">+ Salutation</button>
+                                    <button type="button" class="quick-action-btn" onclick="insertQuickAction('tenure')">+ Tenure Clause</button>
+                                    <button type="button" class="quick-action-btn" onclick="insertQuickAction('signoff')">+ Sign-off</button>
+                                </div>
+                            </div>
+                            <textarea id="form-template-content" class="editor-textarea" spellcheck="false" placeholder="Type document content with dynamic variables..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer: Only Preview and Cancel in Edit State -->
+                <div class="drawer-footer">
+                    <button type="button" class="btn-secondary" onclick="closeDrawer()" style="height: 30px; padding: 0 14px; font-size: 0.8125rem;">Cancel</button>
+                    <button type="button" class="btn-primary" onclick="proceedToPreview()" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <span>Preview</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW 2: PREVIEW SCREEN (Rendered with sample data) -->
+            <div id="drawer-preview-view" style="display: none; flex-direction: column; flex: 1; overflow: hidden;">
+                <div class="drawer-body" style="background: #e2e8f0; padding: 20px;">
+                    <div style="margin-bottom: 8px; font-size: 0.6875rem; color: #475569; display: flex; justify-content: space-between;">
+                        <span>GENERATED DOCUMENT SIMULATION</span>
+                        <span>SAMPLE: EMP-1024 (Rahul Sharma)</span>
+                    </div>
+
+                    <div class="preview-a4-sheet" id="rendered-preview-content">
+                        <!-- Populated dynamically with realistic sample data -->
+                    </div>
+                </div>
+
+                <!-- Footer in Preview Mode: Back to Edit or Save Template -->
+                <div class="drawer-footer">
+                    <button type="button" class="btn-secondary" onclick="backToEditView()" style="height: 30px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        <span>Back to Edit</span>
+                    </button>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" class="btn-secondary" onclick="downloadCurrentPreviewPDF()" style="height: 30px; padding: 0 12px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 5px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Download PDF</span>
+                        </button>
+                        <button type="button" class="btn-primary" onclick="commitSaveTemplate()" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; font-weight: 600;">
+                            Save Template
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: READ-ONLY PREVIEW (Opened from Table Preview Eye Icon & Letterhead Preview) -->
+            <div id="drawer-readonly-view" style="display: none; flex-direction: column; flex: 1; overflow: hidden;">
+                <div class="drawer-body" style="background: #e2e8f0; padding: 20px;">
+                    <div style="margin-bottom: 8px; font-size: 0.6875rem; color: #475569; display: flex; justify-content: space-between;">
+                        <span id="readonly-sub-banner">OFFICIAL EXIT DOCUMENT PREVIEW</span>
+                        <span id="readonly-sample-meta">SAMPLE: EMP-1024 (Rahul Sharma)</span>
+                    </div>
+
+                    <div class="preview-a4-sheet" id="readonly-preview-content">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Footer in Read-Only Mode: Close, Download PDF, and Edit Template -->
+                <div class="drawer-footer">
+                    <button type="button" class="btn-secondary" onclick="closeDrawer()" style="height: 30px; padding: 0 14px; font-size: 0.8125rem;">Close</button>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="button" class="btn-secondary" id="btn-readonly-download" onclick="downloadCurrentPreviewPDF()" style="height: 30px; padding: 0 12px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 5px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Download PDF</span>
+                        </button>
+                        <button type="button" class="btn-primary" id="btn-readonly-edit-jump" style="height: 30px; padding: 0 16px; font-size: 0.8125rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            <span>Edit Template</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // 1. Precise Variables Defined per Document Type
+        const RELIEVING_VARIABLES = [
+            "{{EmployeeName}}",
+            "{{EmployeeID}}",
+            "{{Designation}}",
+            "{{Department}}",
+            "{{Branch}}",
+            "{{JoiningDate}}",
+            "{{LastWorkingDate}}",
+            "{{Company}}",
+            "{{IssueDate}}"
+        ];
+
+        const EXPERIENCE_VARIABLES = [
+            "{{EmployeeName}}",
+            "{{EmployeeID}}",
+            "{{Designation}}",
+            "{{Department}}",
+            "{{Branch}}",
+            "{{JoiningDate}}",
+            "{{LastWorkingDate}}",
+            "{{Company}}",
+            "{{IssueDate}}"
+        ];
+
+        const PAYSLIP_VARIABLES = [
+            "{{EmployeeName}}",
+            "{{EmployeeID}}",
+            "{{Designation}}",
+            "{{Department}}",
+            "{{PayPeriod}}",
+            "{{BasicSalary}}",
+            "{{GrossSalary}}",
+            "{{TotalEarnings}}",
+            "{{TotalDeductions}}",
+            "{{NetSalary}}",
+            "{{Company}}",
+            "{{IssueDate}}"
+        ];
+
+        // 2. Initial Canonical Templates
+        const initialTemplatesList = [
+            {
+                id: "relieving",
+                name: "Relieving Letter",
+                title: "RELIEVING ORDER AND WORK CLEARANCE",
+                isSystem: true,
+                active: true,
+                typeKey: "relieving",
+                variables: RELIEVING_VARIABLES,
+                content: `Date: {{IssueDate}}
+
+To,
+{{EmployeeName}}
+Employee ID: {{EmployeeID}}
+Designation: {{Designation}}
+Department: {{Department}}
+Branch: {{Branch}}
+
+Subject: Relieving Order and Acceptance of Resignation
+
+Dear {{EmployeeName}},
+
+This has reference to your formal resignation letter submitted regarding separation from your employment with {{Company}}.
+
+We wish to inform you that your resignation has been accepted, and you are formally relieved from your services and responsibilities as {{Designation}} with effect from the close of business hours on {{LastWorkingDate}}.
+
+During your tenure from {{JoiningDate}} to {{LastWorkingDate}}, your performance and conduct have been found satisfactory. You have handed over all company assets, credentials, and departmental clearances.
+
+We appreciate the contributions made by you during your association with our organization and wish you success in all your future endeavors.
+
+Yours sincerely,
+
+Authorized Signatory
+For {{Company}}
+Human Resources & Governance Division`
+            },
+            {
+                id: "experience",
+                name: "Experience Letter",
+                title: "TO WHOMSOEVER IT MAY CONCERN",
+                isSystem: true,
+                active: true,
+                typeKey: "experience",
+                variables: EXPERIENCE_VARIABLES,
+                content: `Date: {{IssueDate}}
+
+TO WHOMSOEVER IT MAY CONCERN
+
+This is to certify that {{EmployeeName}} (Employee ID: {{EmployeeID}}) was employed with {{Company}} as a full-time employee from {{JoiningDate}} to {{LastWorkingDate}}.
+
+During the course of employment, {{EmployeeName}} served in the capacity of {{Designation}} within the {{Department}} department at our {{Branch}} facility.
+
+Major responsibilities included operational workflow execution, cross-functional logistics coordination, and maintaining key organizational service standards.
+
+During this period, {{EmployeeName}} demonstrated high professionalism, diligence, and integrity. All exit clearance obligations and formal handovers have been duly fulfilled.
+
+We wish {{EmployeeName}} all the best and continued success in future career pursuits.
+
+Sincerely,
+
+Head of Human Resources
+{{Company}}
+Corporate Node & Regional Administration`
+            },
+            {
+                id: "payslip",
+                name: "Payslip Template",
+                title: "CONFIDENTIAL SALARY STATEMENT & EXIT MONTH VOUCHER",
+                isSystem: true,
+                active: true,
+                typeKey: "payslip",
+                variables: PAYSLIP_VARIABLES,
+                content: `SALARY SLIP & EXIT MONTH SETTLEMENT VOUCHER
+Pay Period: {{PayPeriod}}
+Company: {{Company}}
+Issue Date: {{IssueDate}}
+
+EMPLOYEE DETAILS:
+Employee Name: {{EmployeeName}}          Employee ID: {{EmployeeID}}
+Designation: {{Designation}}              Department: {{Department}}
+
+COMPENSATION & EARNINGS:
+- Basic Salary: {{BasicSalary}}
+- House Rent Allowance (HRA): ₹12,000.00
+- Special & Conveyance Allowances: ₹18,000.00
+Total Gross Earnings: {{TotalEarnings}}
+
+STATUTORY DEDUCTIONS:
+- Provident Fund (EPF 12%): ₹3,600.00
+- Professional Tax (PT): ₹200.00
+- Income Tax (TDS): ₹0.00
+Total Deductions: {{TotalDeductions}}
+
+NET PAYABLE SALARY: {{NetSalary}}
+(Rupees Fifty-Six Thousand Two Hundred Only)
+
+This is a system-generated compensation voucher and does not require a physical signature.`
+            }
+        ];
+
+        // Realistic Sample Data for generating live preview without raw placeholders
+        const sampleEmployeeData = {
+            EmployeeName: "Rahul Sharma",
+            EmployeeID: "EMP-1024",
+            Designation: "Senior Designer",
+            Department: "Design",
+            Branch: "Mumbai",
+            JoiningDate: "10 Jan 2022",
+            LastWorkingDate: "15 Sep 2026",
+            IssueDate: "15 Sep 2026",
+            PayPeriod: "September 2026",
+            BasicSalary: "₹30,000.00",
+            GrossSalary: "₹60,000.00",
+            TotalEarnings: "₹60,000.00",
+            TotalDeductions: "₹3,800.00",
+            NetSalary: "₹56,200.00",
+            Company: "Logistics ERP Systems Ltd."
+        };
+
+        function getTemplates() {
+            const stored = localStorage.getItem('hrms_offboarding_templates_v2');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length >= 3) return parsed;
+                } catch(e) {}
+            }
+            return initialTemplatesList;
+        }
+
+        function saveTemplates(list) {
+            localStorage.setItem('hrms_offboarding_templates_v2', JSON.stringify(list));
+        }
+
+        // Render Compact Table
+        function renderTemplatesTable() {
+            const list = getTemplates();
+            const tbody = document.getElementById('document-templates-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            list.forEach((tpl, idx) => {
+                const tr = document.createElement('tr');
+                
+                // Single-line clean variable chips
+                const vars = tpl.variables || [];
+                const chip1 = vars[0] ? `<span style="font-family:monospace; font-size:0.6875rem; background:#f1f5f9; border:1px solid #e2e8f0; color:#334155; padding:2px 6px; border-radius:3px;">${vars[0]}</span>` : '';
+                const chip2 = vars[1] ? `<span style="font-family:monospace; font-size:0.6875rem; background:#f1f5f9; border:1px solid #e2e8f0; color:#334155; padding:2px 6px; border-radius:3px;">${vars[1]}</span>` : '';
+                const moreCount = vars.length > 2 ? `<span style="font-size:0.6875rem; color:#64748b; font-weight:600; cursor:pointer;" title="${vars.slice(2).join(', ')}">+${vars.length - 2} more</span>` : '';
+                const varHtml = `<div style="display:inline-flex; align-items:center; gap:6px; white-space:nowrap;">${chip1}${chip2}${moreCount}</div>`;
+
+                tr.innerHTML = `
+                    <td style="padding-left: 20px;">
+                        <strong style="color:var(--color-black); font-size:0.8125rem; display:block;">${tpl.name}</strong>
+                    </td>
+                    <td style="color:#333; font-size:0.8125rem; font-weight:500;">${tpl.title}</td>
+                    <td>${varHtml}</td>
+                    <td style="text-align:center;">
+                        <label class="status-toggle" title="Activate / Deactivate">
+                            <input type="checkbox" ${tpl.active ? 'checked' : ''} onchange="handleToggleStatus('${tpl.id}', this)">
+                            <div class="toggle-switch"></div>
+                        </label>
+                    </td>
+                    <td style="text-align:center; padding-right: 20px;">
+                        <div class="action-icons" style="display:inline-flex; align-items:center; gap:8px;">
+                            <button type="button" class="action-icon" title="Preview Document" onclick="openReadOnlyPreview('${tpl.id}')" style="background:none; border:none; cursor:pointer; padding:2px; color:#475569;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                            <button type="button" class="action-icon" title="Download Document PDF" onclick="downloadTemplateDirectPDF('${tpl.id}')" style="background:none; border:none; cursor:pointer; padding:2px; color:#475569;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            </button>
+                            <button type="button" class="action-icon" title="Edit Template" onclick="openEditTemplateDrawer('${tpl.id}')" style="background:none; border:none; cursor:pointer; padding:2px; color:#475569;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Toggle Status with Confirmation for Active Generation
+        function handleToggleStatus(id, checkbox) {
+            const list = getTemplates();
+            const tpl = list.find(t => t.id === id);
+            if (!tpl) return;
+
+            const willDisable = !checkbox.checked;
+            if (willDisable) {
+                const confirmed = confirm(`Are you sure you want to deactivate "${tpl.name}"?\n\nThis template will no longer be available for automatic exit clearance document generation.`);
+                if (!confirmed) {
+                    checkbox.checked = true;
+                    return;
+                }
+            }
+
+            tpl.active = checkbox.checked;
+            saveTemplates(list);
+            renderTemplatesTable();
+        }
+
+        // Open Drawer in Edit Mode
+        function openEditTemplateDrawer(id) {
+            const list = getTemplates();
+            const tpl = list.find(t => t.id === id);
+            if (!tpl) return;
+
+            document.getElementById('form-template-id').value = tpl.id;
+            document.getElementById('drawer-title').textContent = `Edit Template — ${tpl.name}`;
+            document.getElementById('drawer-subtitle').textContent = `Configure title, structure, and dynamic variable tokens.`;
+            document.getElementById('form-template-name').value = tpl.name;
+            document.getElementById('form-template-title').value = tpl.title;
+            document.getElementById('form-template-content').value = tpl.content;
+
+            renderVariableChips(tpl.typeKey || 'relieving');
+
+            // Switch to Edit View
+            document.getElementById('drawer-edit-view').style.display = 'flex';
+            document.getElementById('drawer-preview-view').style.display = 'none';
+            document.getElementById('drawer-readonly-view').style.display = 'none';
+
+            document.getElementById('template-editor-drawer').classList.add('active');
+        }
+
+        // Open Drawer in Create Mode
+        function openCreateNewTemplateDrawer() {
+            document.getElementById('form-template-id').value = '';
+            document.getElementById('drawer-title').textContent = 'Create New Exit Document Template';
+            document.getElementById('drawer-subtitle').textContent = 'Define document parameters and separation clauses.';
+            document.getElementById('form-template-name').value = 'Custom Exit Order Template';
+            document.getElementById('form-template-title').value = 'EXIT CLEARANCE & UNDERTAKING ORDER';
+            document.getElementById('form-template-content').value = `Date: {{IssueDate}}\n\nTo,\n{{EmployeeName}}\nEmployee ID: {{EmployeeID}}\nDesignation: {{Designation}}\nDepartment: {{Department}}\nBranch: {{Branch}}\n\nSubject: Exit Clearance and Separation Order\n\nDear {{EmployeeName}},\n\nThis is to confirm your formal separation from {{Company}} effective {{LastWorkingDate}}.\n\nDuring your tenure from {{JoiningDate}} to {{LastWorkingDate}}, all company asset handovers and exit obligations have been fulfilled.\n\nYours sincerely,\n\nAuthorized Signatory\nFor {{Company}}\nHuman Resources & Governance Division`;
+
+            renderVariableChips('all');
+
+            // Switch to Edit View
+            document.getElementById('drawer-edit-view').style.display = 'flex';
+            document.getElementById('drawer-preview-view').style.display = 'none';
+            document.getElementById('drawer-readonly-view').style.display = 'none';
+
+            document.getElementById('template-editor-drawer').classList.add('active');
+        }
+
+        function renderVariableChips(typeKey) {
+            let vars = RELIEVING_VARIABLES;
+            if (typeKey === 'experience') vars = EXPERIENCE_VARIABLES;
+            else if (typeKey === 'payslip') vars = PAYSLIP_VARIABLES;
+            else if (typeKey === 'all') {
+                vars = Array.from(new Set([...RELIEVING_VARIABLES, ...EXPERIENCE_VARIABLES, "{{PayPeriod}}", "{{GrossSalary}}", "{{NetSalary}}"]));
+            }
+
+            const container = document.getElementById('relevant-variables-container');
+            if (!container) return;
+            container.innerHTML = '';
+            document.getElementById('var-count-label').textContent = `${vars.length} relevant variables`;
+
+            vars.forEach(v => {
+                const chip = document.createElement('span');
+                chip.className = 'var-chip';
+                chip.textContent = v;
+                chip.onclick = () => insertVariableAtCursor(v);
+                container.appendChild(chip);
+            });
+        }
+
+        function insertVariableAtCursor(variableText) {
+            const textarea = document.getElementById('form-template-content');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            textarea.value = text.substring(0, start) + variableText + text.substring(end);
+            textarea.focus();
+            textarea.selectionEnd = start + variableText.length;
+        }
+
+        // Formatting Buttons (Bold, Italic, Underline, Lists)
+        function applyFormat(action) {
+            const textarea = document.getElementById('form-template-content');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selected = textarea.value.substring(start, end) || 'Text';
+
+            let replacement = selected;
+            if (action === 'bold') replacement = `**${selected}**`;
+            else if (action === 'italic') replacement = `*${selected}*`;
+            else if (action === 'underline') replacement = `__${selected}__`;
+            else if (action === 'bullet') replacement = `\n- ${selected}`;
+            else if (action === 'number') replacement = `\n1. ${selected}`;
+
+            textarea.value = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
+            textarea.focus();
+            textarea.selectionEnd = start + replacement.length;
+        }
+
+        function insertQuickAction(type) {
+            if (type === 'salutation') {
+                insertVariableAtCursor('\nDear {{EmployeeName}},\n\n');
+            } else if (type === 'tenure') {
+                insertVariableAtCursor('During your tenure from {{JoiningDate}} to {{LastWorkingDate}} as {{Designation}} in the {{Department}} department, your conduct has been satisfactory.');
+            } else if (type === 'signoff') {
+                insertVariableAtCursor('\n\nYours sincerely,\n\nAuthorized Signatory\nFor {{Company}}\nHuman Resources & Governance Division');
+            }
+        }
+
+        // Step: Proceed to Preview (Mandatory before Save)
+        function proceedToPreview() {
+            const nameInput = document.getElementById('form-template-name');
+            const titleInput = document.getElementById('form-template-title');
+            const contentInput = document.getElementById('form-template-content');
+
+            let name = nameInput.value.trim();
+            let title = titleInput.value.trim();
+            let content = contentInput.value.trim();
+
+            // Auto-fill fallback defaults if left empty so preview always succeeds
+            if (!name) {
+                name = 'Exit Document Template';
+                nameInput.value = name;
+            }
+            if (!title) {
+                title = 'EXIT CLEARANCE ORDER';
+                titleInput.value = title;
+            }
+            if (!content) {
+                content = `Date: {{IssueDate}}\n\nTo,\n{{EmployeeName}}\nEmployee ID: {{EmployeeID}}\nDesignation: {{Designation}}\n\nThis is to certify your formal separation from {{Company}}.\n\nYours sincerely,\nAuthorized Signatory\nFor {{Company}}`;
+                contentInput.value = content;
+            }
+
+            const globalComp = document.getElementById('global-company-name').value || "Logistics ERP Systems Ltd.";
+            const globalAddr = document.getElementById('global-company-addr').value || "HQ Node Mumbai, Maharashtra, India - 400001";
+            const headerText = document.getElementById('global-letterhead-header').value || "Corporate HR & Governance Center • Reg. No. LOG-2026-IND";
+            const footerText = document.getElementById('global-letterhead-footer').value || "Confidential & Proprietary. This document is authenticated under Logistics ERP HRMS Master Governance.";
+
+            // Replace all {{variables}} with realistic sample data
+            let rendered = content;
+            const activeSample = { ...sampleEmployeeData, Company: globalComp };
+            Object.keys(activeSample).forEach(key => {
+                const reg = new RegExp(`{{${key}}}`, 'g');
+                rendered = rendered.replace(reg, activeSample[key]);
+            });
+
+            const logoHtml = letterheadLogoData 
+                ? `<img src="${letterheadLogoData}" style="height: 38px; max-width: 120px; object-fit: contain;">`
+                : `<div style="width: 36px; height: 36px; border-radius: 4px; background: #0f172a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>`;
+
+            // HTML Layout Simulation matching Master Letterhead
+            const sheetHtml = `
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0f172a; padding-bottom: 14px; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        ${logoHtml}
+                        <div>
+                            <div style="font-size: 1.0625rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.02em;">${globalComp}</div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 2px;">${globalAddr}</div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="badge-type-system" style="font-size: 0.625rem; letter-spacing: 0.04em;">OFFICIAL EXIT RECORD</span>
+                        <div style="font-size: 0.6875rem; color: #64748b; margin-top: 4px;">${headerText}</div>
+                    </div>
+                </div>
+                <div class="preview-doc-title">${title}</div>
+                <div style="white-space:pre-wrap; font-size:0.8125rem; line-height:1.75; color:#1e293b; min-height: 280px;">${rendered}</div>
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 12px; margin-top: 32px; display: flex; justify-content: space-between; font-size: 0.6875rem; color: #94a3b8;">
+                    <span>${footerText}</span>
+                    <span>Page 1 of 1</span>
+                </div>
+            `;
+
+            document.getElementById('rendered-preview-content').innerHTML = sheetHtml;
+            document.getElementById('drawer-title').textContent = `Preview — ${name}`;
+            document.getElementById('drawer-subtitle').textContent = `Document simulation rendered with realistic sample employee record.`;
+
+            // Switch to Preview View
+            document.getElementById('drawer-edit-view').style.display = 'none';
+            document.getElementById('drawer-preview-view').style.display = 'flex';
+            document.getElementById('drawer-readonly-view').style.display = 'none';
+        }
+
+        function backToEditView() {
+            const name = document.getElementById('form-template-name').value.trim() || 'Template';
+            document.getElementById('drawer-title').textContent = `Edit Template — ${name}`;
+            document.getElementById('drawer-subtitle').textContent = `Configure title, structure, and dynamic variable tokens.`;
+
+            document.getElementById('drawer-edit-view').style.display = 'flex';
+            document.getElementById('drawer-preview-view').style.display = 'none';
+            document.getElementById('drawer-readonly-view').style.display = 'none';
+        }
+
+        // Commit and Save Template from Preview Screen
+        function commitSaveTemplate() {
+            const id = document.getElementById('form-template-id').value;
+            const name = document.getElementById('form-template-name').value.trim();
+            const title = document.getElementById('form-template-title').value.trim();
+            const content = document.getElementById('form-template-content').value;
+            const cat = document.getElementById('form-template-category') ? document.getElementById('form-template-category').value : 'relieving';
+
+            // Identify variables used in content
+            const matches = content.match(/{{[A-Za-z0-9_]+}}/g) || [];
+            const uniqueVars = Array.from(new Set(matches));
+
+            let list = getTemplates();
+            if (id) {
+                const idx = list.findIndex(t => t.id === id);
+                if (idx > -1) {
+                    list[idx].name = name;
+                    list[idx].title = title;
+                    list[idx].content = content;
+                    list[idx].typeKey = cat;
+                    list[idx].variables = uniqueVars.length > 0 ? uniqueVars : list[idx].variables;
+                }
+            } else {
+                const newId = 'tpl_custom_' + Date.now();
+                list.push({
+                    id: newId,
+                    name: name,
+                    title: title,
+                    isSystem: false,
+                    active: true,
+                    typeKey: cat,
+                    variables: uniqueVars.length > 0 ? uniqueVars : (cat === 'experience' ? EXPERIENCE_VARIABLES : (cat === 'payslip' ? PAYSLIP_VARIABLES : RELIEVING_VARIABLES)),
+                    content: content
+                });
+            }
+
+            saveTemplates(list);
+            closeDrawer();
+            renderTemplatesTable();
+        }
+
+        // Open Read-Only Preview from Eye Icon
+        function openReadOnlyPreview(id) {
+            const list = getTemplates();
+            const tpl = list.find(t => t.id === id);
+            if (!tpl) return;
+
+            currentActivePreviewTemplate = tpl;
+
+            const globalComp = document.getElementById('global-company-name').value || "Logistics ERP Systems Ltd.";
+            const globalAddr = document.getElementById('global-company-addr').value || "HQ Node Mumbai, Maharashtra, India - 400001";
+            const headerText = document.getElementById('global-letterhead-header').value || "Corporate HR & Governance Center • Reg. No. LOG-2026-IND";
+            const footerText = document.getElementById('global-letterhead-footer').value || "Confidential & Proprietary. This document is authenticated under Logistics ERP HRMS Master Governance.";
+
+            let rendered = tpl.content;
+            const activeSample = { ...sampleEmployeeData, Company: globalComp };
+            Object.keys(activeSample).forEach(key => {
+                const reg = new RegExp(`{{${key}}}`, 'g');
+                rendered = rendered.replace(reg, activeSample[key]);
+            });
+
+            const logoHtml = letterheadLogoData 
+                ? `<img src="${letterheadLogoData}" style="height: 38px; max-width: 120px; object-fit: contain;">`
+                : `<div style="width: 36px; height: 36px; border-radius: 4px; background: #0f172a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>`;
+
+            const sheetHtml = `
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0f172a; padding-bottom: 14px; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        ${logoHtml}
+                        <div>
+                            <div style="font-size: 1.0625rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.02em;">${globalComp}</div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 2px;">${globalAddr}</div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="badge-type-system" style="font-size: 0.625rem; letter-spacing: 0.04em;">OFFICIAL EXIT RECORD</span>
+                        <div style="font-size: 0.6875rem; color: #64748b; margin-top: 4px;">${headerText}</div>
+                    </div>
+                </div>
+                <div class="preview-doc-title">${tpl.title}</div>
+                <div style="white-space:pre-wrap; font-size:0.8125rem; line-height:1.75; color:#1e293b; min-height: 280px;">${rendered}</div>
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 12px; margin-top: 32px; display: flex; justify-content: space-between; font-size: 0.6875rem; color: #94a3b8;">
+                    <span>${footerText}</span>
+                    <span>Page 1 of 1</span>
+                </div>
+            `;
+
+            document.getElementById('readonly-sub-banner').textContent = 'OFFICIAL EXIT DOCUMENT PREVIEW';
+            document.getElementById('readonly-sample-meta').textContent = 'SAMPLE: EMP-1024 (Rahul Sharma)';
+            document.getElementById('readonly-sample-meta').style.display = 'inline';
+
+            document.getElementById('readonly-preview-content').innerHTML = sheetHtml;
+            document.getElementById('drawer-title').textContent = `Preview — ${tpl.name}`;
+            document.getElementById('drawer-subtitle').textContent = `Read-only document layout rendered with employee sample data.`;
+
+            document.getElementById('btn-readonly-edit-jump').style.display = 'inline-flex';
+            document.getElementById('btn-readonly-edit-jump').onclick = () => {
+                openEditTemplateDrawer(tpl.id);
+            };
+
+            document.getElementById('drawer-edit-view').style.display = 'none';
+            document.getElementById('drawer-preview-view').style.display = 'none';
+            document.getElementById('drawer-readonly-view').style.display = 'flex';
+
+            document.getElementById('template-editor-drawer').classList.add('active');
+        }
+
+        function closeDrawer() {
+            const drawer = document.getElementById('template-editor-drawer');
+            if (drawer) {
+                drawer.classList.remove('active');
+            }
+        }
+
+        // Close on clicking backdrop overlay
+        document.addEventListener('click', (e) => {
+            const drawerOverlay = document.getElementById('template-editor-drawer');
+            if (e.target === drawerOverlay) {
+                closeDrawer();
+            }
+        });
+
+        // Close on pressing ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDrawer();
+            }
+        });
+
+        let letterheadLogoData = null;
+
+        function handleLogoUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    letterheadLogoData = e.target.result;
+                    document.getElementById('letterhead-logo-preview').innerHTML = `<img src="${letterheadLogoData}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px;">`;
+                    document.getElementById('logo-filename-label').textContent = file.name;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openLetterheadPreviewModal() {
+            const compName = document.getElementById('global-company-name').value || "Logistics ERP Systems Ltd.";
+            const compAddr = document.getElementById('global-company-addr').value || "HQ Node Mumbai, Maharashtra, India - 400001";
+            const signatory = document.getElementById('global-signatory').value || "Head of Human Resources & Governance";
+            const headerText = document.getElementById('global-letterhead-header').value || "Corporate HR & Governance Center • Reg. No. LOG-2026-IND";
+            const footerText = document.getElementById('global-letterhead-footer').value || "Confidential & Proprietary. This document is authenticated under Logistics ERP HRMS Master Governance.";
+
+            const logoHtml = letterheadLogoData 
+                ? `<img src="${letterheadLogoData}" style="height: 38px; max-width: 120px; object-fit: contain;">`
+                : `<div style="width: 36px; height: 36px; border-radius: 4px; background: #0f172a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>`;
+
+            const previewHtml = `
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0f172a; padding-bottom: 14px; margin-bottom: 24px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        ${logoHtml}
+                        <div>
+                            <div style="font-size: 1.0625rem; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.02em;">${compName}</div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 2px;">${compAddr}</div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="badge-type-system" style="font-size: 0.625rem; letter-spacing: 0.04em;">MASTER LETTERHEAD</span>
+                        <div style="font-size: 0.6875rem; color: #64748b; margin-top: 4px;">${headerText}</div>
+                    </div>
+                </div>
+
+                <div style="min-height: 240px; border: 1px dashed #e2e8f0; border-radius: 4px; padding: 24px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fafafa; color: #94a3b8; text-align: center;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28" style="margin-bottom: 6px; color: #cbd5e1;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <strong style="color: #64748b; font-size: 0.8125rem;">[ Document Body Area ]</strong>
+                    <span style="font-size: 0.75rem; max-width: 380px; margin-top: 4px;">Exit document templates (Relieving Letter, Experience Certificate, etc.) and backend employee data will populate inside this printable boundary.</span>
+                </div>
+
+                <div style="margin-top: 36px; display: flex; justify-content: flex-end;">
+                    <div style="text-align: right; min-width: 200px;">
+                        <div style="font-size: 0.75rem; color: #64748b;">For and on behalf of</div>
+                        <div style="font-weight: 700; font-size: 0.8125rem; color: #0f172a; margin-bottom: 24px;">${compName}</div>
+                        <div style="border-top: 1px solid #0f172a; padding-top: 4px; font-size: 0.75rem; font-weight: 600; color: #1e293b;">
+                            ${signatory}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 12px; margin-top: 32px; display: flex; justify-content: space-between; font-size: 0.6875rem; color: #94a3b8;">
+                    <span>${footerText}</span>
+                    <span>Master Layout Template</span>
+                </div>
+            `;
+
+            document.getElementById('readonly-preview-content').innerHTML = previewHtml;
+            document.getElementById('drawer-title').textContent = `Master Letterhead Preview`;
+            document.getElementById('drawer-subtitle').textContent = `Master corporate letterhead layout without employee-specific fields.`;
+            
+            const subBanner = document.getElementById('readonly-sub-banner');
+            if (subBanner) subBanner.textContent = 'MASTER CORPORATE LETTERHEAD LAYOUT';
+            const sampleMeta = document.getElementById('readonly-sample-meta');
+            if (sampleMeta) sampleMeta.style.display = 'none';
+
+            document.getElementById('btn-readonly-edit-jump').style.display = 'none';
+
+            document.getElementById('drawer-edit-view').style.display = 'none';
+            document.getElementById('drawer-preview-view').style.display = 'none';
+            document.getElementById('drawer-readonly-view').style.display = 'flex';
+
+            document.getElementById('template-editor-drawer').classList.add('active');
+        }
+
+        let currentActivePreviewTemplate = null;
+
+        function downloadTemplateDirectPDF(id) {
+            const list = getTemplates();
+            const tpl = list.find(t => t.id === id);
+            if (!tpl) return;
+            currentActivePreviewTemplate = tpl;
+            downloadCurrentPreviewPDF();
+        }
+
+        function downloadCurrentPreviewPDF() {
+            const compName = document.getElementById('global-company-name').value || "Logistics ERP Systems Ltd.";
+            const compAddr = document.getElementById('global-company-addr').value || "HQ Node Mumbai, Maharashtra, India - 400001";
+            const signatory = document.getElementById('global-signatory').value || "Head of Human Resources & Governance";
+            const headerText = document.getElementById('global-letterhead-header').value || "Corporate HR & Governance Center • Reg. No. LOG-2026-IND";
+            const footerText = document.getElementById('global-letterhead-footer').value || "Confidential & Proprietary. This document is authenticated under Logistics ERP HRMS Master Governance.";
+
+            // If in master letterhead preview mode
+            const subBanner = document.getElementById('readonly-sub-banner');
+            if (subBanner && subBanner.textContent.includes('MASTER CORPORATE LETTERHEAD')) {
+                downloadLetterheadPDF();
+                return;
+            }
+
+            // Determine content and title to download
+            let docTitle = "EXIT CLEARANCE DOCUMENT";
+            let docBody = "";
+            let templateName = "Exit_Document";
+
+            if (currentActivePreviewTemplate) {
+                templateName = currentActivePreviewTemplate.name.replace(/[^a-zA-Z0-9]/g, '_');
+                docTitle = currentActivePreviewTemplate.title;
+                docBody = currentActivePreviewTemplate.content;
+            } else {
+                const formName = document.getElementById('form-template-name').value.trim() || 'Exit_Document';
+                templateName = formName.replace(/[^a-zA-Z0-9]/g, '_');
+                docTitle = document.getElementById('form-template-title').value.trim() || 'EXIT ORDER';
+                docBody = document.getElementById('form-template-content').value.trim();
+            }
+
+            // Replace dynamic placeholders with sample employee data
+            const activeSample = { ...sampleEmployeeData, Company: compName };
+            Object.keys(activeSample).forEach(key => {
+                const reg = new RegExp(`{{${key}}}`, 'g');
+                docBody = docBody.replace(reg, activeSample[key]);
+            });
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                // Corporate Header
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(13);
+                doc.setTextColor(15, 23, 42);
+                doc.text(compName.toUpperCase(), 20, 22);
+
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(8);
+                doc.setTextColor(100, 116, 139);
+                doc.text(compAddr, 20, 28);
+                doc.text(headerText, 190, 28, { align: 'right' });
+
+                // Top Divider
+                doc.setDrawColor(15, 23, 42);
+                doc.setLineWidth(0.6);
+                doc.line(20, 32, 190, 32);
+
+                // Document Title
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(11);
+                doc.setTextColor(15, 23, 42);
+                doc.text(docTitle.toUpperCase(), 105, 42, { align: 'center' });
+
+                // Document Body Content
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(9.5);
+                doc.setTextColor(30, 41, 59);
+
+                const splitLines = doc.splitTextToSize(docBody, 170);
+                doc.text(splitLines, 20, 52);
+
+                // Signatory Bottom Section
+                doc.setFontSize(8);
+                doc.setTextColor(100, 116, 139);
+                doc.text("For and on behalf of", 190, 232, { align: 'right' });
+
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(9);
+                doc.setTextColor(15, 23, 42);
+                doc.text(compName, 190, 238, { align: 'right' });
+
+                doc.setDrawColor(15, 23, 42);
+                doc.setLineWidth(0.4);
+                doc.line(130, 256, 190, 256);
+
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(8);
+                doc.text(signatory, 190, 261, { align: 'right' });
+
+                // Footer
+                doc.setDrawColor(226, 232, 240);
+                doc.setLineWidth(0.3);
+                doc.line(20, 275, 190, 275);
+
+                doc.setFontSize(7.5);
+                doc.setTextColor(148, 163, 184);
+                doc.text(footerText, 20, 282);
+                doc.text("Generated via HRMS Governance", 190, 282, { align: 'right' });
+
+                doc.save(`EMP-1024_Rahul_Sharma_${templateName}.pdf`);
+
+            } catch (err) {
+                console.error("PDF generation error:", err);
+                window.print();
+            }
+        }
+
+        function downloadLetterheadPDF() {
+            const compName = document.getElementById('global-company-name').value || "Logistics ERP Systems Ltd.";
+            const compAddr = document.getElementById('global-company-addr').value || "HQ Node Mumbai, Maharashtra, India - 400001";
+            const signatory = document.getElementById('global-signatory').value || "Head of Human Resources & Governance";
+            const headerText = document.getElementById('global-letterhead-header').value || "Corporate HR & Governance Center • Reg. No. LOG-2026-IND";
+            const footerText = document.getElementById('global-letterhead-footer').value || "Confidential & Proprietary. This document is authenticated under Logistics ERP HRMS Master Governance.";
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                // Header Top
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(14);
+                doc.setTextColor(15, 23, 42);
+                doc.text(compName.toUpperCase(), 20, 22);
+
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(8.5);
+                doc.setTextColor(100, 116, 139);
+                doc.text(compAddr, 20, 28);
+                doc.text(headerText, 190, 28, { align: 'right' });
+
+                // Divider Line
+                doc.setDrawColor(15, 23, 42);
+                doc.setLineWidth(0.6);
+                doc.line(20, 32, 190, 32);
+
+                // Body Placeholder Box
+                doc.setDrawColor(203, 213, 225);
+                doc.setLineWidth(0.3);
+                doc.setLineDashPattern([2, 2], 0);
+                doc.rect(20, 48, 170, 160);
+                doc.setLineDashPattern([], 0);
+
+                doc.setFontSize(9);
+                doc.setTextColor(148, 163, 184);
+                doc.text("[ Master Document Content Area ]", 105, 125, { align: 'center' });
+                doc.text("Official exit letters (Relieving, Experience, etc.) populate inside this boundary.", 105, 132, { align: 'center' });
+
+                // Signatory Section Bottom Right
+                doc.setFontSize(8);
+                doc.setTextColor(100, 116, 139);
+                doc.text("For and on behalf of", 190, 232, { align: 'right' });
+
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(9);
+                doc.setTextColor(15, 23, 42);
+                doc.text(compName, 190, 238, { align: 'right' });
+
+                doc.setDrawColor(15, 23, 42);
+                doc.setLineWidth(0.4);
+                doc.line(130, 256, 190, 256);
+
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(8);
+                doc.text(signatory, 190, 261, { align: 'right' });
+
+                // Footer
+                doc.setDrawColor(226, 232, 240);
+                doc.setLineWidth(0.3);
+                doc.line(20, 275, 190, 275);
+
+                doc.setFontSize(7.5);
+                doc.setTextColor(148, 163, 184);
+                doc.text(footerText, 20, 282);
+                doc.text("Master Letterhead", 190, 282, { align: 'right' });
+
+                doc.save("Master_Company_Letterhead.pdf");
+
+            } catch (err) {
+                console.error("Letterhead PDF generation error:", err);
+                alert("Master letterhead download initiated.");
+            }
+        }
+
+        function saveAllOffboardingSettings() {
+            localStorage.setItem('hrms_offboarding_company', document.getElementById('global-company-name').value);
+            localStorage.setItem('hrms_offboarding_address', document.getElementById('global-company-addr').value);
+            localStorage.setItem('hrms_offboarding_signatory', document.getElementById('global-signatory').value);
+            localStorage.setItem('hrms_offboarding_header', document.getElementById('global-letterhead-header').value);
+            localStorage.setItem('hrms_offboarding_footer', document.getElementById('global-letterhead-footer').value);
+            if (letterheadLogoData) {
+                localStorage.setItem('hrms_offboarding_logo', letterheadLogoData);
+            }
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedComp = localStorage.getItem('hrms_offboarding_company');
+            if (savedComp) document.getElementById('global-company-name').value = savedComp;
+            const savedAddr = localStorage.getItem('hrms_offboarding_address');
+            if (savedAddr) document.getElementById('global-company-addr').value = savedAddr;
+            const savedSign = localStorage.getItem('hrms_offboarding_signatory');
+            if (savedSign) document.getElementById('global-signatory').value = savedSign;
+            const savedHeader = localStorage.getItem('hrms_offboarding_header');
+            if (savedHeader) document.getElementById('global-letterhead-header').value = savedHeader;
+            const savedFooter = localStorage.getItem('hrms_offboarding_footer');
+            if (savedFooter) document.getElementById('global-letterhead-footer').value = savedFooter;
+            const savedLogo = localStorage.getItem('hrms_offboarding_logo');
+            if (savedLogo) {
+                letterheadLogoData = savedLogo;
+                document.getElementById('letterhead-logo-preview').innerHTML = `<img src="${savedLogo}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px;">`;
+                document.getElementById('logo-filename-label').textContent = "Uploaded Corporate Logo";
+            }
+
+            renderTemplatesTable();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management Platform - Edit Branch (HRMS)</title>
+    <link rel="stylesheet" href="../../Design System/global.css">
+    <link rel="stylesheet" href="../../Design System/components.css">
+    <link rel="stylesheet" href="../../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="../../Admin/Branch-Management/branch-management.css">
+    <link rel="stylesheet" href="staff-management.css">
+</head>
+<body>
+    
+    <!-- Mobile Menu Drawer Toggle -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (HRMS Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="index.html" class="rail-icon active" data-tooltip="HRMS">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">HUMAN RESOURCES</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        Employee Master
+                    </a>
+                    <a href="department-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Department Master
+                    </a>
+                    <a href="role-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Role Master
+                    </a>
+                    <a href="branch-master.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Master
+                    </a>
+                    <a href="../Attendance/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Attendance
+                    </a>
+                    <a href="../Shift-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Shift Management
+                    </a>
+                    <a href="../Leave-Management/leave-management.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Leave &amp; WFH
+                    </a>
+                    <a href="../Payroll-Management/payroll.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                        Payroll
+                    </a>
+                    <a href="../Offboarding/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Offboarding
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>HRMS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="branch-master.html" style="color: inherit; text-decoration: none;">Branch Master</a>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Edit Branch</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../../Login/index.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <form action="branch-master.html">
+                    <div class="page-header">
+                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                            <a href="branch-master.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="line-height: 1.2; margin-bottom: 4px;">Edit Branch</h1>
+                                <p class="page-subtitle">Update Branch Information And Manager Assignment.</p>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a href="branch-master.html" class="btn-secondary">Cancel</a>
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="branch-name">Branch Name *</label>
+                            <input type="text" id="branch-name" name="branch-name" value="Mumbai Hub" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="branch-code">Branch Code *</label>
+                            <input type="text" id="branch-code" name="branch-code" value="BR-001" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Branch Type *</label>
+                            <div class="radio-group">
+                                <label class="radio-card" style="flex: 1;">
+                                    <input type="radio" name="branch-type" value="owned" required checked>
+                                    <span>Owned Branch</span>
+                                </label>
+                                <label class="radio-card" style="flex: 1;">
+                                    <input type="radio" name="branch-type" value="agency" required>
+                                    <span>Agency Branch</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="branch-manager">Branch Manager</label>
+                            <details class="custom-select-wrapper" id="branch-manager">
+                                <summary class="custom-select-trigger">
+                                    <span class="placeholder">Select Branch Manager</span>
+                                    <span class="selected-text text-amit">Amit Sharma</span>
+                                    <span class="selected-text text-rahul">Rahul Verma</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </summary>
+                                <div class="custom-select-options">
+                                    <label class="custom-option" style="text-align: left; justify-content: flex-start;">
+                                        <input type="radio" name="branch-manager" value="amit" checked> Amit Sharma
+                                    </label>
+                                    <label class="custom-option" style="text-align: left; justify-content: flex-start;">
+                                        <input type="radio" name="branch-manager" value="rahul"> Rahul Verma
+                                    </label>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobile-number">Mobile Number *</label>
+                            <div class="input-with-prefix">
+                                <span class="prefix">+91</span>
+                                <input type="text" id="mobile-number" name="mobile-number" value="9876543210" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email-id">Email ID</label>
+                            <input type="text" id="email-id" name="email-id" value="amit@logco.in">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address-line-1">Address Line 1</label>
+                            <input type="text" id="address-line-1" name="address-line-1" value="Unit 4, Logistics Park, MIDC">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address-line-2">Address Line 2</label>
+                            <input type="text" id="address-line-2" name="address-line-2" value="Andheri East">
+                        </div>
+
+                        <div class="form-row-3">
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <input type="text" id="city" name="city" value="Mumbai" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="state">State *</label>
+                                <input type="text" id="state" name="state" value="Maharashtra" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pin-code">Pin Code *</label>
+                                <input type="text" id="pin-code" name="pin-code" value="400069" required>
+                            </div>
+                        </div>
+
+                        <!-- GPS Geo-Fencing & Attendance Check-In Settings -->
+                        <div class="gps-geofence-section" style="grid-column: 1 / -1; margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--color-border);">
+                            <div class="geofence-header-row" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" style="color: var(--color-black); flex-shrink: 0;"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        <h3 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: var(--color-black);">GPS Geo-Fencing &amp; Mobile Check-In</h3>
+                                    </div>
+                                    <p style="margin: 2px 0 0 0; font-size: 0.75rem; color: #666;">Set branch geo-coordinates &amp; radius for employee mobile check-in validation.</p>
+                                </div>
+                                <button type="button" class="btn-secondary" id="btn-detect-gps" style="height: 30px; font-size: 0.75rem; padding: 0 10px; display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; white-space: nowrap;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                                    <span>Get Current Location</span>
+                                </button>
+                            </div>
+
+                            <div class="form-row-3 geofence-coords-grid" style="margin-bottom: 14px;">
+                                <div class="form-group">
+                                    <label for="branch-lat">Latitude (GPS) *</label>
+                                    <input type="text" id="branch-lat" name="branch-lat" value="19.1136" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="branch-lng">Longitude (GPS) *</label>
+                                    <input type="text" id="branch-lng" name="branch-lng" value="72.8697" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="geofence-radius">Check-In Allowed Radius *</label>
+                                    <div class="input-with-prefix" style="border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); display: flex; align-items: center; background: var(--color-white); height: 32px;">
+                                        <input type="number" id="geofence-radius" name="geofence-radius" value="200" min="50" max="5000" required style="border: none !important; padding-left: 10px; width: 100%;">
+                                        <span style="font-size: 0.75rem; font-weight: 600; color: #666; padding-right: 12px;">Meters</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-grid geofence-policy-grid">
+                                <div class="form-group">
+                                    <label for="out-of-range-policy">When Checked In Beyond Radius</label>
+                                    <select id="out-of-range-policy" name="out-of-range-policy" class="custom-select" style="width: 100%; height: 32px; font-size: 0.8125rem; border: 1px solid #8c8c8c; border-radius: var(--border-radius-base); outline: none; padding: 0 32px 0 10px; background-color: var(--color-white); cursor: pointer;">
+                                        <option value="wfh" selected>Auto-Mark as Work From Home (WFH)</option>
+                                        <option value="pending">Mark as Pending Admin Approval</option>
+                                        <option value="reject">Block Check-In (Strict On-Site Only)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Geo-Fencing Status</label>
+                                    <div style="display: flex; align-items: center; gap: 8px; min-height: 32px;">
+                                        <label class="status-toggle" style="margin-bottom: 0;">
+                                            <input type="checkbox" id="geofence-enabled" checked>
+                                            <div class="toggle-switch"></div>
+                                        </label>
+                                        <span style="font-size: 0.8125rem; font-weight: 500; color: var(--color-black);">Enforce GPS validation for this branch</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../Design System/dropdown.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const detectBtn = document.getElementById('btn-detect-gps');
+            if (detectBtn) {
+                detectBtn.addEventListener('click', () => {
+                    if ("geolocation" in navigator) {
+                        detectBtn.disabled = true;
+                        detectBtn.innerHTML = `<span>Detecting...</span>`;
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                document.getElementById('branch-lat').value = position.coords.latitude.toFixed(4);
+                                document.getElementById('branch-lng').value = position.coords.longitude.toFixed(4);
+                                detectBtn.disabled = false;
+                                detectBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg><span>Get Current Location</span>`;
+                            },
+                            (error) => {
+                                document.getElementById('branch-lat').value = "19.0760";
+                                document.getElementById('branch-lng').value = "72.8777";
+                                detectBtn.disabled = false;
+                                detectBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg><span>Get Current Location</span>`;
+                            }
+                        );
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

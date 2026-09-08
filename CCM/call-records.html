@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Call Records — CCM | Logistics Management Platform</title>
+    <title>Call Records . CCM | Logistics Management Platform</title>
     <!-- Design System Global & Components CSS -->
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
@@ -154,15 +154,60 @@
             background-color: var(--color-bg-light, #f8fafc) !important;
         }
         .main-call-records-table th:first-child, .main-call-records-table td:first-child { width: 9% !important; white-space: nowrap; }
-        .main-call-records-table th:nth-child(2), .main-call-records-table td:nth-child(2) { width: 14% !important; white-space: nowrap; }
+        .main-call-records-table th:nth-child(2), .main-call-records-table td:nth-child(2) { width: 13% !important; white-space: nowrap; }
         .main-call-records-table th:nth-child(3), .main-call-records-table td:nth-child(3) { width: 16% !important; white-space: nowrap; }
-        .main-call-records-table th:nth-child(4), .main-call-records-table td:nth-child(4) { width: 9% !important; white-space: nowrap; }
-        .main-call-records-table th:nth-child(5), .main-call-records-table td:nth-child(5) { width: 8% !important; white-space: nowrap; }
-        .main-call-records-table th:nth-child(6), .main-call-records-table td:nth-child(6) { width: 12% !important; white-space: nowrap; }
-        .main-call-records-table th:nth-child(7), .main-call-records-table td:nth-child(7) { width: 8% !important; white-space: nowrap; }
-        .main-call-records-table th:nth-child(8), .main-call-records-table td:nth-child(8) { width: 12% !important; white-space: nowrap; }
+        .main-call-records-table th:nth-child(4), .main-call-records-table td:nth-child(4) { width: 12% !important; white-space: nowrap; }
+        .main-call-records-table th:nth-child(5), .main-call-records-table td:nth-child(5) { width: 9% !important; white-space: nowrap; }
+        .main-call-records-table th:nth-child(6), .main-call-records-table td:nth-child(6) { width: 14% !important; white-space: nowrap; }
+        .main-call-records-table th:nth-child(7), .main-call-records-table td:nth-child(7) { width: 7% !important; white-space: nowrap; }
+        .main-call-records-table th:nth-child(8), .main-call-records-table td:nth-child(8) { width: 13% !important; white-space: nowrap; }
         .main-call-records-table th:nth-child(9), .main-call-records-table td:nth-child(9) { width: 8% !important; white-space: nowrap; }
-        .main-call-records-table th:nth-child(10), .main-call-records-table td:nth-child(10) { width: 50px !important; text-align: right !important; white-space: nowrap; }
+        .main-call-records-table th:nth-child(10), .main-call-records-table td:nth-child(10) { width: 45px !important; text-align: right !important; white-space: nowrap; }
+
+        /* Handled By Role Badges */
+        .staff-role-badge {
+            display: inline-block;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: #475569;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 3px;
+            padding: 1px 5px;
+            margin-top: 2px;
+            line-height: 1.2;
+        }
+        .staff-role-badge.role-agent {
+            color: #0f172a;
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+        .staff-role-badge.role-pickup {
+            color: #1e40af;
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+        .staff-role-badge.role-delivery {
+            color: #065f46;
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+        }
+
+        /* Masked / Proxy Calling Indicator (CCM-9) */
+        .proxy-call-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: #475569;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 1px 5px;
+            margin-top: 3px;
+            white-space: nowrap;
+        }
 
         /* Call Type Badges */
         .badge-type-inbound {
@@ -381,18 +426,31 @@
             border-bottom-color: var(--color-black);
         }
 
-        /* Radio Pill Cards */
+                .call-card-view-details-btn {
+            display: none;
+        }
+        .call-card-mobile-type {
+            display: none;
+        }
+        .call-card-recording-label {
+            display: none;
+        }
+        .call-card-recording-actions .rec-download-btn span {
+            display: none;
+        }
+
+        /* Radio Pill Cards (Compact Design) */
         .radio-policy-card {
-            flex: 1;
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            padding: 12px 14px;
-            border: 1px solid var(--color-border);
+            gap: 8px;
+            padding: 9px 12px;
+            border: 1.5px solid var(--color-border);
             border-radius: var(--border-radius-base);
             background: var(--color-white);
             cursor: pointer;
             transition: all 0.15s ease;
+            box-sizing: border-box;
         }
         .radio-policy-card:hover {
             border-color: #94a3b8;
@@ -405,6 +463,377 @@
             border-color: var(--color-black);
             background: #f8fafc;
         }
+        /* Default: Mobile cards container hidden on desktop */
+        .mobile-call-records-list {
+            display: none;
+        }
+
+        /* ==========================================================
+           COMPREHENSIVE MOBILE RESPONSIVE SYSTEM FOR CALL RECORDS (<=768px)
+           ========================================================== */
+        @media (max-width: 768px) {
+            /* 1. Page Header & Tabs */
+            .page-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                margin-bottom: 12px !important;
+            }
+
+            .page-title {
+                font-size: 1.1875rem !important;
+                line-height: 1.25 !important;
+                margin-bottom: 2px !important;
+            }
+
+            .page-subtitle {
+                font-size: 0.8125rem !important;
+                line-height: 1.4 !important;
+                color: #64748b !important;
+                word-break: normal !important;
+                overflow-wrap: break-word !important;
+            }
+
+            .header-actions {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+
+            .header-actions > [style*="display: none"],
+            .header-actions > [style*="display:none"],
+            #call-mgmt-header-actions[style*="display: none"],
+            #call-mgmt-header-actions[style*="display:none"],
+            #call-config-header-actions[style*="display: none"],
+            #call-config-header-actions[style*="display:none"] {
+                display: none !important;
+            }
+
+            #call-mgmt-header-actions:not([style*="display: none"]):not([style*="display:none"]) {
+                width: 100% !important;
+                display: flex !important;
+            }
+
+            #call-config-header-actions:not([style*="display: none"]):not([style*="display:none"]) {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+
+            #call-config-header-actions > button {
+                flex: 1 1 0% !important;
+                height: 36px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            .ccm-tab-bar {
+                display: flex !important;
+                width: 100% !important;
+                gap: 0 !important;
+                border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
+                margin-bottom: 14px !important;
+            }
+
+            .ccm-tab-btn {
+                flex: 1 !important;
+                padding: 10px 12px !important;
+                font-size: 0.8125rem !important;
+                text-align: center !important;
+                justify-content: center !important;
+            }
+
+            /* 2. Full-Width Stacked Filters Bar */
+            .filters-bar {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                margin-bottom: 14px !important;
+                padding-bottom: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .search-input-wrapper {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            .search-input {
+                width: 100% !important;
+                height: 38px !important;
+                box-sizing: border-box !important;
+                font-size: 0.8125rem !important;
+            }
+
+            .filters-bar .custom-select-wrapper {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                flex-shrink: 0 !important;
+            }
+
+            .filters-bar .custom-select-trigger {
+                width: 100% !important;
+                height: 36px !important;
+                padding: 0 12px !important;
+                font-size: 0.8125rem !important;
+                box-sizing: border-box !important;
+            }
+
+            .filters-bar .custom-select-options {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                z-index: 1050 !important;
+                left: 0 !important;
+                right: 0 !important;
+            }
+
+            /* 3. Hide Desktop Table on Mobile and Show Native Mobile Cards */
+            .table-container.ccm-desktop-table-container {
+                display: none !important;
+            }
+
+            .mobile-call-records-list {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Mobile Call Record Card Container */
+            .mobile-call-card {
+                background: #ffffff;
+                border: 1px solid var(--color-border, #e2e8f0);
+                border-radius: var(--border-radius-base, 6px);
+                padding: 14px 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            /* 1. Header: Call ID + Call Type Badge */
+            .mobile-card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .mobile-card-id {
+                font-family: monospace;
+                font-weight: 700;
+                font-size: 0.9375rem;
+                color: #1e40af;
+            }
+
+            .mobile-card-badge {
+                display: inline-flex;
+                align-items: center;
+            }
+
+            /* 2. Customer Section (Customer Name + Phone + Timestamp directly below) */
+            .mobile-card-customer-section {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                width: 100%;
+            }
+
+            .mobile-customer-name {
+                font-size: 0.9375rem;
+                font-weight: 700;
+                color: #0f172a;
+                line-height: 1.3;
+                text-decoration: none;
+            }
+
+            .mobile-customer-name:hover {
+                color: #1e40af;
+                text-decoration: underline;
+            }
+
+            .mobile-customer-phone {
+                font-family: monospace;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                color: #475569;
+            }
+
+            .mobile-call-timestamp {
+                font-size: 0.75rem;
+                color: #64748b;
+                margin-top: 2px;
+            }
+
+            /* 3. Compact Call Summary (Branch · Agent / Duration · Disposition) */
+            .mobile-card-summary {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                padding: 8px 0;
+                border-top: 1px solid #f1f5f9;
+                border-bottom: 1px solid #f1f5f9;
+                font-size: 0.8125rem;
+            }
+
+            .mobile-summary-row {
+                display: flex;
+                align-items: baseline;
+                flex-wrap: wrap;
+                gap: 6px;
+                line-height: 1.4;
+            }
+
+            .summary-item {
+                font-size: 0.8125rem;
+                color: #334155;
+            }
+
+            .branch-item {
+                font-weight: 600;
+                color: #0f172a;
+            }
+
+            .agent-item {
+                font-weight: 500;
+                color: #334155;
+            }
+
+            .duration-item {
+                font-family: monospace;
+                font-weight: 600;
+                color: #0f172a;
+            }
+
+            .disp-item {
+                color: #475569;
+                word-break: break-word;
+            }
+
+            .summary-dot {
+                color: #94a3b8;
+                font-weight: 700;
+                user-select: none;
+            }
+
+            /* 4. Action Area (Play, Download, View Details) */
+            .mobile-card-actions {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .mobile-card-btn {
+                height: 34px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                border-radius: var(--border-radius-base, 4px);
+                border: 1px solid #cbd5e1;
+                background: #ffffff;
+                color: #0f172a;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                text-decoration: none;
+                transition: all 0.15s ease;
+                box-sizing: border-box;
+            }
+
+            .mobile-card-btn:hover {
+                background: #f1f5f9;
+                border-color: #94a3b8;
+            }
+
+            .mobile-card-actions .rec-play-btn {
+                flex: 1;
+                background: #ffffff;
+                color: #0f172a;
+            }
+
+            .mobile-card-actions .rec-play-btn.playing {
+                background: #1e40af;
+                color: #ffffff;
+                border-color: #1e40af;
+            }
+
+            .mobile-card-actions .rec-download-btn {
+                width: 36px;
+                height: 34px;
+                padding: 0;
+                flex-shrink: 0;
+                background: #ffffff;
+                color: #475569;
+            }
+
+            .mobile-card-actions .rec-download-btn:hover {
+                color: #0f172a;
+            }
+
+            .mobile-card-actions .view-details-btn {
+                flex: 1.3;
+                background: #ffffff;
+                color: #0f172a;
+            }
+
+            .mobile-no-audio {
+                flex: 1;
+                font-size: 0.75rem;
+                color: #94a3b8;
+                font-style: italic;
+                display: flex;
+                align-items: center;
+            }
+
+            /* Responsive Pagination */
+            .pagination-bar {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 10px !important;
+                padding: 12px 4px !important;
+            }
+
+            .pagination-controls {
+                width: 100% !important;
+                justify-content: center !important;
+                gap: 8px !important;
+            }
+
+            .pagination-controls .page-btn {
+                flex: 1 !important;
+                max-width: 100px !important;
+                height: 34px !important;
+                font-size: 0.75rem !important;
+            }
+
+            /* Configuration Form Mobile View */
+            .config-section-card {
+                padding: 14px 12px !important;
+            }
+
+            .config-row {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+            }
+
+            .radio-group-horizontal {
+                flex-direction: column !important;
+                width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -416,10 +845,10 @@
     </label>
 
     <!-- Call Details Modal (for View action) -->
-    <div class="modal-overlay" id="overlay-view-call" style="display: none; padding: 24px 16px; box-sizing: border-box; align-items: center; justify-content: center; z-index: 2100;">
-        <div class="modal-content ccm-call-details-modal" style="position: relative; width: 540px; max-width: 95vw; max-height: calc(100vh - 48px); display: flex; flex-direction: column; padding: 0; text-align: left; box-sizing: border-box; overflow: hidden; border-radius: 8px !important; background-color: var(--color-white); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.25); border: 1px solid var(--color-border);">
+    <div class="modal-overlay" id="overlay-view-call" style="display: none; padding: 20px 16px; box-sizing: border-box; align-items: center; justify-content: center; z-index: 2100;">
+        <div class="ccm-call-details-modal" style="position: relative; width: 540px; max-width: 95vw; max-height: calc(100vh - 40px); display: flex; flex-direction: column; padding: 0 !important; text-align: left; box-sizing: border-box; overflow: hidden; border-radius: 8px !important; background-color: var(--color-white); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.3); border: 1px solid var(--color-border);">
             <!-- Modal Header -->
-            <div style="padding: 16px 20px; border-bottom: 1px solid var(--color-border); position: relative; flex-shrink: 0; background: var(--color-white); display: flex; justify-content: space-between; align-items: center;">
+            <div style="padding: 16px 20px; border-bottom: 1px solid var(--color-border); position: relative; flex-shrink: 0; background: var(--color-white); display: flex; justify-content: space-between; align-items: center; border-top-left-radius: 8px; border-top-right-radius: 8px;">
                 <div>
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <h3 class="modal-title" id="view-call-title" style="font-size: 1.0625rem; font-weight: 700; color: var(--color-black); margin: 0;">Call Record Details</h3>
@@ -427,18 +856,18 @@
                     </div>
                     <p class="modal-desc" id="view-call-id-subtitle" style="font-family: monospace; font-size: 0.8125rem; color: #64748b; margin: 2px 0 0;"></p>
                 </div>
-                <button type="button" class="modal-close-label" onclick="closeViewCallModal()" title="Close" style="border: none; background: none; cursor: pointer; padding: 4px; border-radius: 4px;">
+                <button type="button" onclick="closeViewCallModal()" title="Close" style="border: none; background: transparent; cursor: pointer; padding: 4px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; color: #64748b; transition: color 0.15s ease;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
 
             <!-- Modal Body (Scrollable Info Grid) -->
-            <div class="ccm-modal-body" style="padding: 16px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; font-size: 0.8125rem;">
+            <div class="ccm-modal-body" style="padding: 16px 20px 20px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; font-size: 0.8125rem; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
                 <!-- 1. Caller & Customer Master Information -->
                 <div style="background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 6px; padding: 12px 14px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                         <strong style="font-size: 0.875rem; color: var(--color-black);" id="view-call-cust-name"></strong>
-                        <span class="badge" id="view-call-cust-type-badge" style="background: #ffffff; border: 1px solid #cbd5e1; color: #0f172a; font-weight: 600; font-size: 0.75rem;"></span>
+                        <span class="badge" id="view-call-cust-type-badge" style="background: var(--color-white); border: 1px solid var(--color-border); color: var(--color-black); font-weight: 600; font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; display: inline-flex; align-items: center;"></span>
                     </div>
                     <div style="color: #475569; display: flex; gap: 16px; font-size: 0.8125rem;">
                         <div>Phone: <strong id="view-call-cust-phone" style="color: #0f172a;"></strong></div>
@@ -456,14 +885,21 @@
                         <strong id="view-call-branch" style="color: #0f172a;"></strong>
                     </div>
                     <div>
-                        <span style="color: #64748b; display: block; font-size: 0.75rem;">Assigned Agent</span>
-                        <strong id="view-call-agent" style="color: #0f172a;"></strong>
+                        <span style="color: #64748b; display: block; font-size: 0.75rem;">Handled By</span>
+                        <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                            <strong id="view-call-handled-by" style="color: #0f172a;"></strong>
+                            <span id="view-call-role-badge"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <span style="color: #64748b; display: block; font-size: 0.75rem;">Call Mode</span>
+                        <div id="view-call-mode" style="margin-top: 2px;"></div>
                     </div>
                     <div>
                         <span style="color: #64748b; display: block; font-size: 0.75rem;">Duration</span>
                         <strong id="view-call-duration" style="color: #0f172a; font-family: monospace;"></strong>
                     </div>
-                    <div style="grid-column: span 2;">
+                    <div>
                         <span style="color: #64748b; display: block; font-size: 0.75rem;">Disposition</span>
                         <strong id="view-call-disposition" style="color: #0f172a;"></strong>
                     </div>
@@ -494,11 +930,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Modal Footer -->
-            <div style="padding: 12px 20px; border-top: 1px solid var(--color-border); background: var(--color-bg-light); display: flex; justify-content: flex-end; gap: 8px; flex-shrink: 0; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
-                <button type="button" class="btn-secondary" onclick="closeViewCallModal()" style="height: 32px; padding: 0 16px; font-size: 0.8125rem; border-radius: var(--border-radius-base, 6px);">Close</button>
-            </div>
         </div>
     </div>
 
@@ -518,16 +949,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -735,14 +1156,14 @@
                 <div id="tab-panel-records" class="ccm-page-section" style="display: block;">
 
                     <!-- Filters & Search Bar in ONE horizontal row -->
-                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 12px; align-items: center; width: 100%; flex-wrap: nowrap;">
-                        <div class="search-input-wrapper" style="flex: 1; min-width: 320px;">
+                    <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; display: flex; gap: 8px; align-items: center; width: 100%; flex-wrap: nowrap;">
+                        <div class="search-input-wrapper" style="flex: 1; min-width: 200px;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <input type="text" id="call-search-input" class="search-input" placeholder="Search by Customer Name, Phone Number, or Call ID..." oninput="filterCallRecordsTable()">
                         </div>
 
                         <!-- 1. All Branches Filter Dropdown -->
-                        <details class="custom-select-wrapper" id="filter-branch-details" style="min-width: 160px; width: 160px; flex-shrink: 0;">
+                        <details class="custom-select-wrapper" id="filter-branch-details" style="min-width: 140px; width: 140px; flex-shrink: 0;">
                             <summary class="custom-select-trigger" id="filter-branch-trigger" style="height: 32px;">
                                 <span class="trigger-label" id="filter-branch-label">All Branches</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -771,7 +1192,7 @@
                         </details>
 
                         <!-- 2. All Call Types Filter Dropdown -->
-                        <details class="custom-select-wrapper" id="filter-type-details" style="min-width: 150px; width: 150px; flex-shrink: 0;">
+                        <details class="custom-select-wrapper" id="filter-type-details" style="min-width: 130px; width: 130px; flex-shrink: 0;">
                             <summary class="custom-select-trigger" id="filter-type-trigger" style="height: 32px;">
                                 <span class="trigger-label" id="filter-type-label">All Call Types</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -784,36 +1205,55 @@
                             </div>
                         </details>
 
-                        <!-- 3. All Agents Filter Dropdown (Multi-Select with Search) -->
-                        <details class="custom-select-wrapper" id="filter-agent-details" style="min-width: 160px; width: 160px; flex-shrink: 0;">
-                            <summary class="custom-select-trigger" id="filter-agent-trigger" style="height: 32px;">
-                                <span class="trigger-label" id="filter-agent-label">All Agents</span>
+                        <!-- 3. Staff Role Filter Dropdown (Agents, Pickup Persons, Delivery Staff) -->
+                        <details class="custom-select-wrapper" id="filter-role-details" style="min-width: 135px; width: 135px; flex-shrink: 0;">
+                            <summary class="custom-select-trigger" id="filter-role-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-role-label">All Roles</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <div class="custom-select-options">
+                                <label class="custom-option" onclick="selectRoleFilter('all', 'All Roles')"><input type="radio" name="role-filter" value="all" checked> All Roles</label>
+                                <label class="custom-option" onclick="selectRoleFilter('Agent', 'Agents')"><input type="radio" name="role-filter" value="Agent"> Agents</label>
+                                <label class="custom-option" onclick="selectRoleFilter('Pickup Staff', 'Pickup Staff')"><input type="radio" name="role-filter" value="Pickup Staff"> Pickup Staff</label>
+                                <label class="custom-option" onclick="selectRoleFilter('Delivery Staff', 'Delivery Staff')"><input type="radio" name="role-filter" value="Delivery Staff"> Delivery Staff</label>
+                            </div>
+                        </details>
+
+                        <!-- 4. All Staff Filter Dropdown (Multi-Select with Search) -->
+                        <details class="custom-select-wrapper" id="filter-staff-details" style="min-width: 140px; width: 140px; flex-shrink: 0;">
+                            <summary class="custom-select-trigger" id="filter-staff-trigger" style="height: 32px;">
+                                <span class="trigger-label" id="filter-staff-label">All Staff</span>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </summary>
                             <div class="custom-select-options">
                                 <div class="custom-select-search">
                                     <div class="custom-select-search-wrapper" style="position: relative; display: flex; align-items: center;">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="position: absolute; left: 8px; color: #888; pointer-events: none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                        <input type="text" class="custom-select-search-input" placeholder="Search agent..." oninput="filterAgentDropdownOptions(this)" style="padding-left: 26px;">
+                                        <input type="text" class="custom-select-search-input" placeholder="Search staff..." oninput="filterStaffDropdownOptions(this)" style="padding-left: 26px;">
                                     </div>
                                 </div>
                                 <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;">
-                                    <input type="checkbox" id="agent-all-check" checked onchange="toggleAllAgents(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
-                                    <span style="font-weight: 600; color: var(--color-black);">All Agents</span>
+                                    <input type="checkbox" id="staff-all-check" checked onchange="toggleAllStaff(this)" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;">
+                                    <span style="font-weight: 600; color: var(--color-black);">All Staff</span>
                                 </label>
                                 <div style="height: 1px; background: var(--color-border); margin: 2px 0;"></div>
-                                <div id="filter-agent-list-items">
-                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="agent-filter-cb" value="Deepak Kumar" onchange="updateAgentSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Deepak Kumar</span></label>
-                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="agent-filter-cb" value="Priya Sharma" onchange="updateAgentSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Priya Sharma</span></label>
-                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="agent-filter-cb" value="Rahul Varma" onchange="updateAgentSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Rahul Varma</span></label>
-                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="agent-filter-cb" value="Ananya Iyer" onchange="updateAgentSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Ananya Iyer</span></label>
-                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="agent-filter-cb" value="Venkatesh Rao" onchange="updateAgentSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Venkatesh Rao</span></label>
+                                <div id="filter-staff-list-items">
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Deepak Kumar" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Deepak Kumar <small style="color: #64748b;">(Agent)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Ananya Iyer" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Ananya Iyer <small style="color: #64748b;">(Agent)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Rahul Varma" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Rahul Varma <small style="color: #64748b;">(Agent)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Kavya Nair" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Kavya Nair <small style="color: #64748b;">(Agent)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Ramesh Kumar" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Ramesh Kumar <small style="color: #64748b;">(Pickup Staff)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Suresh Patil" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Suresh Patil <small style="color: #64748b;">(Pickup Staff)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Vikram Singh" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Vikram Singh <small style="color: #64748b;">(Pickup Staff)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Venkatesh Rao" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Venkatesh Rao <small style="color: #64748b;">(Delivery Staff)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Manoj Kumar" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Manoj Kumar <small style="color: #64748b;">(Delivery Staff)</small></span></label>
+                                    <label class="custom-option" style="display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;"><input type="checkbox" class="staff-filter-cb" value="Pradeep Joshi" onchange="updateStaffSelection()" style="margin: 0; width: 14px; height: 14px; accent-color: var(--color-black); cursor: pointer;"> <span>Pradeep Joshi <small style="color: #64748b;">(Delivery Staff)</small></span></label>
                                 </div>
                             </div>
                         </details>
 
-                        <!-- 4. Date Filter with Custom Designed UI Calendar -->
-                        <details class="custom-select-wrapper" id="filter-date-details" style="min-width: 155px; width: 155px; flex-shrink: 0; position: relative;">
+                        <!-- 5. Date Filter with Custom Designed UI Calendar -->
+                        <details class="custom-select-wrapper" id="filter-date-details" style="min-width: 140px; width: 140px; flex-shrink: 0; position: relative;">
                             <summary class="custom-select-trigger" id="filter-date-trigger" style="height: 32px;">
                                 <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13" style="color: #64748b; flex-shrink: 0;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
@@ -853,7 +1293,7 @@
                         </details>
                     </div>
 
-                    <!-- Call Records Table Container (10 Columns strictly as specified) -->
+                    <!-- Call Records Desktop Table Container (10 Columns) -->
                     <div class="table-container ccm-desktop-table-container">
                         <table class="ccm-branches-table main-call-records-table" id="call-records-data-table">
                             <thead>
@@ -888,9 +1328,9 @@
                                             <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
                                         </div>
                                     </th>
-                                    <th class="sortable" onclick="sortCallsTable('agent')">
+                                    <th class="sortable" onclick="sortCallsTable('handledBy')">
                                         <div class="sort-header-content">
-                                            Agent
+                                            Handled By
                                             <span class="sort-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
                                         </div>
                                     </th>
@@ -926,27 +1366,32 @@
                         </div>
                     </div>
 
+                    <!-- Call Records Dedicated Mobile Cards Container (Shown only on <=768px) -->
+                    <div class="mobile-call-records-list" id="call-records-mobile-cards">
+                        <!-- Populated dynamically by renderCallRecords() -->
+                    </div>
+
                 </div>
 
                 <!-- TAB 2 PANEL: Configuration (Dedicated Recording Retention Configuration) -->
                 <div id="tab-panel-config" class="ccm-page-section" style="display: none; width: 100%;">
 
-                    <!-- RECORDING RETENTION CONFIGURATION CARD -->
-                    <div class="section-card">
-                        <div class="section-header">
+                    <!-- RECORDING RETENTION CONFIGURATION CARD (FULL WIDTH) -->
+                    <div class="section-card" style="padding: 16px 20px; width: 100%; box-sizing: border-box;">
+                        <div class="section-header" style="margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--color-border);">
                             <div>
-                                <h3 class="section-title">Recording Retention</h3>
-                                <p class="section-helper">Configure the retention policy for historical call recordings.</p>
+                                <h3 class="section-title" style="font-size: 0.875rem; font-weight: 700; margin: 0;">Recording Retention</h3>
+                                <p class="section-helper" style="font-size: 0.75rem; margin-top: 3px; color: #64748b;">Configure the retention policy for historical call recordings.</p>
                             </div>
                         </div>
 
-                        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
                             <!-- Retention Policy Section -->
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label style="font-weight: 700; color: var(--color-black); margin-bottom: 8px; font-size: 0.8125rem; display: block;">Retention Policy *</label>
-                                <div style="display: flex; gap: 14px; max-width: 680px; flex-wrap: wrap;">
+                            <div class="form-group" style="margin-bottom: 0; width: 100%;">
+                                <label style="font-weight: 700; color: var(--color-black); margin-bottom: 8px; font-size: 0.75rem; display: block;">Retention Policy *</label>
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100%;">
                                     <!-- Rolling Policy Card -->
-                                    <label class="radio-policy-card">
+                                    <label class="radio-policy-card" style="padding: 12px 16px;">
                                         <input type="radio" name="cfg-retention-policy" value="Rolling" checked style="accent-color: var(--color-black); margin-top: 2px; cursor: pointer;">
                                         <div class="policy-card-body">
                                             <div class="policy-title" style="font-weight: 700; font-size: 0.8125rem; color: var(--color-black);">Rolling</div>
@@ -954,7 +1399,7 @@
                                         </div>
                                     </label>
                                     <!-- FIFO Policy Card -->
-                                    <label class="radio-policy-card">
+                                    <label class="radio-policy-card" style="padding: 12px 16px;">
                                         <input type="radio" name="cfg-retention-policy" value="FIFO" style="accent-color: var(--color-black); margin-top: 2px; cursor: pointer;">
                                         <div class="policy-card-body">
                                             <div class="policy-title" style="font-weight: 700; font-size: 0.8125rem; color: var(--color-black);">FIFO (First-In, First-Out)</div>
@@ -962,7 +1407,7 @@
                                         </div>
                                     </label>
                                 </div>
-                                <div class="config-input-hint" style="margin-top: 10px;">
+                                <div class="config-input-hint" style="margin-top: 10px; font-size: 0.75rem; color: #94a3b8;">
                                     Historical call recordings are managed according to the selected Rolling or FIFO retention policy.
                                 </div>
                             </div>
@@ -974,95 +1419,199 @@
             </div>
         </main>
     </div>
-
     <!-- Page Logic -->
     <script>
-        // Sample Realistic Call Records Data
+        // Sample Realistic Call Records Data (CCM-5, CCM-9, CCM-10)
         const sampleCallRecords = [
             {
                 id: 'CALL-9821',
-                timestamp: 'Sep 3, 2026 • 10:15 AM',
+                timestamp: 'Sep 3, 2026 - 10:45 AM',
                 date: '2026-09-03',
-                customerName: 'Rajesh Kumar',
+                customerName: 'Suresh Reddy',
                 customerId: 'CUST-1001',
-                phone: '+91 98765 43210',
+                phone: '+91 98480 12345',
                 customerType: 'Business',
-                type: 'Inbound',
+                type: 'Outbound',
+                isProxy: false,
                 branch: 'Bengaluru',
-                agent: 'Deepak Kumar',
+                handledBy: 'Deepak Kumar',
+                role: 'Agent',
                 duration: '03:42',
                 disposition: 'Shipment Inquiry Resolved',
                 hasRecording: true,
                 recFile: 'CALL-REC-9821.mp3',
-                context: 'Customer queried about express delivery status of shipment SHP-5521. Milestone confirmed on-schedule.'
+                context: 'Customer queried about express delivery status of shipment LR-BLR-84920. Milestone confirmed on-schedule.'
             },
             {
                 id: 'CALL-9440',
-                timestamp: 'Sep 3, 2026 • 09:30 AM',
+                timestamp: 'Sep 3, 2026 - 09:30 AM',
                 date: '2026-09-03',
                 customerName: 'Priya Sharma',
                 customerId: 'CUST-1002',
                 phone: '+91 99887 65432',
                 customerType: 'Business',
-                type: 'Inbound',
-                branch: 'Mumbai',
-                agent: 'Priya Sharma',
-                duration: '05:15',
-                disposition: 'Lead Created (LEAD-8210)',
+                type: 'Outbound',
+                isProxy: true,
+                branch: 'Bengaluru',
+                handledBy: 'Ramesh Kumar',
+                role: 'Pickup Staff',
+                duration: '02:18',
+                disposition: null,
                 hasRecording: true,
                 recFile: 'CALL-REC-9440.mp3',
-                context: 'Inquiry regarding 50T multi-modal freight route from Mumbai to Delhi. Lead recorded and quote pending.'
+                context: 'Pickup coordination for 12 carton consignments at Electronic City warehouse. Masked proxy call routing used (CCM-9).'
             },
             {
                 id: 'CALL-9102',
-                timestamp: 'Sep 2, 2026 • 04:20 PM',
+                timestamp: 'Sep 2, 2026 - 04:20 PM',
                 date: '2026-09-02',
-                customerName: 'Suresh Reddy',
+                customerName: 'Anil Verma',
                 customerId: 'CUST-1003',
-                phone: '+91 98480 12345',
+                phone: '+91 98100 56789',
                 customerType: 'Individual',
                 type: 'Outbound',
+                isProxy: true,
                 branch: 'Hyderabad',
-                agent: 'Rahul Varma',
-                duration: '02:18',
-                disposition: 'Follow-up Completed',
+                handledBy: 'Venkatesh Rao',
+                role: 'Delivery Staff',
+                duration: '04:05',
+                disposition: null,
                 hasRecording: true,
                 recFile: 'CALL-REC-9102.mp3',
-                context: 'Outbound callback to confirm updated dispatch schedule for warehousing bay allocation.'
+                context: 'Outbound masked proxy call to coordinate delivery gate access and OTP confirmation at Gachibowli hub (CCM-9).'
             },
             {
                 id: 'CALL-8845',
-                timestamp: 'Sep 2, 2026 • 02:40 PM',
+                timestamp: 'Sep 2, 2026 - 02:40 PM',
                 date: '2026-09-02',
-                customerName: 'Anil Verma',
+                customerName: 'Rajesh Gupta',
                 customerId: 'CUST-1004',
-                phone: '+91 98100 56789',
+                phone: '+91 98220 34567',
                 customerType: 'Business',
                 type: 'Inbound',
+                isProxy: false,
                 branch: 'Delhi',
-                agent: 'Ananya Iyer',
-                duration: '04:05',
+                handledBy: 'Ananya Iyer',
+                role: 'Agent',
+                duration: '05:10',
                 disposition: 'Ticket Created (TCK-7104)',
                 hasRecording: true,
                 recFile: 'CALL-REC-8845.mp3',
-                context: 'Damaged container reported during transit on corridor NH-48. Ticket escalated for insurance review.'
+                context: 'Container seal verification requested for corridor NH-48 consignment. Support ticket logged for audit.'
             },
             {
                 id: 'CALL-8610',
-                timestamp: 'Sep 2, 2026 • 11:15 AM',
+                timestamp: 'Sep 2, 2026 - 11:15 AM',
                 date: '2026-09-02',
                 customerName: 'Kavya Nair',
                 customerId: 'CUST-1005',
                 phone: '+91 98950 24680',
                 customerType: 'Individual',
                 type: 'Missed',
+                isProxy: false,
                 branch: 'Chennai',
-                agent: 'Venkatesh Rao',
+                handledBy: 'Rahul Varma',
+                role: 'Agent',
                 duration: '00:00',
                 disposition: 'Missed / Abandoned in Queue',
                 hasRecording: false,
                 recFile: null,
-                context: 'Caller waited 45s in Support Queue and abandoned before agent answered. Automatic callback logged.'
+                context: 'Caller waited in Support Queue and abandoned before agent answered. Automatic callback logged.'
+            },
+            {
+                id: 'CALL-8320',
+                timestamp: 'Sep 1, 2026 - 03:50 PM',
+                date: '2026-09-01',
+                customerName: 'Vikram Singh',
+                customerId: 'CUST-1006',
+                phone: '+91 97330 98123',
+                customerType: 'Business',
+                type: 'Outbound',
+                isProxy: true,
+                branch: 'Mumbai',
+                handledBy: 'Suresh Patil',
+                role: 'Pickup Staff',
+                duration: '01:45',
+                disposition: null,
+                hasRecording: true,
+                recFile: 'CALL-REC-8320.mp3',
+                context: 'Proxy masked call to verify dock readiness for bulk textile pickup at Bhiwandi terminal.'
+            },
+            {
+                id: 'CALL-8105',
+                timestamp: 'Sep 1, 2026 - 01:25 PM',
+                date: '2026-09-01',
+                customerName: 'Arjun Mehta',
+                customerId: 'CUST-1007',
+                phone: '+91 98765 43210',
+                customerType: 'Individual',
+                type: 'Outbound',
+                isProxy: true,
+                branch: 'Bengaluru',
+                handledBy: 'Manoj Kumar',
+                role: 'Delivery Staff',
+                duration: '03:15',
+                disposition: null,
+                hasRecording: true,
+                recFile: 'CALL-REC-8105.mp3',
+                context: 'Outbound proxy call for doorstep delivery gate OTP verification in Whitefield sector.'
+            },
+            {
+                id: 'CALL-7940',
+                timestamp: 'Aug 31, 2026 - 04:10 PM',
+                date: '2026-08-31',
+                customerName: 'Sneha Patel',
+                customerId: 'CUST-1008',
+                phone: '+91 99123 45678',
+                customerType: 'Individual',
+                type: 'Inbound',
+                isProxy: true,
+                branch: 'Pune',
+                handledBy: 'Pradeep Joshi',
+                role: 'Delivery Staff',
+                duration: '02:40',
+                disposition: null,
+                hasRecording: true,
+                recFile: 'CALL-REC-7940.mp3',
+                context: 'Inbound masked proxy call from recipient directing driver to warehouse gate 4 loading bay.'
+            },
+            {
+                id: 'CALL-7810',
+                timestamp: 'Aug 31, 2026 - 10:20 AM',
+                date: '2026-08-31',
+                customerName: 'Kunal Kapoor',
+                customerId: 'CUST-1009',
+                phone: '+91 98111 22334',
+                customerType: 'Business',
+                type: 'Inbound',
+                isProxy: true,
+                branch: 'Delhi',
+                handledBy: 'Vikram Singh',
+                role: 'Pickup Staff',
+                duration: '04:12',
+                disposition: null,
+                hasRecording: true,
+                recFile: 'CALL-REC-7810.mp3',
+                context: 'Inbound proxy masked call from shipper dispatch manager confirming pallet count and weight slips.'
+            },
+            {
+                id: 'CALL-7650',
+                timestamp: 'Aug 30, 2026 - 03:15 PM',
+                date: '2026-08-30',
+                customerName: 'Meera Nambiar',
+                customerId: 'CUST-1010',
+                phone: '+91 98450 67890',
+                customerType: 'Business',
+                type: 'Inbound',
+                isProxy: false,
+                branch: 'Chennai',
+                handledBy: 'Kavya Nair',
+                role: 'Agent',
+                duration: '06:30',
+                disposition: 'Rate Tariff Query Resolved',
+                hasRecording: true,
+                recFile: 'CALL-REC-7650.mp3',
+                context: 'Inbound query regarding FTL freight rates and GST invoicing for coastal transit.'
             }
         ];
 
@@ -1071,7 +1620,8 @@
         let playSeconds = 0;
 
         let currentTypeFilter = 'all';
-        let currentAgentFilter = 'all';
+        let currentRoleFilter = 'all'; // 'all', 'Agent', 'Pickup Staff', 'Delivery Staff'
+        let currentStaffFilter = 'all';
         let currentDateFilter = 'all'; // 'all', 'today', 'yesterday', or 'YYYY-MM-DD'
         let currentSort = { column: 'id', order: 'desc' };
 
@@ -1091,37 +1641,39 @@
         });
 
         function renderCallRecords() {
-            const searchVal = (document.getElementById('call-search-input')?.value || '').toLowerCase().trim();
             const tbody = document.getElementById('call-records-table-body');
-            if (!tbody) return;
+            const mobileCardsContainer = document.getElementById('call-records-mobile-cards');
+            const searchVal = (document.getElementById('call-search-input')?.value || '').toLowerCase().trim();
 
-            // Selected Branches
-            const checkedBranchNodes = document.querySelectorAll('.branch-filter-cb:checked');
-            const selectedBranches = Array.from(checkedBranchNodes).map(cb => cb.value);
-            const allBranchChecked = document.getElementById('branch-all-check')?.checked;
+            const allBranchesChecked = document.getElementById('branch-all-check')?.checked;
+            const branchCheckboxes = document.querySelectorAll('.branch-filter-cb:checked');
+            const selectedBranches = Array.from(branchCheckboxes).map(cb => cb.value);
 
-            // Selected Agents
-            const checkedAgentNodes = document.querySelectorAll('.agent-filter-cb:checked');
-            const selectedAgents = Array.from(checkedAgentNodes).map(cb => cb.value);
-            const allAgentChecked = document.getElementById('agent-all-check')?.checked;
+            const allStaffChecked = document.getElementById('staff-all-check')?.checked;
+            const staffCheckboxes = document.querySelectorAll('.staff-filter-cb:checked');
+            const selectedStaff = Array.from(staffCheckboxes).map(cb => cb.value);
 
             const filtered = sampleCallRecords.filter(c => {
                 // Search filter
                 const matchesSearch = !searchVal || 
                     c.id.toLowerCase().includes(searchVal) ||
-                    (c.customerName && c.customerName.toLowerCase().includes(searchVal)) ||
-                    (c.phone && c.phone.toLowerCase().includes(searchVal)) ||
-                    (c.agent && c.agent.toLowerCase().includes(searchVal)) ||
-                    (c.disposition && c.disposition.toLowerCase().includes(searchVal));
-                
-                // Branch filter
-                const matchesBranch = allBranchChecked || selectedBranches.length === 0 || selectedBranches.includes(c.branch);
+                    c.customerName.toLowerCase().includes(searchVal) ||
+                    c.phone.toLowerCase().includes(searchVal) ||
+                    c.handledBy.toLowerCase().includes(searchVal) ||
+                    c.role.toLowerCase().includes(searchVal) ||
+                    c.branch.toLowerCase().includes(searchVal);
+
+                // Branch filter (multi-select)
+                const matchesBranch = allBranchesChecked || selectedBranches.length === 0 || selectedBranches.includes(c.branch);
 
                 // Type filter
-                const matchesType = (currentTypeFilter === 'all') || (c.type === currentTypeFilter);
+                const matchesType = (currentTypeFilter === 'all' || c.type === currentTypeFilter);
 
-                // Agent filter (multi-select)
-                const matchesAgent = allAgentChecked || selectedAgents.length === 0 || selectedAgents.includes(c.agent);
+                // Staff Role filter (Agents, Pickup Staff, Delivery Staff)
+                const matchesRole = (currentRoleFilter === 'all' || c.role === currentRoleFilter);
+
+                // Staff member filter (multi-select across individual names)
+                const matchesStaff = allStaffChecked || selectedStaff.length === 0 || selectedStaff.includes(c.handledBy);
 
                 // Date filter
                 let matchesDate = true;
@@ -1135,97 +1687,197 @@
                     matchesDate = (c.date === currentDateFilter);
                 }
 
-                return matchesSearch && matchesBranch && matchesType && matchesAgent && matchesDate;
+                return matchesSearch && matchesBranch && matchesType && matchesRole && matchesStaff && matchesDate;
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="10" style="text-align: center; padding: 32px; color: #64748b;">
+                if (tbody) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="10" style="text-align: center; padding: 32px; color: #64748b;">
+                                No call records match your search or filter criteria.
+                            </td>
+                        </tr>
+                    `;
+                }
+                if (mobileCardsContainer) {
+                    mobileCardsContainer.innerHTML = `
+                        <div style="text-align: center; padding: 32px 16px; color: #64748b; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px;">
                             No call records match your search or filter criteria.
-                        </td>
-                    </tr>
-                `;
+                        </div>
+                    `;
+                }
                 document.getElementById('call-pagination-info').textContent = 'Showing 0-0 of 0';
                 return;
             }
 
-            tbody.innerHTML = filtered.map(c => {
-                // Type badge
-                let typeBadge = '';
-                if (c.type === 'Inbound') {
-                    typeBadge = '<span class="badge-type-inbound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Inbound</span>';
-                } else if (c.type === 'Outbound') {
-                    typeBadge = '<span class="badge-type-outbound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="17 14 12 9 7 14"></polyline><line x1="12" y1="9" x2="12" y2="21"></line></svg>Outbound</span>';
-                } else {
-                    typeBadge = '<span class="badge-type-missed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Missed</span>';
-                }
+            // 1. RENDER DESKTOP TABLE ROWS (Clean 10-Column Desktop Table)
+            if (tbody) {
+                tbody.innerHTML = filtered.map(c => {
+                    let typeBadge = '';
+                    if (c.type === 'Inbound') {
+                        typeBadge = '<span class="badge-type-inbound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Inbound</span>';
+                    } else if (c.type === 'Outbound') {
+                        typeBadge = '<span class="badge-type-outbound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="17 14 12 9 7 14"></polyline><line x1="12" y1="9" x2="12" y2="21"></line></svg>Outbound</span>';
+                    } else {
+                        typeBadge = '<span class="badge-type-missed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Missed</span>';
+                    }
 
-                // Recording Action Cell
-                let recHtml = '';
-                if (c.hasRecording) {
-                    const isPlaying = (currentActivePlayingId === c.id);
-                    recHtml = `
-                        <div style="display: flex; align-items: center; gap: 6px;">
-                            <button type="button" class="rec-play-btn ${isPlaying ? 'playing' : ''}" onclick="toggleInlinePlayback('${escapeHtml(c.id)}', this)" title="${isPlaying ? 'Pause Recording' : 'Play Recording'}">
-                                <svg viewBox="0 0 24 24" fill="${isPlaying ? '#fff' : 'currentColor'}" width="10" height="10">
-                                    ${isPlaying ? '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>' : '<polygon points="5 3 19 12 5 21 5 3"></polygon>'}
-                                </svg>
-                                <span>${isPlaying ? 'Playing...' : 'Play'}</span>
-                            </button>
-                            <button type="button" class="rec-download-btn" onclick="downloadCallRec('${escapeHtml(c.id)}', '${escapeHtml(c.recFile)}')" title="Download Recording (.mp3)">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </button>
-                        </div>
-                    `;
-                } else {
-                    recHtml = `<span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">No Audio</span>`;
-                }
-
-                return `
-                    <tr data-id="${escapeHtml(c.id)}">
-                        <td style="font-family: monospace; font-weight: 700; color: #1e40af;">
-                            ${escapeHtml(c.id)}
-                        </td>
-                        <td style="font-family: monospace; font-size: 0.75rem; color: #475569;">
-                            ${escapeHtml(c.timestamp)}
-                        </td>
-                        <td>
-                            <div style="font-weight: 600;">
-                                <a href="customer-360.html?id=${escapeHtml(c.customerId || 'CUST-1001')}" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
-                                    ${escapeHtml(c.customerName)}
-                                </a>
+                    // Masked / Proxy Call Tag (CCM-9)
+                    let proxyTag = '';
+                    if (c.isProxy) {
+                        proxyTag = `
+                            <div class="proxy-call-tag" title="CCM-9 Masked/Proxy Call: Staff phone number is protected">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                Masked / Proxy
                             </div>
-                            <div style="font-family: monospace; font-size: 0.75rem; color: #64748b;">${escapeHtml(c.phone)}</div>
-                        </td>
-                        <td>
-                            ${typeBadge}
-                        </td>
-                        <td>
-                            ${escapeHtml(c.branch)}
-                        </td>
-                        <td style="font-weight: 500;">
-                            ${escapeHtml(c.agent)}
-                        </td>
-                        <td style="font-family: monospace; font-weight: 600; color: #0f172a;">
-                            ${escapeHtml(c.duration)}
-                        </td>
-                        <td style="font-size: 0.8125rem; color: #334155;">
-                            ${escapeHtml(c.disposition)}
-                        </td>
-                        <td>
-                            ${recHtml}
-                        </td>
-                        <td class="action-cell" style="text-align: right; white-space: nowrap;">
-                            <div class="ccm-action-icons" style="justify-content: flex-end;">
-                                <button type="button" class="ccm-icon-btn" title="View Call Details" onclick="openViewCallModal('${escapeHtml(c.id)}')">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        `;
+                    }
+
+                    // Handled By Role Badge Class
+                    let roleClass = 'role-agent';
+                    if (c.role === 'Pickup Staff') roleClass = 'role-pickup';
+                    else if (c.role === 'Delivery Staff') roleClass = 'role-delivery';
+
+                    const isPlaying = (currentActivePlayingId === c.id);
+                    let desktopRec = '';
+                    if (c.hasRecording) {
+                        desktopRec = `
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <button type="button" class="rec-play-btn ${isPlaying ? 'playing' : ''}" onclick="toggleInlinePlayback('${escapeHtml(c.id)}', this)" title="${isPlaying ? 'Pause Recording' : 'Play Recording'}">
+                                    <svg viewBox="0 0 24 24" fill="${isPlaying ? '#fff' : 'currentColor'}" width="10" height="10">
+                                        ${isPlaying ? '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>' : '<polygon points="5 3 19 12 5 21 5 3"></polygon>'}
+                                    </svg>
+                                    <span>${isPlaying ? 'Playing...' : 'Play'}</span>
+                                </button>
+                                <button type="button" class="rec-download-btn" onclick="downloadCallRec('${escapeHtml(c.id)}', '${escapeHtml(c.recFile)}')" title="Download Recording (.mp3)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 </button>
                             </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+                        `;
+                    } else {
+                        desktopRec = `<span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">No Audio</span>`;
+                    }
+
+                    return `
+                        <tr data-id="${escapeHtml(c.id)}">
+                            <td style="font-family: monospace; font-weight: 700; color: #1e40af;">${escapeHtml(c.id)}</td>
+                            <td style="font-family: monospace; font-size: 0.75rem; color: #475569;">${escapeHtml(c.timestamp.replace(' - ', ' · '))}</td>
+                            <td>
+                                <div style="font-weight: 600; color: #0f172a;">
+                                    <a href="customer-360.html?id=${escapeHtml(c.customerId || 'CUST-1001')}" style="color: inherit; text-decoration: none;">${escapeHtml(c.customerName)}</a>
+                                </div>
+                                <div style="font-family: monospace; font-size: 0.75rem; color: #64748b;">${escapeHtml(c.phone)}</div>
+                            </td>
+                            <td>
+                                <div>${typeBadge}</div>
+                                ${proxyTag}
+                            </td>
+                            <td>${escapeHtml(c.branch)}</td>
+                            <td>
+                                <div style="font-weight: 600; color: #0f172a;">${escapeHtml(c.handledBy)}</div>
+                                <span class="staff-role-badge ${roleClass}">${escapeHtml(c.role)}</span>
+                            </td>
+                            <td style="font-family: monospace; font-weight: 600; color: #0f172a;">${escapeHtml(c.duration)}</td>
+                            <td style="font-size: 0.8125rem; color: #334155;">${(c.role === 'Agent' && c.disposition) ? escapeHtml(c.disposition) : '<span style="color: #94a3b8;">—</span>'}</td>
+                            <td>${desktopRec}</td>
+                            <td class="action-cell" style="text-align: right;">
+                                <div class="ccm-action-icons" style="justify-content: flex-end;">
+                                    <button type="button" class="ccm-icon-btn" title="View Call Details" onclick="openViewCallModal('${escapeHtml(c.id)}')">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // 2. RENDER MOBILE CALL RECORD CARDS (Pure Native Mobile Layout)
+            if (mobileCardsContainer) {
+                mobileCardsContainer.innerHTML = filtered.map(c => {
+                    let typeBadge = '';
+                    if (c.type === 'Inbound') {
+                        typeBadge = '<span class="badge-type-inbound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Inbound</span>';
+                    } else if (c.type === 'Outbound') {
+                        typeBadge = '<span class="badge-type-outbound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="17 14 12 9 7 14"></polyline><line x1="12" y1="9" x2="12" y2="21"></line></svg>Outbound</span>';
+                    } else {
+                        typeBadge = '<span class="badge-type-missed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Missed</span>';
+                    }
+
+                    // Mobile Proxy Snippet
+                    let mobileProxySnippet = '';
+                    if (c.isProxy) {
+                        mobileProxySnippet = `<span class="proxy-call-tag" style="font-size: 0.625rem; padding: 1px 5px; margin-top: 0;">Masked / Proxy</span>`;
+                    }
+
+                    const isPlaying = (currentActivePlayingId === c.id);
+
+                    // Actions block for mobile card
+                    let actionsHtml = '';
+                    if (c.hasRecording) {
+                        actionsHtml = `
+                            <button type="button" class="mobile-card-btn rec-play-btn ${isPlaying ? 'playing' : ''}" onclick="toggleInlinePlayback('${escapeHtml(c.id)}', this)" title="${isPlaying ? 'Pause Recording' : 'Play Recording'}">
+                                <svg viewBox="0 0 24 24" fill="${isPlaying ? '#fff' : 'currentColor'}" width="12" height="12">
+                                    ${isPlaying ? '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>' : '<polygon points="5 3 19 12 5 21 5 3"></polygon>'}
+                                </svg>
+                                <span>${isPlaying ? 'Pause' : 'Play'}</span>
+                            </button>
+                            <button type="button" class="mobile-card-btn rec-download-btn" onclick="downloadCallRec('${escapeHtml(c.id)}', '${escapeHtml(c.recFile)}')" title="Download Recording (.mp3)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            </button>
+                            <button type="button" class="mobile-card-btn view-details-btn" onclick="openViewCallModal('${escapeHtml(c.id)}')">
+                                <span>View Details</span>
+                            </button>
+                        `;
+                    } else {
+                        actionsHtml = `
+                            <div class="mobile-no-audio">No Audio</div>
+                            <button type="button" class="mobile-card-btn view-details-btn" onclick="openViewCallModal('${escapeHtml(c.id)}')">
+                                <span>View Details</span>
+                            </button>
+                        `;
+                    }
+
+                    return `
+                        <div class="mobile-call-card" data-id="${escapeHtml(c.id)}">
+                            <!-- 1. Top Row: Call ID & Call Type Badge -->
+                            <div class="mobile-card-header">
+                                <span class="mobile-card-id">${escapeHtml(c.id)}</span>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    ${mobileProxySnippet}
+                                    <div class="mobile-card-badge">${typeBadge}</div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Customer Information: Name, Phone, Timestamp -->
+                            <div class="mobile-card-customer-section">
+                                <a href="customer-360.html?id=${escapeHtml(c.customerId || 'CUST-1001')}" class="mobile-customer-name">${escapeHtml(c.customerName)}</a>
+                                <div class="mobile-customer-phone">${escapeHtml(c.phone)}</div>
+                                <div class="mobile-call-timestamp">${escapeHtml(c.timestamp.replace(' - ', ' · '))}</div>
+                            </div>
+
+                            <!-- 3. Compact Call Summary (Branch · Handled By / Duration · Disposition) -->
+                            <div class="mobile-card-summary">
+                                <div class="mobile-summary-row branch-agent-row">
+                                    <span class="summary-item branch-item">${escapeHtml(c.branch)}</span>
+                                    <span class="summary-dot">·</span>
+                                    <span class="summary-item agent-item">${escapeHtml(c.handledBy)} (${escapeHtml(c.role)})</span>
+                                </div>
+                                <div class="mobile-summary-row duration-disp-row">
+                                    <span class="summary-item duration-item">${escapeHtml(c.duration)}</span>
+                                    ${(c.role === 'Agent' && c.disposition) ? `<span class="summary-dot">·</span><span class="summary-item disp-item">${escapeHtml(c.disposition)}</span>` : `<span class="summary-dot">·</span><span class="summary-item disp-item" style="color: #94a3b8;">—</span>`}
+                                </div>
+                            </div>
+
+                            <!-- 4. Bottom Action Row -->
+                            <div class="mobile-card-actions">
+                                ${actionsHtml}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
 
             document.getElementById('call-pagination-info').textContent = `Showing 1-${filtered.length} of ${filtered.length}`;
         }
@@ -1280,9 +1932,16 @@
             renderCallRecords();
         }
 
-        function filterAgentDropdownOptions(input) {
+        function selectRoleFilter(role, label) {
+            currentRoleFilter = role;
+            document.getElementById('filter-role-label').textContent = label;
+            document.getElementById('filter-role-details').removeAttribute('open');
+            renderCallRecords();
+        }
+
+        function filterStaffDropdownOptions(input) {
             const query = input.value.toLowerCase().trim();
-            const container = document.getElementById('filter-agent-list-items');
+            const container = document.getElementById('filter-staff-list-items');
             if (!container) return;
             const options = container.querySelectorAll('.custom-option');
             options.forEach(opt => {
@@ -1291,30 +1950,30 @@
             });
         }
 
-        function toggleAllAgents(cb) {
-            const itemCheckboxes = document.querySelectorAll('.agent-filter-cb');
+        function toggleAllStaff(cb) {
+            const itemCheckboxes = document.querySelectorAll('.staff-filter-cb');
             itemCheckboxes.forEach(item => { item.checked = cb.checked; });
-            document.getElementById('filter-agent-label').textContent = cb.checked ? 'All Agents' : 'No Agents';
+            document.getElementById('filter-staff-label').textContent = cb.checked ? 'All Staff' : 'No Staff';
             renderCallRecords();
         }
 
-        function updateAgentSelection() {
-            const itemCheckboxes = document.querySelectorAll('.agent-filter-cb');
+        function updateStaffSelection() {
+            const itemCheckboxes = document.querySelectorAll('.staff-filter-cb');
             const checkedItems = Array.from(itemCheckboxes).filter(cb => cb.checked);
-            const allCheck = document.getElementById('agent-all-check');
+            const allCheck = document.getElementById('staff-all-check');
 
             if (checkedItems.length === itemCheckboxes.length) {
                 allCheck.checked = true;
-                document.getElementById('filter-agent-label').textContent = 'All Agents';
+                document.getElementById('filter-staff-label').textContent = 'All Staff';
             } else if (checkedItems.length === 0) {
                 allCheck.checked = false;
-                document.getElementById('filter-agent-label').textContent = 'No Agents';
+                document.getElementById('filter-staff-label').textContent = 'No Staff';
             } else if (checkedItems.length === 1) {
                 allCheck.checked = false;
-                document.getElementById('filter-agent-label').textContent = checkedItems[0].value;
+                document.getElementById('filter-staff-label').textContent = checkedItems[0].value;
             } else {
                 allCheck.checked = false;
-                document.getElementById('filter-agent-label').textContent = `${checkedItems.length} Agents`;
+                document.getElementById('filter-staff-label').textContent = `${checkedItems.length} Staff`;
             }
             renderCallRecords();
         }
@@ -1410,6 +2069,7 @@
         }
 
         function sortCallsTable(column) {
+            const colKey = (column === 'customer') ? 'customerName' : column;
             if (currentSort.column === column) {
                 currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
             } else {
@@ -1418,9 +2078,9 @@
             }
 
             sampleCallRecords.sort((a, b) => {
-                let vA = a[column] || '';
-                let vB = b[column] || '';
-                return currentSort.order === 'asc' ? vA.localeCompare(vB) : vB.localeCompare(vA);
+                let vA = a[colKey] || '';
+                let vB = b[colKey] || '';
+                return currentSort.order === 'asc' ? vA.localeCompare(vB) : vB.localeCompare(a[colKey] || '');
             });
             renderCallRecords();
         }
@@ -1455,9 +2115,35 @@
             document.getElementById('view-call-cust-type-badge').textContent = (c.customerType || 'Unified') + ' Customer';
             document.getElementById('view-call-timestamp').textContent = c.timestamp;
             document.getElementById('view-call-branch').textContent = c.branch;
-            document.getElementById('view-call-agent').textContent = c.agent;
+            document.getElementById('view-call-handled-by').textContent = c.handledBy;
+
+            // Role Badge in Modal
+            let roleClass = 'role-agent';
+            if (c.role === 'Pickup Staff') roleClass = 'role-pickup';
+            else if (c.role === 'Delivery Staff') roleClass = 'role-delivery';
+            document.getElementById('view-call-role-badge').innerHTML = `<span class="staff-role-badge ${roleClass}">${escapeHtml(c.role)}</span>`;
+
+            // Call Mode (Direct vs Masked/Proxy) in Modal
+            const modalModeEl = document.getElementById('view-call-mode');
+            if (modalModeEl) {
+                if (c.isProxy) {
+                    modalModeEl.innerHTML = '<span class="proxy-call-tag" style="margin-top:0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Masked / Proxy</span>';
+                } else {
+                    modalModeEl.innerHTML = '<span style="color: #64748b; font-size: 0.75rem; font-weight: 500;">Direct Telephony</span>';
+                }
+            }
+
             document.getElementById('view-call-duration').textContent = c.duration;
-            document.getElementById('view-call-disposition').textContent = c.disposition;
+            const modalDispEl = document.getElementById('view-call-disposition');
+            if (c.role === 'Agent' && c.disposition) {
+                modalDispEl.textContent = c.disposition;
+                modalDispEl.style.color = '#0f172a';
+                modalDispEl.style.fontWeight = '700';
+            } else {
+                modalDispEl.textContent = '— (Not required for Field Staff)';
+                modalDispEl.style.color = '#64748b';
+                modalDispEl.style.fontWeight = '500';
+            }
             document.getElementById('view-call-context-box').textContent = c.context || 'No specific CRM note attached.';
 
             // Type Badge

@@ -328,18 +328,18 @@
   .mobile-menu-btn {
     display: flex;
     position: fixed;
-    top: 8px;
-    left: 12px;
+    top: 0;
+    left: 10px;
     bottom: auto;
     right: auto;
     background-color: transparent;
     color: var(--color-black);
     border: none;
     border-radius: 4px;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 48px;
     box-shadow: none;
-    z-index: 1000;
+    z-index: 1002;
     cursor: pointer;
     padding: 0;
     justify-content: center;
@@ -347,15 +347,21 @@
     transition: background-color 0.15s ease;
   }
   .mobile-menu-btn:hover {
-    background-color: var(--color-bg-light);
-  
+    background-color: transparent;
   }
   .mobile-menu-btn svg {
     width: 22px;
     height: 22px;
     stroke: var(--color-black);
-     margin-top: 24px;
+    margin: 0;
   }
+  /* When drawer is open, hide the hamburger button so it doesn't overlap the drawer logo */
+  #mobile-menu-toggle:checked ~ .mobile-menu-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Backdrop when drawer is open */
   #mobile-menu-toggle:checked ~ .mobile-menu-btn::before {
     content: '';
     position: fixed;
@@ -364,23 +370,55 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.4);
-    z-index: -1;
+    z-index: 1000;
     cursor: default;
+    pointer-events: auto;
   }
   .sidebar {
     position: fixed;
     top: 0;
-    left: -284px; /* Hidden drawer (64 + 220) */
+    left: -284px; /* Hidden drawer (56 + 200) */
     box-shadow: 10px 0 15px rgba(0,0,0,0.15);
     height: 100%;
-    z-index: 1001;
+    z-index: 1005 !important;
     transition: left 0.3s ease;
+    pointer-events: auto !important;
+    background-color: var(--color-white);
   }
-  #mobile-menu-toggle:checked ~ .app-layout .sidebar {
-    left: 0;
+  .sidebar-rail {
+    width: 56px;
+    background-color: var(--color-white);
+    border-right: 1px solid var(--color-border);
+  }
+  .sidebar-rail::after {
+    display: none;
+  }
+  .sidebar-logo-container {
+    height: 48px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--color-border);
+    box-sizing: border-box;
+  }
+  .rail-nav {
+    padding-top: 16px;
+  }
+  .sidebar-header {
+    height: 48px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--color-border);
+    box-sizing: border-box;
+  }
+  #mobile-menu-toggle:checked ~ .app-layout .sidebar,
+  #mobile-menu-toggle:checked ~ .sidebar {
+    left: 0 !important;
+    pointer-events: auto !important;
   }
   .top-header {
+    height: 48px;
+    min-height: 48px;
     padding: 0 16px 0 48px; /* space for the hamburger menu */
+    display: flex;
+    align-items: center;
   }
   .top-breadcrumb {
     font-size: 0 !important;

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,204 @@
     <link rel="stylesheet" href="../Sidebar/sidebar.css">
     <!-- CCM & Agents Unified Stylesheet -->
     <link rel="stylesheet" href="agents.css">
+    <style>
+        /* Mobile Responsive for Import Customers */
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                width: 100% !important;
+            }
+
+            .app-layout {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                width: 100% !important;
+            }
+
+            .app-content {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            .main-scroll-area {
+                overflow-x: hidden !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                padding: 10px !important;
+            }
+
+            /* Stack Header: Top data (Title/Subtitle) on top, CTAs below */
+            .page-header.import-page-header,
+            html body .main-scroll-area .page-header {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                margin-bottom: 14px !important;
+                width: 100% !important;
+            }
+
+            .page-header.import-page-header > div:first-child,
+            .page-header > div:first-child {
+                width: 100% !important;
+                display: flex !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+            }
+
+            .page-title-group {
+                width: 100% !important;
+                flex: 1 1 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 2px !important;
+                min-width: 0 !important;
+            }
+
+            #import-page-title {
+                font-size: 1.125rem !important;
+                line-height: 1.25 !important;
+                margin-bottom: 2px !important;
+            }
+
+            #import-page-subtitle {
+                font-size: 0.75rem !important;
+                line-height: 1.35 !important;
+                color: #64748b !important;
+            }
+
+            /* CTAs placed below top data with 100% width */
+            .page-header.import-page-header .header-actions,
+            .page-header .header-actions {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 8px !important;
+                margin-top: 4px !important;
+            }
+
+            .header-actions > div[style*="display: none"] {
+                display: none !important;
+            }
+
+            .header-actions > div:not([style*="display: none"]) {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px !important;
+                align-items: center !important;
+                flex: 1 1 100% !important;
+            }
+
+            .header-actions .btn-primary,
+            .header-actions .btn-secondary {
+                height: 38px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 0.8125rem !important;
+                padding: 0 10px !important;
+                box-sizing: border-box !important;
+                white-space: nowrap !important;
+            }
+
+            /* Step 1 CTAs */
+            #top-actions-step-1 a.btn-secondary {
+                flex: 0 0 75px !important;
+                width: 75px !important;
+            }
+
+            #top-actions-step-1 button.btn-primary,
+            #top-btn-proceed-1 {
+                flex: 1 1 auto !important;
+                width: auto !important;
+                gap: 6px !important;
+                font-weight: 600 !important;
+                font-size: 0.775rem !important;
+            }
+
+            /* Step 2 CTAs */
+            #top-actions-step-2 button.btn-secondary {
+                flex: 0 0 75px !important;
+                width: 75px !important;
+            }
+
+            #top-actions-step-2 button.btn-primary {
+                flex: 1 1 auto !important;
+                width: auto !important;
+                gap: 6px !important;
+                font-weight: 600 !important;
+                font-size: 0.775rem !important;
+            }
+
+            /* Step 3 CTAs */
+            #top-actions-step-3 button.btn-secondary {
+                flex: 1 1 auto !important;
+                font-size: 0.775rem !important;
+            }
+
+            #top-actions-step-3 a.btn-primary {
+                flex: 1 1 auto !important;
+                font-weight: 600 !important;
+                font-size: 0.775rem !important;
+            }
+
+            /* Progress Stepper */
+            .ccm-stepper-container {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                padding: 8px 12px !important;
+                overflow-x: auto !important;
+                scrollbar-width: none !important;
+                -webkit-overflow-scrolling: touch !important;
+                border-radius: var(--border-radius-base) !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                gap: 6px !important;
+                margin-bottom: 14px !important;
+            }
+
+            .ccm-stepper-container::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            .ccm-stepper-container .step-item {
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+                font-size: 0.75rem !important;
+            }
+
+            .ccm-stepper-container .stepper-divider {
+                flex: 0 0 16px !important;
+                width: 16px !important;
+                min-width: 16px !important;
+                margin: 0 4px !important;
+            }
+
+            /* Sample CSV Download Card */
+            .sample-csv-card {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                padding: 12px 14px !important;
+            }
+
+            .sample-csv-card .sample-csv-btn {
+                width: 100% !important;
+                justify-content: center !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -35,16 +233,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -229,7 +417,7 @@
             <div class="main-scroll-area">
                 
                 <!-- Page Header with Dynamic Title / Subtitle & Top-Right Header Actions -->
-                <div class="page-header">
+                <div class="page-header import-page-header">
                     <div style="display: flex; align-items: flex-start; gap: 12px;">
                         <a href="customers.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;" title="Back to Customers">&lt;</a>
                         <div class="page-title-group">
@@ -273,19 +461,19 @@
                 </div>
 
                 <!-- 3-Step Simplified Progress Indicator -->
-                <div style="display: flex; align-items: center; justify-content: space-between; background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 8px 16px; margin-bottom: 16px;">
+                <div class="ccm-stepper-container" style="display: flex; align-items: center; justify-content: space-between; background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 8px 16px; margin-bottom: 16px;">
                     <div class="step-item active" id="stepper-step-1" style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 700; color: var(--color-black);">
-                        <span style="width: 20px; height: 20px; border-radius: 50%; background: var(--color-black); color: var(--color-white); display: flex; align-items: center; justify-content: center; font-size: 0.6875rem;">1</span>
+                        <span class="stepper-circle" style="width: 22px; height: 22px; min-width: 22px; max-width: 22px; border-radius: 50%; background: var(--color-black); color: var(--color-white); display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; flex-shrink: 0; box-sizing: border-box; line-height: 1;">1</span>
                         <span>Upload CSV</span>
                     </div>
-                    <div style="flex: 1; height: 1px; background: #e2e8f0; margin: 0 14px;"></div>
+                    <div class="stepper-divider" style="flex: 1; height: 1px; background: #e2e8f0; margin: 0 14px;"></div>
                     <div class="step-item" id="stepper-step-2" style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 600; color: #94a3b8;">
-                        <span style="width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid #cbd5e1; background: var(--color-white); color: #64748b; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem;">2</span>
+                        <span class="stepper-circle" style="width: 22px; height: 22px; min-width: 22px; max-width: 22px; border-radius: 50%; border: 1.5px solid #cbd5e1; background: var(--color-white); color: #64748b; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; flex-shrink: 0; box-sizing: border-box; line-height: 1;">2</span>
                         <span>Validation &amp; Merge Handling</span>
                     </div>
-                    <div style="flex: 1; height: 1px; background: #e2e8f0; margin: 0 14px;"></div>
+                    <div class="stepper-divider" style="flex: 1; height: 1px; background: #e2e8f0; margin: 0 14px;"></div>
                     <div class="step-item" id="stepper-step-3" style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 600; color: #94a3b8;">
-                        <span style="width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid #cbd5e1; background: var(--color-white); color: #64748b; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem;">3</span>
+                        <span class="stepper-circle" style="width: 22px; height: 22px; min-width: 22px; max-width: 22px; border-radius: 50%; border: 1.5px solid #cbd5e1; background: var(--color-white); color: #64748b; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; flex-shrink: 0; box-sizing: border-box; line-height: 1;">3</span>
                         <span>Import Result</span>
                     </div>
                 </div>
@@ -319,7 +507,7 @@
                             </div>
                             <div>
                                 <strong style="font-size: 0.9375rem; color: var(--color-black); display: block;" id="file-name-display">Customer_Import_Sample.csv</strong>
-                                <span style="font-size: 0.75rem; color: #059669; font-weight: 600;" id="file-meta-display">48.6 KB &bull; 500 records detected</span>
+                                <span style="font-size: 0.75rem; color: #059669; font-weight: 600;" id="file-meta-display">48.6 KB • 500 records detected</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
                                 <button type="button" class="btn-primary" style="height: 30px; padding: 0 14px; font-size: 0.75rem;" onclick="document.getElementById('csv-file-input').click();">
@@ -334,56 +522,57 @@
                     </div>
 
                     <!-- Download Sample CSV Section (Positioned neatly below the upload area) -->
-                    <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 36px; height: 36px; border-radius: var(--border-radius-base); background: var(--color-bg-light); display: flex; align-items: center; justify-content: center; color: var(--color-black);">
+                    <div class="sample-csv-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                        <div class="sample-csv-content" style="display: flex; align-items: center; gap: 12px;">
+                            <div class="sample-csv-icon" style="width: 36px; height: 36px; border-radius: var(--border-radius-base); background: var(--color-bg-light); display: flex; align-items: center; justify-content: center; color: var(--color-black); flex-shrink: 0;">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                             </div>
                             <div>
                                 <strong style="font-size: 0.8125rem; color: var(--color-black); display: block;">Need the sample template?</strong>
-                                <span style="font-size: 0.75rem; color: #64748b;">Download the sample CSV file pre-populated with example customer columns and format instructions.</span>
+                                <span style="font-size: 0.75rem; color: #64748b; display: block; line-height: 1.35;">Download the sample CSV file pre-populated with example customer columns and format instructions.</span>
                             </div>
                         </div>
-                        <button type="button" class="btn-secondary" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;" onclick="downloadSampleCSV()">
+                        <button type="button" class="btn-secondary sample-csv-btn" style="height: 32px; padding: 0 14px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;" onclick="downloadSampleCSV()">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             Download Sample CSV
                         </button>
                     </div>
 
                 </div>
-
                 <!-- ================= STEP 2: VALIDATION & DUPLICATE MERGE HANDLING ================= -->
                 <div id="step-validation-section" style="display: none;">
                     
-                    <!-- Compact Top Summary & Merge Control Bar -->
-                    <div style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 10px 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-                        <!-- Inline Metric Counters -->
-                        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="font-size: 0.75rem; color: #64748b;">Total:</span>
-                                <strong style="font-size: 0.8125rem; color: var(--color-black);">500 Records</strong>
+                    <!-- Top Validation Summary & Merge Control Bar -->
+                    <div class="validation-summary-card" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); padding: 10px 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+                        <!-- Metric Counters -->
+                        <div class="validation-metrics-grid" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                            <div class="validation-metric-item" style="display: flex; align-items: center; gap: 6px;">
+                                <span class="metric-label" style="font-size: 0.75rem; color: #64748b;">Total:</span>
+                                <strong class="metric-val" style="font-size: 0.8125rem; color: var(--color-black);">500 Records</strong>
                             </div>
-                            <div style="height: 14px; width: 1px; background: #e2e8f0;"></div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981;"></span>
-                                <span style="font-size: 0.75rem; color: #64748b;">Valid:</span>
-                                <strong style="font-size: 0.8125rem; color: #059669;">452</strong>
+                            <div class="metric-divider" style="height: 14px; width: 1px; background: #e2e8f0;"></div>
+                            <div class="validation-metric-item" style="display: flex; align-items: center; gap: 6px;">
+                                <span class="metric-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                                <span class="metric-label" style="font-size: 0.75rem; color: #64748b;">Valid:</span>
+                                <strong class="metric-val" style="font-size: 0.8125rem; color: #059669;">452</strong>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 7px; height: 7px; border-radius: 50%; background: #f59e0b;"></span>
-                                <span style="font-size: 0.75rem; color: #64748b;">Duplicates:</span>
-                                <strong style="font-size: 0.8125rem; color: #d97706;">32</strong>
+                            <div class="metric-divider" style="height: 14px; width: 1px; background: #e2e8f0;"></div>
+                            <div class="validation-metric-item" style="display: flex; align-items: center; gap: 6px;">
+                                <span class="metric-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span>
+                                <span class="metric-label" style="font-size: 0.75rem; color: #64748b;">Duplicates:</span>
+                                <strong class="metric-val" style="font-size: 0.8125rem; color: #d97706;">32</strong>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444;"></span>
-                                <span style="font-size: 0.75rem; color: #64748b;">Invalid:</span>
-                                <strong style="font-size: 0.8125rem; color: #dc2626;">16</strong>
+                            <div class="metric-divider" style="height: 14px; width: 1px; background: #e2e8f0;"></div>
+                            <div class="validation-metric-item" style="display: flex; align-items: center; gap: 6px;">
+                                <span class="metric-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+                                <span class="metric-label" style="font-size: 0.75rem; color: #64748b;">Invalid:</span>
+                                <strong class="metric-val" style="font-size: 0.8125rem; color: #dc2626;">16</strong>
                             </div>
                         </div>
 
                         <!-- Custom ERP Dropdown for Duplicate Handling Strategy -->
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); white-space: nowrap;">
+                        <div class="validation-strategy-control" style="display: flex; align-items: center; gap: 10px;">
+                            <span class="strategy-label" style="font-size: 0.75rem; font-weight: 700; color: var(--color-black); white-space: nowrap;">
                                 Duplicate Strategy:
                             </span>
                             <details class="custom-select-wrapper" id="dup-strategy-details" style="min-width: 270px;">
@@ -409,9 +598,9 @@
                         </div>
                     </div>
 
-                    <!-- Clean Validation Log Table -->
-                    <div class="table-container">
-                        <div style="padding: 8px 14px; background: var(--color-bg-light); border-bottom: 1px solid var(--color-border); font-weight: 700; font-size: 0.8125rem; display: flex; justify-content: space-between; align-items: center;">
+                    <!-- Clean Validation Log Table (Desktop View) -->
+                    <div class="table-container validation-desktop-table">
+                        <div class="validation-preview-header" style="padding: 8px 14px; background: var(--color-bg-light); border-bottom: 1px solid var(--color-border); font-weight: 700; font-size: 0.8125rem; display: flex; justify-content: space-between; align-items: center;">
                             <span>Validation Preview Log</span>
                             <span style="font-size: 0.6875rem; font-weight: 500; color: #64748b;">Previewing first 4 records</span>
                         </div>
@@ -458,6 +647,101 @@
                         </table>
                     </div>
 
+                    <!-- Mobile Validation Record Cards (Mobile Only View) -->
+                    <div class="validation-mobile-container">
+                        <div class="validation-preview-header" style="padding: 8px 12px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: var(--border-radius-base); font-weight: 700; font-size: 0.8125rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span>Validation Preview Log</span>
+                            <span style="font-size: 0.6875rem; font-weight: 500; color: #64748b;">Previewing first 4 records</span>
+                        </div>
+
+                        <!-- Card 1 -->
+                        <div class="validation-record-card">
+                            <div class="vrc-header">
+                                <span class="vrc-row-id">#101</span>
+                                <span class="vrc-badge vrc-badge-valid">Valid New Record</span>
+                            </div>
+                            <div class="vrc-body">
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Customer Name</span>
+                                    <strong class="vrc-val">Amitabh Sengupta</strong>
+                                </div>
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Phone Number</span>
+                                    <span class="vrc-val vrc-val-mono">+91 98450 11223</span>
+                                </div>
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Branch</span>
+                                    <span class="vrc-val">Kolkata</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="validation-record-card">
+                            <div class="vrc-header">
+                                <span class="vrc-row-id">#102</span>
+                                <span class="vrc-badge vrc-badge-dup">Duplicate (Matches CUST-1001)</span>
+                            </div>
+                            <div class="vrc-body">
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Customer Name</span>
+                                    <strong class="vrc-val">Rajesh Kumar</strong>
+                                </div>
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Phone Number</span>
+                                    <span class="vrc-val vrc-val-mono">+91 98765 43210</span>
+                                </div>
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Branch</span>
+                                    <span class="vrc-val">Bengaluru</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="validation-record-card">
+                            <div class="vrc-header">
+                                <span class="vrc-row-id">#103</span>
+                                <span class="vrc-badge vrc-badge-valid">Valid New Record</span>
+                            </div>
+                            <div class="vrc-body">
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Customer Name</span>
+                                    <strong class="vrc-val">Pooja Hegde</strong>
+                                </div>
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Phone Number</span>
+                                    <span class="vrc-val vrc-val-mono">+91 97410 88990</span>
+                                </div>
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Branch</span>
+                                    <span class="vrc-val">Mangalore</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="validation-record-card">
+                            <div class="vrc-header">
+                                <span class="vrc-row-id">#104</span>
+                                <span class="vrc-badge vrc-badge-invalid">Invalid (Phone &lt; 10 digits)</span>
+                            </div>
+                            <div class="vrc-body">
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Customer Name</span>
+                                    <strong class="vrc-val" style="color: #dc2626;">[Missing Name]</strong>
+                                </div>
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Phone Number</span>
+                                    <span class="vrc-val vrc-val-mono">9811022</span>
+                                </div>
+                                <div class="vrc-field">
+                                    <span class="vrc-label">Branch</span>
+                                    <span class="vrc-val">Delhi</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>                <!-- ================= STEP 3: IMPORT RESULT ================= -->
                 <div id="step-result-section" style="display: none;">
                     
@@ -626,3 +910,6 @@
     </script>
 </body>
 </html>
+
+
+

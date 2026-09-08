@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telephony — Exelon Logistics ERP</title>
+    <title>Telephony - Exelon Logistics ERP</title>
     <!-- Design System Global & Components CSS -->
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
@@ -92,17 +92,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <!-- Headset / Telephony Icon -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -318,7 +307,7 @@
 
                         <!-- 2. Configured / Active Integration View -->
                         <div id="provider-configured-view">
-                            <div class="ccm-central-configured-content" style="align-items: center;">
+                            <div class="ccm-central-configured-content" style="align-items: center; padding-bottom: 12px; border-bottom: 1px dashed var(--color-border);">
                                 <div class="ccm-central-data-inline" style="gap: 48px;">
                                     <div class="ccm-field-item">
                                         <span class="ccm-field-label">PROVIDER</span>
@@ -341,6 +330,26 @@
                                     Change Provider
                                 </label>
                             </div>
+
+                            <!-- Integration Credentials & Parameters Inspection Box (Visible to Admin) -->
+                            <div class="provider-active-credentials-panel">
+                                <div class="provider-active-credentials-header">
+                                    <div class="provider-active-credentials-header-text">
+                                        <div style="display: flex; align-items: center; gap: 6px;">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" style="color: #64748b;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                            <span class="provider-active-credentials-title">Integration Credentials / Settings</span>
+                                        </div>
+                                        <span class="provider-active-credentials-subtitle">Authentication parameters for the active provider interface.</span>
+                                    </div>
+                                    <label for="modal-provider" class="cred-edit-btn" onclick="openChangeModal();" title="Edit Credentials / Provider">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        <span>Edit</span>
+                                    </label>
+                                </div>
+                                <div id="active-credentials-grid" class="active-credentials-grid">
+                                    <!-- Populated dynamically based on saved parameters -->
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -357,18 +366,37 @@
                         </div>
 
                         <form id="calling-config-form" onsubmit="saveCallingConfig(event)">
-                            <div class="calling-mode-group">
-                                <label class="calling-mode-label">Calling Mode *</label>
-                                <div class="calling-mode-options">
-                                     <label class="calling-radio-label">
-                                         <input type="radio" name="calling-mode" value="hybrid" onchange="enableSaveCallingBtn()">
-                                         Hybrid
-                                     </label>
-                                     <label class="calling-radio-label">
-                                         <input type="radio" name="calling-mode" value="in-app-only" onchange="enableSaveCallingBtn()">
-                                         In-app-only
-                                     </label>
-                                 </div>
+                            <div class="calling-config-grid">
+                                <!-- Left Column: Calling Mode -->
+                                <div class="calling-mode-group">
+                                    <label class="calling-mode-label">Calling Mode *</label>
+                                    <div class="calling-mode-options">
+                                         <label class="calling-radio-label">
+                                             <input type="radio" name="calling-mode" value="hybrid" onchange="enableSaveCallingBtn()">
+                                             Hybrid
+                                         </label>
+                                         <label class="calling-radio-label">
+                                             <input type="radio" name="calling-mode" value="in-app-only" onchange="enableSaveCallingBtn()">
+                                             In-app-only
+                                         </label>
+                                     </div>
+                                </div>
+
+                                <!-- Right Column: Masked / Proxy Calling -->
+                                <div class="proxy-calling-group">
+                                    <div class="proxy-calling-header-inline">
+                                        <label for="proxy-calling-toggle" class="proxy-calling-label" style="cursor: pointer;">Masked / Proxy Calling</label>
+                                        <label class="status-toggle" title="Enable / Disable Masked / Proxy Calling" style="margin: 0;">
+                                            <input type="checkbox" id="proxy-calling-toggle" onchange="handleProxyToggleChange(this.checked)">
+                                            <div class="toggle-switch"></div>
+                                        </label>
+                                        <span id="proxy-calling-status-text" class="proxy-toggle-status-label">Disabled</span>
+                                    </div>
+                                    <div class="proxy-calling-info-badge">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        <span>Mask customer and staff phone numbers during calls.</span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="calling-config-footer">
@@ -395,6 +423,8 @@
         let validationTimer = null;
         let feedbackTimer = null;
 
+        const CALLING_CONFIG_KEY = 'ccm_telephony_calling_config';
+
         function enableSaveCallingBtn() {
             const btn = document.getElementById('save-calling-btn');
             if (btn) {
@@ -402,11 +432,35 @@
             }
         }
 
+        function handleProxyToggleChange(checked) {
+            const statusLabel = document.getElementById('proxy-calling-status-text');
+            if (statusLabel) {
+                statusLabel.textContent = checked ? 'Enabled' : 'Disabled';
+            }
+            enableSaveCallingBtn();
+        }
+
         function saveCallingConfig(e) {
             e.preventDefault();
             const checkedMode = document.querySelector('input[name="calling-mode"]:checked');
-            if (!checkedMode) return;
+            const proxyToggle = document.getElementById('proxy-calling-toggle');
             
+            const config = {
+                mode: checkedMode ? checkedMode.value : 'hybrid',
+                proxyCalling: proxyToggle ? proxyToggle.checked : false
+            };
+
+            try {
+                localStorage.setItem(CALLING_CONFIG_KEY, JSON.stringify(config));
+            } catch (err) {
+                console.error('Error saving calling config:', err);
+            }
+            
+            const saveBtn = document.getElementById('save-calling-btn');
+            if (saveBtn) {
+                saveBtn.disabled = true;
+            }
+
             const feedbackElem = document.getElementById('calling-config-feedback');
             if (feedbackElem) {
                 feedbackElem.classList.add('show');
@@ -414,6 +468,36 @@
                 feedbackTimer = setTimeout(() => {
                     feedbackElem.classList.remove('show');
                 }, 2500);
+            }
+        }
+
+        function loadCallingConfig() {
+            try {
+                const saved = localStorage.getItem(CALLING_CONFIG_KEY);
+                let modeVal = 'hybrid';
+                let proxyVal = false;
+
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.mode) modeVal = parsed.mode;
+                    if (typeof parsed.proxyCalling === 'boolean') proxyVal = parsed.proxyCalling;
+                }
+
+                const targetRadio = document.querySelector(`input[name="calling-mode"][value="${modeVal}"]`);
+                if (targetRadio) {
+                    targetRadio.checked = true;
+                }
+
+                const proxyToggle = document.getElementById('proxy-calling-toggle');
+                if (proxyToggle) {
+                    proxyToggle.checked = proxyVal;
+                    const statusLabel = document.getElementById('proxy-calling-status-text');
+                    if (statusLabel) {
+                        statusLabel.textContent = proxyVal ? 'Enabled' : 'Disabled';
+                    }
+                }
+            } catch (err) {
+                console.error('Error loading calling config:', err);
             }
         }
 
@@ -509,11 +593,54 @@
             renderProviderFields(selectedModalProvider);
         }
 
+        function renderActiveCredentials(providerKey) {
+            const container = document.getElementById('active-credentials-grid');
+            if (!container) return;
+
+            const config = providerConfigs[providerKey] || providerConfigs['airtel'];
+            container.innerHTML = config.fields.map((f, idx) => {
+                const isSecret = f.type === 'password';
+                const displayVal = isSecret ? '••••••••••••••••••••' : (f.value || '—');
+                const rawVal = f.value || '';
+                return `
+                    <div class="active-credential-item">
+                        <span class="active-credential-label">${f.label.replace(' *', '')}</span>
+                        <div class="active-credential-value-wrapper">
+                            <span class="active-credential-val" id="cred-val-${idx}" data-raw="${rawVal}" data-masked="${displayVal}" data-is-secret="${isSecret}">${displayVal}</span>
+                            ${isSecret ? `
+                                <button type="button" class="cred-toggle-btn" onclick="toggleSecretVisibility(${idx})" title="Toggle Visibility">
+                                    <svg id="cred-eye-${idx}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleSecretVisibility(idx) {
+            const valEl = document.getElementById('cred-val-' + idx);
+            if (!valEl) return;
+            const isMasked = valEl.textContent === valEl.getAttribute('data-masked');
+            valEl.textContent = isMasked ? valEl.getAttribute('data-raw') : valEl.getAttribute('data-masked');
+        }
+
         function saveSelectedProvider() {
             const selectedVal = selectedModalProvider || 'airtel';
             const modalToggle = document.getElementById('modal-provider');
             if (modalToggle) {
                 modalToggle.checked = false;
+            }
+
+            // Read form values from modal
+            const config = providerConfigs[selectedVal];
+            if (config) {
+                config.fields.forEach(f => {
+                    const inp = document.getElementById(f.id);
+                    if (inp && inp.value) {
+                        f.value = inp.value;
+                    }
+                });
             }
 
             // Switch UI to Configured State
@@ -529,6 +656,9 @@
             if (activeRadio) {
                 activeRadio.checked = true;
             }
+
+            // Render saved credentials directly on the active card
+            renderActiveCredentials(selectedVal);
 
             // Trigger intermediate "Checking connection..." state
             const statusBadge = document.getElementById('telephony-status-badge');
@@ -557,9 +687,11 @@
             }, 1200);
         }
 
-        // Initialize default provider fields on DOM ready
+        // Initialize default provider fields and load settings on DOM ready
         document.addEventListener('DOMContentLoaded', () => {
             renderProviderFields('airtel');
+            renderActiveCredentials('airtel');
+            loadCallingConfig();
         });
     </script>
 </body>

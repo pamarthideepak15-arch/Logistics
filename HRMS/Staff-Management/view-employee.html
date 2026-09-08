@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details - Staff Master</title>
+    <link rel="stylesheet" href="../../Design System/global.css">
+    <link rel="stylesheet" href="../../Design System/components.css">
+    <link rel="stylesheet" href="../../Sidebar/sidebar.css">
+    <link rel="stylesheet" href="staff-management.css">
+    <style>
+        .details-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .emp-profile-card {
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .emp-profile-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--color-bg-light);
+            border: 1.5px solid var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-black);
+            flex-shrink: 0;
+        }
+        .section-card {
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-base);
+            overflow: hidden;
+        }
+        .section-header {
+            padding: 10px 16px;
+            background: var(--color-bg-light);
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: var(--color-black);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-body {
+            padding: 14px 16px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 16px;
+        }
+        @media (max-width: 576px) {
+            .section-body {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+        .data-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .data-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        .data-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--color-black);
+            word-break: break-word;
+        }
+        .mobile-bottom-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .mobile-bottom-actions button,
+        .mobile-bottom-actions a {
+            flex: 1;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8125rem;
+            border-radius: var(--border-radius-base);
+        }
+    </style>
+</head>
+<body>
+    
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                <nav class="rail-nav">
+                    <a href="../../Admin/User-Management/index.html" class="rail-icon" data-tooltip="Administration">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </a>
+                    <a href="index.html" class="rail-icon active" data-tooltip="HRMS">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 1 0 7.75"></path></svg>
+                    </a>
+                </nav>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">HUMAN RESOURCES</div>
+                <nav class="sidebar-nav">
+                    <a href="index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        Employee Master
+                    </a>
+                    <a href="department-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Department Master
+                    </a>
+                    <a href="role-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Role Master
+                    </a>
+                    <a href="branch-master.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Branch Master
+                    </a>
+                    <a href="../Attendance/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Attendance
+                    </a>
+                    <a href="../Shift-Management/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Shift Management
+                    </a>
+                    <a href="../Leave-Management/leave-management.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Leave &amp; WFH
+                    </a>
+                    <a href="../Payroll-Management/payroll.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                        Payroll
+                    </a>
+                    <a href="../Offboarding/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        Offboarding
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>HRMS</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="index.html" style="color: inherit; text-decoration: none;">Staff Master</a>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current">Employee Details</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="main-scroll-area">
+                <div class="details-container">
+                    
+                    <!-- Page Header -->
+                    <div class="page-header" style="margin-bottom: 0;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <a href="index.html" class="back-link" title="Back to Staff Master" style="text-decoration: none; font-size: 1.125rem; font-weight: 700; color: var(--color-black); display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: var(--border-radius-base); background: var(--color-white); border: 1px solid var(--color-border);">&lt;</a>
+                            <div class="page-title-group">
+                                <h1 class="page-title" style="margin: 0;">Employee Details</h1>
+                                <p class="page-subtitle" style="margin: 0;">Complete employment and profile record.</p>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <a id="header-edit-btn" href="edit-employee.html" class="btn-primary" style="height: 30px; padding: 0 14px;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                <span>Edit Employee</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Top Profile Card -->
+                    <div class="emp-profile-card">
+                        <div class="emp-profile-avatar" id="disp-avatar">RK</div>
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+                                <h2 id="disp-name" style="font-size: 1.125rem; font-weight: 700; margin: 0; color: var(--color-black);">Rajesh Kumar</h2>
+                                <span id="disp-status-badge" class="status-badge status-active">Active</span>
+                            </div>
+                            <div style="font-size: 0.8125rem; font-weight: 600; color: #555;">
+                                <span id="disp-id">EMP001</span> &bull; <span id="disp-dept-branch">HR &bull; HQ</span>
+                            </div>
+                            <div id="disp-role" style="font-size: 0.75rem; color: #666; font-weight: 500;">HR Manager</div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 1: BASIC INFORMATION -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Basic Information
+                        </div>
+                        <div class="section-body">
+                            <div class="data-item">
+                                <span class="data-label">Employee ID</span>
+                                <span class="data-value" id="disp-id-val">EMP001</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Full Name</span>
+                                <span class="data-value" id="disp-fullname">Rajesh Kumar</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Mobile Number</span>
+                                <span class="data-value" id="disp-mobile">+91 98765 43210</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Email ID</span>
+                                <span class="data-value" id="disp-email">rajesh.kumar@logisticserp.com</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Blood Group</span>
+                                <span class="data-value" id="disp-bloodgroup">O+</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Emergency Contact</span>
+                                <span class="data-value" id="disp-emergency">+91 98765 00000 (Spouse)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2: EMPLOYMENT DETAILS -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            Employment Details
+                        </div>
+                        <div class="section-body">
+                            <div class="data-item">
+                                <span class="data-label">Department</span>
+                                <span class="data-value" id="disp-dept">HR</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Branch</span>
+                                <span class="data-value" id="disp-branch">HQ</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Role / Designation</span>
+                                <span class="data-value" id="disp-desig">HR Manager</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Employment Type</span>
+                                <span class="data-value" id="disp-emptype">Full-Time Permanent</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Joining Date</span>
+                                <span class="data-value" id="disp-joining">2026-08-01</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Assigned Shift</span>
+                                <span class="data-value" id="disp-shift">General Shift (09:00 - 18:00)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: PAYROLL & STATUTORY -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                            Payroll &amp; Statutory
+                        </div>
+                        <div class="section-body">
+                            <div class="data-item">
+                                <span class="data-label">Monthly Gross</span>
+                                <span class="data-value" id="disp-gross">₹30,000</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Overtime (OT) Policy</span>
+                                <span class="data-value" id="disp-ot">Standard OT (1.5x)</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Bank Account</span>
+                                <span class="data-value" id="disp-bank">HDFC Bank •••• 1001</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">IFSC Code</span>
+                                <span class="data-value" id="disp-ifsc">HDFC0000123</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">EPF Deduction</span>
+                                <span class="data-value" id="disp-epf">EPF 12% (₹1,800/mo)</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Professional Tax (PT)</span>
+                                <span class="data-value" id="disp-pt">PT Maharashtra (₹200/mo)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: DOCUMENTS & VERIFICATION -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><polyline points="9 15 11 17 15 13"></polyline></svg>
+                            Documents / Verification
+                        </div>
+                        <div class="section-body">
+                            <div class="data-item">
+                                <span class="data-label">Onboarding Status</span>
+                                <span class="data-value" id="disp-onboarding"><span class="status-badge status-active">Completed</span></span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Background Verification (BGV)</span>
+                                <span class="data-value" id="disp-bgv">Verified (Internal HR)</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Aadhaar / ID Card</span>
+                                <span class="data-value">Uploaded &amp; Verified</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">PAN Card</span>
+                                <span class="data-value">Uploaded &amp; Verified</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Bottom Actions -->
+                    <div class="mobile-bottom-actions">
+                        <a id="bottom-edit-btn" href="edit-employee.html" class="btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Edit Employee
+                        </a>
+                        <button type="button" class="btn-secondary" onclick="openDeleteEmployeeModal()" style="border: 1px solid #8c8c8c; color: var(--color-black);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            Delete
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Delete Employee Confirmation Modal (Matching Staff Master Delete Popup UI) -->
+    <div class="modal-overlay" id="delete-employee-modal">
+        <div class="modal-content" style="position: relative; width: 320px; padding: 20px; text-align: center;">
+            <button type="button" class="modal-close" onclick="closeDeleteEmployeeModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="modal-icon-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="modal-title">Delete Employee</h3>
+            <p class="modal-desc">Are you sure you want to delete this employee record?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeDeleteEmployeeModal()" style="height: 32px; flex: 1;">Cancel</button>
+                <button type="button" class="btn-primary" onclick="confirmDeleteEmployee()" style="height: 32px; flex: 1;">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sampleEmployees = [
+            { id: "EMP001", name: "Rajesh Kumar", mobile: "+91 98765 43210", email: "rajesh.kumar@logisticserp.com", bloodGroup: "O+", dept: "HR", branch: "HQ", role: "HR Manager", shift: "General Shift (09:00 - 18:00)", monthlyGross: "₹30,000", ot: "Standard OT (1.5x)", bank: "HDFC •••• 1001 (HDFC0000123)", statutory: "EPF 12% • PT Maharashtra", bgv: "Verified (Internal HR)", onboardingStatus: "Completed", joiningDate: "2026-08-01", status: true },
+            { id: "EMP002", name: "Amit Patel", mobile: "+91 98765 54321", email: "amit.patel@logisticserp.com", bloodGroup: "B+", dept: "Operations", branch: "Mumbai Hub", role: "Operations Lead", shift: "Morning Shift (06:00 - 15:00)", monthlyGross: "₹28,000", ot: "Standard OT (1.5x)", bank: "ICICI •••• 2002 (ICIC0000456)", statutory: "EPF 12% • PT Maharashtra", bgv: "Verified (Internal HR)", onboardingStatus: "Completed", joiningDate: "2026-08-02", status: true },
+            { id: "EMP003", name: "Sunil Verma", mobile: "+91 98765 67890", email: "sunil.verma@logisticserp.com", bloodGroup: "A+", dept: "Fleet", branch: "Delhi Hub", role: "Fleet Supervisor", shift: "General Shift (09:00 - 18:00)", monthlyGross: "₹25,000", ot: "Double OT (2.0x)", bank: "SBI •••• 3003 (SBIN0001234)", statutory: "EPF 12% • PT Delhi", bgv: "Verified (Internal HR)", onboardingStatus: "Completed", joiningDate: "2026-08-03", status: true },
+            { id: "EMP004", name: "Pooja Sharma", mobile: "+91 98765 78901", email: "pooja.sharma@logisticserp.com", bloodGroup: "AB+", dept: "Finance", branch: "HQ", role: "Accountant", shift: "General Shift (09:00 - 18:00)", monthlyGross: "₹26,000", ot: "No OT Eligible", bank: "Axis •••• 4004 (UTIB0000789)", statutory: "EPF 12% • PT Maharashtra", bgv: "Pending (Third-party)", onboardingStatus: "Pending BGV", joiningDate: "2026-08-04", status: true },
+            { id: "EMP005", name: "Vikas Singh", mobile: "+91 98765 89012", email: "vikas.singh@logisticserp.com", bloodGroup: "O-", dept: "Warehouse", branch: "Mumbai Hub", role: "Warehouse In-charge", shift: "Night Shift (22:00 - 07:00)", monthlyGross: "₹24,000", ot: "Night Shift OT (1.75x)", bank: "Kotak •••• 5005 (KKBK0000321)", statutory: "EPF 12% • PT Maharashtra", bgv: "Verified (Internal HR)", onboardingStatus: "Completed", joiningDate: "2026-08-05", status: true },
+            { id: "EMP006", name: "Ramesh Yadav", mobile: "+91 98765 90123", email: "ramesh.yadav@logisticserp.com", bloodGroup: "B-", dept: "Fleet", branch: "Delhi Hub", role: "Senior Driver", shift: "General Shift (09:00 - 18:00)", monthlyGross: "₹20,000", ot: "Standard OT (1.5x)", bank: "PNB •••• 6006 (PUNB0000654)", statutory: "EPF 12% • PT Delhi", bgv: "Pending (Third-party)", onboardingStatus: "In Progress", joiningDate: "2026-08-06", status: true },
+            { id: "EMP007", name: "Neha Joshi", mobile: "+91 98765 01234", email: "neha.joshi@logisticserp.com", bloodGroup: "A-", dept: "HR", branch: "HQ", role: "HR Executive", shift: "General Shift (09:00 - 18:00)", monthlyGross: "₹22,000", ot: "Standard OT (1.5x)", bank: "HDFC •••• 7007 (HDFC0000123)", statutory: "EPF 12% • PT Maharashtra", bgv: "Verified (Internal HR)", onboardingStatus: "Completed", joiningDate: "2026-08-07", status: true }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const empId = params.get('id') || 'EMP001';
+
+            let staffList = sampleEmployees;
+            const stored = localStorage.getItem('staffEmployees_v2');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) staffList = parsed;
+                } catch(e) {}
+            }
+
+            const emp = staffList.find(e => e.id === empId) || staffList[0];
+
+            // Populate view details
+            document.getElementById('disp-avatar').textContent = (emp.name || 'EMP').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+            document.getElementById('disp-name').textContent = emp.name;
+            document.getElementById('disp-id').textContent = emp.id;
+            document.getElementById('disp-id-val').textContent = emp.id;
+            document.getElementById('disp-fullname').textContent = emp.name;
+            document.getElementById('disp-dept-branch').textContent = `${emp.dept || 'General'} • ${emp.branch || 'HQ'}`;
+            document.getElementById('disp-role').textContent = emp.role || 'Staff Member';
+            document.getElementById('disp-mobile').textContent = emp.mobile || '—';
+            document.getElementById('disp-email').textContent = emp.email || '—';
+            document.getElementById('disp-bloodgroup').textContent = emp.bloodGroup || '—';
+            document.getElementById('disp-dept').textContent = emp.dept || '—';
+            document.getElementById('disp-branch').textContent = emp.branch || '—';
+            document.getElementById('disp-desig').textContent = emp.role || '—';
+            document.getElementById('disp-joining').textContent = emp.joiningDate || '—';
+            document.getElementById('disp-shift').textContent = emp.shift || 'General Shift (09:00 - 18:00)';
+            document.getElementById('disp-gross').textContent = emp.monthlyGross || '—';
+            document.getElementById('disp-ot').textContent = emp.ot || 'Standard OT (1.5x)';
+            document.getElementById('disp-bank').textContent = emp.bank || '—';
+            document.getElementById('disp-bgv').textContent = emp.bgv || 'Verified (Internal HR)';
+
+            const isCompleted = (emp.onboardingStatus || '').toLowerCase() === 'completed';
+            document.getElementById('disp-onboarding').innerHTML = `<span class="status-badge ${isCompleted ? 'status-active' : ''}" style="${isCompleted ? '' : 'border-style: dashed;'}">${emp.onboardingStatus || 'In Progress'}</span>`;
+            
+            document.getElementById('disp-status-badge').textContent = emp.status ? 'Active' : 'Inactive';
+            document.getElementById('disp-status-badge').className = `status-badge ${emp.status ? 'status-active' : ''}`;
+
+            document.getElementById('header-edit-btn').href = `edit-employee.html?id=${emp.id}`;
+            document.getElementById('bottom-edit-btn').href = `edit-employee.html?id=${emp.id}`;
+
+            window.currentEmpId = emp.id;
+        });
+
+        function openDeleteEmployeeModal() {
+            document.getElementById('delete-employee-modal').classList.add('active');
+        }
+
+        function closeDeleteEmployeeModal() {
+            document.getElementById('delete-employee-modal').classList.remove('active');
+        }
+
+        function confirmDeleteEmployee() {
+            let staffList = sampleEmployees;
+            const stored = localStorage.getItem('staffEmployees_v2');
+            if (stored) {
+                try { staffList = JSON.parse(stored); } catch(e) {}
+            }
+            staffList = staffList.filter(e => e.id !== window.currentEmpId);
+            localStorage.setItem('staffEmployees_v2', JSON.stringify(staffList));
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

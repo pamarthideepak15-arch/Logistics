@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leads — CCM | Logistics Management Platform</title>
+    <title>Leads - CCM | Logistics Management Platform</title>
     <!-- Design System Global & Components CSS -->
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
@@ -301,6 +301,513 @@
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
         }
+
+        /* Default: Mobile lead cards container and mobile pagination hidden on desktop */
+        .mobile-leads-list,
+        .mobile-pagination-container {
+            display: none;
+        }
+
+        /* ==========================================================
+           COMPREHENSIVE MOBILE RESPONSIVE SYSTEM FOR LEADS (<=768px)
+           ========================================================== */
+        @media (max-width: 768px) {
+            /* 1. Page Header & Actions */
+            .page-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                margin-bottom: 12px !important;
+            }
+
+            .page-title {
+                font-size: 1.1875rem !important;
+                line-height: 1.25 !important;
+                margin-bottom: 2px !important;
+            }
+
+            .page-subtitle {
+                font-size: 0.8125rem !important;
+                line-height: 1.4 !important;
+                color: #64748b !important;
+                word-break: normal !important;
+                overflow-wrap: break-word !important;
+            }
+
+            .header-actions {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+
+            .header-actions > [style*="display: none"],
+            .header-actions > [style*="display:none"],
+            #leads-mgmt-header-actions[style*="display: none"],
+            #leads-mgmt-header-actions[style*="display:none"],
+            #leads-config-header-actions[style*="display: none"],
+            #leads-config-header-actions[style*="display:none"] {
+                display: none !important;
+            }
+
+            #leads-mgmt-header-actions:not([style*="display: none"]):not([style*="display:none"]) {
+                width: 100% !important;
+                display: flex !important;
+            }
+
+            #leads-mgmt-header-actions a.btn-primary {
+                width: 100% !important;
+                height: 36px !important;
+                justify-content: center !important;
+                display: inline-flex !important;
+            }
+
+            #leads-config-header-actions:not([style*="display: none"]):not([style*="display:none"]) {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+
+            #leads-config-header-actions > button {
+                flex: 1 1 0% !important;
+                height: 36px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            /* 2. Responsive Tabs Bar */
+            .ccm-tab-bar {
+                display: flex !important;
+                width: 100% !important;
+                gap: 0 !important;
+                border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
+                margin-bottom: 14px !important;
+            }
+
+            .ccm-tab-btn {
+                flex: 1 !important;
+                padding: 10px 12px !important;
+                font-size: 0.8125rem !important;
+                text-align: center !important;
+                justify-content: center !important;
+            }
+
+            /* 3. Full-Width Stacked Filters Bar */
+            .filters-bar {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                margin-bottom: 14px !important;
+                padding-bottom: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .search-input-wrapper {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            .search-input {
+                width: 100% !important;
+                height: 38px !important;
+                box-sizing: border-box !important;
+                font-size: 0.8125rem !important;
+            }
+
+            .filters-bar .custom-select-wrapper {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                flex-shrink: 0 !important;
+            }
+
+            .filters-bar .custom-select-trigger {
+                width: 100% !important;
+                height: 36px !important;
+                padding: 0 12px !important;
+                font-size: 0.8125rem !important;
+                box-sizing: border-box !important;
+            }
+
+            .filters-bar .custom-select-options {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                z-index: 1050 !important;
+                left: 0 !important;
+                right: 0 !important;
+            }
+
+            /* 4. Hide Desktop Leads Table and show Native Mobile Lead Cards */
+            #tab-panel-leads .table-container.ccm-desktop-table-container {
+                display: none !important;
+            }
+
+            #tab-panel-config .table-container.ccm-desktop-table-container {
+                display: block !important;
+                overflow-x: hidden !important;
+                border: 1px solid var(--color-border) !important;
+                border-radius: var(--border-radius-base, 8px) !important;
+                background: #ffffff !important;
+                margin-bottom: 12px !important;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            #tab-panel-config .config-mgmt-table {
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                display: table !important;
+                border-collapse: collapse !important;
+                table-layout: fixed !important;
+            }
+
+            #tab-panel-config .config-mgmt-table thead {
+                display: table-header-group !important;
+            }
+
+            #tab-panel-config .config-mgmt-table tbody {
+                display: table-row-group !important;
+            }
+
+            #tab-panel-config .config-mgmt-table tr {
+                display: table-row !important;
+                background-color: #ffffff !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+
+            #tab-panel-config .config-mgmt-table th,
+            #tab-panel-config .config-mgmt-table td {
+                display: table-cell !important;
+                padding: 6px 4px !important;
+                vertical-align: middle !important;
+                border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
+                background-color: transparent !important;
+                box-sizing: border-box !important;
+            }
+
+            #tab-panel-config .config-mgmt-table th {
+                background-color: var(--color-table-header, #111827) !important;
+                color: #ffffff !important;
+                font-weight: 600 !important;
+                font-size: 0.6875rem !important;
+                letter-spacing: 0.02em !important;
+                padding: 8px 4px !important;
+                text-transform: uppercase !important;
+            }
+
+            #tab-panel-config .config-mgmt-table td::before {
+                display: none !important;
+            }
+
+            #tab-panel-config .config-mgmt-table th:first-child,
+            #tab-panel-config .config-mgmt-table td:first-child {
+                width: 44px !important;
+                text-align: center !important;
+                padding-left: 4px !important;
+                padding-right: 2px !important;
+            }
+
+            #tab-panel-config .config-mgmt-table th:nth-child(2),
+            #tab-panel-config .config-mgmt-table td:nth-child(2) {
+                width: auto !important;
+                padding-left: 2px !important;
+                padding-right: 2px !important;
+            }
+
+            #tab-panel-config .config-mgmt-table th:last-child,
+            #tab-panel-config .config-mgmt-table td:last-child {
+                width: 82px !important;
+                text-align: right !important;
+                border-top: none !important;
+                margin-top: 0 !important;
+                padding-left: 2px !important;
+                padding-right: 4px !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .config-inline-input {
+                width: 100% !important;
+                height: 32px !important;
+                font-size: 0.75rem !important;
+                padding: 0 6px !important;
+                border-radius: 4px !important;
+                box-sizing: border-box !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .config-order-pill {
+                width: 20px !important;
+                height: 20px !important;
+                font-size: 0.6875rem !important;
+                border-radius: 4px !important;
+                flex-shrink: 0 !important;
+                padding: 0 !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .drag-handle {
+                padding: 2px !important;
+                margin-right: 2px !important;
+                flex-shrink: 0 !important;
+                display: none !important; /* Hide drag handle on small mobile to maximize clean room for input & arrows */
+            }
+
+            #tab-panel-config .config-mgmt-table .ccm-action-icons {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
+                gap: 2px !important;
+                flex-wrap: nowrap !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .ccm-icon-btn {
+                width: 24px !important;
+                height: 24px !important;
+                min-width: 24px !important;
+                padding: 0 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 4px !important;
+                border: 1px solid var(--color-border, #cbd5e1) !important;
+                background: #ffffff !important;
+                flex-shrink: 0 !important;
+            }
+
+            #tab-panel-config .config-mgmt-table .ccm-icon-btn svg {
+                width: 12px !important;
+                height: 12px !important;
+            }
+
+            #tab-panel-config .section-card {
+                padding: 12px 10px !important;
+                margin-bottom: 12px !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
+                border-radius: 8px !important;
+            }
+
+            #tab-panel-config .section-header {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                margin-bottom: 10px !important;
+            }
+
+            #tab-panel-config .section-header .section-title {
+                font-size: 0.9375rem !important;
+                margin-bottom: 2px !important;
+            }
+
+            #tab-panel-config .section-header .section-helper {
+                font-size: 0.75rem !important;
+                line-height: 1.35 !important;
+            }
+
+            #tab-panel-config .section-header button {
+                width: 100% !important;
+                height: 34px !important;
+                font-size: 0.8125rem !important;
+                font-weight: 600 !important;
+                justify-content: center !important;
+                display: inline-flex !important;
+                align-items: center !important;
+            }
+
+            #tab-panel-config .config-input-hint {
+                font-size: 0.75rem !important;
+                line-height: 1.45 !important;
+                color: #64748b !important;
+                margin-top: 8px !important;
+            }
+
+            .mobile-leads-list {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .mobile-pagination-container {
+                display: block !important;
+                width: 100% !important;
+                margin-top: 10px !important;
+            }
+
+            /* Purpose-Built Single Column Native Lead Card */
+            .mobile-lead-card {
+                background: #ffffff;
+                border: 1px solid var(--color-border, #e2e8f0);
+                border-radius: var(--border-radius-base, 6px);
+                padding: 14px 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            /* Top Row: Lead ID + Lead Status Badge */
+            .mobile-lead-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .mobile-lead-id {
+                font-family: monospace;
+                font-weight: 700;
+                font-size: 0.875rem;
+                color: #0f172a;
+                text-decoration: none;
+            }
+
+            .mobile-lead-id:hover {
+                color: #1e40af;
+                text-decoration: underline;
+            }
+
+            .mobile-lead-status-wrap {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            /* Customer Section: Customer Name + Mobile Number */
+            .mobile-lead-customer-section {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                width: 100%;
+            }
+
+            .mobile-lead-cust-name {
+                font-size: 0.9375rem;
+                font-weight: 700;
+                color: #0f172a;
+                line-height: 1.3;
+                text-decoration: none;
+            }
+
+            .mobile-lead-cust-name:hover {
+                color: #1e40af;
+                text-decoration: underline;
+            }
+
+            .mobile-lead-cust-phone {
+                font-size: 0.8125rem;
+                font-family: monospace;
+                color: #64748b;
+                line-height: 1.4;
+            }
+
+            /* Requirement / Service Section */
+            .mobile-lead-requirement {
+                font-size: 0.8125rem;
+                color: #1e293b;
+                line-height: 1.45;
+                font-weight: 500;
+                word-break: normal;
+                overflow-wrap: break-word;
+            }
+
+            /* Lead Details Key-Value Attributes: Branch, Assigned Agent, Next Follow-up */
+            .mobile-lead-details-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                padding-top: 8px;
+                border-top: 1px solid #f1f5f9;
+                font-size: 0.8125rem;
+            }
+
+            .mobile-lead-detail-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .mobile-lead-detail-label {
+                color: #64748b;
+                font-size: 0.75rem;
+                font-weight: 500;
+                flex-shrink: 0;
+            }
+
+            .mobile-lead-detail-value {
+                color: #0f172a;
+                font-weight: 600;
+                font-size: 0.8125rem;
+                text-align: right;
+                word-break: normal;
+                overflow-wrap: break-word;
+            }
+
+            /* Bottom Action Row: View, Edit, Delete */
+            .mobile-lead-actions {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding-top: 8px;
+                border-top: 1px solid #f1f5f9;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .mobile-lead-action-btn {
+                flex: 1;
+                height: 34px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                border-radius: var(--border-radius-base, 4px);
+                border: 1px solid #cbd5e1;
+                background: #ffffff;
+                color: #0f172a;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                text-decoration: none;
+                transition: all 0.15s ease;
+                box-sizing: border-box;
+            }
+
+            .mobile-lead-action-btn:hover {
+                background: #f1f5f9;
+                border-color: #94a3b8;
+            }
+
+            .mobile-lead-action-btn.btn-delete {
+                color: #b91c1c;
+                border-color: #fca5a5;
+                background: #ffffff;
+            }
+
+            .mobile-lead-action-btn.btn-delete:hover {
+                background: #fef2f2;
+                border-color: #f87171;
+            }
+
+            /* Pagination on Mobile */
+            .pagination-bar {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 10px !important;
+                padding: 12px 4px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -439,16 +946,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -813,6 +1310,23 @@
                         <!-- Pagination -->
                         <div class="pagination-bar">
                             <span id="lead-pagination-info">Showing 1-4 of 4</span>
+                            <div class="pagination-controls">
+                                <button type="button" class="page-btn" disabled>Prev</button>
+                                <span class="page-number">1</span>
+                                <button type="button" class="page-btn" disabled>Next</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Lead Cards Container (Only visible on mobile <= 768px) -->
+                    <div class="mobile-leads-list" id="leads-mobile-cards">
+                        <!-- Rendered dynamically by renderLeads() -->
+                    </div>
+
+                    <!-- Mobile Standalone Pagination Bar (for Mobile Cards) -->
+                    <div class="mobile-pagination-container" id="mobile-leads-pagination">
+                        <div class="pagination-bar">
+                            <span id="mobile-lead-pagination-info">Showing 1-4 of 4</span>
                             <div class="pagination-controls">
                                 <button type="button" class="page-btn" disabled>Prev</button>
                                 <span class="page-number">1</span>
@@ -1372,118 +1886,221 @@
                 return 0;
             });
 
+            const mobileContainer = document.getElementById('leads-mobile-cards');
+            const mobilePaginationInfo = document.getElementById('mobile-lead-pagination-info');
+
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: #888; padding: 28px;">No matching leads found.</td></tr>`;
-                document.getElementById('lead-pagination-info').textContent = `Showing 0 of ${leadsData.length}`;
+                if (tbody) tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #888; padding: 28px;">No matching leads found.</td></tr>`;
+                if (mobileContainer) mobileContainer.innerHTML = `<div style="text-align: center; color: #888; padding: 28px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;">No matching leads found.</div>`;
+                if (document.getElementById('lead-pagination-info')) document.getElementById('lead-pagination-info').textContent = `Showing 0 of ${leadsData.length}`;
+                if (mobilePaginationInfo) mobilePaginationInfo.textContent = `Showing 0 of ${leadsData.length}`;
                 return;
             }
 
-            tbody.innerHTML = filtered.map(l => {
-                // Customer Type Badge: Existing vs New
-                let custTypeBadge = '';
-                if (l.customerType === 'New') {
-                    custTypeBadge = '<span style="padding: 2px 7px; background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">New</span>';
-                } else {
-                    custTypeBadge = '<span style="padding: 2px 7px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Existing</span>';
-                }
+            // 1. RENDER DESKTOP LEADS TABLE (100% untouched desktop table rows)
+            if (tbody) {
+                tbody.innerHTML = filtered.map(l => {
+                    // Customer Type Badge: Existing vs New
+                    let custTypeBadge = '';
+                    if (l.customerType === 'New') {
+                        custTypeBadge = '<span style="padding: 2px 7px; background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">New</span>';
+                    } else {
+                        custTypeBadge = '<span style="padding: 2px 7px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Existing</span>';
+                    }
 
-                // Lead Pipeline Status Badge
-                let statusBadge = '';
-                switch (l.status) {
-                    case 'New':
-                        statusBadge = '<span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-weight: 600; font-size: 0.75rem;">New</span>';
-                        break;
-                    case 'Contacted':
-                        statusBadge = '<span style="padding: 2px 7px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Contacted</span>';
-                        break;
-                    case 'Qualified':
-                        statusBadge = '<span style="padding: 2px 7px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Qualified</span>';
-                        break;
-                    case 'Converted':
-                        statusBadge = '<span style="padding: 2px 7px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Converted</span>';
-                        break;
-                    case 'Lost':
-                        statusBadge = '<span style="padding: 2px 7px; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Lost</span>';
-                        break;
-                    default:
-                        statusBadge = `<span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-weight: 600; font-size: 0.75rem;">${escapeHtml(l.status)}</span>`;
-                }
+                    // Lead Pipeline Status Badge
+                    let statusBadge = '';
+                    switch (l.status) {
+                        case 'New':
+                            statusBadge = '<span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-weight: 600; font-size: 0.75rem;">New</span>';
+                            break;
+                        case 'Contacted':
+                            statusBadge = '<span style="padding: 2px 7px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Contacted</span>';
+                            break;
+                        case 'Qualified':
+                            statusBadge = '<span style="padding: 2px 7px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Qualified</span>';
+                            break;
+                        case 'Converted':
+                            statusBadge = '<span style="padding: 2px 7px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Converted</span>';
+                            break;
+                        case 'Lost':
+                            statusBadge = '<span style="padding: 2px 7px; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Lost</span>';
+                            break;
+                        default:
+                            statusBadge = `<span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-weight: 600; font-size: 0.75rem;">${escapeHtml(l.status)}</span>`;
+                    }
 
-                // Standard CCM Actions column rendering using icon buttons (View, Edit, Delete)
-                const isDisallowedPerson = (l.customerName === 'Priya Sharma' || l.agentName === 'Rahul Varma' || l.customerName === 'Rahul Varma');
-                const canEdit = (l.allowEdit !== false && !isDisallowedPerson);
-                const canDelete = (l.allowDelete !== false && !isDisallowedPerson);
-                let actionsHtml = `
-                    <div class="ccm-action-icons">
-                        <button type="button" class="ccm-icon-btn" title="View Lead Details" onclick="openViewLeadModal('${escapeHtml(l.id)}')">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        </button>
-                        ${canEdit ? `
-                        <a href="edit-lead.html?id=${encodeURIComponent(l.id)}" class="ccm-icon-btn" title="Edit Lead">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                        </a>
-                        ` : ''}
-                        ${canDelete ? `
-                        <button type="button" class="ccm-icon-btn" title="Delete Lead" onclick="openDeleteLeadModal('${escapeHtml(l.id)}', '${escapeHtml(l.customerName)}')">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                        ` : ''}
-                    </div>
-                `;
-
-                // Lead Source Badge: Manual vs Call
-                let sourceBadge = '';
-                if (l.source === 'Call' || (l.source && l.source.toLowerCase().includes('call'))) {
-                    sourceBadge = '<span style="padding: 2px 7px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call</span>';
-                } else {
-                    sourceBadge = '<span style="padding: 2px 7px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Manual</span>';
-                }
-
-                // Assigned Agent
-                const assignedAgentHtml = escapeHtml(l.agentName || 'Unassigned');
-
-                return `
-                    <tr data-id="${escapeHtml(l.id)}">
-                        <td style="font-family: monospace; font-weight: 700; color: #1e40af;">
-                            ${escapeHtml(l.id)}
-                        </td>
-                        <td style="font-weight: 600;">
-                            <a href="customer-360.html?id=${escapeHtml(l.customerId || 'CUST-1001')}" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
-                                ${escapeHtml(l.customerName || '—')}
+                    // Standard CCM Actions column rendering using icon buttons (View, Edit, Delete)
+                    const isDisallowedPerson = (l.customerName === 'Priya Sharma' || l.agentName === 'Rahul Varma' || l.customerName === 'Rahul Varma');
+                    const canEdit = (l.allowEdit !== false && !isDisallowedPerson);
+                    const canDelete = (l.allowDelete !== false && !isDisallowedPerson);
+                    let actionsHtml = `
+                        <div class="ccm-action-icons">
+                            <button type="button" class="ccm-icon-btn" title="View Lead Details" onclick="openViewLeadModal('${escapeHtml(l.id)}')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                            ${canEdit ? `
+                            <a href="edit-lead.html?id=${encodeURIComponent(l.id)}" class="ccm-icon-btn" title="Edit Lead">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             </a>
-                        </td>
-                        <td style="font-family: monospace;">
-                            ${escapeHtml(l.phone || '')}
-                        </td>
-                        <td>
-                            ${custTypeBadge}
-                        </td>
-                        <td>
-                            ${sourceBadge}
-                        </td>
-                        <td>
-                            ${escapeHtml(l.requirement)}
-                        </td>
-                        <td>
-                            ${escapeHtml(l.branch)}
-                        </td>
-                        <td>
-                            ${assignedAgentHtml}
-                        </td>
-                        <td>
-                            ${statusBadge}
-                        </td>
-                        <td>
-                            <span style="font-weight: 600; color: #475569;">${escapeHtml(l.followupDisplay || l.followupDate || 'No Follow-up')}</span>
-                        </td>
-                        <td class="action-cell" style="text-align: right; white-space: nowrap;">
-                            ${actionsHtml}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+                            ` : ''}
+                            ${canDelete ? `
+                            <button type="button" class="ccm-icon-btn" title="Delete Lead" onclick="openDeleteLeadModal('${escapeHtml(l.id)}', '${escapeHtml(l.customerName)}')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                            ` : ''}
+                        </div>
+                    `;
 
-            document.getElementById('lead-pagination-info').textContent = `Showing 1-${filtered.length} of ${filtered.length}`;
+                    // Lead Source Badge: Manual vs Call
+                    let sourceBadge = '';
+                    if (l.source === 'Call' || (l.source && l.source.toLowerCase().includes('call'))) {
+                        sourceBadge = '<span style="padding: 2px 7px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Call</span>';
+                    } else {
+                        sourceBadge = '<span style="padding: 2px 7px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Manual</span>';
+                    }
+
+                    // Assigned Agent
+                    const assignedAgentHtml = escapeHtml(l.agentName || 'Unassigned');
+
+                    return `
+                        <tr data-id="${escapeHtml(l.id)}">
+                            <td style="font-family: monospace; font-weight: 700; color: #1e40af;">
+                                ${escapeHtml(l.id)}
+                            </td>
+                            <td style="font-weight: 600;">
+                                <a href="customer-360.html?id=${escapeHtml(l.customerId || 'CUST-1001')}" style="color: inherit; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                    ${escapeHtml(l.customerName || '—')}
+                                </a>
+                            </td>
+                            <td style="font-family: monospace;">
+                                ${escapeHtml(l.phone || '')}
+                            </td>
+                            <td>
+                                ${custTypeBadge}
+                            </td>
+                            <td>
+                                ${sourceBadge}
+                            </td>
+                            <td>
+                                ${escapeHtml(l.requirement)}
+                            </td>
+                            <td>
+                                ${escapeHtml(l.branch)}
+                            </td>
+                            <td>
+                                ${assignedAgentHtml}
+                            </td>
+                            <td>
+                                ${statusBadge}
+                            </td>
+                            <td>
+                                <span style="font-weight: 600; color: #475569;">${escapeHtml(l.followupDisplay || l.followupDate || 'No Follow-up')}</span>
+                            </td>
+                            <td class="action-cell" style="text-align: right; white-space: nowrap;">
+                                ${actionsHtml}
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // 2. RENDER PURPOSE-DESIGNED MOBILE LEAD CARDS (Mobile Responsive View)
+            if (mobileContainer) {
+                mobileContainer.innerHTML = filtered.map(l => {
+                    // Lead Pipeline Status Badge
+                    let statusBadge = '';
+                    switch (l.status) {
+                        case 'New':
+                            statusBadge = '<span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-weight: 600; font-size: 0.75rem;">New</span>';
+                            break;
+                        case 'Contacted':
+                            statusBadge = '<span style="padding: 2px 7px; background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Contacted</span>';
+                            break;
+                        case 'Qualified':
+                            statusBadge = '<span style="padding: 2px 7px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Qualified</span>';
+                            break;
+                        case 'Converted':
+                            statusBadge = '<span style="padding: 2px 7px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Converted</span>';
+                            break;
+                        case 'Lost':
+                            statusBadge = '<span style="padding: 2px 7px; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">Lost</span>';
+                            break;
+                        default:
+                            statusBadge = `<span style="padding: 2px 7px; background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: 4px; font-weight: 600; font-size: 0.75rem;">${escapeHtml(l.status)}</span>`;
+                    }
+
+                    const isDisallowedPerson = (l.customerName === 'Priya Sharma' || l.agentName === 'Rahul Varma' || l.customerName === 'Rahul Varma');
+                    const canEdit = (l.allowEdit !== false && !isDisallowedPerson);
+                    const canDelete = (l.allowDelete !== false && !isDisallowedPerson);
+
+                    return `
+                        <div class="mobile-lead-card" data-id="${escapeHtml(l.id)}">
+                            <!-- TOP ROW: Lead ID + Lead Status -->
+                            <div class="mobile-lead-header">
+                                <a href="javascript:void(0)" onclick="openViewLeadModal('${escapeHtml(l.id)}')" class="mobile-lead-id">${escapeHtml(l.id)}</a>
+                                <div class="mobile-lead-status-wrap">
+                                    ${statusBadge}
+                                </div>
+                            </div>
+
+                            <!-- CUSTOMER: Customer Name + Mobile Number -->
+                            <div class="mobile-lead-customer-section">
+                                <a href="customer-360.html?id=${escapeHtml(l.customerId || 'CUST-1001')}" class="mobile-lead-cust-name">${escapeHtml(l.customerName || '—')}</a>
+                                <div class="mobile-lead-cust-phone">${escapeHtml(l.phone || '—')}</div>
+                            </div>
+
+                            <!-- REQUIREMENT / SERVICE -->
+                            <div class="mobile-lead-requirement">
+                                ${escapeHtml(l.requirement)}
+                            </div>
+
+                            <!-- LEAD DETAILS: Branch, Assigned Agent, Next Follow-up -->
+                            <div class="mobile-lead-details-grid">
+                                <div class="mobile-lead-detail-row">
+                                    <span class="mobile-lead-detail-label">Branch</span>
+                                    <span class="mobile-lead-detail-value">${escapeHtml(l.branch)}</span>
+                                </div>
+                                <div class="mobile-lead-detail-row">
+                                    <span class="mobile-lead-detail-label">Assigned Agent</span>
+                                    <span class="mobile-lead-detail-value">${escapeHtml(l.agentName || 'Unassigned')}</span>
+                                </div>
+                                <div class="mobile-lead-detail-row">
+                                    <span class="mobile-lead-detail-label">Next Follow-up</span>
+                                    <span class="mobile-lead-detail-value">${escapeHtml(l.followupDisplay || l.followupDate || 'No Follow-up')}</span>
+                                </div>
+                            </div>
+
+                            <!-- BOTTOM: View, Edit, Delete -->
+                            <div class="mobile-lead-actions">
+                                <button type="button" class="mobile-lead-action-btn" title="View Lead Details" onclick="openViewLeadModal('${escapeHtml(l.id)}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <span>View</span>
+                                </button>
+                                ${canEdit ? `
+                                <a href="edit-lead.html?id=${encodeURIComponent(l.id)}" class="mobile-lead-action-btn" title="Edit Lead">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <span>Edit</span>
+                                </a>
+                                ` : ''}
+                                ${canDelete ? `
+                                <button type="button" class="mobile-lead-action-btn btn-delete" title="Delete Lead" onclick="openDeleteLeadModal('${escapeHtml(l.id)}', '${escapeHtml(l.customerName)}')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    <span>Delete</span>
+                                </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (document.getElementById('lead-pagination-info')) {
+                document.getElementById('lead-pagination-info').textContent = `Showing 1-${filtered.length} of ${leadsData.length}`;
+            }
+            if (mobilePaginationInfo) {
+                mobilePaginationInfo.textContent = `Showing 1-${filtered.length} of ${leadsData.length}`;
+            }
         }
 
         function filterLeadTable() {
@@ -1583,8 +2200,8 @@
             const showAdminChipOnAgent = (l.createdByAdmin === true && (l.source === 'Manual' || !l.callId));
 
             document.getElementById('view-lead-id-subtitle').textContent = l.id;
-            document.getElementById('view-lead-cust-name').textContent = l.customerName || '—';
-            document.getElementById('view-lead-cust-phone').textContent = l.phone || '—';
+            document.getElementById('view-lead-cust-name').textContent = l.customerName || '–';
+            document.getElementById('view-lead-cust-phone').textContent = l.phone || '–';
             document.getElementById('view-lead-cust-type-badge').textContent = (l.customerType || 'Existing') + ' Customer';
 
             document.getElementById('view-lead-branch').textContent = l.branch;

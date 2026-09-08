@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Details — CCM | Exelon Logistics ERP</title>
+    <!-- Design System Global & Components CSS -->
+    <link rel="stylesheet" href="../../Design System/global.css">
+    <link rel="stylesheet" href="../../Design System/components.css">
+    <link rel="stylesheet" href="../../Sidebar/sidebar.css">
+    <!-- Queues Module Stylesheet -->
+    <link rel="stylesheet" href="queues.css">
+</head>
+<body>
+
+    <!-- Mobile Drawer Checkbox Trigger -->
+    <input type="checkbox" id="mobile-menu-toggle">
+    <label for="mobile-menu-toggle" class="mobile-menu-btn" title="Open Navigation Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </label>
+
+    <!-- App Layout -->
+    <div class="app-layout">
+        
+        <!-- Two-Tier Dark Sidebar (CCM Admin Specific navigation) -->
+        <aside class="sidebar">
+            <!-- Left Rail -->
+            <div class="sidebar-rail">
+                <div class="sidebar-logo-container">
+                    <div class="sidebar-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                </div>
+                
+                <nav class="rail-nav">
+                    <a href="../Company-Branches/index.html" class="rail-icon active" data-tooltip="CCM">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Menu Pane -->
+            <div class="sidebar-menu">
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Logistics ERP</div>
+                    <div class="sidebar-badge">ONLINE</div>
+                </div>
+
+                <div class="sidebar-nav-section">TELEPHONY &amp; CRM</div>
+                <nav class="sidebar-nav">
+                    <!-- Module 1: Company & Branches -->
+                    <a href="../Company-Branches/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="21" width="18" height="2"></rect>
+                            <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path>
+                            <path d="M9 9h1"></path>
+                            <path d="M9 13h1"></path>
+                            <path d="M9 17h1"></path>
+                            <path d="M14 9h1"></path>
+                            <path d="M14 13h1"></path>
+                            <path d="M14 17h1"></path>
+                        </svg>
+                        Company &amp; Branches
+                    </a>
+                    <!-- Module 2: Telephony -->
+                    <a href="../Telephony/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Telephony
+                    </a>
+                    <!-- Module 3: IVR -->
+                    <a href="../IVR/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        IVR
+                    </a>
+                    <!-- Module 4: Call Routing -->
+                    <a href="../Call-Routing/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 3 21 3 21 8"></polyline>
+                            <line x1="4" y1="20" x2="21" y2="3"></line>
+                            <polyline points="21 16 21 21 16 21"></polyline>
+                            <line x1="15" y1="15" x2="21" y2="21"></line>
+                            <line x1="4" y1="4" x2="9" y2="9"></line>
+                        </svg>
+                        Call Routing
+                    </a>
+                    <!-- Module 5: Queues -->
+                    <a href="../Queues/index.html" class="active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Queues
+                    </a>
+                    <!-- Module 6: Agents -->
+                    <a href="../Agents/index.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Agents
+                    </a>
+                    <!-- Module 7: Customers -->
+                    <a href="../CCM/customers.html">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Customers
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="top-breadcrumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Home</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span>CCM</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="index.html" style="color: inherit; text-decoration: none;">Queues</a>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 12px; height: 12px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <span class="current" id="breadcrumb-queue-name">Queue Details</span>
+                </div>
+                <div class="top-profile-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <div class="profile-info">
+                        <strong>Super Admin</strong>
+                        <span>HQ-NODE-01</span>
+                    </div>
+                    <a href="../../Login/welcome.html" class="logout-btn" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="main-scroll-area" style="padding-bottom: 60px;">
+                
+                <!-- Page Header with Back Arrow & Actions -->
+                <div class="page-header">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <a href="index.html" style="color: inherit; text-decoration: none; font-size: 1.25rem; font-weight: 700; line-height: 1.1; margin-top: 2px;" title="Back to Queues">&lt;</a>
+                        <div class="page-title-group">
+                            <h1 class="page-title" id="details-queue-title" style="line-height: 1.2; margin-bottom: 4px;">Queue Details</h1>
+                            <p class="page-subtitle" id="details-queue-subtitle">Overview of queue configuration, assigned agents, waiting calls, and overflow fallbacks.</p>
+                        </div>
+                    </div>
+                    <div class="header-actions" style="display: flex; align-items: center; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-right: 6px;">
+                            <span style="font-size: 0.8125rem; font-weight: 600; color: #555;">Status:</span>
+                            <label class="status-toggle" title="Toggle Queue Status">
+                                <input type="checkbox" id="details-status-toggle" onchange="handleQueueStatusChange(this.checked)">
+                                <div class="toggle-switch"></div>
+                            </label>
+                        </div>
+                        <a href="#" id="edit-queue-link" class="btn-primary" style="height: 32px; padding: 0 16px; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Edit Queue
+                        </a>
+                    </div>
+                </div>
+
+                <!-- KPI Status Bar -->
+                <div class="queue-kpi-bar">
+                    <div class="queue-kpi-item">
+                        <span class="queue-kpi-title">Assigned Agents</span>
+                        <span class="queue-kpi-number" id="kpi-assigned-count">0</span>
+                    </div>
+                    <div class="queue-kpi-item">
+                        <span class="queue-kpi-title">Eligible Employees Pool</span>
+                        <span class="queue-kpi-number" id="kpi-eligible-count">0</span>
+                    </div>
+                    <div class="queue-kpi-item">
+                        <span class="queue-kpi-title">Waiting Calls</span>
+                        <span class="queue-kpi-number" id="kpi-waiting-calls" style="color: var(--color-black);">0</span>
+                    </div>
+                    <div class="queue-kpi-item">
+                        <span class="queue-kpi-title">Queue Status</span>
+                        <div style="margin-top: 4px;">
+                            <span id="kpi-status-badge" class="agent-status-badge status-available">Active</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Layout Grid (2 Columns: Left content + Right configuration summary) -->
+                <div class="queue-details-grid">
+                    
+                    <!-- Left Column: Assigned Agents & Eligible Pool -->
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        
+                        <!-- Assigned Agents Card -->
+                        <div class="section-card" style="margin-bottom: 0;">
+                            <div class="section-header">
+                                <div>
+                                    <h3 class="section-title">Assigned Agents</h3>
+                                    <p class="section-helper">Employees currently assigned to receive and answer customer calls for this queue.</p>
+                                </div>
+                                <span id="assigned-badge-count" style="font-size: 0.75rem; font-weight: 700; background: var(--color-bg-light); border: 1px solid var(--color-border); padding: 3px 10px; border-radius: 12px;">0 Agents</span>
+                            </div>
+
+                            <div class="table-container" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); overflow-x: auto;">
+                                <table class="assigned-agents-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Employee Name</th>
+                                            <th>Identifier / Ext</th>
+                                            <th style="text-align: right;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="assigned-agents-table-body">
+                                        <!-- Dynamic Rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Eligible Unassigned Agents Pool Card -->
+                        <div class="section-card" style="margin-bottom: 0;">
+                            <div class="section-header">
+                                <div>
+                                    <h3 class="section-title">Eligible Employees (Unassigned Pool)</h3>
+                                    <p class="section-helper">Employees matching <strong id="eligible-criteria-label">Branch &bull; Department &bull; Role</strong> who are not yet assigned to this queue.</p>
+                                </div>
+                                <button type="button" class="btn-secondary" id="assign-all-btn" style="height: 28px; padding: 0 12px; font-size: 0.75rem;" onclick="assignAllEligible()">Assign All to Queue</button>
+                            </div>
+
+                            <div id="unassigned-empty-message" style="display: none; padding: 24px; text-align: center; border: 1px dashed var(--color-border); border-radius: var(--border-radius-base); background: var(--color-bg-light); color: #64748b; font-size: 0.8125rem;">
+                                All eligible employees matching this queue's criteria are currently assigned.
+                            </div>
+
+                            <div class="table-container" id="unassigned-table-container" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-base); overflow-x: auto;">
+                                <table class="assigned-agents-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Employee Name</th>
+                                            <th>Identifier / Ext</th>
+                                            <th style="text-align: right;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="unassigned-agents-table-body">
+                                        <!-- Dynamic Rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column: Queue Details & Fallback Settings -->
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        
+                        <!-- Queue Target Configuration Card -->
+                        <div class="section-card" style="margin-bottom: 0;">
+                            <div class="section-header">
+                                <h3 class="section-title">Queue Configuration</h3>
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 14px; font-size: 0.8125rem;">
+                                <div>
+                                    <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Queue Name</div>
+                                    <div style="font-weight: 700; color: var(--color-black); margin-top: 2px;" id="conf-queue-name">-</div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 10px; border-top: 1px solid var(--color-border);">
+                                    <div>
+                                        <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Branch</div>
+                                        <div style="font-weight: 600; color: var(--color-black); margin-top: 2px;" id="conf-branch">-</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Department</div>
+                                        <div style="font-weight: 600; color: var(--color-black); margin-top: 2px;" id="conf-dept">-</div>
+                                    </div>
+                                </div>
+                                <div style="padding-top: 10px; border-top: 1px solid var(--color-border);">
+                                    <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase;">Target Employee Role</div>
+                                    <div style="font-weight: 600; color: var(--color-black); margin-top: 2px;" id="conf-role">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Queue / Fallback Behaviour Card -->
+                        <div class="section-card" style="margin-bottom: 0;">
+                            <div class="section-header">
+                                <h3 class="section-title">Queue Behaviour &amp; Fallback</h3>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.8125rem;">
+                                <div>
+                                    <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Distribution Strategy</div>
+                                    <div style="font-weight: 600; color: var(--color-black); margin-top: 2px;">Round Robin / Longest Idle</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Max Wait Timeout</div>
+                                    <div style="font-weight: 600; color: var(--color-black); margin-top: 2px;">120 Seconds</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Fallback Destination</div>
+                                    <div style="font-weight: 700; color: var(--color-black); margin-top: 2px;" id="conf-fallback">None</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Script for Dynamic Queue Details Render & Management -->
+    <script>
+        function getQueuesFromStorage() {
+            const data = localStorage.getItem('ccm_queues_data_v2');
+            if (!data) return [];
+            try {
+                return JSON.parse(data);
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function getAgentsFromStorage() {
+            const data = localStorage.getItem('ccm_agents_master_v1');
+            if (!data) return [];
+            try {
+                return JSON.parse(data);
+            } catch (e) {
+                return [];
+            }
+        }
+
+        let queuesList = getQueuesFromStorage();
+        let agentsMaster = getAgentsFromStorage();
+        let currentQueue = null;
+
+        function getQueueIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            return id ? parseInt(id, 10) : 1;
+        }
+
+        function getStatusBadgeClass(status) {
+            switch (status) {
+                case 'Available': return 'status-available';
+                case 'On Call': return 'status-oncall';
+                case 'Offline': return 'status-offline';
+                case 'Busy': return 'status-busy';
+                default: return 'status-offline';
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function loadQueueDetails() {
+            const queueId = getQueueIdFromUrl();
+            queuesList = getQueuesFromStorage();
+            agentsMaster = getAgentsFromStorage();
+            currentQueue = queuesList.find(q => q.id === queueId) || queuesList[0];
+
+            if (!currentQueue) {
+                document.getElementById('details-queue-title').textContent = "Queue Not Found";
+                return;
+            }
+
+            // Populate Breadcrumb & Titles
+            document.getElementById('breadcrumb-queue-name').textContent = currentQueue.name;
+            document.getElementById('details-queue-title').textContent = currentQueue.name;
+            document.getElementById('details-queue-subtitle').textContent = `Manage call distribution and agent assignments for ${currentQueue.branch}.`;
+            document.getElementById('edit-queue-link').href = `edit-queue.html?id=${currentQueue.id}`;
+
+            // Status Toggle
+            const statusToggle = document.getElementById('details-status-toggle');
+            if (statusToggle) statusToggle.checked = (currentQueue.status === 'Active');
+
+            // KPI Status
+            const kpiStatusBadge = document.getElementById('kpi-status-badge');
+            if (kpiStatusBadge) {
+                kpiStatusBadge.textContent = currentQueue.status || 'Active';
+                kpiStatusBadge.className = `agent-status-badge ${currentQueue.status === 'Active' ? 'status-available' : 'status-offline'}`;
+            }
+
+            document.getElementById('kpi-waiting-calls').textContent = currentQueue.waitingCalls || 0;
+
+            // Config Summary
+            document.getElementById('conf-queue-name').textContent = currentQueue.name;
+            document.getElementById('conf-branch').textContent = currentQueue.branch;
+            document.getElementById('conf-dept').textContent = currentQueue.department || 'Customer Support';
+            document.getElementById('conf-role').textContent = currentQueue.role || 'Customer Care Executive';
+            document.getElementById('conf-fallback').textContent = currentQueue.fallback || 'None';
+            document.getElementById('eligible-criteria-label').innerHTML = `${escapeHtml(currentQueue.branch)} &bull; ${escapeHtml(currentQueue.department || 'Customer Support')} &bull; ${escapeHtml(currentQueue.role || 'Customer Care Executive')}`;
+
+            // Derive Eligible Agents (Matching Branch + Department + Role)
+            const eligibleAgents = agentsMaster.filter(a => 
+                a.branch === currentQueue.branch && 
+                a.dept === (currentQueue.department || 'Customer Support') && 
+                a.role === (currentQueue.role || 'Customer Care Executive')
+            );
+
+            // Assigned vs Unassigned
+            const assignedIds = currentQueue.agentIds || [];
+            const assignedAgents = eligibleAgents.filter(a => assignedIds.includes(a.id));
+            const unassignedAgents = eligibleAgents.filter(a => !assignedIds.includes(a.id));
+
+            // Update Counts
+            document.getElementById('kpi-assigned-count').textContent = assignedAgents.length;
+            document.getElementById('kpi-eligible-count').textContent = eligibleAgents.length;
+            document.getElementById('assigned-badge-count').textContent = `${assignedAgents.length} Agents`;
+
+            // Render Assigned Agents Table
+            const assignedTbody = document.getElementById('assigned-agents-table-body');
+            if (assignedAgents.length === 0) {
+                assignedTbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #888; padding: 20px;">No agents currently assigned. Assign agents from the eligible pool below.</td></tr>`;
+            } else {
+                assignedTbody.innerHTML = assignedAgents.map(a => `
+                    <tr>
+                        <td style="font-weight: 600; color: var(--color-black);">${escapeHtml(a.name)}</td>
+                        <td><span style="font-family: monospace; font-size: 0.75rem; background: var(--color-bg-light); border: 1px solid var(--color-border); padding: 2px 6px; border-radius: 4px;">Ext. ${escapeHtml(a.ext)}</span></td>
+                        <td style="text-align: right;">
+                            <button type="button" class="btn-secondary" style="height: 26px; font-size: 0.75rem; padding: 0 8px; color: #dc2626; border-color: #fee2e2;" onclick="removeAgentFromQueue('${a.id}')">Remove</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Render Unassigned Agents Table
+            const unassignedTbody = document.getElementById('unassigned-agents-table-body');
+            const unassignedEmpty = document.getElementById('unassigned-empty-message');
+            const unassignedTable = document.getElementById('unassigned-table-container');
+            const assignAllBtn = document.getElementById('assign-all-btn');
+
+            if (unassignedAgents.length === 0) {
+                unassignedEmpty.style.display = 'block';
+                unassignedTable.style.display = 'none';
+                if (assignAllBtn) assignAllBtn.style.display = 'none';
+            } else {
+                unassignedEmpty.style.display = 'none';
+                unassignedTable.style.display = 'block';
+                if (assignAllBtn) assignAllBtn.style.display = 'inline-flex';
+
+                unassignedTbody.innerHTML = unassignedAgents.map(a => `
+                    <tr>
+                        <td style="font-weight: 600; color: var(--color-black);">${escapeHtml(a.name)}</td>
+                        <td><span style="font-family: monospace; font-size: 0.75rem; background: var(--color-bg-light); border: 1px solid var(--color-border); padding: 2px 6px; border-radius: 4px;">Ext. ${escapeHtml(a.ext)}</span></td>
+                        <td style="text-align: right;">
+                            <button type="button" class="btn-primary" style="height: 26px; font-size: 0.75rem; padding: 0 10px;" onclick="assignAgentToQueue('${a.id}')">Assign to Queue</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function handleQueueStatusChange(isActive) {
+            if (!currentQueue) return;
+            currentQueue.status = isActive ? 'Active' : 'Inactive';
+            saveQueuesState();
+            loadQueueDetails();
+        }
+
+        function assignAgentToQueue(agentId) {
+            if (!currentQueue) return;
+            if (!currentQueue.agentIds) currentQueue.agentIds = [];
+            if (!currentQueue.agentIds.includes(agentId)) {
+                currentQueue.agentIds.push(agentId);
+                currentQueue.agentCount = currentQueue.agentIds.length;
+                saveQueuesState();
+                loadQueueDetails();
+            }
+        }
+
+        function removeAgentFromQueue(agentId) {
+            if (!currentQueue || !currentQueue.agentIds) return;
+            currentQueue.agentIds = currentQueue.agentIds.filter(id => id !== agentId);
+            currentQueue.agentCount = currentQueue.agentIds.length;
+            saveQueuesState();
+            loadQueueDetails();
+        }
+
+        function assignAllEligible() {
+            if (!currentQueue) return;
+            const eligibleAgents = agentsMaster.filter(a => 
+                a.branch === currentQueue.branch && 
+                a.dept === (currentQueue.department || 'Customer Support') && 
+                a.role === (currentQueue.role || 'Customer Care Executive')
+            );
+            currentQueue.agentIds = eligibleAgents.map(a => a.id);
+            currentQueue.agentCount = currentQueue.agentIds.length;
+            saveQueuesState();
+            loadQueueDetails();
+        }
+
+        function saveQueuesState() {
+            const idx = queuesList.findIndex(q => q.id === currentQueue.id);
+            if (idx !== -1) {
+                queuesList[idx] = currentQueue;
+                localStorage.setItem('ccm_queues_data_v2', JSON.stringify(queuesList));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQueueDetails();
+        });
+    </script>
+</body>
+</html>

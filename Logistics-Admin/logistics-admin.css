@@ -1,7 +1,7 @@
 /* Logistics Admin Stylesheet - STRICT BLACK AND WHITE ONLY DESIGN SYSTEM */
-@import url('../Design System/global.css');
-@import url('../Design System/components.css');
-@import url('../Sidebar/sidebar.css');
+@import url('../../Design System/global.css');
+@import url('../../Design System/components.css');
+@import url('../../Sidebar/sidebar.css');
 
 /* Monochrome Overrides & Enterprise Clean Styles */
 :root {

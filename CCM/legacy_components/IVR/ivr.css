@@ -1,0 +1,1516 @@
+/* CCM / Call Center, Telephony & CRM Management - Module 1 CSS */
+
+/* Pure CSS State Toggles (Radio hacks for demonstration & interactive testing) */
+.ccm-central-state-toggle,
+.ccm-branches-state-toggle,
+.ccm-provider-state-toggle,
+.ccm-modal-toggle {
+    display: none !important;
+}
+
+/* Central Telephony Section State Switching */
+#central-state-empty:checked ~ .app-layout #central-empty-view {
+    display: block !important;
+}
+#central-state-empty:checked ~ .app-layout #central-configured-view {
+    display: none !important;
+}
+
+#central-state-configured:checked ~ .app-layout #central-configured-view {
+    display: block !important;
+}
+#central-state-configured:checked ~ .app-layout #central-empty-view {
+    display: none !important;
+}
+
+/* Telephony Provider View Switches */
+#provider-state-empty:checked ~ .app-layout #provider-empty-view {
+    display: block !important;
+}
+#provider-state-empty:checked ~ .app-layout #provider-configured-view {
+    display: none !important;
+}
+
+#provider-state-configured:checked ~ .app-layout #provider-empty-view {
+    display: none !important;
+}
+#provider-state-configured:checked ~ .app-layout #provider-configured-view {
+    display: block !important;
+}
+
+/* Call Routing Section State Switching */
+.ccm-routing-state-toggle {
+    display: none !important;
+}
+
+#routing-state-empty:checked ~ .app-layout #routing-empty-view {
+    display: block !important;
+}
+#routing-state-empty:checked ~ .app-layout #routing-configured-view {
+    display: none !important;
+}
+
+#routing-state-configured:checked ~ .app-layout #routing-configured-view {
+    display: block !important;
+}
+#routing-state-configured:checked ~ .app-layout #routing-empty-view {
+    display: none !important;
+}
+
+/* Branches Section State Switching */
+#branches-state-empty:checked ~ .app-layout #branches-empty-view {
+    display: block;
+}
+#branches-state-empty:checked ~ .app-layout #branches-configured-view {
+    display: none;
+}
+
+#branches-state-configured:checked ~ .app-layout #branches-configured-view {
+    display: block;
+}
+#branches-state-configured:checked ~ .app-layout #branches-empty-view {
+    display: none;
+}
+
+.modal-content select.form-control {
+    width: 100%;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-white);
+    font-size: 0.8125rem;
+    color: var(--color-black);
+    outline: none;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.modal-content select.form-control:focus {
+    border-color: var(--color-black);
+}
+
+.modal-content .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-content .form-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.modal-content {
+    overflow: visible !important;
+}
+
+/* Modal Overlays & Actions Alignment */
+.ccm-modal-toggle:checked + .modal-overlay {
+    display: flex !important;
+}
+
+.modal-content .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-content .modal-actions .btn-secondary,
+.modal-content .modal-actions .btn-primary {
+    height: 32px;
+    padding: 0 14px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-base);
+    flex: none !important;
+    width: auto !important;
+}
+
+/* Modal Custom Select Dropdown UI */
+.modal-content details.custom-select-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.modal-content summary.custom-select-trigger {
+    width: 100%;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8125rem;
+    color: var(--color-black);
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.modal-content summary.custom-select-trigger .trigger-label.placeholder {
+    color: #888;
+}
+
+.modal-content summary.custom-select-trigger svg {
+    color: #666;
+    flex-shrink: 0;
+}
+
+.modal-content .custom-select-options {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    z-index: 100;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.modal-content .custom-select-search {
+    position: sticky;
+    top: 0;
+    background: var(--color-white);
+    padding: 6px;
+    border-bottom: 1px solid var(--color-border);
+    z-index: 2;
+}
+
+.modal-content .custom-select-search-input {
+    width: 100%;
+    height: 30px;
+    padding: 0 10px 0 32px !important;
+    font-size: 0.8125rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    outline: none;
+    box-sizing: border-box;
+    background-color: var(--color-white);
+}
+
+.modal-content .custom-select-search-input:focus {
+    border-color: var(--color-black);
+}
+
+.modal-content .custom-select-search-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.modal-content .custom-select-search-wrapper svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    color: #888;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.modal-content .custom-option {
+    padding: 8px 12px;
+    font-size: 0.8125rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--color-black);
+    transition: background-color 0.15s ease;
+}
+
+.modal-content .custom-option:hover {
+    background-color: var(--color-bg-light);
+}
+
+.modal-content .custom-option input[type="radio"] {
+    display: none;
+}
+
+.modal-content .custom-option:has(input[type="radio"]:checked) {
+    font-weight: 700;
+    background-color: var(--color-bg-light);
+}
+
+/* Text Switching inside summary trigger */
+.modal-content .selected-text {
+    display: none;
+}
+details.custom-select-wrapper:has(input[value="mangalore"]:checked) .selected-text-mangalore,
+details.custom-select-wrapper:has(input[value="bengaluru"]:checked) .selected-text-bengaluru,
+details.custom-select-wrapper:has(input[value="hyderabad"]:checked) .selected-text-hyderabad,
+details.custom-select-wrapper:has(input[value="mumbai"]:checked) .selected-text-mumbai,
+details.custom-select-wrapper:has(input[value="delhi"]:checked) .selected-text-delhi,
+details.custom-select-wrapper:has(input[value="chennai"]:checked) .selected-text-chennai,
+details.custom-select-wrapper:has(input[value="pune"]:checked) .selected-text-pune,
+details.custom-select-wrapper:has(input[value="toll-free"]:checked) .selected-text-toll-free,
+details.custom-select-wrapper:has(input[value="standard"]:checked) .selected-text-standard,
+details.custom-select-wrapper:has(input[value="airtel"]:checked) .selected-text-airtel,
+details.custom-select-wrapper:has(input[value="exotel"]:checked) .selected-text-exotel,
+details.custom-select-wrapper:has(input[value="ozonetel"]:checked) .selected-text-ozonetel,
+details.custom-select-wrapper:has(input[value="other"]:checked) .selected-text-other,
+details.custom-select-wrapper:has(input[value="custom"]:checked) .selected-text-custom,
+details.custom-select-wrapper:has(input[value="shipment-status"]:checked) .selected-text-shipment-status,
+details.custom-select-wrapper:has(input[value="customer-support"]:checked) .selected-text-customer-support,
+details.custom-select-wrapper:has(input[value="branch-assistance"]:checked) .selected-text-branch-assistance,
+details.custom-select-wrapper:has(input[value="billing-inquiries"]:checked) .selected-text-billing-inquiries,
+details.custom-select-wrapper:has(input[value="dest-lookup"]:checked) .selected-text-dest-lookup,
+details.custom-select-wrapper:has(input[value="dest-support-queue"]:checked) .selected-text-dest-support-queue,
+details.custom-select-wrapper:has(input[value="dest-branch-queue"]:checked) .selected-text-dest-branch-queue,
+details.custom-select-wrapper:has(input[value="dest-accounts-queue"]:checked) .selected-text-dest-accounts-queue,
+details.custom-select-wrapper:has(input[value="method-ivr"]:checked) .selected-text-method-ivr,
+details.custom-select-wrapper:has(input[value="method-areacode"]:checked) .selected-text-method-areacode,
+details.custom-select-wrapper:has(input[value="method-centralteam"]:checked) .selected-text-method-centralteam,
+details.custom-select-wrapper:has(input[value="method-branchshipment"]:checked) .selected-text-method-branchshipment,
+details.custom-select-wrapper:has(input[value="dest-central-ivr"]:checked) .selected-text-dest-central-ivr,
+details.custom-select-wrapper:has(input[value="dest-blr-branch"]:checked) .selected-text-dest-blr-branch,
+details.custom-select-wrapper:has(input[value="dest-mum-branch"]:checked) .selected-text-dest-mum-branch,
+details.custom-select-wrapper:has(input[value="dest-central-team"]:checked) .selected-text-dest-central-team,
+details.custom-select-wrapper:has(input[value="dest-matched-branch"]:checked) .selected-text-dest-matched-branch,
+details.custom-select-wrapper:has(input[value="dest-origin-branch"]:checked) .selected-text-dest-origin-branch,
+details.custom-select-wrapper:has(input[value="dest-dest-hub"]:checked) .selected-text-dest-dest-hub,
+details.custom-select-wrapper:has(input[value="fb-none"]:checked) .selected-text-fb-none,
+details.custom-select-wrapper:has(input[value="fb-ivr"]:checked) .selected-text-fb-ivr,
+details.custom-select-wrapper:has(input[value="fb-centralteam"]:checked) .selected-text-fb-centralteam,
+details.custom-select-wrapper:has(input[value="fb-blr-branch"]:checked) .selected-text-fb-blr-branch,
+details.custom-select-wrapper:has(input[value="fb-origin-branch"]:checked) .selected-text-fb-origin-branch,
+details.custom-select-wrapper:has(input[value="ac-080"]:checked) .selected-text-ac-080,
+details.custom-select-wrapper:has(input[value="ac-022"]:checked) .selected-text-ac-022,
+details.custom-select-wrapper:has(input[value="ac-040"]:checked) .selected-text-ac-040,
+details.custom-select-wrapper:has(input[value="ac-011"]:checked) .selected-text-ac-011,
+details.custom-select-wrapper:has(input[value="ac-044"]:checked) .selected-text-ac-044,
+details.custom-select-wrapper:has(input[value="match-auto"]:checked) .selected-text-match-auto,
+details.custom-select-wrapper:has(input[value="match-origin"]:checked) .selected-text-match-origin,
+details.custom-select-wrapper:has(input[value="match-dest"]:checked) .selected-text-match-dest,
+details.custom-select-wrapper:has(input[value="dest-hyd-branch"]:checked) .selected-text-dest-hyd-branch,
+details.custom-select-wrapper:has(input[value="dest-delhi-branch"]:checked) .selected-text-dest-delhi-branch,
+details.custom-select-wrapper:has(input[value="dest-chennai-branch"]:checked) .selected-text-dest-chennai-branch,
+details.custom-select-wrapper:has(input[value="status-active"]:checked) .selected-text-status-active,
+details.custom-select-wrapper:has(input[value="status-inactive"]:checked) .selected-text-status-inactive {
+    display: inline !important;
+}
+
+/* Call Routing Modal: Conditional Form Fields & Destination Options per Routing Method */
+.method-conditional-field {
+    display: none;
+}
+.routing-rule-form:has(input[name$="-rule-method"][value="method-areacode"]:checked) .area-code-field {
+    display: flex !important;
+}
+.routing-rule-form:has(input[name$="-rule-method"][value="method-branchshipment"]:checked) .shipment-logic-field {
+    display: flex !important;
+}
+
+/* Contextual Destination Filtering per Method */
+.routing-rule-form:has(input[name$="-rule-method"][value="method-ivr"]:checked) .custom-option.opt-grp-areacode,
+.routing-rule-form:has(input[name$="-rule-method"][value="method-ivr"]:checked) .custom-option.opt-grp-centralteam,
+.routing-rule-form:has(input[name$="-rule-method"][value="method-ivr"]:checked) .custom-option.opt-grp-shipment {
+    display: none !important;
+}
+
+.routing-rule-form:has(input[name$="-rule-method"][value="method-centralteam"]:checked) .custom-option.opt-grp-ivr,
+.routing-rule-form:has(input[name$="-rule-method"][value="method-centralteam"]:checked) .custom-option.opt-grp-areacode,
+.routing-rule-form:has(input[name$="-rule-method"][value="method-centralteam"]:checked) .custom-option.opt-grp-shipment {
+    display: none !important;
+}
+
+.routing-rule-form:has(input[name$="-rule-method"][value="method-branchshipment"]:checked) .custom-option.opt-grp-ivr,
+.routing-rule-form:has(input[name$="-rule-method"][value="method-branchshipment"]:checked) .custom-option.opt-grp-centralteam,
+.routing-rule-form:has(input[name$="-rule-method"][value="method-branchshipment"]:checked) .custom-option.opt-grp-areacode {
+    display: none !important;
+}
+
+.routing-rule-form:has(input[name$="-rule-method"][value="method-areacode"]:checked) .custom-option.opt-grp-ivr,
+.routing-rule-form:has(input[name$="-rule-method"][value="method-areacode"]:checked) .custom-option.opt-grp-centralteam,
+.routing-rule-form:has(input[name$="-rule-method"][value="method-areacode"]:checked) .custom-option.opt-grp-shipment {
+    display: none !important;
+}
+
+/* Contextual Fallback Filtering per Method */
+.routing-rule-form:has(input[name$="-rule-method"][value="method-ivr"]:checked) .custom-option.opt-fb-ivr {
+    display: none !important;
+}
+.routing-rule-form:has(input[name$="-rule-method"][value="method-centralteam"]:checked) .custom-option.opt-fb-centralteam {
+    display: none !important;
+}
+
+/* Active Central Number Type switching on Company & Branches Page */
+.central-type-display {
+    display: none;
+}
+#central-type-toll-free:checked ~ .app-layout .central-badge-toll-free,
+#central-type-standard:checked ~ .app-layout .central-badge-standard {
+    display: inline-flex !important;
+}
+
+/* Active Telephony Provider switching on Telephony Page */
+.provider-name-display {
+    display: none;
+}
+#active-provider-airtel:checked ~ .app-layout .provider-name-airtel,
+#active-provider-exotel:checked ~ .app-layout .provider-name-exotel,
+#active-provider-ozonetel:checked ~ .app-layout .provider-name-ozonetel,
+#active-provider-other:checked ~ .app-layout .provider-name-other {
+    display: inline !important;
+}
+
+details.custom-select-wrapper:has(input[type="radio"]:checked) .placeholder {
+    display: none !important;
+}
+
+/* Dropdown auto-close enhancement for Pure CSS details dropdowns */
+details.custom-select-wrapper[open] .custom-select-options {
+    animation: fadeInDropdown 0.15s ease;
+}
+
+@keyframes fadeInDropdown {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sections Layout on Single Compact Page */
+.ccm-page-section {
+    margin-bottom: 14px;
+}
+
+.ccm-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.ccm-section-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.ccm-section-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-black);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ccm-section-subtitle {
+    font-size: 0.6875rem;
+    color: #666;
+}
+
+/* Configuration Detail Card (Central Section - Single Compact Full Width Card) */
+.ccm-central-box {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 12px 16px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.ccm-central-box-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 10px;
+}
+
+.ccm-central-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ccm-central-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-black);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.ccm-central-subtitle {
+    font-size: 0.75rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* Configured Body (Compact Layout with clear labels & values) */
+.ccm-central-configured-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 0;
+}
+
+.ccm-central-data-inline {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+
+.ccm-field-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ccm-field-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.ccm-field-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-black);
+    display: flex;
+    align-items: center;
+}
+
+.ccm-field-value .badge {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.ccm-field-value .badge.badge-toll-free,
+.ccm-field-value .badge.badge-connected {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border: 1px solid var(--color-black);
+}
+
+.ccm-field-value .badge.badge-standard {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border: 1px solid var(--color-border);
+}
+
+.ccm-field-value .badge.badge-connecting {
+    background-color: var(--color-bg-light);
+    color: #555;
+    border: 1px solid var(--color-border);
+}
+
+.ccm-field-value .badge.badge-failed {
+    background-color: #fff1f0;
+    color: #cf1322;
+    border: 1px solid #ffa39e;
+}
+
+/* Empty State inside Compact Card */
+.ccm-central-empty-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 0;
+}
+
+.ccm-central-empty-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ccm-central-empty-primary {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.ccm-central-empty-secondary {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+/* Table Specific Layout for Branches Section (HRMS Standard) */
+.ccm-branches-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.ccm-branches-table th, 
+.ccm-branches-table td {
+    padding: 6px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.875rem;
+}
+
+.ccm-branches-table th {
+    font-weight: 600;
+    background-color: var(--color-table-header);
+    color: var(--color-white);
+    border-bottom: none;
+}
+
+.ccm-branches-table tr:last-child td {
+    border-bottom: none;
+}
+
+.ccm-branches-table th:first-child,
+.ccm-branches-table td:first-child {
+    width: 35%;
+    text-align: left;
+}
+
+.ccm-branches-table th:nth-child(2),
+.ccm-branches-table td:nth-child(2) {
+    width: 35%;
+    text-align: left;
+}
+
+.ccm-branches-table th:nth-child(3),
+.ccm-branches-table td:nth-child(3) {
+    width: 15%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ccm-branches-table th:nth-child(4),
+.ccm-branches-table td:nth-child(4) {
+    width: 15%;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* IVR Menu Specific Table Columns (6 Columns with Drag Handle & Status) */
+.ccm-branches-table.ivr-table th:first-child,
+.ccm-branches-table.ivr-table td:first-child {
+    width: 4% !important;
+    text-align: center !important;
+    padding-left: 6px !important;
+    padding-right: 2px !important;
+}
+
+.ccm-branches-table.ivr-table th:nth-child(2),
+.ccm-branches-table.ivr-table td:nth-child(2) {
+    width: 8% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.ivr-table th:nth-child(3),
+.ccm-branches-table.ivr-table td:nth-child(3) {
+    width: 32% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.ivr-table th:nth-child(4),
+.ccm-branches-table.ivr-table td:nth-child(4) {
+    width: 36% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.ivr-table th:nth-child(5),
+.ccm-branches-table.ivr-table td:nth-child(5) {
+    width: 10% !important;
+    text-align: center !important;
+}
+
+.ccm-branches-table.ivr-table th:nth-child(6),
+.ccm-branches-table.ivr-table td:nth-child(6) {
+    width: 10% !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+}
+
+/* Call Routing Specific Table Columns (5 Columns: Method, Destination, Fallback, Status, Actions) */
+.ccm-branches-table.routing-table th:first-child,
+.ccm-branches-table.routing-table td:first-child {
+    width: 28% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.routing-table th:nth-child(2),
+.ccm-branches-table.routing-table td:nth-child(2) {
+    width: 30% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.routing-table th:nth-child(3),
+.ccm-branches-table.routing-table td:nth-child(3) {
+    width: 26% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.routing-table th:nth-child(4),
+.ccm-branches-table.routing-table td:nth-child(4) {
+    width: 8% !important;
+    text-align: center !important;
+}
+
+.ccm-branches-table.routing-table th:nth-child(5),
+.ccm-branches-table.routing-table td:nth-child(5) {
+    width: 8% !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+}
+
+/* Queues Specific Table Columns (6 Columns: Queue Name, Branch, Agents, Waiting Calls, Status, Actions) */
+.ccm-branches-table.queues-table th:nth-child(1),
+.ccm-branches-table.queues-table td:nth-child(1) {
+    width: 20% !important;
+}
+
+.ccm-branches-table.queues-table th:nth-child(2),
+.ccm-branches-table.queues-table td:nth-child(2) {
+    width: 12% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.queues-table th:nth-child(3),
+.ccm-branches-table.queues-table td:nth-child(3) {
+    width: 14% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.queues-table th:nth-child(4),
+.ccm-branches-table.queues-table td:nth-child(4) {
+    width: 16% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.queues-table th:nth-child(5),
+.ccm-branches-table.queues-table td:nth-child(5) {
+    width: 12% !important;
+    text-align: left !important;
+}
+
+.ccm-branches-table.queues-table th:nth-child(6),
+.ccm-branches-table.queues-table td:nth-child(6) {
+    width: 10% !important;
+    text-align: center !important;
+}
+
+.ccm-branches-table.queues-table th:nth-child(7),
+.ccm-branches-table.queues-table td:nth-child(7) {
+    width: 8% !important;
+    text-align: center !important;
+}
+
+.ccm-branches-table.queues-table th:nth-child(8),
+.ccm-branches-table.queues-table td:nth-child(8) {
+    width: 8% !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+}
+
+/* Multi-select Agents Box & Chips */
+.agents-multi-select-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.selected-agents-chips-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 28px;
+    padding: 4px 6px;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-bg-light);
+    align-items: center;
+}
+
+.agent-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.agent-chip-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #64748b;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.agent-chip-remove:hover {
+    color: #ef4444;
+}
+
+.agent-search-box {
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-light);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.agent-search-input {
+    width: 100%;
+    height: 28px;
+    padding: 0 8px;
+    font-size: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    outline: none;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.agent-search-input:focus {
+    border-color: var(--color-black);
+}
+
+.dropdown-agent-actions {
+    display: flex;
+    align-items: center;
+    padding: 6px 4px 2px 4px;
+}
+
+.select-all-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-black);
+    width: 100%;
+    user-select: none;
+    line-height: 1;
+}
+
+.select-all-row input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    accent-color: var(--color-black);
+    flex-shrink: 0;
+    vertical-align: middle;
+    position: relative;
+    top: 0;
+}
+
+.select-all-row span {
+    display: inline-block;
+    line-height: 14px;
+}
+
+.custom-option.agent-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 7px 10px;
+    cursor: pointer;
+}
+
+.custom-option.agent-item input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    accent-color: var(--color-black);
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+.custom-option.agent-item .agent-info-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+/* Assigned Agents Table (Clean HRMS / ERP Standard Styling) */
+.assigned-agents-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.assigned-agents-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-white);
+    background-color: var(--color-black);
+    border: none;
+    letter-spacing: 0.02em;
+}
+
+.assigned-agents-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-black);
+    vertical-align: middle;
+    background-color: var(--color-white);
+}
+
+.assigned-agents-table tbody tr:hover td {
+    background-color: var(--color-bg-light);
+}
+
+.agent-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-light);
+    color: var(--color-black);
+}
+
+.agent-status-badge.status-available::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10b981;
+}
+
+.agent-status-badge.status-oncall::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #3b82f6;
+}
+
+.agent-status-badge.status-offline::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #94a3b8;
+}
+
+.remove-agent-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: 1px solid transparent;
+    color: #dc2626;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 3px 8px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+.remove-agent-action-btn:hover {
+    background-color: #fee2e2;
+    border-color: #fca5a5;
+}
+
+.remove-agent-action-btn svg {
+    width: 13px;
+    height: 13px;
+    stroke-width: 2;
+}
+
+.custom-option.agent-item input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.waiting-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.waiting-badge.waiting-active {
+    background-color: var(--color-bg-light);
+    color: var(--color-black);
+    border: 1px solid var(--color-border);
+}
+
+.waiting-badge.waiting-zero {
+    background-color: transparent;
+    color: #64748b;
+    border: 1px solid var(--color-border);
+}
+
+/* Fallback Flow Indicator & Status Badges */
+.fallback-chain-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    color: #444;
+}
+
+.fallback-chain-arrow {
+    color: #8c8c8c;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-active {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-inactive {
+    background-color: var(--color-bg-light);
+    color: #777;
+    border: 1px solid var(--color-border);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* IVR Drag Handle Styling & Interactive Reordering (Pure CSS Order simulation) */
+.ivr-drag-handle {
+    cursor: grab;
+    color: #999;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.ivr-drag-handle:hover {
+    color: var(--color-black);
+    background-color: var(--color-bg-light);
+}
+
+.ccm-branches-table.ivr-table tr[draggable="true"]:active .ivr-drag-handle {
+    cursor: grabbing;
+}
+
+/* Sortable Table Headers */
+.ccm-branches-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.ccm-branches-table th.sortable .sort-header-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ccm-branches-table th.sortable:nth-child(2) .sort-header-content {
+    justify-content: flex-start;
+}
+
+.ccm-branches-table th.sortable .sort-icon {
+    display: inline-flex;
+    align-items: center;
+    color: #999;
+}
+
+/* Icon-Only Action Buttons */
+.ccm-action-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: flex-end;
+}
+
+.ccm-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-black);
+    padding: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.ccm-icon-btn:hover {
+    background-color: var(--color-bg-light);
+}
+
+.ccm-icon-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Mobile Responsive Cards (Branches) */
+.ccm-mobile-branch-cards {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ccm-branch-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ccm-branch-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.ccm-branch-card-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.ccm-branch-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ccm-branch-card-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.ccm-branch-card-number {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.ccm-branch-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border);
+}
+
+.ccm-branch-card-actions .btn-secondary,
+.ccm-branch-card-actions .btn-primary {
+    flex: 1;
+    height: 28px;
+    font-size: 0.75rem;
+    padding: 0 8px;
+}
+
+/* Form Container for Add / Edit Branch */
+.ccm-form-container {
+    max-width: 600px;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   IVR MODULE STYLES (Pure CSS Tabs, Switches, Flow Stepper)
+   ═══════════════════════════════════════════════════════════════ */
+.ccm-tab-toggle {
+    display: none !important;
+}
+
+.ccm-tabs-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 16px;
+}
+
+.ccm-tab-label {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+    margin-bottom: -1px;
+}
+
+.ccm-tab-label:hover {
+    color: var(--color-black);
+}
+
+#tab-ivr-config-toggle:checked ~ .app-layout label[for="tab-ivr-config-toggle"],
+#tab-ivr-lookup-toggle:checked ~ .app-layout label[for="tab-ivr-lookup-toggle"] {
+    color: var(--color-black) !important;
+    border-bottom-color: var(--color-black) !important;
+    font-weight: 700 !important;
+}
+
+.ccm-tab-content {
+    display: none;
+    width: 100%;
+}
+
+#tab-ivr-config-toggle:checked ~ .app-layout #tab-content-config {
+    display: block !important;
+}
+
+#tab-ivr-lookup-toggle:checked ~ .app-layout #tab-content-lookup {
+    display: block !important;
+}
+
+/* Pure CSS State Switchers for IVR Config */
+.ccm-ivr-state-toggle {
+    display: none !important;
+}
+
+/* Tab 1 IVR Menu State: Empty vs Configured */
+#ivr-menu-state-empty:checked ~ .app-layout #ivr-menu-empty-view {
+    display: block !important;
+}
+#ivr-menu-state-empty:checked ~ .app-layout #ivr-menu-configured-view {
+    display: none !important;
+}
+
+#ivr-menu-state-configured:checked ~ .app-layout #ivr-menu-configured-view {
+    display: block !important;
+}
+#ivr-menu-state-configured:checked ~ .app-layout #ivr-menu-empty-view {
+    display: none !important;
+}
+
+/* Self-Service Flow Step Cards */
+.ivr-flow-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 0 4px 0;
+    width: 100%;
+}
+
+.ivr-flow-step {
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.ivr-flow-step-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ivr-flow-step-text {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-black);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ivr-flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8c8c8c;
+    flex-shrink: 0;
+}
+
+.ivr-input-methods-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.ivr-input-method-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 10px 14px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-black);
+    box-sizing: border-box;
+}
+
+.ivr-input-method-item svg {
+    color: var(--color-black);
+    flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AGENTS MODULE & QUEUE DETAILS STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+.agent-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-available {
+    background-color: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+}
+.status-available::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10b981;
+}
+
+.status-oncall {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+.status-oncall::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #3b82f6;
+}
+
+.status-offline {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+.status-offline::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #94a3b8;
+}
+
+.status-busy {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+.status-busy::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #ef4444;
+}
+
+/* Stats Pill Summary Bar */
+.ccm-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.ccm-stat-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ccm-stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ccm-stat-val {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-top: 2px;
+}
+
+/* Queue Details Specific Grid */
+.queue-details-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+}
+
+.queue-kpi-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.queue-kpi-item {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.queue-kpi-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.queue-kpi-number {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.agent-queue-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    background: var(--color-bg-light);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 2px 7px;
+    margin: 2px 2px 2px 0;
+}
+
+.assigned-agents-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+}
+
+.assigned-agents-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #555;
+    background-color: var(--color-bg-light);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.assigned-agents-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-black);
+    vertical-align: middle;
+}
+
+.assigned-agents-table tr:hover {
+    background-color: #fafafa;
+}
+
+@media (max-width: 1024px) {
+    .queue-details-grid {
+        grid-template-columns: 1fr;
+    }
+    .ccm-stats-row, .queue-kpi-bar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .ccm-stats-row, .queue-kpi-bar {
+        grid-template-columns: 1fr;
+    }
+}
+

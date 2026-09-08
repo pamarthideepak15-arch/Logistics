@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -253,17 +253,6 @@
                 <nav class="rail-nav">
                     <a href="index.html" class="rail-icon active" data-tooltip="CCM">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </a>
-                </nav>
-            </div>
-                
-                <nav class="rail-nav">
-                    <a href="index.html" class="rail-icon active" data-tooltip="CCM">
-                        <!-- Headset / Telephony Icon -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                             <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
                         </svg>
@@ -756,7 +745,7 @@
                 <!-- Field 2: Area Code -->
                 <div id="master-field-areacode-wrap" style="display: none; flex-direction: column; gap: 6px;">
                     <label for="master-input-areacode" style="font-size: 0.8125rem; font-weight: 600;">Area Code *</label>
-                    <input type="text" id="master-input-areacode" class="form-control" placeholder="e.g. 080 – Bengaluru STD" style="width: 100%; height: 32px; padding: 0 10px; font-size: 0.8125rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-base);">
+                    <input type="text" id="master-input-areacode" class="form-control" placeholder="e.g. 080 - Bengaluru STD" style="width: 100%; height: 32px; padding: 0 10px; font-size: 0.8125rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-base);">
                 </div>
 
                 <!-- Field 3: Routing Data -->
@@ -831,12 +820,12 @@
 
         // Area Code Master
         let masterAreaCodes = [
-            { id: 1, name: "080 – Bengaluru STD", active: true },
-            { id: 2, name: "022 – Mumbai STD", active: true },
-            { id: 3, name: "040 – Hyderabad STD", active: true },
-            { id: 4, name: "011 – Delhi STD", active: true },
-            { id: 5, name: "044 – Chennai STD", active: true },
-            { id: 6, name: "020 – Pune STD", active: true }
+            { id: 1, name: "080 - Bengaluru STD", active: true },
+            { id: 2, name: "022 - Mumbai STD", active: true },
+            { id: 3, name: "040 - Hyderabad STD", active: true },
+            { id: 4, name: "011 - Delhi STD", active: true },
+            { id: 5, name: "044 - Chennai STD", active: true },
+            { id: 6, name: "020 - Pune STD", active: true }
         ];
         let nextAreaCodeId = 7;
 
@@ -937,7 +926,7 @@
             {
                 id: 1,
                 method: "Caller Area Code",
-                areaCode: "080 – Bengaluru STD",
+                areaCode: "080 - Bengaluru STD",
                 shipmentLogic: "",
                 destination: "Bengaluru Branch",
                 fallback: "Central Support Team",

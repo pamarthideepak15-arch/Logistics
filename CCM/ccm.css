@@ -5942,8 +5942,7 @@ summary.modal-select-trigger:focus {
 
     /* 1. Branch History Cards */
     .branch-history-table tbody tr td:nth-child(1)::before { content: "BRANCH" !important; }
-    .branch-history-table tbody tr td:nth-child(2)::before { content: "INTERACTION / HISTORY" !important; }
-    .branch-history-table tbody tr td:nth-child(3)::before { content: "LAST ACTIVITY" !important; }
+    .branch-history-table tbody tr td:nth-child(2)::before { content: "LAST ACTIVITY" !important; }
     .branch-history-table tbody tr td:nth-child(1) {
         font-weight: 700 !important;
         color: #0f172a !important;

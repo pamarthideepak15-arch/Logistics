@@ -1,17 +1,21 @@
-/* Audit Logs Specific Adjustments if needed */
+/* Audit Logs Table Columns & Cell Layout */
+.data-table th, .data-table td {
+    text-align: left !important;
+    white-space: nowrap;
+    padding-right: 16px !important;
+}
+.data-table th:nth-child(1), .data-table td:nth-child(1) { width: 18%; }
+.data-table th:nth-child(2), .data-table td:nth-child(2) { width: 12%; }
+.data-table th:nth-child(3), .data-table td:nth-child(3) { width: 15%; }
+.data-table th:nth-child(4), .data-table td:nth-child(4) { width: 18%; }
+.data-table th:nth-child(5), .data-table td:nth-child(5) { width: 10%; }
+.data-table th:nth-child(6), .data-table td:nth-child(6) { width: 27%; }
+
 .message-cell {
-    max-width: 300px;
+    max-width: 320px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-/* Override generic table alignments that break this specific table */
-.data-table th:nth-child(2), .data-table td:nth-child(2),
-.data-table th:nth-child(3), .data-table td:nth-child(3) {
-    width: auto;
-    white-space: normal;
-    text-align: left;
-    padding-right: 10px;
 }
 
 /* KPI Cards Grid - Standard HRMS */

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer 360 — CCM | Logistics Management Platform</title>
+    <title>Customer 360 - CCM | Logistics Management Platform</title>
     <!-- Design System Global & Components CSS -->
     <link rel="stylesheet" href="../Design System/global.css">
     <link rel="stylesheet" href="../Design System/components.css">
@@ -317,7 +317,7 @@
                 </div>
 
                 <!-- ================= TAB 2: BRANCH HISTORY ================= -->
-                <!-- Columns: Branch | Interaction / History | Last Activity -->
+                <!-- Columns: Branch | Last Activity -->
                 <div id="pane-branch-history" class="ccm-tab-pane">
                     <!-- Tab Search Bar -->
                     <div class="filters-bar" style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border);">
@@ -337,8 +337,7 @@
                                             <span class="sort-icon"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
                                         </div>
                                     </th>
-                                    <th>Interaction / History</th>
-                                    <th class="sortable" style="text-align: right;" onclick="sortTable('table-branch-history', 2)">
+                                    <th class="sortable" style="text-align: right;" onclick="sortTable('table-branch-history', 1)">
                                         <div class="sort-header-content" style="justify-content: flex-end;">
                                             Last Activity
                                             <span class="sort-icon"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15l5 5 5-5"></path><path d="M7 9l5-5 5 5"></path></svg></span>
@@ -349,17 +348,14 @@
                             <tbody>
                                 <tr>
                                     <td style="font-weight: 600;">Bengaluru Branch</td>
-                                    <td>Outbound Freight &bull; Primary Operational Center</td>
                                     <td style="text-align: right; color: #475569;">Sep 2, 2026</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: 600;">Mumbai Branch</td>
-                                    <td>Destination Delivery &bull; Hub Operations</td>
                                     <td style="text-align: right; color: #475569;">Aug 25, 2026</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: 600;">Hyderabad Branch</td>
-                                    <td>Transit Center &bull; Regional Distribution</td>
                                     <td style="text-align: right; color: #475569;">Aug 18, 2026</td>
                                 </tr>
                             </tbody>
@@ -422,21 +418,21 @@
                                     <td style="font-weight: 600;">Sep 2, 2026 10:32 AM</td>
                                     <td>
                                         <span style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600;">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                                            Inbound
-                                        </span>
-                                    </td>
-                                    <td>Rahul Kumar</td>
-                                    <td style="font-family: monospace;">04:32</td>
-                                    <td style="text-align: right;">
-                                        <span style="padding: 1px 6px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 3px; font-weight: 600;">Resolved</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="font-weight: 600;">Sep 1, 2026 03:18 PM</td>
-                                    <td>
-                                        <span style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600;">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="17" y1="7" x2="7" y2="17"></line><polyline points="17 17 7 17 7 7"></polyline></svg>
+                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="17" y1="7" x2="7" y2="17"></line><polyline points="17 17 7 17 7 7"></polyline></svg>
+                                             Inbound
+                                         </span>
+                                     </td>
+                                     <td>Rahul Kumar</td>
+                                     <td style="font-family: monospace;">04:32</td>
+                                     <td style="text-align: right;">
+                                         <span style="padding: 1px 6px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 3px; font-weight: 600;">Resolved</span>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td style="font-weight: 600;">Sep 1, 2026 03:18 PM</td>
+                                     <td>
+                                         <span style="display: inline-flex; align-items: center; gap: 4px; font-weight: 600;">
+                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                                             Outbound
                                         </span>
                                     </td>
@@ -672,9 +668,9 @@
         const customersDB = {
             'CUST-1001': { name: 'Rajesh Kumar', phone: '+91 98765 43210', branch: 'Bengaluru', type: 'Business Customer', initials: 'RK', email: 'rajesh.kumar@acmelogistics.in', gstin: '29ABCDE1234F1Z5', pan: 'ABCDE1234F', address: '#42, 4th Cross, Indiranagar, Bengaluru, KA 560038' },
             'CUST-1002': { name: 'Priya Sharma', phone: '+91 99887 65432', branch: 'Mumbai', type: 'Business Customer', initials: 'PS', email: 'priya.sharma@sharmatrading.in', gstin: '27AAACP9876Q1Z2', pan: 'AAACP9876Q', address: 'Plot 104, MIDC Industrial Area, Andheri East, Mumbai, MH 400093' },
-            'CUST-1003': { name: 'Suresh Reddy', phone: '+91 98480 12345', branch: 'Hyderabad', type: 'Individual', initials: 'SR', email: 'suresh.reddy@gmail.com', gstin: '—', pan: '—', address: 'Flat 302, Sri Sai Residency, Jubilee Hills, Hyderabad, TS 500033' },
+            'CUST-1003': { name: 'Suresh Reddy', phone: '+91 98480 12345', branch: 'Hyderabad', type: 'Individual', initials: 'SR', email: 'suresh.reddy@gmail.com', gstin: 'ï¿½', pan: 'ï¿½', address: 'Flat 302, Sri Sai Residency, Jubilee Hills, Hyderabad, TS 500033' },
             'CUST-1004': { name: 'Anil Verma', phone: '+91 98100 56789', branch: 'Delhi', type: 'Business Customer', initials: 'AV', email: 'anil.verma@vermaenterprises.com', gstin: '07AABCV5544R1ZA', pan: 'AABCV5544R', address: 'B-12, Okhla Industrial Area Phase 2, New Delhi, DL 110020' },
-            'CUST-1005': { name: 'Kavya Nair', phone: '+91 98950 24680', branch: 'Chennai', type: 'Individual', initials: 'KN', email: 'kavya.nair@outlook.com', gstin: '—', pan: '—', address: '#18, Gandhi Mandapam Road, Guindy, Chennai, TN 600025' }
+            'CUST-1005': { name: 'Kavya Nair', phone: '+91 98950 24680', branch: 'Chennai', type: 'Individual', initials: 'KN', email: 'kavya.nair@outlook.com', gstin: 'ï¿½', pan: 'ï¿½', address: '#18, Gandhi Mandapam Road, Guindy, Chennai, TN 600025' }
         };
 
         const urlParams = new URLSearchParams(window.location.search);

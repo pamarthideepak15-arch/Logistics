@@ -2075,11 +2075,9 @@ summary.modal-select-trigger:focus {
         padding: 6px 10px !important;
     }
     .ccm-branches-table.branch-history-table th:first-child,
-    .ccm-branches-table.branch-history-table td:first-child { width: 35% !important; text-align: left !important; }
+    .ccm-branches-table.branch-history-table td:first-child { width: 60% !important; text-align: left !important; }
     .ccm-branches-table.branch-history-table th:nth-child(2),
-    .ccm-branches-table.branch-history-table td:nth-child(2) { width: 40% !important; text-align: left !important; }
-    .ccm-branches-table.branch-history-table th:nth-child(3),
-    .ccm-branches-table.branch-history-table td:nth-child(3) { width: 25% !important; text-align: right !important; }
+    .ccm-branches-table.branch-history-table td:nth-child(2) { width: 40% !important; text-align: right !important; }
 
     .ccm-branches-table.call-history-table th,
     .ccm-branches-table.call-history-table td {
@@ -3603,8 +3601,8 @@ summary.modal-select-trigger:focus {
         text-align: left !important;
         display: block !important;
     }
-    .branch-history-table tbody tr td:nth-child(3),
-    .ccm-branches-table.branch-history-table tbody tr td:nth-child(3) {
+    .branch-history-table tbody tr td:nth-child(2),
+    .ccm-branches-table.branch-history-table tbody tr td:nth-child(2) {
         grid-column: 2 !important;
         grid-row: 1 !important;
         font-size: 0.75rem !important;
@@ -3613,20 +3611,6 @@ summary.modal-select-trigger:focus {
         text-align: right !important;
         white-space: nowrap !important;
         display: block !important;
-    }
-    .branch-history-table tbody tr td:nth-child(2),
-    .ccm-branches-table.branch-history-table tbody tr td:nth-child(2) {
-        grid-column: 1 / -1 !important;
-        grid-row: 2 !important;
-        font-size: 0.75rem !important;
-        color: #475569 !important;
-        background: #f8fafc !important;
-        padding: 6px 8px !important;
-        border-radius: 4px !important;
-        border: 1px solid #f1f5f9 !important;
-        word-break: break-word !important;
-        display: block !important;
-        text-align: left !important;
     }
 
     /* 2. Call History Mobile Cards: Clean horizontal rows (left to right) */
@@ -5163,7 +5147,6 @@ summary.modal-select-trigger:focus {
     }
 
     /* Live Monitoring mobile table container and card styles are managed directly in live-monitoring.html */
-}
 
     /* 6. Configuration Tab Responsiveness */
     #tab-panel-config .section-card {

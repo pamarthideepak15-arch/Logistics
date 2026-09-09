@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CCM CCM Agent App - Callback Requests</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .caa-filter-pills-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            padding: 2px 0;
+        }
+
+        .caa-filter-tab-btn {
+            flex: 1;
+            padding: 8px 14px;
+            border-radius: var(--caa-radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid var(--caa-border);
+            background: var(--caa-surface);
+            color: var(--caa-text-secondary);
+            transition: all 0.18s ease;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            user-select: none;
+        }
+
+        .caa-filter-tab-btn:active {
+            opacity: 0.8;
+        }
+
+        .caa-filter-tab-btn.active {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+        }
+
+        .empty-callbacks-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+            text-align: center;
+            color: var(--caa-text-secondary);
+        }
+
+        .empty-icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--caa-surface-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: #94a3b8;
+        }
+
+        .completed-highlight {
+            animation: fadeInHighlight 0.4s ease-out;
+        }
+
+        @keyframes fadeInHighlight {
+            0% { transform: translateY(-6px); opacity: 0.4; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="agent-app-body">
+
+    <div class="caa-app-container">
+
+        <!-- ============================================================ -->
+        <!-- 1. MOBILE HEADER WITH BACK CHEVRON                           -->
+        <!-- ============================================================ -->
+        <header class="caa-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="index.html" class="caa-back-btn" title="Back to Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                <div>
+                    <span class="caa-brand-text" style="font-size: 0.9375rem;">Callback Requests</span>
+                    <div style="font-size: 0.6875rem; color: var(--caa-text-secondary); margin-top: 1px;">Support Queue • Bengaluru</div>
+                </div>
+            </div>
+            <span class="caa-badge caa-badge-dark" id="header-pending-count" style="font-size: 0.6875rem;">2 Pending</span>
+        </header>
+
+        <!-- ============================================================ -->
+        <!-- 2. MAIN SCROLLABLE VIEWPORT — CALLBACK REQUESTS              -->
+        <!-- Supported: Pending and Completed Status Tabs Only            -->
+        <!-- ============================================================ -->
+        <main class="caa-viewport">
+
+            <!-- Filter Tabs for Callback Status (Pending & Completed Only) -->
+            <div class="caa-filter-pills-row">
+                <button type="button" class="caa-filter-tab-btn active" id="tab-btn-pending" onclick="switchCallbackTab('pending')">
+                    Pending (<span id="count-pending">2</span>)
+                </button>
+                <button type="button" class="caa-filter-tab-btn" id="tab-btn-completed" onclick="switchCallbackTab('completed')">
+                    Completed (<span id="count-completed">4</span>)
+                </button>
+            </div>
+
+            <!-- Callbacks Container (Rendered dynamically) -->
+            <div id="callbacks-list-container"></div>
+
+        </main>
+
+        <!-- ============================================================ -->
+        <!-- 3. BOTTOM NAVIGATION (Fixed, Exactly 5 Items)                -->
+        <!-- ============================================================ -->
+        <nav class="caa-bottom-nav">
+            <a href="index.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Home</span>
+            </a>
+
+            <a href="calls.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Calls</span>
+            </a>
+
+            <a href="customers.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Customers</span>
+            </a>
+
+            <a href="leads.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Leads</span>
+            </a>
+
+            <a href="tickets.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Tickets</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT: CALLBACK WORKFLOW & IMMEDIATE TAB SWITCHING      -->
+    <!-- ============================================================ -->
+    <script>
+        let currentCallbackTab = 'pending';
+
+        // Initial Callbacks Data
+        const callbacks = [
+            {
+                id: 'CB-104',
+                name: 'Rajesh Kumar',
+                phone: '+91 98111 22334',
+                branch: 'Bengaluru Branch',
+                queue: 'Support Queue',
+                requestedTime: 'Today 12:30 PM',
+                context: 'Shipment schedule verification (LR-9021)',
+                status: 'pending',
+                completedTime: null
+            },
+            {
+                id: 'CB-105',
+                name: 'Priya Sharma',
+                phone: '+91 98220 54321',
+                branch: 'Bengaluru Branch',
+                queue: 'Support Queue',
+                requestedTime: 'Today 02:00 PM',
+                context: 'Freight quote rate negotiation (LEAD-8210)',
+                status: 'pending',
+                completedTime: null
+            },
+            {
+                id: 'CB-101',
+                name: 'Anil Verma',
+                phone: '+91 98100 56789',
+                branch: 'Bengaluru Branch',
+                queue: 'Sales Queue',
+                requestedTime: 'Today 10:00 AM',
+                context: 'Bulk enterprise shipment quote (LR-7810)',
+                status: 'completed',
+                completedTime: 'Today, 10:15 AM'
+            },
+            {
+                id: 'CB-102',
+                name: 'Vikram Singh',
+                phone: '+91 97123 45678',
+                branch: 'Bengaluru Branch',
+                queue: 'Support Queue',
+                requestedTime: 'Yesterday 04:30 PM',
+                context: 'Delivery reschedule for LR-BLR-84920',
+                status: 'completed',
+                completedTime: 'Yesterday, 04:45 PM'
+            },
+            {
+                id: 'CB-103',
+                name: 'Sneha Patel',
+                phone: '+91 98330 11223',
+                branch: 'Bengaluru Branch',
+                queue: 'Dispatch Queue',
+                requestedTime: 'Yesterday 02:15 PM',
+                context: 'Proof of Delivery copy request',
+                status: 'completed',
+                completedTime: 'Yesterday, 02:30 PM'
+            },
+            {
+                id: 'CB-100',
+                name: 'Amit Joshi',
+                phone: '+91 98990 44556',
+                branch: 'Bengaluru Branch',
+                queue: 'Billing Queue',
+                requestedTime: '05 Sep 11:00 AM',
+                context: 'GST invoice clarification on freight',
+                status: 'completed',
+                completedTime: '05 Sep, 11:20 AM'
+            }
+        ];
+
+        // Switch between Pending & Completed Tabs
+        function switchCallbackTab(tab) {
+            currentCallbackTab = tab;
+
+            document.getElementById('tab-btn-pending').classList.toggle('active', tab === 'pending');
+            document.getElementById('tab-btn-completed').classList.toggle('active', tab === 'completed');
+
+            renderCallbacks();
+        }
+
+        // Complete Callback Action
+        function completeCallback(callbackId) {
+            const cb = callbacks.find(c => c.id === callbackId);
+            if (cb) {
+                cb.status = 'completed';
+                cb.completedTime = 'Just now';
+
+                // Automatically switch to Completed tab
+                switchCallbackTab('completed');
+            }
+        }
+
+        // Render Callbacks List
+        function renderCallbacks() {
+            const container = document.getElementById('callbacks-list-container');
+            if (!container) return;
+
+            const pendingList = callbacks.filter(c => c.status === 'pending');
+            const completedList = callbacks.filter(c => c.status === 'completed');
+
+            // Update Counts
+            document.getElementById('count-pending').textContent = pendingList.length;
+            document.getElementById('count-completed').textContent = completedList.length;
+            document.getElementById('header-pending-count').textContent = `${pendingList.length} Pending`;
+
+            const currentList = currentCallbackTab === 'pending' ? pendingList : completedList;
+
+            if (currentList.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-callbacks-state">
+                        <div class="empty-icon-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <div style="font-size: 0.875rem; font-weight: 700; color: var(--caa-text-primary); margin-bottom: 2px;">
+                            ${currentCallbackTab === 'pending' ? 'No Pending Callbacks' : 'No Completed Callbacks'}
+                        </div>
+                        <div style="font-size: 0.75rem;">
+                            ${currentCallbackTab === 'pending' ? 'All callback requests have been resolved.' : 'Completed callbacks will appear here.'}
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = currentList.map(cb => {
+                const isPending = cb.status === 'pending';
+
+                return `
+                    <div class="caa-card completed-highlight" id="card-${cb.id}">
+                        <div class="caa-card-header">
+                            <span class="caa-card-title">Callback #${cb.id}</span>
+                            <span class="caa-badge ${isPending ? '' : 'caa-badge-dark'}">
+                                ${isPending ? 'Pending' : 'Completed ✓'}
+                            </span>
+                        </div>
+                        
+                        <div style="font-size: 0.9375rem; font-weight: 700; color: var(--caa-text-primary);">${cb.name}</div>
+                        <div style="font-size: 0.75rem; color: var(--caa-text-secondary); margin-top: 2px; font-family: monospace;">Phone: ${cb.phone}</div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px; padding: 8px; background-color: var(--caa-surface-subtle); border-radius: var(--caa-radius-sm); font-size: 0.6875rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: var(--caa-text-secondary);">Branch:</span>
+                                <strong>${cb.branch}</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: var(--caa-text-secondary);">Queue:</span>
+                                <span>${cb.queue}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: var(--caa-text-secondary);">Requested Time:</span>
+                                <strong>${cb.requestedTime}</strong>
+                            </div>
+                            ${cb.completedTime ? `
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: var(--caa-text-secondary);">Completed Time:</span>
+                                <strong style="color: #111111;">${cb.completedTime}</strong>
+                            </div>` : ''}
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: var(--caa-text-secondary);">Context:</span>
+                                <span>${cb.context}</span>
+                            </div>
+                        </div>
+
+                        <!-- Actions Area -->
+                        ${isPending ? `
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
+                            <a href="calls.html" class="caa-btn caa-btn-primary caa-btn-sm" style="text-decoration: none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                                <span>Call Customer</span>
+                            </a>
+                            <button type="button" class="caa-btn caa-btn-secondary caa-btn-sm" onclick="completeCallback('${cb.id}')">
+                                Complete Callback
+                            </button>
+                        </div>
+                        ` : `
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 10px;">
+                            <a href="calls.html" class="caa-btn caa-btn-secondary caa-btn-sm" style="text-decoration: none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                                <span>Call Customer</span>
+                            </a>
+                        </div>
+                        `}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCallbacks();
+        });
+    </script>
+</body>
+</html>
+

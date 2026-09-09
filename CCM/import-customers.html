@@ -11,6 +11,41 @@
     <!-- CCM & Agents Unified Stylesheet -->
     <link rel="stylesheet" href="agents.css">
     <style>
+        /* Import Customers Desktop Header & Actions (Top Right End CTAs) */
+        .page-header.import-page-header {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: flex-start !important;
+            margin-bottom: 16px !important;
+            width: 100% !important;
+        }
+
+        .page-header.import-page-header > div:first-child {
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+            flex: 1 1 auto !important;
+        }
+
+        .page-header.import-page-header .header-actions {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            margin-left: auto !important;
+            flex-shrink: 0 !important;
+            width: auto !important;
+        }
+
+        /* Step 2: Table UI ONLY for desktop; Mobile cards ONLY for mobile */
+        .validation-desktop-table {
+            display: block !important;
+        }
+
+        .validation-mobile-container {
+            display: none !important;
+        }
+
         /* Mobile Responsive for Import Customers */
         @media (max-width: 768px) {
             html, body {
@@ -39,7 +74,7 @@
                 padding: 10px !important;
             }
 
-            /* Stack Header: Top data (Title/Subtitle) on top, CTAs below */
+            /* Stack Header on Mobile: Top data on top, CTAs below */
             .page-header.import-page-header,
             html body .main-scroll-area .page-header {
                 display: flex !important;
@@ -205,6 +240,15 @@
             .sample-csv-card .sample-csv-btn {
                 width: 100% !important;
                 justify-content: center !important;
+            }
+
+            /* Step 2 on Mobile: Mobile cards only */
+            .validation-desktop-table {
+                display: none !important;
+            }
+
+            .validation-mobile-container {
+                display: flex !important;
             }
         }
     </style>

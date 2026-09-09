@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CCM CCM Agent App - Login</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="agent-app-body">
+
+    <!-- Mobile Device Frame (Compact 375px - 414px) -->
+    <div class="caa-app-container">
+
+        <!-- Toast Notification -->
+        <div id="caa-toast" class="caa-toast"></div>
+
+        <!-- ============================================================ -->
+        <!-- HIGH-FIDELITY MOBILE OTP LOGIN SCREEN                        -->
+        <!-- ============================================================ -->
+        <div class="caa-mobile-login-view">
+            
+            <div class="caa-login-top">
+                
+                <!-- Logo & App Name -->
+                <div class="caa-login-brand-compact">
+                    <div class="caa-login-logo-sq">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="caa-app-title-main">CCM CCM Agent App</div>
+                        <div class="caa-app-title-sub">Customer Care & Support Operations</div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Mobile Number Input -->
+                <div id="login-step-phone">
+                    <div class="caa-login-prompt">
+                        <h3>Mobile Number</h3>
+                        <p>Enter registered 10-digit number to receive OTP</p>
+                    </div>
+
+                    <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 14px;">
+                        <div class="caa-phone-input-group">
+                            <span class="caa-country-code">+91</span>
+                            <input type="tel" id="login-phone-val" class="caa-phone-field" placeholder="Enter mobile number" value="9886099887" maxlength="10">
+                        </div>
+
+                        <button type="button" class="caa-btn-full" onclick="sendMobileOTP()">
+                            <span>Send OTP</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: OTP Verification -->
+                <div id="login-step-otp" class="caa-otp-view">
+                    
+                    <!-- Top Left Back CTA -->
+                    <button type="button" class="caa-login-back-btn" onclick="backToPhoneStep()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        <span>Back</span>
+                    </button>
+
+                    <div class="caa-login-prompt">
+                        <h3>Enter OTP</h3>
+                        <p>6-digit code sent to <strong id="display-otp-phone" style="color:var(--caa-text-primary);">+91 98860 99887</strong></p>
+                    </div>
+
+                    <div class="caa-otp-inputs">
+                        <input type="text" class="caa-otp-digit" maxlength="1" value="5" onkeyup="moveOTPFocus(this, 0)" onfocus="this.select()">
+                        <input type="text" class="caa-otp-digit" maxlength="1" value="4" onkeyup="moveOTPFocus(this, 1)" onfocus="this.select()">
+                        <input type="text" class="caa-otp-digit" maxlength="1" value="2" onkeyup="moveOTPFocus(this, 2)" onfocus="this.select()">
+                        <input type="text" class="caa-otp-digit" maxlength="1" value="1" onkeyup="moveOTPFocus(this, 3)" onfocus="this.select()">
+                        <input type="text" class="caa-otp-digit" maxlength="1" value="0" onkeyup="moveOTPFocus(this, 4)" onfocus="this.select()">
+                        <input type="text" class="caa-otp-digit" maxlength="1" value="9" onkeyup="moveOTPFocus(this, 5)" onfocus="this.select()">
+                    </div>
+
+                    <button type="button" class="caa-btn-full" onclick="verifyMobileOTP()">
+                        <span>Verify OTP & Login →</span>
+                    </button>
+
+                    <div style="margin-top: 12px; text-align: center; font-size: 0.75rem;">
+                        <span id="otp-timer-text" style="color: var(--caa-text-secondary);">Resend OTP in <strong id="otp-countdown" style="color: var(--caa-text-primary);">30</strong> seconds</span>
+                        <button type="button" id="btn-resend-otp" onclick="resendMobileOTP()" style="display: none; background: none; border: none; color: #111111; font-weight: 700; font-size: 0.75rem; cursor: pointer; padding: 2px 6px; text-decoration: underline;">Resend OTP</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="caa-login-footer">
+                Bengaluru Branch · Customer Care Authorization
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let toastTimeout;
+        let otpCountdownInterval;
+
+        function showToast(msg) {
+            const toast = document.getElementById('caa-toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2600);
+        }
+
+        // 1. Send Mobile OTP
+        function sendMobileOTP() {
+            const phone = document.getElementById('login-phone-val').value.trim();
+            if (phone.length < 10) {
+                showToast('Please enter 10-digit mobile number');
+                return;
+            }
+            document.getElementById('display-otp-phone').textContent = `+91 ${phone}`;
+            document.getElementById('login-step-phone').style.display = 'none';
+            document.getElementById('login-step-otp').classList.add('visible');
+            showToast('OTP sent: 542109');
+            
+            // Start 30s Countdown Timer
+            startOTPTimer();
+
+            // Focus first OTP field
+            const firstDigit = document.querySelector('.caa-otp-digit');
+            if (firstDigit) firstDigit.focus();
+        }
+
+        // 2. Countdown Timer
+        function startOTPTimer() {
+            let timeLeft = 30;
+            const countdownEl = document.getElementById('otp-countdown');
+            const timerText = document.getElementById('otp-timer-text');
+            const resendBtn = document.getElementById('btn-resend-otp');
+
+            if (countdownEl && timerText && resendBtn) {
+                timerText.style.display = 'inline';
+                resendBtn.style.display = 'none';
+                countdownEl.textContent = timeLeft;
+
+                clearInterval(otpCountdownInterval);
+                otpCountdownInterval = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft <= 0) {
+                        clearInterval(otpCountdownInterval);
+                        timerText.style.display = 'none';
+                        resendBtn.style.display = 'inline-block';
+                    } else {
+                        countdownEl.textContent = timeLeft;
+                    }
+                }, 1000);
+            }
+        }
+
+        // 3. Resend OTP
+        function resendMobileOTP() {
+            showToast('New OTP sent: 542109');
+            startOTPTimer();
+        }
+
+        // 4. Return to Phone input
+        function backToPhoneStep() {
+            clearInterval(otpCountdownInterval);
+            document.getElementById('login-step-phone').style.display = 'block';
+            document.getElementById('login-step-otp').classList.remove('visible');
+            document.getElementById('login-phone-val').focus();
+        }
+
+        // 5. Move OTP cursor focus
+        function moveOTPFocus(input, idx) {
+            if (input.value.length === 1 && idx < 5) {
+                const digits = document.querySelectorAll('.caa-otp-digit');
+                digits[idx + 1].focus();
+            }
+        }
+
+        // 6. Verify OTP and login
+        function verifyMobileOTP() {
+            showToast('OTP verified successfully');
+            sessionStorage.setItem('ccm_agent_login', 'true');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 450);
+        }
+    </script>
+</body>
+</html>
+

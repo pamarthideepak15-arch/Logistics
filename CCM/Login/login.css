@@ -1,0 +1,173 @@
+/* Logistics Management Platform - Login CSS */
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-page-container {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Strict wireframe container, not a standard soft "card" */
+.login-container {
+  width: 100%;
+  max-width: 360px;
+  border: 1px solid var(--color-black);
+  padding: 24px;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-base);
+}
+
+.product-header {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.product-header h1 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.product-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.input-group input {
+  padding: 8px 12px;
+  border: 1px solid var(--color-black);
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-family: var(--font-family-primary);
+  font-size: 0.9375rem;
+  border-radius: var(--border-radius-base);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+  border-width: 2px;
+  padding: 7px 11px; /* Adjust padding to prevent layout shift */
+}
+
+.login-button {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-family-primary);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border: 1px solid var(--color-black);
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-button:hover, .login-button:focus {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 24px;
+    max-width: 90%;
+  }
+  .login-role-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+  }
+  .login-role-tab {
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page-container {
+    padding: 12px;
+  }
+
+  .login-container {
+    padding: 16px;
+    border-width: 1px;
+    max-width: 100%;
+  }
+  
+  .product-header {
+    margin-bottom: 16px;
+  }
+
+  .product-header h1 {
+    font-size: 0.8125rem;
+  }
+  
+  .product-header h2 {
+    font-size: 1.125rem;
+  }
+
+  .input-group input {
+    border-width: 1px;
+    padding: 6px 10px;
+    font-size: 0.875rem;
+  }
+  
+  .input-group input:focus {
+    border-width: 2px;
+    padding: 5px 9px;
+  }
+
+  .login-button {
+    padding: 8px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Forgot Password Link styling */
+.forgot-password-wrapper {
+  text-align: right;
+  margin-top: 4px;
+}
+
+.forgot-password-link {
+  font-size: 0.75rem;
+  color: #666;
+  text-decoration: none;
+  font-family: var(--font-family-primary);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.forgot-password-link:hover {
+  color: var(--color-black);
+  text-decoration: underline;
+}
+
+

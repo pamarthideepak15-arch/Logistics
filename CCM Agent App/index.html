@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CCM CCM Agent App - Home</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ============================================================ */
+        /* STRICTLY BLACK & WHITE DESIGN SYSTEM (HOME PAGE)             */
+        /* ============================================================ */
+        :root {
+            --caa-primary: #0f172a;
+            --caa-primary-hover: #000000;
+            --caa-primary-light: #f1f5f9;
+        }
+
+        /* Brand & Profile Icons strictly Black & White */
+        .caa-brand-icon {
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+        }
+
+        .caa-avatar-mini {
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+        }
+
+        /* Availability Card Monochrome */
+        .caa-avail-card {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        .caa-avail-icon-wrap {
+            background: #f8fafc !important;
+            color: #0f172a !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        .caa-avail-chip {
+            background: #f8fafc !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+
+        .caa-dot-green,
+        .caa-dot-orange,
+        .caa-dot-red,
+        .caa-dot-blue {
+            color: #0f172a !important;
+        }
+
+        .caa-avail-link-action {
+            color: #0f172a !important;
+        }
+
+        .caa-avail-link-action svg {
+            color: #0f172a !important;
+        }
+
+        /* Availability Bottom Sheet Monochrome */
+        .caa-bottom-sheet {
+            background-color: #ffffff !important;
+            border-top: 2px solid #0f172a !important;
+        }
+
+        .caa-sheet-title {
+            color: #0f172a !important;
+        }
+
+        .caa-sheet-close {
+            color: #0f172a !important;
+        }
+
+        .caa-sheet-option {
+            background: #ffffff !important;
+            border: 1.5px solid #e2e8f0 !important;
+        }
+
+        .caa-sheet-option:active {
+            background: #f8fafc !important;
+            border-color: #0f172a !important;
+        }
+
+        .caa-sheet-opt-name {
+            color: #0f172a !important;
+        }
+
+        .caa-sheet-opt-sub {
+            color: #64748b !important;
+        }
+
+        .caa-sheet-opt-chevron-circle {
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+        }
+
+        /* Profile Modal Monochrome */
+        .caa-profile-card {
+            background: #ffffff !important;
+            border: 1.5px solid #0f172a !important;
+        }
+
+        .caa-profile-name,
+        .caa-profile-meta-val {
+            color: #0f172a !important;
+        }
+
+        .caa-profile-role,
+        .caa-profile-meta-lbl {
+            color: #64748b !important;
+        }
+
+        .caa-logout-btn {
+            background: #ffffff !important;
+            border: 1.5px solid #0f172a !important;
+            color: #0f172a !important;
+        }
+
+        .caa-logout-btn:active {
+            background: #0f172a !important;
+            color: #ffffff !important;
+        }
+
+        /* Today's Performance KPI Grid Monochrome */
+        .caa-kpi-card {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+
+        .caa-kpi-val {
+            color: #0f172a !important;
+        }
+
+        .caa-kpi-icon-badge {
+            background: #f8fafc !important;
+            color: #0f172a !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        .caa-kpi-label {
+            color: #64748b !important;
+        }
+
+        /* My Work Monochrome */
+        .caa-work-card {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        .caa-work-icon-wrap {
+            background: #f8fafc !important;
+            color: #0f172a !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        .caa-work-title {
+            color: #0f172a !important;
+        }
+
+        .caa-work-sub {
+            color: #64748b !important;
+        }
+
+        .caa-work-count {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 3px 9px !important;
+            border-radius: 9999px !important;
+            font-size: 0.6875rem !important;
+            font-weight: 700 !important;
+            line-height: 1.25 !important;
+            letter-spacing: 0.01em !important;
+            white-space: nowrap !important;
+            background: #f1f5f9 !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+        }
+
+        .caa-work-chevron {
+            color: #94a3b8 !important;
+        }
+
+        /* Bottom Nav Monochrome */
+        .caa-bottom-nav {
+            background-color: #ffffff !important;
+            border-top: 1px solid #e2e8f0 !important;
+        }
+
+        .caa-nav-item.active .caa-nav-icon {
+            background: #0f172a !important;
+            color: #ffffff !important;
+        }
+
+        .caa-nav-item.active .caa-nav-label {
+            color: #0f172a !important;
+        }
+
+        /* Links and headers strictly Black & White */
+        .caa-greeting-title {
+            color: #0f172a !important;
+        }
+
+        .caa-greeting-sub {
+            color: #64748b !important;
+        }
+
+        .caa-home-section-title span {
+            color: #0f172a !important;
+        }
+
+        .home-view-leads-link {
+            font-size: 0.72rem;
+            color: #0f172a !important;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .home-view-leads-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================================ */
+        /* FOLLOW-UP REMINDERS (COMPACT 2-LINE MONOCHROME CARDS)        */
+        /* ============================================================ */
+        .home-reminders-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .home-reminder-count-pill {
+            font-size: 0.65625rem;
+            font-weight: 700;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 7px;
+            border-radius: 9999px;
+            border: 1px solid #cbd5e1;
+        }
+
+        /* ============================================================ */
+        /* COMPACT 3-ROW REMINDER CARDS (Clean, Uncrowded Mobile UI)   */
+        /* ============================================================ */
+        .home-reminders-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .home-reminder-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .home-reminder-card:active {
+            background: #f8fafc;
+        }
+
+        /* Due Card: Deep black border with solid left accent & slow smooth zoom in/out animation */
+        .home-reminder-card.is-due {
+            border: 1px solid #0f172a;
+            border-left: 3.5px solid #0f172a;
+            background: #ffffff;
+            animation: dueCardZoomPulse 3s ease-in-out infinite;
+            transform-origin: center;
+            will-change: transform, box-shadow;
+        }
+
+        /* Overdue Card: High contrast border with solid left accent & slow smooth zoom in/out animation */
+        .home-reminder-card.is-overdue {
+            border: 1px solid #0f172a;
+            border-left: 3.5px solid #0f172a;
+            background: #ffffff;
+            animation: dueCardZoomPulse 3s ease-in-out infinite;
+            transform-origin: center;
+            will-change: transform, box-shadow;
+        }
+
+        @keyframes dueCardZoomPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 0 0 0 rgba(15, 23, 42, 0);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12), 0 0 0 2.5px rgba(15, 23, 42, 0.08);
+            }
+        }
+
+        .home-reminder-left {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .home-reminder-row1 {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+            line-height: 1.25;
+        }
+
+        .home-reminder-cust-name {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #0f172a;
+            white-space: nowrap;
+        }
+
+        .home-reminder-dot {
+            color: #94a3b8;
+            font-weight: 700;
+            font-size: 0.75rem;
+            line-height: 1;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .home-reminder-lead-id {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: #64748b;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .home-reminder-row2 {
+            min-width: 0;
+            line-height: 1.25;
+        }
+
+        .home-reminder-context {
+            font-size: 0.75rem;
+            color: #475569;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            max-width: 100%;
+        }
+
+        .home-reminder-row3 {
+            min-width: 0;
+            line-height: 1.25;
+        }
+
+        .home-reminder-datetime {
+            font-size: 0.6875rem;
+            color: #64748b;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .home-reminder-datetime.due {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .home-reminder-datetime.overdue {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        /* Right Group matching My Work (caa-work-right) */
+        .home-reminder-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Status Chip matching My Work (caa-work-count) UI */
+        .home-reminder-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            background: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            flex-shrink: 0;
+        }
+
+        /* Due: Light pill matching My Work with dark border */
+        .home-reminder-chip.due {
+            background: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid #0f172a;
+        }
+
+        /* Upcoming: Clean Neutral Slate Pill */
+        .home-reminder-chip.upcoming {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        /* Overdue: Solid High-Contrast Inverse Pill */
+        .home-reminder-chip.overdue {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1.5px solid #0f172a;
+        }
+
+        /* Bell Icon: continuous gentle ringing animation */
+        .home-reminder-bell-icon {
+            display: inline-block;
+            animation: bellSubtlePulse 1.4s ease-in-out infinite;
+            transform-origin: center top;
+            color: #0f172a;
+            flex-shrink: 0;
+        }
+
+        @keyframes bellSubtlePulse {
+            0% { transform: rotate(0deg) scale(1); }
+            10% { transform: rotate(14deg) scale(1.12); }
+            20% { transform: rotate(-12deg) scale(1.12); }
+            30% { transform: rotate(8deg) scale(1.06); }
+            40% { transform: rotate(-6deg) scale(1.04); }
+            50% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .home-reminder-chevron {
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.15s ease, color 0.15s ease;
+        }
+
+        .home-reminder-card:active .home-reminder-chevron {
+            transform: translateX(2px);
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body class="agent-app-body">
+
+    <!-- Mobile Device Frame (Compact 375px - 414px) -->
+    <div class="caa-app-container">
+
+        <!-- Top Profile Drawer State Toggle -->
+        <input type="checkbox" id="caa-toggle-profile" class="caa-profile-modal-toggle">
+
+        <!-- ============================================================ -->
+        <!-- 1. MOBILE HEADER                                             -->
+        <!-- ============================================================ -->
+        <header class="caa-header">
+            <!-- Left: CCM Agent identity with ERP Truck Logo -->
+            <a href="index.html" class="caa-header-brand">
+                <div class="caa-brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                        <rect x="1" y="3" width="15" height="13"></rect>
+                        <polygon points="16 8 20 8 23 11 23 16 16 8"></polygon>
+                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                </div>
+                <span class="caa-brand-text">CCM Agent</span>
+            </a>
+
+            <!-- Right: Profile/account access with DK avatar & chevron-down -->
+            <div class="caa-header-right">
+                <a href="profile.html" class="caa-profile-btn" title="Open Profile &amp; Account">
+                    <div class="caa-avatar-mini">DK</div>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- Availability State Radios (Pure CSS Controller for Prototype) -->
+        <input type="radio" name="avail-status" id="avail-state-available" class="caa-profile-modal-toggle" checked>
+        <input type="radio" name="avail-status" id="avail-state-break" class="caa-profile-modal-toggle">
+        <input type="radio" name="avail-status" id="avail-state-offline" class="caa-profile-modal-toggle">
+        <input type="radio" name="avail-status" id="avail-state-oncall" class="caa-profile-modal-toggle">
+
+        <!-- Availability Bottom Sheet Open/Close Toggle Checkbox -->
+        <input type="checkbox" id="caa-avail-sheet-toggle" class="caa-profile-modal-toggle">
+
+        <!-- ============================================================ -->
+        <!-- AVAILABILITY BOTTOM SHEET (Change Availability)              -->
+        <!-- Options: Available, Break, Offline (On Call is system-only)  -->
+        <!-- ============================================================ -->
+        <div class="caa-sheet-overlay">
+            <div class="caa-bottom-sheet">
+                <div class="caa-sheet-header">
+                    <span class="caa-sheet-title">Change Availability</span>
+                    <label for="caa-avail-sheet-toggle" class="caa-sheet-close" title="Close">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </label>
+                </div>
+
+                <div class="caa-sheet-options">
+                    <!-- Option 1: Available (Hidden when Available is current) -->
+                    <label for="avail-state-available" onclick="document.getElementById('caa-avail-sheet-toggle').checked=false;" class="caa-sheet-option sheet-opt-available">
+                        <div class="caa-sheet-opt-left">
+                            <span class="caa-dot-green">●</span>
+                            <div>
+                                <div class="caa-sheet-opt-name">Available</div>
+                                <div class="caa-sheet-opt-sub">Ready to receive incoming calls</div>
+                            </div>
+                        </div>
+                        <div class="caa-sheet-opt-chevron-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+
+                    <!-- Option 2: Break (Hidden when Break is current) -->
+                    <label for="avail-state-break" onclick="document.getElementById('caa-avail-sheet-toggle').checked=false;" class="caa-sheet-option sheet-opt-break">
+                        <div class="caa-sheet-opt-left">
+                            <span class="caa-dot-orange">●</span>
+                            <div>
+                                <div class="caa-sheet-opt-name">Break</div>
+                                <div class="caa-sheet-opt-sub">Paused from call queues</div>
+                            </div>
+                        </div>
+                        <div class="caa-sheet-opt-chevron-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+
+                    <!-- Option 3: Offline (Hidden when Offline is current) -->
+                    <label for="avail-state-offline" onclick="document.getElementById('caa-avail-sheet-toggle').checked=false;" class="caa-sheet-option sheet-opt-offline">
+                        <div class="caa-sheet-opt-left">
+                            <span class="caa-dot-red">●</span>
+                            <div>
+                                <div class="caa-sheet-opt-name">Offline</div>
+                                <div class="caa-sheet-opt-sub">Signed out of all queues</div>
+                            </div>
+                        </div>
+                        <div class="caa-sheet-opt-chevron-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2. MAIN SCROLLABLE VIEWPORT — CLEAN HOME WORKSPACE           -->
+        <!-- ============================================================ -->
+        <!-- 2. MAIN SCROLLABLE VIEWPORT — IMPROVED HOME DASHBOARD        -->
+        <!-- ============================================================ -->
+        <main class="caa-viewport">
+
+            <!-- 1. GREETING -->
+            <div class="caa-home-section-greeting caa-home-greeting-bar">
+                <div>
+                    <h1 class="caa-greeting-title">Good morning, Deepak</h1>
+                    <div class="caa-greeting-sub">Manage your customer calls, callbacks, leads and tickets.</div>
+                </div>
+            </div>
+
+            <!-- 2. AVAILABILITY STATUS -->
+            <div class="caa-avail-card">
+                <!-- A. AVAILABLE STATE -->
+                <div class="caa-avail-status-block state-block-available">
+                    <div class="caa-avail-top-row">
+                        <div class="caa-avail-left-group">
+                            <div class="caa-avail-icon-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="caa-avail-heading">Availability Status</div>
+                                <div class="caa-avail-subtext">Online &amp; ready to receive queue calls.</div>
+                            </div>
+                        </div>
+                        <div class="caa-avail-chip">
+                            <span class="caa-dot-green">●</span>
+                            <span>Available</span>
+                        </div>
+                    </div>
+                    <div class="caa-avail-action-row">
+                        <label for="caa-avail-sheet-toggle" class="caa-avail-link-action" title="Change Availability">
+                            <span>Change Availability</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- B. BREAK STATE -->
+                <div class="caa-avail-status-block state-block-break">
+                    <div class="caa-avail-top-row">
+                        <div class="caa-avail-left-group">
+                            <div class="caa-avail-icon-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="caa-avail-heading">Availability Status</div>
+                                <div class="caa-avail-subtext">On break · Paused from call routing.</div>
+                            </div>
+                        </div>
+                        <div class="caa-avail-chip">
+                            <span class="caa-dot-orange">●</span>
+                            <span>Break</span>
+                        </div>
+                    </div>
+                    <div class="caa-avail-action-row">
+                        <label for="caa-avail-sheet-toggle" class="caa-avail-link-action" title="Change Availability">
+                            <span>Change Availability</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- C. OFFLINE STATE -->
+                <div class="caa-avail-status-block state-block-offline">
+                    <div class="caa-avail-top-row">
+                        <div class="caa-avail-left-group">
+                            <div class="caa-avail-icon-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="caa-avail-heading">Availability Status</div>
+                                <div class="caa-avail-subtext">Offline · Logged out from queues.</div>
+                            </div>
+                        </div>
+                        <div class="caa-avail-chip">
+                            <span class="caa-dot-red">●</span>
+                            <span>Offline</span>
+                        </div>
+                    </div>
+                    <div class="caa-avail-action-row">
+                        <label for="caa-avail-sheet-toggle" class="caa-avail-link-action" title="Change Availability">
+                            <span>Change Availability</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- D. ON CALL STATE (System-controlled during calls) -->
+                <div class="caa-avail-status-block state-block-oncall">
+                    <div class="caa-avail-top-row">
+                        <div class="caa-avail-left-group">
+                            <div class="caa-avail-icon-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="caa-avail-heading">Availability Status</div>
+                                <div class="caa-avail-subtext">Currently handling active call.</div>
+                            </div>
+                        </div>
+                        <div class="caa-avail-chip">
+                            <span class="caa-dot-blue">●</span>
+                            <span>On Call</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. TODAY'S PERFORMANCE -->
+            <div class="caa-home-section">
+                <div class="caa-home-section-title">
+                    <span>Today's Performance</span>
+                </div>
+
+                <div class="caa-kpi-grid">
+                    <!-- KPI 1: Calls Handled -->
+                    <a href="calls.html" class="caa-kpi-card" title="View Calls">
+                        <div class="caa-kpi-top">
+                            <span class="caa-kpi-val" id="kpi-calls-val">14</span>
+                            <div class="caa-kpi-icon-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="caa-kpi-label">Calls Handled</div>
+                    </a>
+
+                    <!-- KPI 2: Leads Created -->
+                    <a href="leads.html" class="caa-kpi-card" title="View Leads">
+                        <div class="caa-kpi-top">
+                            <span class="caa-kpi-val">5</span>
+                            <div class="caa-kpi-icon-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="caa-kpi-label">Leads Created</div>
+                    </a>
+
+                    <!-- KPI 3: Tickets Created -->
+                    <a href="tickets.html" class="caa-kpi-card" title="View Tickets">
+                        <div class="caa-kpi-top">
+                            <span class="caa-kpi-val">3</span>
+                            <div class="caa-kpi-icon-badge">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+                                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+                                    <path d="M13 5v2"></path>
+                                    <path d="M13 17v2"></path>
+                                    <path d="M13 11v2"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="caa-kpi-label">Tickets Created</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. MY WORK -->
+            <div class="caa-home-section">
+                <div class="caa-home-section-title">
+                    <span>My Work</span>
+                </div>
+
+                <div class="caa-work-card">
+                    <!-- Row 1: Pending Callbacks -->
+                    <a href="callbacks.html" class="caa-work-row">
+                        <div class="caa-work-left">
+                            <div class="caa-work-icon-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                    <polyline points="16 2 16 8 22 8"></polyline>
+                                    <line x1="23" y1="1" x2="16" y2="8"></line>
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="caa-work-title">Pending Callbacks</div>
+                                <div class="caa-work-sub">2 customers awaiting callback request</div>
+                            </div>
+                        </div>
+                        <div class="caa-work-right">
+                            <span class="caa-work-count">2 Pending</span>
+                            <div class="caa-work-chevron">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Row 2: My Leads -->
+                    <a href="leads.html" class="caa-work-row">
+                        <div class="caa-work-left">
+                            <div class="caa-work-icon-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <polyline points="17 11 19 13 23 9"></polyline>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="caa-work-title">My Leads</div>
+                                <div class="caa-work-sub">5 active opportunities in pipeline</div>
+                            </div>
+                        </div>
+                        <div class="caa-work-right">
+                            <span class="caa-work-count">5 Active</span>
+                            <div class="caa-work-chevron">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Row 3: My Tickets -->
+                    <a href="tickets.html" class="caa-work-row">
+                        <div class="caa-work-left">
+                            <div class="caa-work-icon-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="9" y1="13" x2="15" y2="13"></line>
+                                    <line x1="9" y1="17" x2="13" y2="17"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="caa-work-title">My Tickets</div>
+                                <div class="caa-work-sub">3 open tickets assigned to you</div>
+                            </div>
+                        </div>
+                        <div class="caa-work-right">
+                            <span class="caa-work-count">3 Open</span>
+                            <div class="caa-work-chevron">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. FOLLOW-UP REMINDERS (Lead Follow-up Section) -->
+            <div class="caa-home-section" id="home-followup-reminders-section">
+                <div class="caa-home-section-title" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span>Follow-up Reminders</span>
+                        <span class="home-reminder-count-pill" id="home-reminders-count-badge">2</span>
+                    </div>
+                    <a href="reminders.html" class="home-view-leads-link">View All &gt;</a>
+                </div>
+
+                <div class="home-reminders-container" id="home-reminders-list">
+                    <!-- Due: Priya Sharma -->
+                    <a href="leads.html?id=LEAD-8210" class="home-reminder-card is-due" title="View Lead Priya Sharma">
+                        <div class="home-reminder-left">
+                            <div class="home-reminder-row1">
+                                <span class="home-reminder-cust-name">Priya Sharma</span>
+                                <span class="home-reminder-dot">·</span>
+                                <span class="home-reminder-lead-id">LEAD-8210</span>
+                            </div>
+                            <div class="home-reminder-row2">
+                                <span class="home-reminder-context" title="Customer requested updated quote">Customer requested updated quote</span>
+                            </div>
+                            <div class="home-reminder-row3">
+                                <span class="home-reminder-datetime due">Today, 2:00 PM</span>
+                            </div>
+                        </div>
+                        <div class="home-reminder-right">
+                            <span class="home-reminder-chip due">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="11" height="11" class="home-reminder-bell-icon">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                                <span>Due</span>
+                            </span>
+                            <div class="home-reminder-chevron">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Upcoming: Suresh Reddy -->
+                    <a href="leads.html?id=LEAD-8214" class="home-reminder-card" title="View Lead Suresh Reddy">
+                        <div class="home-reminder-left">
+                            <div class="home-reminder-row1">
+                                <span class="home-reminder-cust-name">Suresh Reddy</span>
+                                <span class="home-reminder-dot">·</span>
+                                <span class="home-reminder-lead-id">LEAD-8214</span>
+                            </div>
+                            <div class="home-reminder-row2">
+                                <span class="home-reminder-context" title="Discuss individual &amp; business">Discuss individual &amp; business</span>
+                            </div>
+                            <div class="home-reminder-row3">
+                                <span class="home-reminder-datetime">Sep 9, 10:00 AM</span>
+                            </div>
+                        </div>
+                        <div class="home-reminder-right">
+                            <span class="home-reminder-chip upcoming">Upcoming</span>
+                            <div class="home-reminder-chevron">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ============================================================ -->
+        <!-- 3. BOTTOM NAVIGATION (Fixed, Exactly 5 Items)                -->
+        <!-- Home | Calls | Customers | Leads | Tickets                   -->
+        <!-- ============================================================ -->
+        <nav class="caa-bottom-nav">
+            <!-- 1. Home (Active) -->
+            <a href="index.html" class="caa-nav-item active">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Home</span>
+            </a>
+
+            <!-- 2. Calls -->
+            <a href="calls.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Calls</span>
+            </a>
+
+            <!-- 3. Customers -->
+            <a href="customers.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Customers</span>
+            </a>
+
+            <!-- 4. Leads -->
+            <a href="leads.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Leads</span>
+            </a>
+
+            <!-- 5. Tickets -->
+            <a href="tickets.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Tickets</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Update KPI counter if completed calls exist
+                const saved = JSON.parse(localStorage.getItem('ccm_agent_recent_calls') || '[]');
+                const kpiVal = document.getElementById('kpi-calls-val');
+                if (kpiVal && saved.length > 0) {
+                    kpiVal.textContent = 14 + saved.length;
+                }
+
+                // Check for just-completed call disposition
+                const lastDispRaw = sessionStorage.getItem('lastCallDisposition');
+                if (lastDispRaw) {
+                    const lastDisp = JSON.parse(lastDispRaw);
+                    sessionStorage.removeItem('lastCallDisposition');
+                    showDispositionToast(lastDisp);
+                }
+
+                // Load and render Follow-up Reminders
+                loadHomeFollowupReminders();
+            } catch (_) {}
+        });
+
+        function getInitials(name) {
+            if (!name) return 'CU';
+            const parts = name.trim().split(/\s+/);
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        // Load & Render Follow-up Reminders on Home Screen
+        function loadHomeFollowupReminders() {
+            const container = document.getElementById('home-reminders-list');
+            const countBadge = document.getElementById('home-reminders-count-badge');
+            if (!container) return;
+
+            // Default lead data if not yet created in localStorage
+            const defaultLeads = [
+                {
+                    id: 'LEAD-8210',
+                    customer: 'Priya Sharma',
+                    phone: '+91 98480 12345',
+                    requirement: 'Customer requested updated quote',
+                    nextFollowup: '2026-09-08T14:00',
+                    notes: 'Customer requested updated quote',
+                    displayDate: 'Today, 2:00 PM',
+                    reminderState: 'due'
+                },
+                {
+                    id: 'LEAD-8214',
+                    customer: 'Suresh Reddy',
+                    phone: '+91 98480 12345',
+                    requirement: 'Discuss individual & business',
+                    nextFollowup: '2026-09-09T10:00',
+                    notes: 'Discuss individual & business',
+                    displayDate: 'Sep 9, 10:00 AM',
+                    reminderState: 'upcoming'
+                },
+                {
+                    id: 'LEAD-8401',
+                    customer: 'Rajesh Kumar',
+                    phone: '+91 98765 43210',
+                    requirement: 'Customer wants to review contract rates',
+                    nextFollowup: '2026-09-09T11:30',
+                    notes: 'Customer wants to review contract rates',
+                    displayDate: 'Tomorrow, 11:30 AM',
+                    reminderState: 'upcoming'
+                }
+            ];
+
+            let leads = [];
+            try {
+                const storedLeads = localStorage.getItem('ccm_agent_leads');
+                if (storedLeads) {
+                    leads = JSON.parse(storedLeads);
+                    // Ensure the core examples are present if missing
+                    defaultLeads.forEach(dl => {
+                        const existing = leads.find(l => l.id === dl.id);
+                        if (!existing) {
+                            leads.push(dl);
+                        } else {
+                            if (!existing.nextFollowup) existing.nextFollowup = dl.nextFollowup;
+                            existing.notes = dl.notes;
+                            existing.requirement = dl.requirement;
+                            existing.displayDate = dl.displayDate;
+                            if (dl.reminderState) existing.reminderState = dl.reminderState;
+                        }
+                    });
+                } else {
+                    leads = defaultLeads;
+                    localStorage.setItem('ccm_agent_leads', JSON.stringify(leads));
+                }
+            } catch (e) {
+                leads = defaultLeads;
+            }
+
+            // Extract follow-ups from leads that have nextFollowup scheduled
+            const reminders = [];
+            leads.forEach(lead => {
+                if (lead.nextFollowup) {
+                    reminders.push({
+                        leadId: lead.id,
+                        customer: lead.customer,
+                        context: lead.notes || lead.requirement || 'Lead Follow-up',
+                        datetime: lead.nextFollowup,
+                        displayDate: lead.displayDate || '',
+                        reminderState: lead.reminderState || ''
+                    });
+                }
+            });
+
+            // Also check for any call reminders saved in ccm_agent_reminders that link to leads
+            try {
+                const storedRem = JSON.parse(localStorage.getItem('ccm_agent_reminders') || '[]');
+                storedRem.forEach(r => {
+                    const existing = reminders.find(rem => rem.leadId === r.leadId || (rem.customer && rem.customer.toLowerCase() === (r.customer || '').toLowerCase()));
+                    if (!existing && (r.leadId || r.refId)) {
+                        reminders.push({
+                            leadId: r.leadId || r.refId,
+                            customer: r.customer,
+                            context: r.notes || 'Call Follow-up',
+                            datetime: r.datetime || (r.date ? `${r.date}T${r.time || '10:00'}` : '2026-09-08T10:00'),
+                            displayDate: '',
+                            reminderState: r.reminderState || ''
+                        });
+                    }
+                });
+            } catch (e) {}
+
+            if (reminders.length === 0) {
+                container.innerHTML = `
+                    <div style="padding: 16px; text-align: center; color: var(--caa-text-tertiary); font-size: 0.8125rem; background: var(--caa-surface); border: 1px dashed var(--caa-border); border-radius: 12px;">
+                        No scheduled follow-up reminders.
+                    </div>
+                `;
+                if (countBadge) countBadge.textContent = '0';
+                return;
+            }
+
+            const now = new Date();
+
+            // Classify reminder states: Due, Upcoming, Overdue
+            reminders.forEach(r => {
+                const d = new Date(r.datetime);
+                r.dateObj = d;
+                if (r.reminderState) {
+                    r.state = r.reminderState;
+                } else if (isNaN(d.getTime())) {
+                    r.state = 'upcoming';
+                } else {
+                    const diffMs = now.getTime() - d.getTime();
+                    if (diffMs < 0) {
+                        r.state = 'upcoming';
+                    } else if (diffMs <= 2 * 60 * 60 * 1000 && (d.toDateString() === now.toDateString() || r.displayDate?.includes('Today'))) {
+                        r.state = 'due';
+                    } else {
+                        r.state = 'overdue';
+                    }
+                }
+            });
+
+            // Priority sorting: Overdue and Due first, then Upcoming
+            reminders.sort((a, b) => {
+                const priority = { overdue: 0, due: 1, upcoming: 2 };
+                const pA = priority[a.state] ?? 2;
+                const pB = priority[b.state] ?? 2;
+                if (pA !== pB) return pA - pB;
+                return (a.dateObj?.getTime() || 0) - (b.dateObj?.getTime() || 0);
+            });
+
+            if (countBadge) {
+                countBadge.textContent = reminders.length;
+            }
+
+            // Format date time helper
+            function formatReminderDate(r) {
+                if (r.displayDate) return r.displayDate;
+                const dtStr = r.datetime;
+                try {
+                    const d = new Date(dtStr);
+                    if (isNaN(d.getTime())) return dtStr;
+                    const isToday = d.toDateString() === now.toDateString();
+                    const tomorrow = new Date(now);
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    const isTomorrow = d.toDateString() === tomorrow.toDateString();
+
+                    const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                    if (isToday) {
+                        return `Today, ${timeStr}`;
+                    } else if (isTomorrow) {
+                        return `Tomorrow, ${timeStr}`;
+                    } else {
+                        const monthStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        return `${monthStr}, ${timeStr}`;
+                    }
+                } catch (_) {
+                    return dtStr;
+                }
+            }
+
+            // Render top previews on home screen (e.g. 2 or 3)
+            const previewReminders = reminders.slice(0, 3);
+
+            container.innerHTML = previewReminders.map(r => {
+                const formattedTime = formatReminderDate(r);
+                const statusChip = r.state === 'due'
+                    ? `<span class="home-reminder-chip due">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="11" height="11" class="home-reminder-bell-icon">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span>Due</span>
+                      </span>`
+                    : r.state === 'overdue'
+                    ? `<span class="home-reminder-chip overdue">Overdue</span>`
+                    : `<span class="home-reminder-chip upcoming">Upcoming</span>`;
+
+                const cardClass = r.state === 'due' ? 'is-due' : r.state === 'overdue' ? 'is-overdue' : '';
+                const dtClass = r.state === 'due' ? 'due' : r.state === 'overdue' ? 'overdue' : '';
+
+                return `
+                    <a href="leads.html?id=${encodeURIComponent(r.leadId)}" class="home-reminder-card ${cardClass}" title="View Lead ${r.customer}">
+                        <div class="home-reminder-left">
+                            <div class="home-reminder-row1">
+                                <span class="home-reminder-cust-name">${r.customer}</span>
+                                <span class="home-reminder-dot">·</span>
+                                <span class="home-reminder-lead-id">${r.leadId}</span>
+                            </div>
+                            <div class="home-reminder-row2">
+                                <span class="home-reminder-context" title="${r.context}">${r.context}</span>
+                            </div>
+                            <div class="home-reminder-row3">
+                                <span class="home-reminder-datetime ${dtClass}">${formattedTime}</span>
+                            </div>
+                        </div>
+                        <div class="home-reminder-right">
+                            ${statusChip}
+                            <div class="home-reminder-chevron">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function showDispositionToast(info) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 82px;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                background: #0f172a;
+                color: #ffffff;
+                padding: 10px 16px;
+                border-radius: 12px;
+                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 0.8125rem;
+                font-weight: 500;
+                z-index: 9999;
+                opacity: 0;
+                transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+                max-width: 90%;
+                white-space: nowrap;
+                border: 1px solid rgba(255,255,255,0.1);
+            `;
+            toast.innerHTML = `
+                <span style="display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #ffffff; color: #0f172a;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="12" height="12"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span>Call saved · <strong>${info.disposition || 'Dispositioned'}</strong> (${info.name || info.customer || 'Customer'})</span>
+            `;
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            });
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
+

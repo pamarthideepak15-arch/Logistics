@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CCM CCM Agent App - Follow-up Reminders</title>
+    <link rel="stylesheet" href="../Design System/global.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --caa-primary: #0f172a;
+            --caa-primary-hover: #000000;
+            --caa-primary-light: #f1f5f9;
+        }
+
+        .caa-back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            color: #0f172a;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.12s ease;
+            flex-shrink: 0;
+        }
+
+        .caa-back-btn:active {
+            background-color: #f1f5f9;
+        }
+
+        .caa-filter-pills-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            padding: 2px 0;
+        }
+
+        .caa-filter-tab-btn {
+            flex: 1;
+            padding: 7px 12px;
+            border-radius: var(--caa-radius-full, 9999px);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid var(--caa-border, #e2e8f0);
+            background: var(--caa-surface, #ffffff);
+            color: #64748b;
+            transition: all 0.18s ease;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            user-select: none;
+        }
+
+        .caa-filter-tab-btn:active {
+            opacity: 0.8;
+        }
+
+        .caa-filter-tab-btn.active {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+        }
+
+        /* ============================================================ */
+        /* COMPACT REMINDER CARDS (EXACT SAME COMPACT DESIGN)          */
+        /* ============================================================ */
+        .home-reminders-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .home-reminder-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 14px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .home-reminder-card:active {
+            background: #f8fafc;
+        }
+
+        /* Due Card: Deep black border with solid left accent & slow smooth zoom in/out animation */
+        .home-reminder-card.is-due {
+            border: 1px solid #0f172a;
+            border-left: 3.5px solid #0f172a;
+            background: #ffffff;
+            animation: dueCardZoomPulse 3s ease-in-out infinite;
+            transform-origin: center;
+            will-change: transform, box-shadow;
+        }
+
+        /* Overdue Card: High contrast border with solid left accent & slow smooth zoom in/out animation */
+        .home-reminder-card.is-overdue {
+            border: 1px solid #0f172a;
+            border-left: 3.5px solid #0f172a;
+            background: #ffffff;
+            animation: dueCardZoomPulse 3s ease-in-out infinite;
+            transform-origin: center;
+            will-change: transform, box-shadow;
+        }
+
+        @keyframes dueCardZoomPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 0 0 0 rgba(15, 23, 42, 0);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12), 0 0 0 2.5px rgba(15, 23, 42, 0.08);
+            }
+        }
+
+        .home-reminder-left {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .home-reminder-row1 {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+            line-height: 1.25;
+        }
+
+        .home-reminder-cust-name {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #0f172a;
+            white-space: nowrap;
+        }
+
+        .home-reminder-dot {
+            color: #94a3b8;
+            font-weight: 700;
+            font-size: 0.75rem;
+            line-height: 1;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .home-reminder-lead-id {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: #64748b;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .home-reminder-row2 {
+            min-width: 0;
+            line-height: 1.25;
+        }
+
+        .home-reminder-context {
+            font-size: 0.75rem;
+            color: #475569;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            max-width: 100%;
+        }
+
+        .home-reminder-row3 {
+            min-width: 0;
+            line-height: 1.25;
+        }
+
+        .home-reminder-datetime {
+            font-size: 0.6875rem;
+            color: #64748b;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .home-reminder-datetime.due {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .home-reminder-datetime.overdue {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        /* Right Group matching My Work (caa-work-right) */
+        .home-reminder-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Status Chip matching My Work (caa-work-count) UI */
+        .home-reminder-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            background: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            flex-shrink: 0;
+        }
+
+        .home-reminder-chip.due {
+            background: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid #0f172a;
+        }
+
+        .home-reminder-chip.upcoming {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .home-reminder-chip.overdue {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1.5px solid #0f172a;
+        }
+
+        /* Bell Icon: continuous gentle ringing animation */
+        .home-reminder-bell-icon {
+            display: inline-block;
+            animation: bellSubtlePulse 1.4s ease-in-out infinite;
+            transform-origin: center top;
+            color: #0f172a;
+            flex-shrink: 0;
+        }
+
+        @keyframes bellSubtlePulse {
+            0% { transform: rotate(0deg) scale(1); }
+            10% { transform: rotate(14deg) scale(1.12); }
+            20% { transform: rotate(-12deg) scale(1.12); }
+            30% { transform: rotate(8deg) scale(1.06); }
+            40% { transform: rotate(-6deg) scale(1.04); }
+            50% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .home-reminder-chevron {
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.15s ease, color 0.15s ease;
+        }
+
+        .home-reminder-card:active .home-reminder-chevron {
+            transform: translateX(2px);
+            color: #0f172a;
+        }
+
+        .empty-reminders-state {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+            text-align: center;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body class="agent-app-body">
+
+    <div class="caa-app-container">
+
+        <!-- ============================================================ -->
+        <!-- 1. MOBILE HEADER WITH BACK CTA                               -->
+        <!-- Uses exact full-page navigation pattern as Customer Profile  -->
+        <!-- ============================================================ -->
+        <header class="caa-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="index.html" class="caa-back-btn" title="Back to Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                <span class="caa-brand-text" style="font-size: 0.9375rem;">Follow-up Reminders</span>
+            </div>
+        </header>
+
+        <!-- ============================================================ -->
+        <!-- 2. MAIN SCROLLABLE CONTENT AREA                              -->
+        <!-- ============================================================ -->
+        <main class="caa-viewport" style="padding: 14px 16px 80px; overflow-y: auto;">
+
+            <!-- Filter Tabs: All, Due, Upcoming -->
+            <div class="caa-filter-pills-row">
+                <button type="button" class="caa-filter-tab-btn active" id="tab-all" onclick="filterRemindersView('all')">
+                    All (<span id="count-all">3</span>)
+                </button>
+                <button type="button" class="caa-filter-tab-btn" id="tab-due" onclick="filterRemindersView('due')">
+                    Due (<span id="count-due">1</span>)
+                </button>
+                <button type="button" class="caa-filter-tab-btn" id="tab-upcoming" onclick="filterRemindersView('upcoming')">
+                    Upcoming (<span id="count-upcoming">2</span>)
+                </button>
+            </div>
+
+            <!-- Reminders List Container -->
+            <div class="home-reminders-container" id="reminders-page-list">
+                <!-- Populated dynamically via JS with default seeds -->
+            </div>
+
+            <div class="empty-reminders-state" id="empty-reminders-view">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; color: #94a3b8;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                </div>
+                <div style="font-size: 0.875rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">No reminders found</div>
+                <div style="font-size: 0.75rem; color: #64748b;">There are no follow-ups scheduled for this filter.</div>
+            </div>
+
+        </main>
+
+        <!-- ============================================================ -->
+        <!-- 3. BOTTOM NAVIGATION (Fixed, Exactly 5 Items)                -->
+        <!-- ============================================================ -->
+        <nav class="caa-bottom-nav">
+            <a href="index.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Home</span>
+            </a>
+            <a href="calls.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Calls</span>
+            </a>
+            <a href="customers.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Customers</span>
+            </a>
+            <a href="leads.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Leads</span>
+            </a>
+            <a href="tickets.html" class="caa-nav-item">
+                <div class="caa-nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+                <span class="caa-nav-label">Tickets</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <script>
+        let currentFilter = 'all';
+        let allReminders = [];
+
+        function getInitials(name) {
+            if (!name) return 'LD';
+            const parts = name.trim().split(/\s+/);
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        function loadRemindersData() {
+            const defaultLeads = [
+                {
+                    id: 'LEAD-8210',
+                    customer: 'Priya Sharma',
+                    context: 'Discuss individual vs business shipping options',
+                    requirement: 'Discuss individual vs business shipping options',
+                    notes: 'Discuss individual vs business shipping options',
+                    nextFollowup: '2026-09-08T14:00',
+                    displayDate: 'Today, 2:00 PM'
+                },
+                {
+                    id: 'LEAD-8401',
+                    customer: 'Rajesh Kumar',
+                    context: 'Review corporate shipping requirements',
+                    requirement: 'Review corporate shipping requirements',
+                    notes: 'Review corporate shipping requirements',
+                    nextFollowup: '2026-09-09T11:30',
+                    displayDate: 'Tomorrow, 11:30 AM'
+                },
+                {
+                    id: 'LEAD-8214',
+                    customer: 'Suresh Reddy',
+                    context: 'Discuss monthly FTL contract requirements',
+                    requirement: 'Discuss monthly FTL contract requirements',
+                    notes: 'Discuss monthly FTL contract requirements',
+                    nextFollowup: '2026-09-09T10:00',
+                    displayDate: 'Sep 9, 10:00 AM'
+                }
+            ];
+
+            let leads = [];
+            try {
+                const storedLeads = localStorage.getItem('ccm_agent_leads');
+                if (storedLeads) {
+                    leads = JSON.parse(storedLeads);
+                    defaultLeads.forEach(dl => {
+                        const existing = leads.find(l => l.id === dl.id);
+                        if (!existing) {
+                            leads.push(dl);
+                        } else {
+                            if (!existing.nextFollowup) existing.nextFollowup = dl.nextFollowup;
+                            if (dl.context) existing.context = dl.context;
+                            if (dl.notes) existing.notes = dl.notes;
+                            if (dl.requirement) existing.requirement = dl.requirement;
+                            if (dl.displayDate) existing.displayDate = dl.displayDate;
+                        }
+                    });
+                } else {
+                    leads = defaultLeads;
+                    localStorage.setItem('ccm_agent_leads', JSON.stringify(leads));
+                }
+            } catch (e) {
+                leads = defaultLeads;
+            }
+
+            allReminders = [];
+            leads.forEach(l => {
+                if (l.nextFollowup) {
+                    allReminders.push({
+                        leadId: l.id,
+                        customer: l.customer,
+                        context: l.context || l.notes || l.requirement || 'Lead Follow-up',
+                        datetime: l.nextFollowup,
+                        displayDate: l.displayDate || '',
+                        initials: getInitials(l.customer)
+                    });
+                }
+            });
+
+            // Also check call reminders
+            try {
+                const storedRem = JSON.parse(localStorage.getItem('ccm_agent_reminders') || '[]');
+                storedRem.forEach(r => {
+                    const existing = allReminders.find(rem => rem.leadId === r.leadId || (rem.customer && rem.customer.toLowerCase() === (r.customer || '').toLowerCase()));
+                    if (!existing && (r.leadId || r.refId)) {
+                        allReminders.push({
+                            leadId: r.leadId || r.refId,
+                            customer: r.customer,
+                            context: r.notes || 'Call Follow-up',
+                            datetime: r.datetime || (r.date ? `${r.date}T${r.time || '10:00'}` : '2026-09-08T10:00'),
+                            displayDate: '',
+                            initials: getInitials(r.customer)
+                        });
+                    }
+                });
+            } catch (e) {}
+
+            const now = new Date();
+            allReminders.forEach(r => {
+                const d = new Date(r.datetime);
+                r.isDue = !isNaN(d.getTime()) && d <= now;
+                r.dateObj = d;
+            });
+
+            allReminders.sort((a, b) => {
+                if (a.isDue && !b.isDue) return -1;
+                if (!a.isDue && b.isDue) return 1;
+                return (a.dateObj?.getTime() || 0) - (b.dateObj?.getTime() || 0);
+            });
+
+            renderRemindersList();
+        }
+
+        function formatReminderDate(r) {
+            if (r.displayDate) return r.displayDate;
+            const dtStr = r.datetime;
+            try {
+                const d = new Date(dtStr);
+                if (isNaN(d.getTime())) return dtStr;
+                const now = new Date();
+                const isToday = d.toDateString() === now.toDateString();
+                const tomorrow = new Date(now);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const isTomorrow = d.toDateString() === tomorrow.toDateString();
+
+                const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                if (isToday) {
+                    return `Today, ${timeStr}`;
+                } else if (isTomorrow) {
+                    return `Tomorrow, ${timeStr}`;
+                } else {
+                    const monthStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    return `${monthStr}, ${timeStr}`;
+                }
+            } catch (_) {
+                return dtStr;
+            }
+        }
+
+        function filterRemindersView(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.caa-filter-tab-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`tab-${filter}`);
+            if (activeBtn) activeBtn.classList.add('active');
+            renderRemindersList();
+        }
+
+        function renderRemindersList() {
+            const container = document.getElementById('reminders-page-list');
+            const emptyView = document.getElementById('empty-reminders-view');
+            const cntAll = document.getElementById('count-all');
+            const cntDue = document.getElementById('count-due');
+            const cntUpcoming = document.getElementById('count-upcoming');
+            const headerDueBadge = document.getElementById('header-due-badge');
+
+            const total = allReminders.length;
+            const dueCount = allReminders.filter(r => r.isDue).length;
+            const upcomingCount = allReminders.filter(r => !r.isDue).length;
+
+            if (cntAll) cntAll.textContent = total;
+            if (cntDue) cntDue.textContent = dueCount;
+            if (cntUpcoming) cntUpcoming.textContent = upcomingCount;
+            if (headerDueBadge) headerDueBadge.textContent = `${dueCount} Due`;
+
+            const filtered = allReminders.filter(r => {
+                if (currentFilter === 'due') return r.isDue;
+                if (currentFilter === 'upcoming') return !r.isDue;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                if (container) container.style.display = 'none';
+                if (emptyView) emptyView.style.display = 'flex';
+                return;
+            }
+
+            if (container) container.style.display = 'flex';
+            if (emptyView) emptyView.style.display = 'none';
+
+            container.innerHTML = filtered.map(r => {
+                const formattedTime = formatReminderDate(r);
+                const statusChip = r.isDue ? `
+                    <span class="home-reminder-chip due">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="11" height="11" class="home-reminder-bell-icon">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span>Due</span>
+                    </span>
+                ` : `
+                    <span class="home-reminder-chip upcoming">Upcoming</span>
+                `;
+
+                return `
+                    <a href="leads.html?id=${encodeURIComponent(r.leadId)}" class="home-reminder-card ${r.isDue ? 'is-due' : ''}" title="View Lead ${r.customer}">
+                        <div class="home-reminder-left">
+                            <div class="home-reminder-row1">
+                                <span class="home-reminder-cust-name">${r.customer}</span>
+                                <span class="home-reminder-dot">·</span>
+                                <span class="home-reminder-lead-id">${r.leadId}</span>
+                            </div>
+                            <div class="home-reminder-row2">
+                                <span class="home-reminder-context" title="${r.context}">${r.context}</span>
+                            </div>
+                            <div class="home-reminder-row3">
+                                <span class="home-reminder-datetime ${r.isDue ? 'due' : ''}">${formattedTime}</span>
+                            </div>
+                        </div>
+                        <div class="home-reminder-right">
+                            ${statusChip}
+                            <div class="home-reminder-chevron">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadRemindersData();
+        });
+    </script>
+</body>
+</html>
+

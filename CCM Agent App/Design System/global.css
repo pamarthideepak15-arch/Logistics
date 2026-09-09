@@ -1,0 +1,47 @@
+/* Logistics Management Platform - Global CSS */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+@import url('design-system.css');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+body {
+  font-family: var(--font-family-primary);
+  background-color: var(--color-white);
+  color: var(--color-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Clean focus states across all devices and browsers */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 1.5px solid var(--color-black);
+  outline-offset: 1px;
+}
+
+/* Remove default focus outline from mouse clicks on interactive elements */
+a, button, input, select, textarea, [tabindex] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus, button:focus, .app-launcher-card:focus, .btn-primary:focus, .btn-secondary:focus {
+  outline: none !important;
+  box-shadow: none;
+}
